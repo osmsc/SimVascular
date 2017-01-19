@@ -88,6 +88,9 @@ $(TARGET_SHARED):	$(DLLOBJS)
 	for fn in $(TARGET_SHARED:.$(SOEXT)=.$(STATICEXT)); do /bin/rm -f $$fn; done
 	$(SHAR) $(TARGET_SHARED)  \
              $(DLLOBJS) $(LFLAGS) $(DLLLIBS) $(SHARED_LFLAGS)
+ifdef SV_APPEND_CPPMICROSERVICES_TO_DLL
+	$(MITK_US_RESOURCE_COMPILER) --append $(TARGET_SHARED) ./cppmicroservices_shared/res_0.zip 
+endif
 ifdef SV_COPY_DLL_TO_BIN_PLUGINS
 	mkdir -p $(TOP)/Bin/plugins
 	cp -f $(TARGET_SHARED) $(TOP)/Bin/plugins
@@ -99,6 +102,9 @@ $(TARGET_SHARED):	$(DLLOBJS)
 	for fn in $(TARGET_SHARED:.$(SOEXT)=.$(STATICEXT)); do /bin/rm -f $$fn; done
 	$(SHAR) $(SHARED_LFLAGS) $(TARGET_SHARED)  \
              $(DLLOBJS) $(LFLAGS) $(DLLLIBS)
+ifdef SV_APPEND_CPPMICROSERVICES_TO_DLL
+	$(MITK_US_RESOURCE_COMPILER) --append $(TARGET_SHARED) ./cppmicroservices_shared/res_0.zip 
+endif
 ifdef SV_COPY_DLL_TO_BIN_PLUGINS
 	mkdir -p $(TOP)/Bin/plugins
 	cp -f $(TARGET_SHARED) $(TOP)/Bin/plugins
