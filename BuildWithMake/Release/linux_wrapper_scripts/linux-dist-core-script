@@ -20,6 +20,7 @@ export SIM_LICENSE_FILE=$SV_HOME/meshsim-license.dat
 export TCL_LIBRARY=$SV_HOME/lib/REPLACE_TCL_VERSION_NO
 export TK_LIBRARY=$SV_HOME/lib/REPLACE_TK_VERSION_NO
 export LD_LIBRARY_PATH=$SV_HOME/lib:$LD_LIBRARY_PATH
+export TCLLIBPATH=$SV_HOME/tcltk-vtk/vtk
 
 # PARASOLID additions
 export P_SCHEMA=$SV_HOME/schema
@@ -29,4 +30,11 @@ export LD_LIBRARY_PATH=$SV_HOME/mpi/lib:$LD_LIBRARY_PATH
 
 # intel additions
 export LD_LIBRARY_PATH=$SV_HOME/intel_compiler_runtime_libs:$LD_LIBRARY_PATH
+
+#MITK additions
+export SV_PLUGIN_PATH=$SV_HOME
+export LD_LIBRARY_PATH=$SV_HOME/mitk/lib:$SV_HOME/mitk/bin:$LD_LIBRARY_PATH
+
+# Qt additions
+export QT_PLUGIN_PATH=$SV_HOME/qt-plugins
 

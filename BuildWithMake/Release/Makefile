@@ -57,13 +57,14 @@ ifeq ($(CLUSTER), x64_cygwin)
   DIST_DIR := /cygdrive/p/package/$(SV_VERSION)/$(SV_TIMESTAMP)
 else
   DIST_DIR_TOP := $(REAL_DIST_DIR_TOP)
-  DIST_DIR := $(REAL_DIST_DIR) 
+  DIST_DIR := $(REAL_DIST_DIR)
 endif
 
 ifneq ($(CLUSTER),x64_linux)
   all: use_subst windows-distribution msi
 else
-  all: linux-distribution taritup taritup-meshsim-and-parasolid
+#  all: linux-distribution taritup taritup-meshsim-and-parasolid
+  all: linux-distribution
 endif
 
 use_subst:
@@ -263,6 +264,10 @@ endif
 ifeq ($(SV_USE_VTK),1)
 	-cp -fd $(VTK_LIBDIRS)/*.$(SOEXT)* $(DIST_DIR)
 	-cp -fd $(VTK_BINDIRS)/*.$(SOEXT)* $(DIST_DIR)
+# need an extra dummy path due to hardcoded stuff in vtk pkgIndex.tcl
+	-mkdir -p $(DIST_DIR)/tcltk-vtk
+	-cp -fR $(VTK_TCL_LIB_PATH) $(DIST_DIR)/tcltk-vtk
+	-mv $(DIST_DIR)/tcltk-vtk/vtk* $(DIST_DIR)/tcltk-vtk/vtk
 endif
 ifeq ($(SV_USE_ZLIB),1)
 	-cp -f $(ZLIB_LIBDIR)/zlib.$(SOEXT)* $(DIST_DIR)
@@ -271,39 +276,67 @@ ifeq ($(SV_USE_ITK),1)
 	-cp -f $(ITK_BIN_LIBS)/*.$(SOEXT)* $(DIST_DIR)
 endif
 ifeq ($(SV_USE_GDCM),1)
-	-cp -f $(SV_GDCM_DLLS)/gdcm*.$(SOEXT)* $(DIST_DIR)
-	-cp -f $(SV_GDCM_DLLS)/gdcm*.exe* $(DIST_DIR)
-	-cp -f $(SV_GDCM_DLLS)/socketxx.$(SOEXT)* $(DIST_DIR)
+ifeq ($(CLUSTER), x64_cygwin)
+	-cp -fd $(SV_GDCM_DLLS)/gdcm*.$(SOEXT)* $(DIST_DIR)
+	-cp -fd $(SV_GDCM_DLLS)/gdcm*.exe* $(DIST_DIR)
+	-cp -fd $(SV_GDCM_DLLS)/socketxx.$(SOEXT)* $(DIST_DIR)
+else
+	-cp -fd $(SV_GDCM_DLLS)/* $(DIST_DIR)
+	-cp -fd $(SV_GDCM_TOP)/bin/* $(DIST_DIR)
+endif
 endif
 ifeq ($(SV_USE_PYTHON),1)
-#	-cp -fR $(PYTHON_HOME)/Lib $(DIST_DIR)/python-packages
-#	-cp -fR $(VTK_PYTHON_PACKAGES) $(DIST_DIR)/python-packages
+ifeq ($(CLUSTER), x64_cygwin)
 	-cp -fR $(PYTHON_HOME) $(DIST_DIR)/Python27
 	-cp -fR $(VTK_PYTHON_PACKAGES) $(DIST_DIR)/Python27/Lib/vtk-packages
 	-cp -f $(SV_PYTHON_SO_PATH)/*.$(SOEXT)* $(DIST_DIR)
 	-cp -Rf $(TOP)/../Python $(DIST_DIR)/Python
+else
+	-cp -fRd $(PYTHON_HOME) $(DIST_DIR)/Python27
+	-cp -fRd $(VTK_PYTHON_PACKAGES) $(DIST_DIR)/Python27/lib/python2.7/vtk-packages
+	-cp -fd $(SV_PYTHON_SO_PATH)/*.$(SOEXT)* $(DIST_DIR)
+	-cp -Rf $(TOP)/../Python $(DIST_DIR)/Python
+endif
 endif
 ifeq ($(SV_USE_QT),1)
-	-cp -f $(QT_BIN_LIBS)/*.$(SOEXT)* $(DIST_DIR)
-	-cp -fR $(QT_PLUGIN_PATH) $(DIST_DIR)/qt-plugins 
+ifeq ($(CLUSTER), x64_cygwin)
+	-cp -fd $(QT_BIN_LIBS)/*.$(SOEXT)* $(DIST_DIR)
+	-cp -fRd $(QT_PLUGIN_PATH) $(DIST_DIR)/qt-plugins
+else
+	-cp -fd $(QT_LIBDIRS)/*.$(SOEXT)* $(DIST_DIR)
+	-cp -fRd $(QT_PLUGIN_PATH) $(DIST_DIR)/qt-plugins
+endif
 endif
 ifeq ($(SV_USE_OPENCASCADE),1)
-	-cp -f $(SV_OPENCASCADE_SO_PATH)/*.$(SOEXT)* $(DIST_DIR)
+	-cp -fd $(SV_OPENCASCADE_SO_PATH)/*.$(SOEXT)* $(DIST_DIR)
+endif
+ifeq ($(SV_USE_FREETYPE),1)
+	-cp -fd $(SV_FREETYPE_DLLS)/*.$(SOEXT)* $(DIST_DIR)
 endif
 ifeq ($(SV_USE_MITK),1)
+ifeq ($(CLUSTER), x64_cygwin)
 	-mkdir -p $(DIST_DIR)/mitk/bin
 	-cp -fR $(MITK_BINDIRS)/MitkCore $(DIST_DIR)/mitk/bin
 	-cp -fR $(MITK_BINDIRS)/MitkPython $(DIST_DIR)/mitk/bin
 	-cp -fR $(MITK_BINDIRS)/Python $(DIST_DIR)/mitk/bin
 	-cp -f $(SV_MITK_SO_PATH)/*.$(SOEXT)* $(DIST_DIR)
 	-cp -fR $(MITK_BINDIRS)/dcm* $(DIST_DIR)
-ifeq ($(CLUSTER), x64_cygwin)
 	-mkdir -p $(DIST_DIR)/mitk/bin/plugins
 	-cp -fR $(SV_MITK_PLUGIN_PATH) $(DIST_DIR)/mitk/bin/plugins
 	-cp -f $(SV_MITK_SO_PATH)/liborg*.$(SOEXT)* $(DIST_DIR)/mitk/bin/plugins/RelWithDebInfo
 else
-	-cp -f $(SV_MITK_PLUGIN_PATH)/* $(DIST_DIR)/mitk/bin/plugins
-	-cp -f $(SV_MITK_SO_PATH)/liborg*.$(SOEXT)* $(DIST_DIR)/mitk/bin/plugins
+	-mkdir -p $(DIST_DIR)/mitk
+#	-mkdir -p $(DIST_DIR)/mitk/lib/plugins
+#	-cp -fRd $(MITK_LIBDIRS)/MitkCore $(DIST_DIR)/mitk/lib
+#	-cp -fRd $(MITK_LIBDIRS)/MitkPython $(DIST_DIR)/mitk/lib
+#	-cp -fRd $(MITK_BINDIRS)/Python $(DIST_DIR)/mitk/lib
+#	-cp -fd $(MITK_LIBDIRS)/*.$(SOEXT)* $(DIST_DIR)
+#	-cp -fd $(MITK_BINDIRS)/*.$(SOEXT)* $(DIST_DIR)
+	-cp -fRd $(MITK_BINDIRS)/dcm* $(DIST_DIR)
+#	-cp -fd $(SV_MITK_PLUGIN_PATH)/* $(DIST_DIR)/mitk/lib/plugins
+#	-cp -fd $(MITK_LIBDIRS)/liborg*.$(SOEXT)* $(DIST_DIR)/mitk/lib/plugins
+	-cp -fRd $(MITK_LIBDIRS) $(DIST_DIR)/mitk
+	-cp -fRd $(MITK_BINDIRS) $(DIST_DIR)/mitk 
 endif
 endif
 
