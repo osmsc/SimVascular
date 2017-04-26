@@ -1,0 +1,154 @@
+<html>
+<head>
+<title>File 'lib/indexBaseEntry.cls' (part of 'AutoDOC')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'lib/indexBaseEntry.cls' (part of '<a href="pkg_AutoDOC.html" class="package">AutoDOC</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">General interface of an index entry.</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">General interface of an index entry.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">index entries,  general interface to index entry.</span>
+</dl>
+</div>
+<h1 class="class">Class 'indexBaseEntry'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Interface common to all objects used by indices. Manages the object name, a reference to the index it is part of and location information.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cdistInterface.html" class="class">distInterface</a><br>
+<a href="cformatterInterface.html" class="class">formatterInterface</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#oname" class="options">name</a><br>
+<a href="#oindex" class="options">index</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cindexBaseEntry.html#pindexBaseEntry_link" class="proc">link</a> <span class="arg-list">()</span><br>
+<a href="cindexBaseEntry.html#pindexBaseEntry_name" class="proc">name</a> <span class="arg-list">()</span><br>
+<a href="cindexBaseEntry.html#pindexBaseEntry_page" class="proc">page</a> <span class="arg-list">()</span><br>
+<a href="cindexBaseEntry.html#pindexBaseEntry_short" class="proc">short</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vpage" class="members">page</a><br>
+<a href="#vshortDescription" class="members">shortDescription</a><br>
+<a href="#ventity" class="members">entity</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="oname"></a>
+<dt><span class="option-name">-name</span>
+<dd><span class="option-description">  The name of the indexed object. Empty by default.</span>
+<a name="oindex"></a>
+<dt><span class="option-name">-index</span>
+<dd><span class="option-description">  Handle of the index containing this object. Automatically set  during addition of this object to its index.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pindexBaseEntry_link"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">link</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a string containing a hyperlink to the page of this object. The name of the object is used for the textual part of the link. Uses the current formatter object to obtain the data.
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBaseEntry_name"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">name</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: the name of this object.
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBaseEntry_page"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">page</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Retrieval interface to the location information. Generates a unique page upon the first call and then returns always this information.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBaseEntry_short"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">short</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: the short description of the object.
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vpage"></a>
+<dt><span class="variable-name">page</span>
+<dd><span class="variable-description">  Name of the file containing the page describing this object.  Defaults to {}, which is an indicator that the information was  never requested before too.</span>
+<a name="vshortDescription"></a>
+<dt><span class="variable-name">shortDescription</span>
+<dd><span class="variable-description">  A short description of the object. This text is used  by the index to embellish the reference to the page  of the object and give a user hints about the  purpose of the object</span>
+<a name="ventity"></a>
+<dt><span class="variable-name">entity</span>
+<dd><span class="variable-description">  The type of the entity described by the  object. Derived classes have to overide the default  value (in their constructor).</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">entity</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/07/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

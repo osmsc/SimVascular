@@ -1,0 +1,263 @@
+#!/usr/local/bin/wish
+# -*- tcl -*-
+#
+# graphical management/monitor utility to Nserver.
+#
+# -------------------------------------------------------
+# problems not dealt with:
+#
+# * Removal of users with messages in their mailbox lying around.
+#   The current implementation silently removes them too.
+#
+# * Removal of user currently accessing its maildrop
+# * Changes to spooldir of user currently accessing its maildrop
+#
+#   In the current implementation the generated errors
+#   will cause a shutdown of the affected connection, but the
+#   server as a whole stays functional. As a pop client should
+#   be able to deal with such unexpected situations (popeye does!)
+#   I currently feel no need to work on this.
+# -------------------------------------------------------
+
+package require Pool_Base
+package require Pool_GuiBase
+package require Pool_Net
+package require Comm
+package require Tktable
+
+
+# -------------------------------------------------------
+# global information
+
+::pool::array::def registry		; # server information display variable
+set                registry(0,0) Name	; # #'Name of registered apps'
+set                registry(0,1) Port	; # #'Listening ports of reg. apps'
+
+::pool::array::def name_map	; # maps ports into names
+set name_map([comm self]) nsmon
+
+set selRow -1
+
+# -------------------------------------------------------
+# build interface
+
+proc main_interface {} {
+    global registry
+
+    create_main_menu
+
+    frame  .led    -bg red -width 4m -height 4m
+    logger .lproto -theight 10 -twidth 90 -level info
+    table  .stat   \
+	    -flashmode      1           \
+	    -flashtime      1           \
+	    -titlerows      1		\
+	    -state          disabled    \
+	    -colstretchmode all         \
+	    -browsecommand  {browse %S} \
+	    -variable       registry    \
+	    -cols           2           \
+	    -rows           1
+
+    .stat tag configure flash   -bg coral
+    .stat tag configure title   -relief raised
+
+    pack .led    -side top   -expand 0 -fill y -anchor w
+    pack .stat   -side top   -expand 0 -fill both
+    pack .lproto -side top   -expand 1 -fill both
+
+    wm title . {Nameserver monitor}
+
+    bind . <Delete> delSelection
+
+    # make it visible
+    update
+    update idletasks
+}
+
+
+proc create_main_menu {} {
+
+    menu .mb -type menubar -tearoff 0
+
+    .mb add cascade -label NsMon      -underline 0 -menu .mb.nsmon
+    .mb add cascade -label Management -underline 0 -menu .mb.management
+
+    menu .mb.nsmon      -type normal -tearoff 1
+    menu .mb.management -type normal -tearoff 1
+
+    .mb.nsmon add command         \
+	    -label       Exit     \
+	    -underline   0        \
+	    -command     nsmon_exit
+
+    .mb.management add command         \
+	    -label       "Kill server" \
+	    -underline   0             \
+	    -state       disabled      \
+	    -command     nsmon_kill
+
+    . configure -menu .mb
+}
+
+
+proc nsmon_exit {} {
+    catch {comm send [::pool::nameserver::Port] ns_logto [list {}]}
+    exit
+}
+
+
+proc nsmon_kill {} {
+    comm send -async [::pool::nameserver::Port] after 100 exit
+
+    .led configure -bg red
+    .mb.management entryconfigure 1 -state disabled
+
+    # wait for next incarnation of server
+    after 500 search_nserver
+}
+
+
+# -------------------------------------------------------
+# poll for running pop server
+proc search_nserver {} {
+    global log_port
+
+    set fail [catch {set id [::pool::nameserver::lookup {}]}]
+    ;# protect against missing name service
+
+    if {$fail} {
+	after 1000 search_nserver
+	return
+    }
+
+    # redirect nserver log to us
+
+    comm send [::pool::nameserver::Port] \
+	    ns_logto [list [list [info hostname] $log_port]]
+
+    .led configure -bg green
+
+    .mb.management entryconfigure 1 -state normal
+
+    after idle refreshdisplay
+    return
+}
+
+
+# -------------------------------------------------------
+# log dispatcher linked into the server
+
+set log_port [::pool::misc::rdServer setup_log]
+
+proc setup_log {sock host port} {
+    fconfigure $sock -buffering line -translation crlf -blocking 0
+    fileevent  $sock readable [list nsmon_log $sock]
+}
+
+proc nsmon_log {sock} {
+    if {[eof $sock]} {
+	close $sock
+	return
+    }
+
+    if {[gets $sock text] < 0} {return}
+
+    regsub -all {"} $text {} text ; #"-fake out emacs hilighting
+    set level [::pool::list::shift text]
+    ::pool::list::shift text
+
+    after 1 stat [list $level] [list $text]
+    return
+}
+
+proc stat {level text} {
+    global name_map
+
+    set text [split  $text]
+    set port [lindex $text 0]
+
+    switch -glob $text {
+	*register* {
+	    set who  [lindex $text end]
+	    set name_map($port) $who
+	 
+	    refreshdisplay
+	}
+	*revoke*   {
+	    refreshdisplay
+	}
+    }
+
+    # missing entries are catched and cause the
+    # usage of a standard display 
+    catch {set text [lreplace $text 1 0 "($name_map($port))"]}
+
+    .lproto log $level $text
+    return
+}
+
+
+proc refreshdisplay {} {
+    global registry
+
+    array set who [::pool::nameserver::lookup]
+
+    set apps [lsort [array names who]]
+
+    set row 1
+    foreach app $apps {
+	set registry($row,0) $app
+	set registry($row,1) $who($app)
+	incr row
+    }
+
+    .stat configure -rows [expr {1+[llength $apps]}]
+    return
+}
+
+
+proc browse {idx} {
+    global selRow
+
+    if {$idx == {}} {return}
+
+    #    puts "--check <$idx>"
+
+    set idx_ [split  $idx  ,]
+    set r    [lindex $idx_ 0]
+    set c    [lindex $idx_ 1]
+
+    # -------------------------
+
+    set selRow $r
+
+    .stat selection clear all
+    after idle .stat selection set $r,0 $r,1
+    return
+}
+
+
+proc delSelection {} {
+    global registry selRow
+
+    if {$selRow < 0} {return}
+
+    set name $registry($selRow,0)
+
+    ::pool::nameserver::revokeOther $name
+    return
+}
+
+
+
+# MAIN
+# -------------------------------------------------------
+wm withdraw .
+
+::pool::nameserver::register nsmon
+
+main_interface
+after 1000 search_nserver
+
+wm deiconify .

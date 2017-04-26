@@ -1,0 +1,189 @@
+<html>
+<head>
+<title>File 'gui/gMenubar.cls' (part of 'Pool_GuiBase')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'gui/gMenubar.cls' (part of '<a href="pkg_Pool_GuiBase.html" class="package">Pool_GuiBase</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Generic menubar widget</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Generic menubar widget</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">menubar,  generic menubar</span>
+</dl>
+</div>
+<h1 class="class">Class 'genericMenubar'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Instances of this class maintain a generic menubar</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cwidget.html" class="class">widget</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ocommand" class="options">command</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cgenericMenubar.html#pgenericMenubar_InvokeEntry" class="proc">InvokeEntry</a> <span class="arg-list">(command)</span><br>
+<a href="cgenericMenubar.html#pgenericMenubar_addMenu" class="proc">addMenu</a> <span class="arg-list">(name underline spec)</span><br>
+<a href="cgenericMenubar.html#pgenericMenubar_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span><br>
+<a href="cgenericMenubar.html#pgenericMenubar_entryconfigure" class="proc">entryconfigure</a> <span class="arg-list">(command args)</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#ventry" class="members">entry</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ocommand"></a>
+<dt><span class="option-name">-command</span>
+<dd><span class="option-description">  Script to execute upon invocation of a menu entry. Two  arguments are added before any evaluation. These are the path  to the menubar invoking the command and the symbolic name of  the invoked command itself.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pgenericMenubar_InvokeEntry"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">InvokeEntry</span> <span class="arg-list">(command)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal method, called upon invocation of a menu entry.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: command
+</td>
+<td class="argument-description">
+Symbolic name of the invoked entry.
+</td>
+</tr>
+</table>
+</p>
+<a name="pgenericMenubar_addMenu"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">addMenu</span> <span class="arg-list">(name underline spec)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds a new menubutton and its entries to the menubar.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+String to display in the new button
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: underline
+</td>
+<td class="argument-description">
+Index of the character in <span class="argument"><span class="argument-description">name</span></span> to underline.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: spec
+</td>
+<td class="argument-description">
+A list suitable for usage with 'array set'. The first item of each pair is the command code to give to the external script (<span class="xref-oref"><a href="cgenericMenubar.html#ocommand" class="xref-oref">command</a></span>) upon invocation of the entry. It serves as symbolic name of the entry too. The 2nd item in each pair is the string to display in the entry. A command of '-' indicates a separator line. The display string is ignored in this case, but has to be present nevertheless. A command name has to be unique over all menubuttons added to a menubar.
+</td>
+</tr>
+</table>
+</p>
+<a name="pgenericMenubar_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cwidget.html" class="class">widget</a>:<a href="cwidget.html#pwidget_createSubwidgets" class="proc">createSubwidgets</a><br>
+<span class="header-description-value">Generate the menubar, place it in the toplevel, use the new menu mechanism of tk.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pgenericMenubar_entryconfigure"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">entryconfigure</span> <span class="arg-list">(command args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Accessor method allowing the reconfiguration of all entries in the menubar. Access is given based upon the symbolic name of the entry. The mapping to the menu widget of the entry and its index in that is done here.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: command
+</td>
+<td class="argument-description">
+Symbolic name of the command to operate on.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+List of option, value pairs.
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="ventry"></a>
+<dt><span class="variable-name">entry</span>
+<dd><span class="variable-description">  Mapping from symbolic names to menu entries</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

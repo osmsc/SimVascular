@@ -1,0 +1,55 @@
+#!/usr/local/bin/wish
+#-!/usr/local/bin/tclsh
+# -*- tcl -*-
+
+package require Pool_GuiBase
+
+logger .x
+pack   .x
+::pool::syslog::def [list .x log]
+
+
+#after 2000 {destroy .x ; exit}
+#after 2000 {.x delete ; exit}
+
+::pool::syslog::syslog info ---------------------------
+after 100 anim [::pool::syslog::levels]
+
+proc anim {args} {
+    set v [::pool::list::shift args]
+
+    ::pool::syslog::syslog $v $v
+
+    if {$args != {}} {
+	after 500 anim $args
+    } else {
+	::pool::syslog::syslog info ---------------------------
+
+	# check usability of unique prefixes
+
+	foreach l [::pool::syslog::levels] {
+	    set p($l) .
+	}
+	::pool::string::fillPrefixes p
+
+	eval anim_b [lsort [array names p]]
+    }
+}
+
+
+
+proc anim_b {args} {
+    set v [::pool::list::shift args]
+
+    ::pool::syslog::syslog $v $v
+
+    if {$args != {}} {
+	after 500 anim_b $args
+    } else {
+	::pool::syslog::syslog info ---------------------------
+
+	after 5000 exit
+    }
+}
+
+

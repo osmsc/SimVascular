@@ -1,0 +1,394 @@
+<html>
+<head>
+<title>File 'lib/indexBase.cls' (part of 'AutoDOC')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'lib/indexBase.cls' (part of '<a href="pkg_AutoDOC.html" class="package">AutoDOC</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">General interface of an index.</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">General interface of an index.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">indices,  general interface to index.</span>
+</dl>
+</div>
+<h1 class="class">Class 'indexBase'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Baseclass of all indices. Contains their common behaviour and member variables.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cdistInterface.html" class="class">distInterface</a><br>
+<a href="cformatterInterface.html" class="class">formatterInterface</a><br>
+<a href="cproblemIndex.html" class="class">problemIndex</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cindexBase.html#pindexBase_addItem" class="proc">addItem</a> <span class="arg-list">(item)</span><br>
+<a href="cindexBase.html#pindexBase_clear" class="proc">clear</a> <span class="arg-list">()</span><br>
+<a href="cindexBase.html#pindexBase_code" class="proc">code</a> <span class="arg-list">()</span><br>
+<a href="cindexBase.html#pindexBase_getRef" class="proc">getRef</a> <span class="arg-list">(name)</span><br>
+<a href="cindexBase.html#pindexBase_itemByName" class="proc">itemByName</a> <span class="arg-list">(name)</span><br>
+<a href="cindexBase.html#pindexBase_items" class="proc">items</a> <span class="arg-list">()</span><br>
+<a href="cindexBase.html#pindexBase_link" class="proc">link</a> <span class="arg-list">()</span><br>
+<a href="cindexBase.html#pindexBase_name" class="proc">name</a> <span class="arg-list">()</span><br>
+<a href="cindexBase.html#pindexBase_number" class="proc">number</a> <span class="arg-list">()</span><br>
+<a href="cindexBase.html#pindexBase_page" class="proc">page</a> <span class="arg-list">()</span><br>
+<a href="cindexBase.html#pindexBase_ref" class="proc">ref</a> <span class="arg-list">(name)</span><br>
+<a href="cindexBase.html#pindexBase_refError" class="proc">refError</a> <span class="arg-list">(name)</span><br>
+<a href="cindexBase.html#pindexBase_title" class="proc">title</a> <span class="arg-list">()</span><br>
+<a href="cindexBase.html#pindexBase_write" class="proc">write</a> <span class="arg-list">()</span><br>
+<a href="cindexBase.html#pindexBase_writeIndexBody" class="proc">writeIndexBody</a> <span class="arg-list">()</span><br>
+<a href="cindexBase.html#pindexBase_~indexBase" class="proc">~indexBase</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vindexPage" class="members">indexPage</a><br>
+<a href="#vindexName" class="members">indexName</a><br>
+<a href="#vindexTitle" class="members">indexTitle</a><br>
+<a href="#vindexShortTitle" class="members">indexShortTitle</a><br>
+<a href="#ventity" class="members">entity</a><br>
+<a href="#vitems" class="members">items</a><br>
+<a href="#vname2Item" class="members">name2Item</a><br>
+<a href="#vrefs" class="members">refs</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pindexBase_addItem"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">addItem</span> <span class="arg-list">(item)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds an <span class="argument"><span class="proc">item</span></span> to the index. The item has to support the interface provided by <span class="xref-classes"><a href="cindexBaseEntry.html" class="class">indexBaseEntry</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: item
+</td>
+<td class="argument-description">
+Handle of the object added to the index.
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_clear"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">clear</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cproblemIndex.html" class="class">problemIndex</a>:<a href="cproblemIndex.html#pproblemIndex_clear" class="proc">clear</a><br>
+<span class="header-description-value">Resets state information and destroys the indexed objects.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_code"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">code</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The internal logicval name of the index.
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_getRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">getRef</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines wether <span class="argument"><span class="proc">name</span></span> is a registered item or not and returns appropriately formatted text (a hyperlink, or the name, marked as error). Indirectly used by <span class="xref-mref"><a href="cdistribution.html" class="class">distribution</a>:<a href="cdistribution.html#pdistribution_crResolve" class="proc">crResolve</a></span> to resolve embedded crossreferences. The workhorse method, called by <span class="xref-mref"><a href="cindexBase.html#pindexBase_ref" class="proc">ref</a></span>, but only if the cache does not have the answer.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the item to look for.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Formatted text for hyperlink to definition of <span class="argument"><span class="proc">name</span></span> or a error markup for unknown entities.
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_itemByName"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">itemByName</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the object searched by the caller.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The object having the specified <span class="argument"><span class="proc">name</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_items"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">items</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A list containing the items registered in the index.
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_link"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">link</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A string containing a hyperlink to the page of this index.
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_name"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">name</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The name of the index, as used by the jumpbars.
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_number"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">number</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The number of registered items
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_page"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">page</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: The codes assumes that only one index exists.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The filename of the page containing the index.
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_ref"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">ref</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines wether <span class="argument"><span class="proc">name</span></span> is a registered item or not and returns appropriately formatted text (a hyperlink, or the name, marked as error). Indirectly used by <span class="xref-mref"><a href="cdistribution.html" class="class">distribution</a>:<a href="cdistribution.html#pdistribution_crResolve" class="proc">crResolve</a></span> to resolve embedded crossreferences. Uses an internal cache to speed processing.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the item to look for.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Formatted text for hyperlink to definition of <span class="argument"><span class="proc">name</span></span> or a error markup for unknown entities.
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_refError"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">refError</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the unknown entity.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A string formatted as error for cross references to unknown entities. Additionally adds the error to the list of problems associated to the entity containing the bogus cross reference.
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_title"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">title</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The title of the index.
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_write"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">write</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Generates and writes the index.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_writeIndexBody"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">writeIndexBody</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Generates the body of the index. Indices having specialities should override this method, not <span class="xref-mref"><a href="cindexBase.html#pindexBase_write" class="proc">write</a></span> to get the frame for free.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pindexBase_~indexBase"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">~indexBase</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Destructor, clears out all state information.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vindexPage"></a>
+<dt><span class="variable-name">indexPage</span>
+<dd><span class="variable-description">        The name of the page to use for the index during        output.</span>
+<a name="vindexName"></a>
+<dt><span class="variable-name">indexName</span>
+<dd><span class="variable-description">        The internal logical name of the index, used to        control the generation of its jumpbar.</span>
+<a name="vindexTitle"></a>
+<dt><span class="variable-name">indexTitle</span>
+<dd><span class="variable-description">       The name of the index, used as the title of its page.</span>
+<a name="vindexShortTitle"></a>
+<dt><span class="variable-name">indexShortTitle</span>
+<dd><span class="variable-description">  The short name of the index, as used in the jumpbars.</span>
+<a name="ventity"></a>
+<dt><span class="variable-name">entity</span>
+<dd><span class="variable-description">           Description of the entities referenced by a concrete           index.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">entity</span>
+<a name="vitems"></a>
+<dt><span class="variable-name">items</span>
+<dd><span class="variable-description">  List of objects known to the index.</span>
+<a name="vname2Item"></a>
+<dt><span class="variable-name">name2Item</span>
+<dd><span class="variable-description">  Mapping from the object names to their handles.</span>
+<a name="vrefs"></a>
+<dt><span class="variable-name">refs</span>
+<dd><span class="variable-description">  Cache holding the results of all calls to <span class="xref-mref"><a href="cindexBase.html#pindexBase_ref" class="proc">ref</a></span>.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/07/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

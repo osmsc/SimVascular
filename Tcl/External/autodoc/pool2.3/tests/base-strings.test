@@ -1,0 +1,294 @@
+# -*- tcl -*-
+# Commands covered:	::pool::string::*
+#
+# This file contains a collection of tests for one or more of the commands
+# the Pool package. Sourcing this file into Tcl runs the tests and generates
+# output for errors.  No output means no errors were found.
+#
+# Copyright (c) 1998 Andreas Kupries (a.kupries@westend.com)
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+# $Id: base-strings.test,v 1.1 1998/06/01 19:57:06 aku Exp $
+
+if {[string compare test [info procs test]] == 1} then {source defs}
+
+
+test base-string-1.0 {rep, n < 0} {
+
+    set result [::pool::string::rep -3 k]
+} {}
+
+
+test base-string-1.1 {rep, n == 0} {
+
+    set result [::pool::string::rep 0 k]
+} {}
+
+
+test base-string-1.2 {rep, n == 1} {
+
+    set result [::pool::string::rep 1 k]
+} {k}
+
+
+test base-string-1.3 {rep, n == 2} {
+
+    set result [::pool::string::rep 2 k]
+} {kk}
+
+
+test base-string-1.4 {rep, n > 0} {
+
+    set result [::pool::string::rep 12 k]
+} {kkkkkkkkkkkk}
+
+
+test base-string-1.5 {rep, n > 0} {
+
+    set result [::pool::string::rep 12 k-]
+} {k-k-k-k-k-k-k-k-k-k-k-k-}
+
+
+test base-string-1.6 {rep, n > 0, empty string} {
+
+    set result [::pool::string::rep 12 {}]
+} {}
+
+
+test base-string-1.7 {blank} {
+
+    set result [::pool::string::blank 12]
+} {            }
+
+
+
+
+test base-string-2.0 {chop, empty string} {
+
+    set result [::pool::string::chop ""]
+} {}
+
+
+test base-string-2.1 {chop, single character} {
+
+    set result [::pool::string::chop a]
+} {}
+
+
+test base-string-2.2 {chop, real string} {
+
+    set result [::pool::string::chop abc]
+} {ab}
+
+
+
+
+test base-string-3.0 {tail, empty string} {
+
+    set result [::pool::string::tail ""]
+} {}
+
+
+test base-string-3.1 {tail, single character} {
+
+    set result [::pool::string::tail a]
+} {}
+
+
+test base-string-3.2 {tail, real string} {
+
+    set result [::pool::string::tail abc]
+} {bc}
+
+
+
+
+test base-string-4.0 {cap, empty string} {
+
+    set result [::pool::string::cap ""]
+} {}
+
+
+test base-string-4.1 {cap, single character} {
+
+    set result [::pool::string::cap a]
+} {A}
+
+
+test base-string-4.2 {cap, real string} {
+
+    set result [::pool::string::cap abc]
+} {Abc}
+
+
+
+
+test base-string-5.0 {uncap, empty string} {
+
+    set result [::pool::string::uncap ""]
+} {}
+
+
+test base-string-5.1 {uncap, single character} {
+
+    set result [::pool::string::uncap A]
+} {a}
+
+
+test base-string-5.2 {uncap, real string} {
+
+    set result [::pool::string::uncap ABC]
+} {aBC}
+
+
+
+
+test base-string-6.0 {cap / uncap complementarity} {
+
+    set result [::pool::string::cap [::pool::string::uncap ABC]]
+} {ABC}
+
+
+test base-string-6.1 {cap / uncap complementarity} {
+
+    set result [::pool::string::uncap [::pool::string::cap abc]]
+} {abc}
+
+
+
+foreach {i string from to new tres} {
+    0 abcd 1   3 {} ad
+    1 abcd 1   1 {} abcd
+    2 abcd 1   1 X  aXbcd
+    3 abcd 2 end {} ab
+    4 abcd 0   1 {} bcd
+    5 {}   1   2 X  X
+} {
+    test base-string-7.$i {replace} {
+	set result [::pool::string::replace $string $from $to $new]
+    } $tres
+}
+
+test base-string-7.6 {replace} {
+
+    catch {::pool::string::replace abcd 3 0 X} result
+    set result
+} {illegal range specification}
+
+
+
+foreach {i text pfx tres} {
+    0 {}    {} {}
+    1 abcd  {} abcd
+    2 abcd  a  bcd
+    3 abcd  b  abcd
+    4 a*bcd a* bcd
+    5 abcd  a. abcd
+} {
+    test base-string-8.$i {stripPrefix} {
+
+	set result [::pool::string::stripPrefix $text $pfx]
+    } $tres
+}
+
+
+
+test base-string-9.0 {rhel} {
+    set result [::pool::string::rhel abcd]
+} {abcd}
+
+
+test base-string-9.1 {rhel} {
+    set result [::pool::string::rhel {
+
+abcd}]
+} {abcd}
+
+
+test base-string-9.2 {rhel} {
+    set result [::pool::string::rhel {
+.
+abcd}]
+} {.
+abcd}
+
+
+
+
+test base-string-10.0 {rhc} {
+    set result [::pool::string::rhc abcd]
+} {abcd}
+
+
+test base-string-10.1 {rhc} {
+    set result [::pool::string::rhc {#   ----
+# kljdfkldjf
+abcd}]
+} {abcd}
+
+
+test base-string-10.2 {rhc} {
+    set result [::pool::string::rhc {#   ----
+    	# kljdfkldjf
+abcd}]
+} {abcd}
+
+
+test base-string-10.3 {rhc} {
+    set result [::pool::string::rhc {#  ---
+
+# ---------
+abcd}]
+} {abcd}
+
+
+
+
+test base-string-11.0 {oneLine} {
+
+    set result [::pool::string::oneLine {ab
+cd}]
+} {ab cd}
+
+
+test base-string-12.0 {fillPrefixes} {
+
+    catch {unset opt}
+    array set opt {direction . orientation .}
+    ::pool::string::fillPrefixes opt
+    lsort [array names opt]
+} {d di dir dire direc direct directi directio direction o or ori orie orien orient orienta orientat orientati orientatio orientation}
+
+
+test base-string-12.1 {fillPrefixes} {
+
+    catch {unset opt}
+    array set opt {direction . directory .}
+    ::pool::string::fillPrefixes opt
+    lsort [array names opt]
+} {directi directio direction directo director directory}
+
+
+test base-string-12.2 {prefixMap} {
+
+    catch {unset opt}
+    array set opt {direction . orientation .}
+    ::pool::string::prefixMap opt
+    lsort [array names opt]
+} {d di dir dire direc direct directi directio o or ori orie orien orient orienta orientat orientati orientatio}
+
+
+test base-string-12.3 {prefixMap} {
+
+    catch {unset opt}
+    array set opt {direction . directory .}
+    ::pool::string::prefixMap opt
+    lsort [array names opt]
+} {directi directio directo director}
+
+
+
+catch {unset result}
+catch {unset opt}

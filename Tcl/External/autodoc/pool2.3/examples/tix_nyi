@@ -1,0 +1,13 @@
+#!/usr/local/bin/wish
+# -*- tcl -*-
+#
+# present nyi dialog
+# ------------------------------------------------------
+
+wm withdraw .
+package require Pool_GuiBase
+
+::pool::ui::nyiTix \
+	Hi, this is an demonstration of the 'Not Yet Implemented' dialog, \
+	using Tix
+exit

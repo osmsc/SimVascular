@@ -1,0 +1,6 @@
+Changes from 'non existence'
+
+* Created initial code base, minimum interface to packages
+
+* Works with existing test suite, at least it should do so
+

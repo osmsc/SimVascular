@@ -1,0 +1,6 @@
+
+- test suite editor
+- better package interfacing / environment interfaces (mail)
+- command line app too. (splashDialog default => Ok => continue)
+
+--> piTcl -> overide default splash to enforce interactive use!

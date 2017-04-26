@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>Distributed applications</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>Distributed applications</h1><hr class="navbar"><p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p><hr class="navbar">
+<p>
+Two applications are distributed, <b>autodoc</b> and <b>tkautodoc</b>.
+The difference between them is that <b>autodoc</b> starts scanning immediately,
+<b>tkautodoc</b> on the other hand pops up a graphical interface, allowing for
+interactive redefinition of some options before the start of the scan.
+</p><p>General invocation of both is as <b>(tk)autodoc ?-option value?...</b>.</p><p>Recognized options are:</p><dl><dt>-v<dd>
+	Possible values are 0 and 1. If set to 1 the values of all
+	options are written to stdout. Defaults to 0.
+    <dt>-srcdir<dd>
+	The directory containing the distribution to be documented.
+	Defaults to the current working directory.
+    <dt>-outputdir<dd>
+	The directory to write the generated HTML pages into. Defaults
+	to subdirectory 'html' of the current working directory. Will
+	be made, if not in existence already.
+    <dt>-tables<dd>
+	Possible values are 0 and 1. Has effect only if the distribution
+	contains '.doc'-files generating additional pages. Influences the
+	layout of the homepage. If set to 1 distribution description and
+	links to the additional pages are placed side by side. Otherwise
+	the additional links are placed below the description. Defaults
+	to 0.
+    <dt>-replyaddr<dd>
+	The mail-address used at the bottom of every page. Defaults to
+        <b>[logname]@[info hostname]</b>. 'logname' is defined
+        in the package <a href="http://www.oche.de/~akupries/soft/pool/index.htm" class="xref-dep">Pool_Base</a>.
+    <dt>-psort<dd>
+	Possible values are 0 and 1. Determines wether procedure/method
+	definitions of a file/class are written alphabetically sorted (1),
+	or in the order encountered during the scan (0). Defaults to 1.
+    <dt>-ptable<dd>
+	Possible values are 0 and 1. Determines wether procedure/method
+	definitions of a file/class are written as table (1) or definition
+	list (0). Defaults to 1.
+    <dt>-up-link<dd>
+	The url to use as target in the uplink to the site containing
+	the generated documentation. Ignored if neither -up-title nor
+	-up-image is set.
+    <dt>-up-title<dd>
+	The string to use in the uplink to the site containing the
+	generated documentation.
+    <dt>-up-image<dd>
+	The symbolic name of the image to use in the uplink to the
+	site containing the generated documentation, as defined with a
+	call <b>imgDef</b>.
+    <dt>-up-imglink<dd>
+	A boolean flag. Determines wether the image is made a part of
+	the generated uplink or not. Ignored if no text was given, the
+	image has to be the link in such a case.
+    <dt>-exclude<dd>
+	A list of glob patterns. All files with names matching at
+	least one of the patterns will be excluded from the scan and
+	documentation processing. This option takes effect while the
+	system is searching for files to document and while searching
+	for additional .doc and .predoc files.
+    <dt>-clisttype<dd>
+        Either one of <b>comma</b> or <b>par</b>.  Defines the
+        appearance of the lists used in classes to reference
+        superclasses, options, methods and member variables.
+    <dt>-no-problems<dd>
+	Boolean option. If set the system will not write the
+	accumulated problem reports / pages. It will still write that
+	there are problems and how many, if any. Default is 0 == no
+	supression.
+    <dt>-css<dd>
+	Boolean option to control support for cascading style sheets
+	(CSS). Support is enabled by default.
+    <dt>-fsort-fullpath<dd>
+	Boolean option. If set the listing of files in their index is
+	sorted by their full path. Else the first letter of the real
+	filename (directories stripped).
+    <dt>-file-prefix<dd>
+	In effect only if -fsort-fullpath is set. Defines a prefix to
+	remove from the path before taking the first letter.
+    <dt>-class-prefix<dd>
+	Defines a prefix to remove from the namespace of a class
+	before taking the first letter.
+    <dt>-proc-prefix<dd>
+	Defines a prefix to remove from the namespace of a procedure
+	before taking the first letter.
+    <dt>-namespace-prefix<dd>
+	Defines a prefix to remove from the namespace of a namespace
+	before taking the first letter.
+    <dt>-itk-opt-alias<dd>
+	The name of a custom command found in the code to scan and
+	equivalent to <b>itk_options</b>.
+    </dl><p>
+Both applications read the file '.autodocrc' in the home directory of the
+caller, if present, and incorporate any option-values defined in it.
+These definitions take precedence over the hardwired defaults, but can be
+overridden by the command line.
+</p><hr><p class="generated-by">Generated by <a href="http://www.purl.org/NET/akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 01/22/2001, invoked by <a href="mailto:nwilson@nateland" class="generated-by">Unknown</a></p></body>
+</html>

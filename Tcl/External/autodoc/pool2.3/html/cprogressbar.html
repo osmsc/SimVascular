@@ -1,0 +1,336 @@
+<html>
+<head>
+<title>File 'gui/progressbar.cls' (part of 'Pool_GuiBase')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'gui/progressbar.cls' (part of '<a href="pkg_Pool_GuiBase.html" class="package">Pool_GuiBase</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Progressbar widget</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Generation and maintenance of progressbars</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">progressbar,  animated feedback,  feedback</span>
+</dl>
+</div>
+<h1 class="class">Class 'progressbar'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cvalueManager.html" class="class">valueManager</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#obarcolor" class="options">barcolor</a><br>
+<a href="#obarwidth" class="options">barwidth</a><br>
+<a href="#obarlength" class="options">barlength</a><br>
+<a href="#oorientation" class="options">orientation</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cprogressbar.html#pprogressbar_SetDimensions" class="proc">SetDimensions</a> <span class="arg-list">()</span><br>
+<a href="cprogressbar.html#pprogressbar_TrackBarColor" class="proc">TrackBarColor</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cprogressbar.html#pprogressbar_TrackBarLength" class="proc">TrackBarLength</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cprogressbar.html#pprogressbar_TrackBarWidth" class="proc">TrackBarWidth</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cprogressbar.html#pprogressbar_TrackGeometry" class="proc">TrackGeometry</a> <span class="arg-list">(w h)</span><br>
+<a href="cprogressbar.html#pprogressbar_TrackOrientation" class="proc">TrackOrientation</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cprogressbar.html#pprogressbar_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span><br>
+<a href="cprogressbar.html#pprogressbar_progressbar" class="proc">progressbar</a> <span class="arg-list">()</span><br>
+<a href="cprogressbar.html#pprogressbar_setBindings" class="proc">setBindings</a> <span class="arg-list">()</span><br>
+<a href="cprogressbar.html#pprogressbar_updateDisplay" class="proc">updateDisplay</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vpos" class="members">pos</a><br>
+<a href="#vbarItem" class="members">barItem</a><br>
+<a href="#vorientation" class="members">orientation</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="obarcolor"></a>
+<dt><span class="option-name">-barcolor</span>
+<dd><span class="option-description">  Color of the bar, defaults to 'red'.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">red</span>
+<a name="obarwidth"></a>
+<dt><span class="option-name">-barwidth</span>
+<dd><span class="option-description">  width of the bar in pixels for vertical  orientation, height else.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">20</span>
+<a name="obarlength"></a>
+<dt><span class="option-name">-barlength</span>
+<dd><span class="option-description">  Length of the bar in pixels  (height for vertical orientation).</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">100</span>
+<a name="oorientation"></a>
+<dt><span class="option-name">-orientation</span>
+<dd><span class="option-description">  Orientation of the progressbar.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">horizontal</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pprogressbar_SetDimensions"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">SetDimensions</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Updates the internal information about the drawn bar. Executed during initialization or changes to the widget orientation.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pprogressbar_TrackBarColor"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackBarColor</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Configure procedure. Propagates changes to the color of the bar into the display.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The changed option.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="pprogressbar_TrackBarLength"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackBarLength</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Configure procedure. Propagates changes to the length of the bar into the display.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The changed option.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="pprogressbar_TrackBarWidth"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackBarWidth</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Configure procedure. Propagates changes to the width of the bar into the display.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The changed option.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="pprogressbar_TrackGeometry"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackGeometry</span> <span class="arg-list">(w h)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executed for 'Configure' events, i.e. resizing operations. Updates the internal information about the drawn bar, then refreshes the display.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+New width of the widget.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: h
+</td>
+<td class="argument-description">
+New height of the widget.
+</td>
+</tr>
+</table>
+</p>
+<a name="pprogressbar_TrackOrientation"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackOrientation</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Configure procedure. Propagates changes to the orientation of the bar into the display.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The changed option.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="pprogressbar_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cwidget.html#pwidget_createSubwidgets" class="proc">createSubwidgets</a><br>
+<span class="header-description-value">Called after object construction. Generates the internal widgets and their layout.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pprogressbar_progressbar"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">progressbar</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Constructor. Initializes the value of the inherited option '-value' to zero.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pprogressbar_setBindings"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">setBindings</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cwidget.html#pwidget_setBindings" class="proc">setBindings</a><br>
+<span class="header-description-value">Called after widget construction and layout. Adds the bindings required to make the widget reactive to changes in the enviroment. Here we track changes to the geometry, as imposed by the user or containing geometry managers.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pprogressbar_updateDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">updateDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cvalueManager.html#pvalueManager_updateDisplay" class="proc">updateDisplay</a><br>
+<span class="header-description-value">Method required by the superclass <span class="xref-classes"><a href="cvalueManager.html" class="class">valueManager</a></span> to propagate changes to the value into the display. Converts the percentage value into a pixelposition and then executes a redraw of the bar.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vpos"></a>
+<dt><span class="variable-name">pos</span>
+<dd><span class="variable-description">  Pixel position of the bar, derived from the value of  option -value.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">0.0</span>
+<a name="vbarItem"></a>
+<dt><span class="variable-name">barItem</span>
+<dd><span class="variable-description">  Index of the canvas item used as bar.</span>
+<a name="vorientation"></a>
+<dt><span class="variable-name">orientation</span>
+<dd><span class="variable-description">   Internal orientation code of the bar, derived from the   value of option -orientation.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

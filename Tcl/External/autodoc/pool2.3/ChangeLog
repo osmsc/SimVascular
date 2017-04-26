@@ -1,0 +1,950 @@
+Mon Jul 31 21:02:10 2000  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/lists.tcl: 
+	* base/math.tcl: Updated to contain the newest email address of
+	  Brent Welch.
+
+	* base/date.tcl (weekday, printCalendar): Added contribution from
+ 	  Ric Klaren <klaren@cs.utwente.nl>.
+
+Sun Jul 30 22:51:50 2000  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/misc.tcl (logName, realName): Changed to allow windows more
+ 	  leeway. Patch from Sébastien Barré <sbarre@claranet.fr>.
+
+	* base/file.tcl (descendDirs): Sébastien Barré
+ 	  <sbarre@claranet.fr> sent a patch to deactive the inode-checking
+ 	  on non-unix platforms as they don't have that concept (and no
+	  way to create circular references in a filesystem).
+
+Sun Dec 19 20:55:35 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* doc/app_popeye.doc: Added user documentation for Popeye.
+
+	* gui/nlistbox.tcl: Added missing documentation.
+
+	* gui/action.cls: Fixed documentation problem.
+
+Sun May 16 10:18:15 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* gui/ui.tcl: Fixed incorrect variable reference in namespace
+	  initialization code.
+
+Sat Feb 20 15:13:06 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/oo.tcl: Fixed errors in the various chaining code
+	  (chain, chainToSuper, chainToDerived, destructors, constructors)
+ 	  introduced by the new namespace features.
+	  (support::delete) Fixed error leaving the object command lying
+ 	  around.
+
+Tue Feb 16 21:31:16 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/oo.tcl (chain): New, general chaining of method calls.
+  	  Bugfix: Changed names of procedures imported from superclasses,
+ 	  substituting @ for :: to prevent access problems due to
+ 	  misintepretation as namespace (which does not exist).
+
+Mon Feb 15 13:51:43 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* ----------------------------------------------------------
+
+	* V 2.2 ready for distribution.
+
+Sun Feb 14 15:00:59 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/oo.tcl (::pool::oo::support::GetObject): Fixed error
+	  preventing the use of objects in namespaces.
+	  (cons/des): Constructors and destructors are now internally
+	  called by that name. The old interface (constructor = method
+	  with name equal to class, destructor same with prepredend ~)
+	  remains in place for backward compatibility. The internal class
+	  compiler will do the conversion. Addtionally a new interface was
+	  created, the declaration procedures 'constructor' and
+	  'destructor'). Reason behind the change: The old convention
+	  prevented the use of classes in namespaces (like xml::parser),
+	  creation and usage of the construcor/destructor methods was
+	  imossible due to the '::' embedded into them.
+
+	* base/cgi_opt.tcl: New, from January 22, 1999. Another option
+	  processor. Uses some functionality from 'getopt'. Processes
+	  options of the form 'option=value' instead of '-option
+	  value'. Useful for new (highlevel) cgi commands allowing them to
+	  blend in with the base commands.
+
+	* base/dump.tcl (::pool::dump::namespace): Removed a 'filter'
+	  statement and replaced it with a foreach-loop computing the list
+	  directly. See the marker <enhance@14/1999/ak>.
+
+	* base/lists.tcl (::pool::list::prepend): Added, it is the
+	  same as ::pool::list::unshift, just under a different name. 
+	  (::pool::list::select): Added, really new, author Christopher
+	  Nelson <chris@pinebush.com>.
+
+Thu Nov 12 22:45:07 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* clock/monthListTix.cls (createSubwidgets): Delayed definition
+	  of -command for the 'tixComboBox'. Was called by tix to early,
+	  while the surrounding widget was incompletely constructed and
+	  its method dispatcher procedure not yet available.
+
+Sun Oct 18 17:07:13 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* apps/gen_idx: Fixed 'if' without braces around its expression.
+
+Thu Oct  1 21:07:01 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* tests/all: enhanced to allow the execution of the tests for an
+	  uninstalled Pool distribution.
+
+Wed Sep 30 18:36:18 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* Makefile (fix-hashbang-line): New target. Called before
+	  installation, fixes the #!-path in all applications.
+
+	* apps/fixhbline: New. Takes tclsh/wish locations and fixes the
+	  first line of the given application script to point to the
+	  correct interpreter binary.
+
+	* apps/findinpath: New. Tcl-equivalent to 'which', finds an application
+	  by searching through the PATH variable and the listed
+	  directories.
+
+	* Makefile (test-prepare): Changed to use the applications in the
+	  distribution for
+
+Fri Aug 28 00:18:52 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* gui/gPopupMenu.cls: Resolved spelling discrepancy (m vs. _m)
+
+Sat Jun  6 15:03:47 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* ----------------------------------------------------------
+
+	* V 2.0 ready for distribution.
+
+Thu Jun  4 20:00:59 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* Prepared for distribution in the last couple of days, installed
+	  locally, ironed out some newly introduced and overlooked bugs in
+	  the mail system.
+
+Wed May 27 20:32:44 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/urls.tcl (wais regexp 'schemepart'): Changed to reduce
+	  number of parentheses. First try had too many and 'regexp'
+	  balked. Found while testing the adapted 'makedist'.
+
+	* base/string.tcl (hangingIndent): New, similar to 'indent', but
+	  skips the first line of the given paragraph.
+
+Tue May 26 23:42:30 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/oo.tcl (SetupOptions): Fixed scoping problem. Made access
+	  to namespace local 'option' procedure, wanted global version.
+
+Thu May 21 01:01:42 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* ----------------------------
+
+	* base/file.tcl (descendDirs): Steve Cariglia
+	  (sjc@hyperion.haystack.mit.edu) pointed out a small buglet in this
+	  procedure. Have to take device into account while looking for
+	  loops as inodes are unique only within a device.
+
+	* doc/net_pop3s.doc, net/pop3c.doc: See below.
+
+	* doc/net_pop3.doc: More content adaptions.
+
+Wed May 20 00:16:25 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* doc/net_pop3(c).doc: Updated the pop3 descriptions to have them
+	  compile without flaw. Content adaptions are still
+	  required. Most of the time went into extending AutoDOC, to
+	  handle images better, as part of its cross reference system.
+
+Tue May 19 19:25:43 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* apps/popeye, apps/popeyemon: Changed logging system to use
+	'remoteLog'.
+
+Mon May 18 22:12:30 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* Class, file, procedure documentation complete, fixed any missing
+	  things shown by autodoc.
+
+Sun May 17 22:30:59 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* More documentation, now the pop3 part.
+
+Thu May 14 21:25:11 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* Got around to finishing the documentation of Pool_Net. Toplevel
+	  is ok now, as is the smtp subdirectory.
+
+Wed Apr 22 01:18:29 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* apps/popeye: Added triggerStorage to system. The script given to
+	  it (-command) calls 'exmh_triggerfetch', thus obviating the need
+	  manual or periodic checking of the folder hierarchy. It is done
+	  exactly when required.
+
+	* net/pop3/storage/trig.cls: New storage class. Basically forwards
+	  incoming messages to a specified storage (option -target).
+	  Additionally detects the delivery of the last message to the
+	  storage and then evaluates the '-command'-script.
+
+	* net/pop3/client.cls: Added option '-on-login'. Contains script,
+	  is evaluated after a successful login to the pop server.
+	  Arguments: pop client and #'messages' found.
+	  (ClearSocket): Overidden to allow evaluation of script stored in
+	  new option '-done'. Signals completion of a POP3 session.
+
+	* apps/exmh_triggerfetch: New, triggers a folder scan in all
+	  running exmh applications.
+
+	* net/pop3/*.cls, net/apps/pop*: Ironed out bugs in server and
+	  client. Both are functional now again (includes recovery
+	  system).
+
+	* ---- Evening again ----
+	
+	* Testing new pop client, server now.
+
+Tue Apr 21 20:11:19 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/remoteLog.cls: new class, encapsulates functionality for
+	  logging syslog calls to a socket. Factored out of
+	  'apps/popsy'. Used by 'apps/nserver'. Adaption of other servers
+	  will follow soon.
+
+	* apps/nsmon: New application, monitors a running nameserver.
+
+	* apps/popeye_trigger: Changed to use new nameserver.
+
+Mon Apr 20 21:13:08 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* gui/ui.tcl (bool2state): new, conversion of boolean value into
+	  state flag as accepted by most widgets (normal, disabled)
+
+	* base/lists.tcl (exchange): new, exchanging an element of a list
+	  against a new value.
+
+	* base/getopt.tcl (changeDefault): new procedure, easy changing of
+	  default values associated to options.
+
+	* net/pop3/storage/*.tcl: Storage system for pop client, rewritten
+	  into classes, files renamed to *.cls.
+
+	* apps/popsy_man, apps/popsymon: Adapted to changes in nameserver
+	  interface and logger widget. Nothing else required.
+
+	* net/pop3/storage: Was 'net/storage' before. Contains POP3 client
+	  storage systems, therefore moved.
+
+	* net/pop3/acceptEverything.cls: Classificator accepting every
+	  incoming mail.
+
+	* net/pop3/classifyBase.cls: Interface to message classificator,
+	  as seen by the POP3 client core in 'client.cls'.
+
+	* net/pop3/svrStorBase.cls: Was 'storBase.cls', name changed to
+	  avoid confusion between server and client storage systems.
+
+	* net/pop3/cltStorBase.cls: Interface to storage system, as seen
+	  by the POP3 client core in 'client.cls'.
+
+	* net/pop3/client.cls: Was 'client.tcl', rewritten into class
+	  (derived from <c pop3Connection>).
+
+Sun Apr 19 12:54:40 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* apps/popsy: Adapted to changes in pop server. Fixed spelling
+	  problems in base/oo.tcl, net/server.cls, net/pop3/server.cls,
+	  net/pop/storBase.cls and net/pop/mbox.cls (rename => ::rename,
+	  delete => dele, pop3_server => pop3Server).
+
+	* net/pop3/*.cls: Rewriting the existing code into classes
+	  (pop3Connection, protocol sequencers). Nearly complete,
+	  only highlevel control is missing.
+
+	* net/pop3/mbox.cls: Was 'net/mbox_man.tcl'. Rewritten into a
+	  class, derived from 'popStorageBase', see below. Changed to
+	  allow more than one transfer in progress.
+
+	* net/pop3/storBase.cls: New, defines interface of storage system
+	  as used by <c pop3Server>.
+
+	* apps/gen_idlist, apps/gen_idpkg: Made scripts converting
+	  tclIndex and pkgIndex.tcl files into NICS upload files
+	  official. 
+
+	* net/smtp/spooler.cls: Was 'net/smtp/spool_serial.tcl', rewritten
+	  into a class.
+
+Sat Apr 18 21:35:01 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* apps/gen_cls: Added code to traverse an entire directory
+	  hierarchy in search of files to compile. Invoke by '-R'
+
+	* apps/gen_idx: Class definitions now export only the name of
+	  their class and the entrypoint for the autoloader as
+	  commands. This removes unnecessary clutter. The size of the
+	  indices is reduced too.
+
+	* base/sequencer.cls, net/smtp/*.cls: Fixed some kinks introduced
+	  during the rewrite.
+
+	* apps/mail_sendfile: Adapted to changes in the SMTP system.
+
+Wed Apr 15 23:20:15 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/smtp/*.cls: See below, more of it. smtpConn done, spooler
+	  waiting for conversion.
+
+Tue Apr 14 20:37:23 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/smtp/*.cls: Rewriting the existing code into classes
+	  (smtpConnection, protocol sequencers).
+
+	* base/sequencer.cls: Was 'net/sequencer.tcl' before. Rewritten
+	  into a class.
+
+	* net/ns/*: Rewritten to use namespaces.
+
+Wed Apr  8 22:15:38 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/pop3/server.cls: Was 'net/pop3/server.tcl' before, rewritten
+	  into class derived from 'net/server.cls', fixed documentation.
+
+Tue Apr  7 20:43:38 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/server.cls: Was 'net/server.tcl' before, rewritten into
+	  class, fixed documentation.
+
+Mon Apr  6 21:43:18 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* gui/*.cls, clock/*.cls: Documentation fixes. Completed in this
+	  area. The only things left are in 'net'. Substantial parts of
+	  that wait for rewriting into classes too (sequencer base, server
+	  base, pop & smtp sequencers, mail storage, ...).
+
+Fri Apr  3 23:45:00 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* Documentation fixes, using the new Autodoc version now.
+
+Mon Mar 30 20:39:48 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/oo.tcl: Added another standard method, 'info', to allow
+	  querying an object for its methods, variables, options, etc.
+
+Mon Mar 16 21:16:47 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/oo.tcl: Added code to handle multiple inheritance of
+	  variables properly. Caused redefinition errors. Solved by adding
+	  class information to the defined variables. See Mar 12 too.
+
+Sat Mar 14 20:45:30 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/urls.tcl (hyperize): Fixed index error with replace
+	  (replaced one character less than intended). Added protection of
+	  special HTML characters in the non-url part of the specified text.
+
+Thu Mar 12 19:39:21 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/oo.tcl: Added code to handle multiple inheritance of
+	  options properly. Caused redefinition errors. Solved by adding
+	  class information to the defined options.
+
+Wed Mar 11 19:17:45 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/oo.tcl (proc DumpRuntimeIntegration): Fixed initialization
+	  of classes without superclasses.
+
+Tue Mar 10 19:50:41 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/server.cls: Converted code in 'server.tcl' into a class.
+
+	* net/sutil.tcl: bgerror from 'server.tcl' placed into its own
+	  file, impossible to mix with class definition.
+
+	* net/urls.tcl: Rewritten to use namespaces. Used to structure the
+	  many regexp patterns.
+
+	* net/mail/message8.tcl: Rewritten to use namespaces, renamed to
+	  'message.tcl'
+
+Tue Mar  3 19:21:33 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* (base,gui,clock)/*.(tcl,cls): Used examples to test the widgets.
+	  Removed some errors introduced during the rewrite.
+
+Mon Mar  2 20:37:52 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* clock/calendar_tix.cls: Renamed to 'calendarTix.cls', rewritten
+	  to use the new oo kernel.
+
+	* clock/calendar.cls: Rewritten to use the new oo kernel.
+
+	* clock/dayBrowse.cls: Added keyboard accelerators to the browser.
+
+Wed Feb 25 19:45:28 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* clock/d_choose.cls: Renamed to 'dayBrowse.cls', rewritten to
+	  use the new oo kernel.
+
+	* gui/ui.tcl: Added procedures ymOrder, ymdOrder. Type checkers
+	  used by 'monthBrowserTixB' and 'calendarTix'.
+
+	* clock/m_choose_tixB.cls: Renamed to 'monthBrowseTixB.cls',
+	  rewritten to use the new oo kernel.
+
+	* clock/m_choose_tixA.cls: Renamed to 'monthBrowseTixA.cls',
+	  rewritten to use the new oo kernel.
+
+	* clock/m_choose.cls: Renamed to 'monthBrowse.cls', rewritten to
+	  use the new oo kernel.
+
+	* clock/m_list_tix.cls: Renamed to 'monthListTix.cls', rewritten
+	  to use the new oo kernel.
+
+	* clock/m_list.cls: Renamed to 'monthList.cls', rewritten to use the
+	  new oo kernel.
+
+	* clock/y_choose.cls: Renamed to 'yearBrowse.cls', rewritten to
+	  use new oo kernel.
+
+Tue Feb 24 12:20:45 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* gui/gPopupMenu.cls: Rewritten to use new oo kernel.
+
+	* gui/gMenubar.cls: Rewritten to use new oo kernel.
+
+	* gui/watchArray.cls: New widget, derived from
+	  'watchAManager'. Displays the contents of an array variable in a
+	  text widget.
+
+	* gui/trackScalar.cls: See below.
+
+	* gui/watchScalar.cls: Inherits now from 'watchManager'.
+
+	* gui/variable.cls: Renamed into 'valueman.cls'.
+
+	* gui/watchaman.cls: See below, this one is specialized on array
+	  variables. 
+
+	* gui/watchman.cls: Added stripped down version of
+	  valueManager. Has only option -variable. Use that for
+	  display-only widgets tracking some value.
+
+Fri Feb 20 00:02:06 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* gui/trackScalar.cls: See below, same functionality, but the
+	  contents are shown as log over time.
+
+Thu Feb 19 22:56:23 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* gui/watchScalar.cls: New class, watch the value of a scalar
+	  variable and display it in a window.
+
+	* gui/fbDialog.cls: Changed relief of stateline for better match
+	  with buttonbox, and other areas in derived classes. Added
+	  method to hide/display the feedback. Added method to set text
+	  into the feedback without going through subwidget, enforces
+	  visibility of stateline too.
+
+	* gui/dirBrowse.cls: See below. Caused changes in 'fbDialog.cls'
+	  for a better appearance.
+
+	* gui/logger.cls: Rewritten to use new oo kernel.
+
+Wed Feb 18 20:00:18 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* gui/*dialog.cls: Hierarchy of basic dialogs.
+
+	* gui/progressbar.cls: Rewritten to use new oo kernel.
+
+	* gui/variable.cls: Rewritten to use new oo kernel.
+
+	* gui/widget.cls, base/getopt.tcl, base/oo.tcl, gui/ui.tcl: Fixed
+	  several bugs during testing the rewrite of several ui classes.
+
+Sun Feb 15 17:29:25 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* Pool_Log now merged into Pool_Base.
+
+	* base/slog.cls: See below, then renamed to 'slogConn.cls'.
+
+	* base/syslog.tcl: Moved from 'log' to 'base'.
+
+	* base/oo.tcl: Added explanations to new OO core. Fixed problem
+	  with calling an object method inside another method of the same
+	  object, without a prefixed $this.
+
+Sat Feb 14 00:08:29 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/oo.tcl: Moved (from 'oo' subdirectory) into 'base'.
+
+Fri Feb 13 21:52:07 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/misc.tcl: Miscancellous procedures.
+
+	* base/getopt.tcl (defShortcuts): Functionality to insert all
+	  possible shortcuts of a set of aliases and options as aliases
+	  into the definition array. Based upon 'string::prefixMap', see
+	  below.
+
+	* base/string.tcl (fillPrefixes, prefixMap): Added procedures to
+	  compute all unique prefixes for a set of strings.
+
+	* tests/base-math.test: Added testsuite for mathematical functions.
+
+	* base/math.tcl: Mathematical part of old misc.tcl'.
+
+	* tests/base-date.test: Added testsuite for date functionality.
+
+	* base/date.tcl: Moved from clock into base (date.cls). Rewritten
+	  from a class definition into a set of procedures collected in a
+	  namespace. 
+
+Thu Feb 12 22:27:14 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/dump8.tcl: Renamed to 'dump.tcl'. No test suite yet.
+
+Wed Feb 11 18:47:53 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/descend8.tcl: Renamed to 'file.tcl'. No test suite yet.
+
+	* tests/base-lists.test: Added test suite for list commands.
+
+	* base/lists8.tcl (proc): Renamed to 'lists.tcl'.
+
+	* base/cgi8.tcl (proc): Renamed to 'cgi.tcl'. No test suite yet.
+
+	* tests/base-getopt.test: Added testsuite for option processor.
+
+	* base/getopt8.tcl: Renamed to 'getopt.tcl'.
+
+	* tests/base-strings.test: Added testsuite for string
+	  functionality.
+
+Tue Feb 10 21:06:59 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/string.tcl: Unification of string8, replace8 and
+	  whitespace8.
+
+	* tests/base-serial.test: Added test suite for generator of
+	  sequence numbers.
+
+	* base/serial8.tcl: Renamed to 'serial.tcl'.
+
+	* tests/base-array.test: Added test suite for array commands.
+
+	* base/array8.tcl: Renamed to 'array.tcl'.
+
+	* base/array8.tcl (::pool::array::existsEntry): removed, is
+	  superfluous.
+
+	* ----------------------------------------------------------
+
+Mon Feb  9 18:10:54 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* Freezed the pool series at version 1.0. Start working on a
+	  fully namespace aware version (2.0).
+
+Tue Jan 20 20:49:07 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/string8.tcl: see below, ::string::rep.
+
+	* base/string.tcl (string_rep): Exchanged O(n) algorithm
+	  against one running in O (log n) time. This one has a much
+	  better performance, even in the usual range of 60-90.
+
+Wed Jan  7 20:36:48 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/string8.tcl: see below, '::string::uncap'.
+
+	* base/string.tcl: Added 'string_uncap' as a reverse of
+	  'string_cap'.
+
+Sun Jan  4 13:39:51 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* -- Released version 0.5 (without explicit announcement).
+
+	* gui/dialog_choice.cls: Added an optional stateline to the
+	  dialog, for possible feedback to the user. Copied back from
+	  'dbCentral' project.
+
+Fri Dec 19 00:12:45 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/smtp/spool_serial.tcl: Added global variable (smtp_active)
+	  to prevent startup of a scheduler whilst another is still
+	  working. Else duplicate mail will be send out.
+
+Thu Dec 18 21:19:43 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/pop3/client.tcl (pop3_run): Added reset of recovery
+	  information, must not propagate between fetch cycles or it will
+	  disturb a recovery initiated later (more deletes than
+	  desired!).
+
+Mon Nov 24 23:33:53 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* The changes below were required to avoid flooding the remote
+	  host (and my pop3 retriever) in case of many outgoing mails (>
+	  50). Such big bundles are produced by the c.l.t.welcomebot (news
+	  bot to welcome first time posters to the c.l.t newsgroup). The
+	  second day produced 175 mails. The remote host handled this, but
+	  with considerable slow down. My pop3 retriever was starved
+	  completely. This will not happen anymore now.
+
+	* apps/popeye: Changed to use the new mail spooler, see
+	  below. Reconfigures this spooler to send 2 messages in parallel.
+
+	* net/smtp/spool_serial.tcl: New spooler for outgoing mail. No
+	  unlimited parallelism as in 'net/smtp/spool.tcl'. Option
+	  -par allows to configure the degree of parallelism. Internal
+	  default: 1 == Complete serialization of outgoing mail.
+
+Fri Nov  7 19:34:52 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/mail/message8.tcl: See last last entry below. Namespace is
+	'::mail'.
+
+Wed Oct 29 22:40:58 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/*8.tcl: New files. Functionality of files without
+	  '8'-suffix, but moved into appropriately named namespaces
+	  (::list, ::string, ::dump, ::serial).
+
+Thu Oct 23 13:39:30 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* gui (Added files): Some generic dialogs: dialog_choice.cls,
+	  dialog_info.cls, dirchoice.cls, file_prop.cls, generic_mbar.cls,
+	  generic_popup.cls, generic_prop.cls. All copied from
+	  'CSS/apps/lib'.
+	
+Wed Oct 22 14:28:09 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* Added documentation of class options and members, as required by
+	  the new version of 'AutoDoc'.
+
+	* base/dump.tcl: New file, contains all datastructure dumpers from
+	  'CSS/lib/common.tcl'.
+
+	* base/misc.tcl: Added 'isnumber' predicate. Source file as
+	  before, see below.
+
+	* base/string.tcl: Added string procedures from file
+	  'CSS/lib/common.tcl'.
+
+Tue Oct 21 10:59:42 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* oo/*: Fixed 'object_savedef'. Could not handle compiled classes
+	  and superclasses in separate files. Actually done around 'Oct
+	  15' as part of working on CSS.
+
+Sat Oct  4 14:38:43 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* oo/o_interp.tcl, oo/o_compile.tcx: Added 'class_initialization'
+	  procedure, to allow specification of global, class specific
+	  initialization scripts.
+
+Fri Oct  3 00:27:15 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* gui/sep.tcl (separator_grid): Corrected wrong varname:
+	  $name -> $w. Changed width/height/sticky attributes to force a
+	  thin line.
+
+Fri Aug 29 23:00:50 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/descend.tcl (file_followlink): Erroneous behaviour if given
+	  a regular file. Fixed now.
+	  (file_normalize_path): Handles leading ..'s now.
+	  (file_resolve_links, file_realname): New procedures, based on
+	  code by Maurice Diamantini <diam@ensta.fr>.
+
+Sat Aug 16 15:33:35 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/pop3/client.tcl (_pop3_initiate_recovery): found the error
+	  preventing proper recovery. Forgot to unlock the
+	  scheduler. Tasks were added, but the scheduler was not started
+	  because of this.
+
+	* apps/popeye: see below.
+
+	* net/smtp/spool.tcl: tested, removed some misspellings preventing
+	  proper operation.
+
+	* apps/popeye: Added configuration and code to use the new
+	  spooler, see below. Messages residing in a specific directory
+	  are send to the configured mailhost. This is done in parallel to
+	  sucking newly arrived mail.
+
+	* net/smtp/spool.tcl: New file, implements smtp-based message
+	  spooler.
+
+Sat Aug  9 00:04:08 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* Background to latest changes: Had loss of data after inc'ing
+	  mail in exmh while retrieval was still running. The added log
+	  information clearly shows that a connection to the smtp demon
+	  locks up immediately after creation, all following connection
+	  attempts are then refused. Proper error handling and additional
+	  modes of message storage (net/storage/dir.tcl, etc.) solved the
+	  immediate problem of information loss, but not the primary lock
+	  up. I believe it to be releated to file/directory locking, as it
+	  is caused by emxh integrating mail with retrieval running. It is
+	  no problem of sending more than one mail via smtp at a time. The
+	  logs had examples of up to 3 simultaneous smtp transfers.
+
+	* net/storage/multi.tcl, smtp.tcl: Removed some errors, tested in
+	  popeye, against popsy.
+
+	  The situation causing loss of data with old popeye was
+	  reproducible, and therefore checked. Loss of data does not occur
+	  anymore.
+
+Thu Aug  7 23:23:10 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* apps/popeye: Changed storage system to use multi storage in
+	  combination with smtp, directory and memory. Should not loose
+	  mail now.
+
+	* net/storage/multi.tcl: Special storage facility. Sequentially
+	  tries all registered sub facilities until a sucessful one is hit.
+
+	* net/storage/*: New directory, new files. Several facilities to
+	  store incoming messages in various ways (append to file, file in
+	  a directory, in memory, transfer via smtp).
+
+	* net/smtp/*: Added syslog calls at strategic places.
+
+Sat Aug  2 21:35:28 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/string.tcl (string_replace): New function. Works like
+	  'lreplace', but for strings. 
+
+Thu Jul 31 21:43:47 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* base/descend.tcl (file_normalize_path, file_normalize_unix_path):
+	  Added normalization of paths (files and internet urls). 
+
+Wed Jul 30 22:38:47 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/pop3/client.tcl (_pop3_task): RETR has same priority as DELE
+	  now.
+
+	* base/cgi.tcl (cgi_tools_get_string): New procedure. Wrapper
+	  around 'cgi_tools_open_string' and 'cgi_tools_close_string'.
+	  Simplifies usage, ensures correct nesting.
+
+Thu Jul  3 23:06:45 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* Added missing documentation, as found by AutoDOC. Corrected
+	  spelling errors in documentation.
+
+Tue Jul  1 18:17:29 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/pop3/server.tcl: Added code to '_pop3s_top' to interpret
+	  'TOP x 0' as 'RETR x'. 'RETR x' is still available, of course.
+
+	* apps/popeye:       Added option '-use-top-for-retr'. See below.
+
+	* net/pop3/base.tcl: Added option '-use-top-for-retr'. See below.
+
+	* net/pop3/retrieve.tcl: Added option '-use-top'. Default is
+	  0. Setting to 1 forces the system to use 'TOP x 0' instead of
+	  'RETR x'. Reason: My provider had a brain dead pop3 server some
+	  time. It didn't accept RETR, but delivered the whole mail if 0
+	  was given as 2nd argument to TOP. I don't know wether similar
+	  versions of this server are lurking out there, but better be
+	  prepared.
+
+Sun Jun 29 16:11:35 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* doc/: Completed POP documentation.
+
+Sat Jun 28 19:55:56 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/popeye, net/popeyemon: Added monitor application for popeye.
+
+Fri Jun 27 23:14:08 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/popsymon, popsy: User management complete. Rewrote remote
+	  logging. direct transfer via socket now instead of 'comm send
+	  -async'. The latter lost messages somehow and handling of
+	  incoming messages was timecritical. The new thing works
+	  a-ok. Next thing to do: Complete popeye, add management tools
+	  there too.
+
+Thu Jun 26 20:47:09 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/popsymon: Started with user management.
+	
+	* net/pop3/server.tcl: Changed some log messages to help popsymon
+	  (texts, levels used).
+
+	* net/popsymon: Graphical monitor of popsy server. Started
+	  yesterday, monitoring capabilities now complete.
+
+	* gui/log.cls: Added recoloring of message levels.
+
+Tue Jun 24 19:45:03 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* gui/log.cls: new widget to log messages into. usable in
+	  conjunction with syslog. Taken from 'tkautodoc', enhanced and
+	  put into a class. 
+
+	* net/popsy_man: New application. Small commandline oriented
+	  tool to manage a running popsy.
+
+	* net/adb.tcl, net/mboxman.tcl: Added features required by a more
+	  rich implementation of popsy (user/mailbox management).
+
+Mon Jun 23 23:53:13 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* net/pop3/client.tcl, server.tcl, top.tcl, login_user.tcl,
+	  login_apop.tcl, retrieve.tcl, net/server.tcl,
+	  net/sequencer.tcl, net/mboxman.tcl: First tests of pop3 server,
+	  client. Removed various bugs.
+	
+Mon Jun 16 23:50:57 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* net/pop3/client.tcl: Worked at implementation again, completed.
+
+Tue Jun 10 19:15:18 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* net/pop3/client.tcl: Started implementation of pop3 client. The
+	  core, that is.
+
+	* net/mboxman.tcl: Management of directory based
+	  mailboxes. 'mbox_exec' can be used directly in the '-storage'
+	  callback of the pop3 core below. Started yesterday, complete
+	  now, with exception of documentation.
+
+Mon Jun  9 19:19:47 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* net/adb.tcl: Mini database to map from user names to passwords
+	  and storage locations. 'adb_query' can be used directly in the
+	  '-userdb' callback of the pop3 core below.
+
+	* net/pop3/server_core.tcl: First server using the
+	  framework. Core code for a POP3 server. Interfaces to separate
+	  authentication database (user -> pwd, storage) and mail storage
+	  subsystem.
+
+	* net/server.tcl: Framework complete.
+
+Sun Jun  8 00:15:23 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* net/server.tcl: Framework to ease implementation of simple
+	  command based servers (like pop3, imap, smtp). Incomplete.
+
+Sat Jun  7 18:47:17 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* net/pop3/: Populated with basic transactions (open, close,
+	  login, delete, retrieve).
+
+	* base/cgi.tcl: The mixture of 'rename' and 'interp alias' to
+	  switch between the various 'cgi_puts' implementations did not
+	  worked right. Using 'rename' only now. Added check in
+	  'close_page' to catch nesting errors of 'open/close_string'.
+
+Fri Jun  6 00:07:49 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* apps/mail_sendfile: see below.
+
+Thu Jun  5 00:02:49 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* net/smtp/proto.tcl: See below.
+
+	* net/smtp/data.tcl: Added option -string to allow transfer of
+	  immediately specified messages.
+
+	* base/array.tcl (array_exists_entry): Using 'info exists' now.
+
+	* net/mail/*: New, mail related functionality (message manipulation).
+
+	* apps/apps.doc: Documented new applications.
+
+	* -------- evening again ------------
+	
+	* apps/mail_sendfile: Application built upon net/smtp/*. Transmits
+	  the given files via mail to the specified destinations.
+
+Wed Jun  4 18:42:26 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* PREPARE: Added -R to 'gen_idx; to allow for indexing of
+	  directory hierarchies (net/).
+
+	* net/ns/client.tcl (ns_revoke, ns_lookup): added forgotten
+	  catches, messed up nesting of parentheses.
+
+	* log/syslog.tcl: changed to support multiple vectors, one for
+	  each possible message level.
+
+	* apps/nwho: Query name server for registered applications.
+
+	* apps/nserver: New application, nameserver, uses net/ns/*.
+
+	* net/ns/*: Added mini name service, built on top of Comm
+	  (by J. R. LoVerso). 
+
+	* log/syslog.tcl: Added _syslog_log_stderr, syslog_stderr to allow
+	  for easy setup of standard logging mechanism.
+
+Tue Jun  3 23:51:53 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* net/smtp_test: Test application, transmits mail messages in
+	  files to local smtp demon.
+
+	* net/smtp/*: Implementation of SMTP client functionality. Uses
+	  framework defined below.
+
+	* net/sequencer.tcl: Framework for building event-based
+	  statemachines.
+
+	* net/: New section for network related code.
+
+Sun Jun  1 23:43:00 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* apps/gen_idx: Added -R to allow generation of index for a
+	  directory hierarchy.
+
+Tue May 27 19:13:12 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* oo/o_core.tcl: Added call to 'create' method for
+	  'object_class'es, if defined.
+
+	* cgitools.doc: Added some usage info, and background.
+
+	* base/cgi.tcl: added cgi utility procedures formerly found in
+	  autodoc/lib/dist_util.tcl . Adaption of autodoc will come in
+	  near future.
+
+Sun May 25 18:45:07 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* clock/date.cls (next/prev): Added info about dangers inherent in
+	  the routine (DST +2 instead of +1), missing days. Maybe an
+	  explicit library should be created instead of using 'clock'.
+	  See Netnewsgroup 'comp.lang.tcl', message-id's
+	  <5lv9ml$7p5$1@fddinewz.oit.unc.edu>
+	  <m3oha44okv.fsf@bluepeak.westend.com>
+	  <5m50n8$7hs$1@tattoo.twinsun.com>
+
+Tue May  6 20:19:37 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* applications and examples are described now too.
+
+	* PREPARE: builds documentation during generation of a distribution.
+
+Sat May  3 19:14:41 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* Reworked comments in all files. They now follow the format for
+	  embbedable documentation as recognized by 'autodoc'. 
+
+Thu Apr 24 22:05:35 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* Logging of changes starts. This is an distributable package now.
+

@@ -1,0 +1,34 @@
+#!/usr/local/bin/wish
+# -*- tcl -*-
+#
+# present progress bar widget
+# ------------------------------------------------------
+wm title . Progressbar
+
+#lappend auto_path [pwd]/../base [pwd]/../gui
+package require Pool_Base
+package require Pool_GuiBase
+
+progressbar .p -value 10 -barlength 200
+pack        .p -fill both -expand 1
+
+proc anim_a {args} {
+    if {$args == {}} {after 1000 anim_b 100 ; return}
+
+    .p configure -value [::pool::date::StripLeadingZeros [::pool::list::shift args]]
+    after 150 anim_a $args
+}
+
+proc anim_b {n} {
+    if {$n < 0} {after 500 exit ; return}
+    incr n -1
+
+    .p configure -value $n
+    after 100 anim_b $n
+}
+
+
+
+after 1000 {
+    anim_a 0 10 30 20 40 30 49 43 76 23 90 34 90 34 09 43 09 34 90 98 56 98 43 93
+}

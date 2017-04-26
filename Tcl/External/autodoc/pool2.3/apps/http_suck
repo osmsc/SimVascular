@@ -1,0 +1,23 @@
+#!/usr/local/bin/tclsh
+# -*- tcl -*-
+# suck data specified as by http url to this host
+# -> requires tcl 8.0 final (http 2.0)
+
+package require http 2.0
+
+set url [lindex $argv 0]
+
+proc p {args} {
+    puts -nonewline stderr . ; flush stderr
+}
+
+
+http::config
+set token [http::geturl $url -blocksize 1024 -progress p -channel stdout]
+upvar #0 $token state
+
+puts stderr ""
+unset state(body)
+puts stderr "[array get state]"
+
+#puts "[http_data $token]"

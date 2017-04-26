@@ -1,0 +1,18 @@
+# -*- tcl -*-
+# POPeye configuration
+
+host	 somehost.somewhere.com
+user     dagobert
+password duck
+auth     apop
+to       somebody
+#maxtries   4		;# try 4 times to connect
+#retrydelay 1000	;# wait a second between connection requests
+
+# debugging only
+#set opt(-port)	23001
+
+# spooler configuration
+#spoolfiles q*
+#spooldir   ~/Mail/.outbound
+#from       dagobert@somehost.somewhere.com

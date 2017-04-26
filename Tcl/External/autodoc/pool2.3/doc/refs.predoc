@@ -1,0 +1,76 @@
+# -*- tcl -*-
+# external links required by documentation.
+
+xrefDef Sam	"Sam Shen"		"mailto:slshen@lbl.gov"
+xrefDef Welch	"Brent Welch"		"mailto:bwelch@scriptics.com"
+xrefDef libes	"Don Libes"		"mailto:libes@nist.gov"
+xrefDef loverso	"John R. LoVerso"       "mailto:loverso@schooner.com"
+xrefDef jhobbs	"Jeffrey Hobbs"         "mailto:jhobbs@acm.org"
+xrefDef westend	"Westend GbR, Aachen"   "http://www.westend.com"
+xrefDef	cgilib	"cgi library"		"http://expect.nist.gov/cgi.tcl/"
+xrefDef ExMH	"ExMH"			"http://www.beedub.com/exmh/"
+
+
+# references to external packages
+depDef	Pool		"http://www.oche.de/~akupries/soft/pool/index.htm"
+depDef	Pool_Base	"http://www.oche.de/~akupries/soft/pool/packages.htm"
+depDef	Pool_GuiBase	"http://www.oche.de/~akupries/soft/pool/packages.htm"
+depDef	Pool_Clock	"http://www.oche.de/~akupries/soft/pool/packages.htm"
+depDef  Tcl-MIME        "http://www.oche.de/~akupries/soft/mail/"
+
+#depDef	Pool_OO		"http://www.oche.de/~akupries/soft/pool/packages.htm"
+#depDef	Pool_Log	"http://www.oche.de/~akupries/soft/pool/packages.htm"
+depDef	cgi		"http://expect.nist.gov/cgi.tcl/"
+depDef	Tcl		"http://www.scriptics.com/"
+depDef	Tk		"http://www.scriptics.com/"
+depDef	Tix		"http://tix.mne.com/"
+#depDef	Tktable		"ftp://ftp.cs.uoregon.edu/pub/tcl/tkTable/"
+#depDef	Comm		"http://www.opengroup.org/~loverso/tcl-tk/#comm"
+depDef	Tktable		"http://www.purl.org/net/hobbs/tcl/capp/"
+depDef	Comm		"http://www.schooner.com/~loverso/tcl-tk/#comm"
+depDef	Trf		"http://www.oche.de/~akupries/soft/trf/index.html"
+depDef	Memchan		"http://www.oche.de/~akupries/tcltk.html"
+
+
+# internal links to hand made documentation pages
+xrefDef	cgitools		"Cgi tools Usage"		cgitools.htm
+xrefDef	svt_explain		"background"			server.htm 
+xrefDef	svt_opt			"options"			server.htm 
+xrefDef	seq_explain		"background"			seq.htm 
+xrefDef	seq_opt			"options"			seq.htm 
+xrefDef	popsy_interface		"POPsy RC interface"		popsyrc.htm
+xrefDef	popeye_interface	"POPeye RC interface"		popeyrc.htm
+
+
+
+xrefDef	pop3info		"POP3 background information"	pop3.htm
+xrefDef	pop3s			"POP3 server core"		pop3s.htm
+xrefDef	pop3c			"POP3 client core"		pop3c.htm
+xrefDef	p3c_opt			"options"			pop3c.htm
+
+# -------------------------------------------------
+# image definitions
+
+imgConverter ps2gif {
+    exec pstogif -flip cw -density 100 -out %tmp% %in%
+    exec giftopnm %tmp% | ppmtogif -trans #ffffff > %out%
+}
+
+imgConverter transXpm2gif {
+    exec convert %in% %tmp%.gif
+    file copy %tmp%.gif %out%
+}
+
+imgDef pop3_statem  "Statemachine of the POP3 client core" \
+	ps2gif gif doc/pictures/p3c.ps
+imgDef pop3_current "Current configuration of my mail fetching system" \
+	ps2gif gif doc/pictures/cfg.current.ps
+imgDef pop3_future1 "Possible future of my mail fetcher" \
+	ps2gif gif doc/pictures/cfg.future.1.ps
+imgDef pop3_future2 "Another possible future of my mail fetcher" \
+	ps2gif gif doc/pictures/cfg.future.2.ps
+
+imgDef pop3server  "Server structure" \
+	ps2gif gif doc/pictures/p3s.ps
+
+imgDef upArrow "" transXpm2gif gif doc/up.xpm

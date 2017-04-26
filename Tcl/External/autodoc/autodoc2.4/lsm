@@ -1,0 +1,13 @@
+Begin3
+Title:          autodoc
+Version:        2.4
+Entered-date:   07-SEP-2000
+Description:    An application to convert specially formatted
+	documentation embedded into tcl code into a cross-referenced set of
+	HTML pages describing this code.
+Keywords:       tcl, inlined documentation, html
+Author:         Andreas Kupries <a.kupries@westend.com>
+Maintained-by:  Andreas Kupries <a.kupries@westend.com>
+Platforms:      Tcl, Pool, cgi
+Copying-policy: BSD, see 'Tcl' license too
+End

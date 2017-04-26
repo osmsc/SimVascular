@@ -1,0 +1,9 @@
+# -*- tcl -*-
+replyaddr  a.kupries@westend.com
+tables     1
+ptable     1
+
+up-title   {Local main page}
+up-link    {file:///home/aku/.Personal/web/local/main.html}
+up-image   upArrow
+up-imglink 0

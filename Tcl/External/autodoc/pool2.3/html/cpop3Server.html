@@ -1,0 +1,715 @@
+<html>
+<head>
+<title>File 'net/pop3/server.cls' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/pop3/server.cls' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">POP3 server core (Popsy)</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Core of a POP3 server (Popsy). All general operation is handled by the code in the baseclass <span class="xref-classes"><a href="cserver.html" class="class">server</a></span>.</span>
+<dt><span class="header-title">See also</span>
+<dd><span class="header-value">general <a href="pop3.htm" class="xref-xref">POP3 background information</a>, or <a href="pop3s.htm" class="xref-xref">POP3 server core</a> for more specific info</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">POP3,  mail server core,  Popsy</span>
+</dl>
+</div>
+<h1 class="class">Class 'pop3Server'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">A full fledged pop3 server, based upon the <span class="xref-classes"><a href="cserver.html" class="class">server</a></span> framework. The only missing parts are a storage system handling mailboxes and mails and a database of user accounts. These are delegated to external objects, see option <span class="xref-oref"><a href="cpop3Server.html#ouserdb" class="xref-oref">userdb</a></span> and <span class="xref-oref"><a href="cpop3Server.html#ostorage" class="xref-oref">storage</a></span>. See <a href="pop3s.htm" class="xref-xref">POP3 server core</a> for more. <br>
+ The UIDL command is not supported.</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.oche.de/~akupries/soft/trf/index.html" class="xref-dep">Trf</a></span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cserver.html" class="class">server</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ouserdb" class="options">userdb</a><br>
+<a href="#ostorage" class="options">storage</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cpop3Server.html#ppop3Server_CheckLogin" class="proc">CheckLogin</a> <span class="arg-list">(conn clientid serverid storage)</span><br>
+<a href="cpop3Server.html#ppop3Server_CloseConnection" class="proc">CloseConnection</a> <span class="arg-list">(conn)</span><br>
+<a href="cpop3Server.html#ppop3Server_GreetPeer" class="proc">GreetPeer</a> <span class="arg-list">(conn)</span><br>
+<a href="cpop3Server.html#ppop3Server_H_apop" class="proc">H_apop</a> <span class="arg-list">(conn cmd line)</span><br>
+<a href="cpop3Server.html#ppop3Server_H_dele" class="proc">H_dele</a> <span class="arg-list">(conn cmd line)</span><br>
+<a href="cpop3Server.html#ppop3Server_H_list" class="proc">H_list</a> <span class="arg-list">(conn cmd line)</span><br>
+<a href="cpop3Server.html#ppop3Server_H_noop" class="proc">H_noop</a> <span class="arg-list">(conn cmd line)</span><br>
+<a href="cpop3Server.html#ppop3Server_H_pass" class="proc">H_pass</a> <span class="arg-list">(conn cmd line)</span><br>
+<a href="cpop3Server.html#ppop3Server_H_quit" class="proc">H_quit</a> <span class="arg-list">(conn cmd line)</span><br>
+<a href="cpop3Server.html#ppop3Server_H_reset" class="proc">H_reset</a> <span class="arg-list">(conn cmd line)</span><br>
+<a href="cpop3Server.html#ppop3Server_H_retr" class="proc">H_retr</a> <span class="arg-list">(conn cmd line)</span><br>
+<a href="cpop3Server.html#ppop3Server_H_stat" class="proc">H_stat</a> <span class="arg-list">(conn cmd line)</span><br>
+<a href="cpop3Server.html#ppop3Server_H_top" class="proc">H_top</a> <span class="arg-list">(conn cmd line)</span><br>
+<a href="cpop3Server.html#ppop3Server_H_user" class="proc">H_user</a> <span class="arg-list">(conn cmd line)</span><br>
+<a href="cpop3Server.html#ppop3Server_HandleUnknownCmd" class="proc">HandleUnknownCmd</a> <span class="arg-list">(conn cmd line)</span><br>
+<a href="cpop3Server.html#ppop3Server_InitializeNewConnection" class="proc">InitializeNewConnection</a> <span class="arg-list">(conn)</span><br>
+<a href="cpop3Server.html#ppop3Server_TransferDone" class="proc">TransferDone</a> <span class="arg-list">(conn)</span><br>
+<a href="cpop3Server.html#ppop3Server_pop3Server" class="proc">pop3Server</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vconnInfo" class="members">connInfo</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ouserdb"></a>
+<dt><span class="option-name">-userdb</span>
+<dd><span class="option-description">  Handle of the object giving us access to the database of users  and their associated passwords. Must be derived from class  <span class="xref-classes"><a href="cuserdbBase.html" class="class">userdbBase</a></span>.</span>
+<a name="ostorage"></a>
+<dt><span class="option-name">-storage</span>
+<dd><span class="option-description">  Handle of the object giving us access to the facility storing  the mails known to the whole system. Must be derived from  class <span class="xref-classes"><a href="cpopServerStorageBase.html" class="class">popServerStorageBase</a></span>.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="ppop3Server_CheckLogin"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">CheckLogin</span> <span class="arg-list">(conn clientid serverid storage)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal procedure. General code used by USER/PASS and APOP login mechanisms to verify the given user-id. Locks the mailbox in case of a match.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: clientid
+</td>
+<td class="argument-description">
+Authentication code transmitted by client
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: serverid
+</td>
+<td class="argument-description">
+Authentication code calculated here.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: storage
+</td>
+<td class="argument-description">
+Handle of mailbox requested by client.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_CloseConnection"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">CloseConnection</span> <span class="arg-list">(conn)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cserver.html" class="class">server</a>:<a href="cserver.html#pserver_CloseConnection" class="proc">CloseConnection</a><br>
+<span class="header-description-value">Called by the general server to cleanup the pop3 specific part of a new connection. Overides the baseclass definition (<span class="xref-mref"><a href="cserver.html" class="class">server</a>:<a href="cserver.html#pserver_CloseConnection" class="proc">CloseConnection</a></span>).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_GreetPeer"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">GreetPeer</span> <span class="arg-list">(conn)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cserver.html" class="class">server</a>:<a href="cserver.html#pserver_GreetPeer" class="proc">GreetPeer</a><br>
+<span class="header-description-value">Called after the initialization of a new connection. Writes the greeting to the new client. Overides the baseclass definition (<span class="xref-mref"><a href="cserver.html" class="class">server</a>:<a href="cserver.html#pserver_GreetPeer" class="proc">GreetPeer</a></span>).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_H_apop"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">H_apop</span> <span class="arg-list">(conn cmd line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Handle APOP command.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+The sent command
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+The sent line, with <span class="argument"><span class="argument-description">cmd</span></span> as first word.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_H_dele"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">H_dele</span> <span class="arg-list">(conn cmd line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Handle DELE command.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+The sent command
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+The sent line, with <span class="argument"><span class="argument-description">cmd</span></span> as first word.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_H_list"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">H_list</span> <span class="arg-list">(conn cmd line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Handle LIST command. Generates scan listing</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+The sent command
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+The sent line, with <span class="argument"><span class="argument-description">cmd</span></span> as first word.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_H_noop"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">H_noop</span> <span class="arg-list">(conn cmd line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Handle NOOP command.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+The sent command
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+The sent line, with <span class="argument"><span class="argument-description">cmd</span></span> as first word.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_H_pass"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">H_pass</span> <span class="arg-list">(conn cmd line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Handle PASS command.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+The sent command
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+The sent line, with <span class="argument"><span class="argument-description">cmd</span></span> as first word.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_H_quit"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">H_quit</span> <span class="arg-list">(conn cmd line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Handle QUIT command.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+The sent command
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+The sent line, with <span class="argument"><span class="argument-description">cmd</span></span> as first word.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_H_reset"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">H_reset</span> <span class="arg-list">(conn cmd line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Handle RSET command.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+The sent command
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+The sent line, with <span class="argument"><span class="argument-description">cmd</span></span> as first word.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_H_retr"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">H_retr</span> <span class="arg-list">(conn cmd line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Handle RETR command.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+The sent command
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+The sent line, with <span class="argument"><span class="argument-description">cmd</span></span> as first word.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_H_stat"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">H_stat</span> <span class="arg-list">(conn cmd line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Handle STAT command.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+The sent command
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+The sent line, with <span class="argument"><span class="argument-description">cmd</span></span> as first word.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_H_top"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">H_top</span> <span class="arg-list">(conn cmd line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Handle RETR command.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+The sent command
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+The sent line, with <span class="argument"><span class="argument-description">cmd</span></span> as first word.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_H_user"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">H_user</span> <span class="arg-list">(conn cmd line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Handle USER command.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+The sent command
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+The sent line, with <span class="argument"><span class="argument-description">cmd</span></span> as first word.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_HandleUnknownCmd"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">HandleUnknownCmd</span> <span class="arg-list">(conn cmd line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cserver.html" class="class">server</a>:<a href="cserver.html#pserver_HandleUnknownCmd" class="proc">HandleUnknownCmd</a><br>
+<span class="header-description-value">Handler for commands not known to the server. Overides the baseclass definition (<span class="xref-mref"><a href="cserver.html" class="class">server</a>:<a href="cserver.html#pserver_HandleUnknownCmd" class="proc">HandleUnknownCmd</a></span>). Simply writes an error response to the client.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+The sent command
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+The complete line sent by the client behind <span class="argument"><span class="argument-description">conn</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_InitializeNewConnection"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">InitializeNewConnection</span> <span class="arg-list">(conn)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cserver.html" class="class">server</a>:<a href="cserver.html#pserver_InitializeNewConnection" class="proc">InitializeNewConnection</a><br>
+<span class="header-description-value">Called by the base class to initialize the pop3 specific part of a new connection. Overides the baseclass definition (<span class="xref-mref"><a href="cserver.html" class="class">server</a>:<a href="cserver.html#pserver_InitializeNewConnection" class="proc">InitializeNewConnection</a></span>).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_TransferDone"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TransferDone</span> <span class="arg-list">(conn)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal procedure. Called by the storage system after completion of the transfer requested by the server. Reenables listening for commands.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Descriptor of connection to write to.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Server_pop3Server"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">pop3Server</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Constructor. Creates the core of a pop3 server. It handles all interactions with a client, but relies on external code for authentication and mail storage. Built on top of <span class="xref-classes"><a href="cserver.html" class="class">server</a></span>.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vconnInfo"></a>
+<dt><span class="variable-name">connInfo</span>
+<dd><span class="variable-description">  Maps connection handles to the state information required by  the server. The data is stored in 'array set' format, for  easy retrieval and update. Any method requiring access to  the data of a specific connection will read and store  'connInfo(&lt;conn&gt;)' from/into the local array 'state'.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

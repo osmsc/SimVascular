@@ -1,0 +1,27 @@
+# -*- tcl -*-
+newPage    pop3s.htm "Description of POP3 server core"
+#add2Sidebar pop3s.htm "Popsy"
+
+par "
+The server core is derived from the general [classRef server] class. It
+handles only the details of the POP3 connection and protocol. The task of
+authenticating a user attempting a login is done in here, but the data used by
+the process is retrieved from an external object obeying the interface as
+described in [classRef userdbBase] and specified to the core via the option
+[optionRef pop3Server userdb]. Access to the messages stored an user is
+mediated through another external object, its handle given to the core by
+[optionRef pop3Server storage] and derived from [classRef popServerStorageBase]
+"
+
+par "
+Example implementations of a user database and a storage subsystem are
+[classRef aDB] and [classRef mbox]."
+
+par "
+They were used to build [fileRef apps/popsy], a complete small
+scale pop server.
+"
+
+par align=center [imgRef pop3server]
+
+closePage

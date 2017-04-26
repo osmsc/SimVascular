@@ -1,0 +1,28 @@
+#!/usr/local/bin/wish
+#-!/usr/local/bin/tclsh
+# -*- tcl -*-
+
+package require Pool_GuiBase
+
+
+genericPopupMenu .m
+
+.m associate . Exec
+.m addEntry exit -1 <Exit>
+
+label .l -text "click button <2> for popup menu" -relief sunken -bd 1
+pack  .l -side top -fill x -expand 0
+wm geometry . 200x100
+
+proc Exec {who cmd} {
+    puts "$who -> cmd = $cmd"
+    exit
+}
+
+after 250 blink grey red
+
+proc blink {ca cb} {
+    .l configure -bg $ca
+
+    after 250 blink $cb $ca
+}

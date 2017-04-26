@@ -1,0 +1,288 @@
+<html>
+<head>
+<title>File 'clock/monthBrowseTixB.cls' (part of 'Pool_Clock')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'clock/monthBrowseTixB.cls' (part of '<a href="pkg_Pool_Clock.html" class="package">Pool_Clock</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Year/month choice, tix</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Widget to choose month and year</span>
+<dt><span class="header-title">See also</span>
+<dd><span class="header-value"><span class="xref-classes"><a href="cmonthList.html" class="class">monthList</a></span>, <span class="xref-classes"><a href="ccalendarTix.html" class="class">calendarTix</a></span></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">calendar,  choosing month and year,  year/month choice,  tix</span>
+</dl>
+</div>
+<h1 class="class">Class 'monthBrowserTixB'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://tix.mne.com/" class="xref-dep">Tix</a></span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cvalueManager.html" class="class">valueManager</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ocharwidth" class="options">charwidth</a><br>
+<a href="#oorder" class="options">order</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cmonthBrowserTixB.html#pmonthBrowserTixB_OnWrap" class="proc">OnWrap</a> <span class="arg-list">(dir)</span><br>
+<a href="cmonthBrowserTixB.html#pmonthBrowserTixB_TrackCharWidth" class="proc">TrackCharWidth</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cmonthBrowserTixB.html#pmonthBrowserTixB_TrackMonth" class="proc">TrackMonth</a> <span class="arg-list">(month)</span><br>
+<a href="cmonthBrowserTixB.html#pmonthBrowserTixB_TrackOrder" class="proc">TrackOrder</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cmonthBrowserTixB.html#pmonthBrowserTixB_TrackYear" class="proc">TrackYear</a> <span class="arg-list">(year)</span><br>
+<a href="cmonthBrowserTixB.html#pmonthBrowserTixB_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span><br>
+<a href="cmonthBrowserTixB.html#pmonthBrowserTixB_monthBrowserTixB" class="proc">monthBrowserTixB</a> <span class="arg-list">()</span><br>
+<a href="cmonthBrowserTixB.html#pmonthBrowserTixB_setBindings" class="proc">setBindings</a> <span class="arg-list">()</span><br>
+<a href="cmonthBrowserTixB.html#pmonthBrowserTixB_setBindingsTo" class="proc">setBindingsTo</a> <span class="arg-list">(w)</span><br>
+<a href="cmonthBrowserTixB.html#pmonthBrowserTixB_updateDisplay" class="proc">updateDisplay</a> <span class="arg-list">()</span>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ocharwidth"></a>
+<dt><span class="option-name">-charwidth</span>
+<dd><span class="option-description">  Width of the widget in characters.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">12</span>
+<a name="oorder"></a>
+<dt><span class="option-name">-order</span>
+<dd><span class="option-description">  Order of components: The year browser is packed to the left or  right of the month list.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">ym</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pmonthBrowserTixB_OnWrap"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">OnWrap</span> <span class="arg-list">(dir)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Increment/decrement operator for internal year browser.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: dir
+</td>
+<td class="argument-description">
+direction of wrap, must be one of 'up' or 'down'.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthBrowserTixB_TrackCharWidth"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackCharWidth</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executed whenever the width of the widget is changed by the outside.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option, always '-charwidth'.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthBrowserTixB_TrackMonth"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackMonth</span> <span class="arg-list">(month)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Callback. Used by the internal month list to integrate changes to the month into the overall value. Executed every time the month changed its value.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: month
+</td>
+<td class="argument-description">
+The new value of the chosen month.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthBrowserTixB_TrackOrder"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackOrder</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The widget defined allows arbitrary ordering of its components. The corresponding option is -order. This method is called everytime the option was set and executes the necessary relayout.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option, always '-order'.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthBrowserTixB_TrackYear"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackYear</span> <span class="arg-list">(year)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Callback. Used by the internal year browser to integrate changes to the year into the overall value. Executed every time the year changed its value.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: year
+</td>
+<td class="argument-description">
+The (possibly) new value of the chosen year.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthBrowserTixB_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cwidget.html#pwidget_createSubwidgets" class="proc">createSubwidgets</a><br>
+<span class="header-description-value">Generate the subwidgets and their layout.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthBrowserTixB_monthBrowserTixB"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">monthBrowserTixB</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Initialize the value to the current month and year, if not set already by the user.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthBrowserTixB_setBindings"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">setBindings</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cwidget.html#pwidget_setBindings" class="proc">setBindings</a><br>
+<span class="header-description-value">Adds various keyboard accelerators to the month browser.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthBrowserTixB_setBindingsTo"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">setBindingsTo</span> <span class="arg-list">(w)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds various keyboard accelerators to the given widget.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+The widget the accelerators are added to.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthBrowserTixB_updateDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">updateDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cvalueManager.html#pvalueManager_updateDisplay" class="proc">updateDisplay</a><br>
+<span class="header-description-value">Method required by the superclass <span class="xref-classes"><a href="cvalueManager.html" class="class">valueManager</a></span> to propagate changes to the value into the display.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

@@ -1,0 +1,199 @@
+<html>
+<head>
+<title>File 'net/smtp/spooler.cls' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/smtp/spooler.cls' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">SMTP based spooler.</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">SMTP based spooler of outbound mail (found in files in halfbaked SMTP format).</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">SMTP,  spooler</span>
+</dl>
+</div>
+<h1 class="class">Class 'smtpSpooler'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Implements a file and directory based spooler for mails. See <span class="xref-mref"><a href="csmtpSpooler.html#psmtpSpooler_start" class="proc">start</a></span> for more. Uses <span class="xref-classes"><a href="csmtpConnection.html" class="class">smtpConnection</a></span> to do the real work.</span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ohost" class="options">host</a><br>
+<a href="#ohelo" class="options">helo</a><br>
+<a href="#ofrom" class="options">from</a><br>
+<a href="#on" class="options">n</a><br>
+<a href="#ocommand" class="options">command</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="csmtpSpooler.html#psmtpSpooler_AllDone" class="proc">AllDone</a> <span class="arg-list">(conn)</span><br>
+<a href="csmtpSpooler.html#psmtpSpooler_Done" class="proc">Done</a> <span class="arg-list">(file conn)</span><br>
+<a href="csmtpSpooler.html#psmtpSpooler_SpoolMessage" class="proc">SpoolMessage</a> <span class="arg-list">()</span><br>
+<a href="csmtpSpooler.html#psmtpSpooler_start" class="proc">start</a> <span class="arg-list">(flist)</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vactive" class="members">active</a><br>
+<a href="#vmsgFiles" class="members">msgFiles</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ohost"></a>
+<dt><span class="option-name">-host</span>
+<dd><span class="option-description">     The name of the host the smtp demon is running on.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">localhost</span>
+<a name="ohelo"></a>
+<dt><span class="option-name">-helo</span>
+<dd><span class="option-description">     The initial string to send to the smtp demon</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">bluepeak.westend.com</span>
+<a name="ofrom"></a>
+<dt><span class="option-name">-from</span>
+<dd><span class="option-description">     The address of the sender.</span>
+<a name="on"></a>
+<dt><span class="option-name">-n</span>
+<dd><span class="option-description">        The number of simultaneously open connections to the smtp        demon.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">1</span>
+<a name="ocommand"></a>
+<dt><span class="option-name">-command</span>
+<dd><span class="option-description">  The script to evaluate after the last mail was sent down the  line.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="psmtpSpooler_AllDone"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">AllDone</span> <span class="arg-list">(conn)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called by <span class="argument"><span class="proc">conn</span></span> after the channel to the smtp demon was closed. Simply destroys the connection</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+The <span class="xref-classes"><a href="csmtpConnection.html" class="class">smtpConnection</a></span> in shutdown, to destroy.
+</td>
+</tr>
+</table>
+</p>
+<a name="psmtpSpooler_Done"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Done</span> <span class="arg-list">(file conn)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executed after SMTP transfer of <span class="argument"><span class="proc">file</span></span> is finished. Removes the file in case of success. Always initiates the transfer of the next file.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: file
+</td>
+<td class="argument-description">
+Name of the file transfered to the outside world.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+Name of the used smtp descriptor array.
+</td>
+</tr>
+</table>
+</p>
+<a name="psmtpSpooler_SpoolMessage"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">SpoolMessage</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Initiates a SMTP session for the first message in the queue.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="psmtpSpooler_start"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">start</span> <span class="arg-list">(flist)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">All specified files are forwarded to the given site, using the SMTP protocol. Files successfully transfered are deleted afterward. A partial transfer is enough to do so.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This procedure assumes that the files are in HB-SMTP format (half baked SMTP), as generated by the smail MTA. In such files the message is prepended with MAIL FROM, RCPT TO, DATA commands, and the standard EOM-indicator (. on a single line line) is appended.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: flist
+</td>
+<td class="argument-description">
+List of files to transfer.
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vactive"></a>
+<dt><span class="variable-name">active</span>
+<dd><span class="variable-description">    Boolean flag locking the object against multiple <span class="xref-mref"><a href="csmtpSpooler.html#psmtpSpooler_start" class="proc">start</a></span>s.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">0</span>
+<a name="vmsgFiles"></a>
+<dt><span class="variable-name">msgFiles</span>
+<dd><span class="variable-description">  Contains the list of files containing the mails to sent to  the smtp demon. Can be seens as a task queue as well, as it  will be shortened during the operation.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

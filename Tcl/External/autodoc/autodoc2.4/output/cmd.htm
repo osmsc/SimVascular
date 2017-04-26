@@ -1,0 +1,160 @@
+<html>
+<head>
+<title>Available formatting commands</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>Available formatting commands</h1><hr class="navbar"><p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p><hr class="navbar">
+<p>First a table of all commands and their possible place of use:</p><table border><caption><p>Available formatting commands</p></caption><tr><th>Command
+</th><th>Short form
+</th><th>File
+</th><th>Class
+</th><th>Procedure
+</th></tr><tr><td>@argument
+</td><td>@a
+</td><td> 
+</td><td> 
+</td><td>+
+</td></tr><tr><td>@author
+</td><td> 
+</td><td>+
+</td><td>+
+</td><td>+
+</td></tr><tr><td>@bug
+</td><td>@b
+</td><td>+
+</td><td>+
+</td><td>+
+</td></tr><tr><td>@comment
+</td><td>@c
+</td><td>+
+</td><td>+
+</td><td>+
+</td></tr><tr><td>@danger
+</td><td>@d
+</td><td>+
+</td><td>+
+</td><td>+
+</td></tr><tr><td>@date
+</td><td> 
+</td><td>+
+</td><td>+
+</td><td>+
+</td></tr><tr><td>@example
+</td><td>@ex
+</td><td> 
+</td><td>+
+</td><td>+
+</td></tr><tr><td>@index
+</td><td>@i
+</td><td>+
+</td><td>+
+</td><td>+
+</td></tr><tr><td>@note
+</td><td>@n
+</td><td>+
+</td><td>+
+</td><td>+
+</td></tr><tr><td>@option
+</td><td>@o
+</td><td> 
+</td><td>+
+</td><td> 
+</td></tr><tr><td>@result
+</td><td>@r
+</td><td> 
+</td><td> 
+</td><td>+
+</td></tr><tr><td>@see
+</td><td> 
+</td><td>+
+</td><td>+
+</td><td> 
+</td></tr><tr><td>@short
+</td><td>@s
+</td><td>+
+</td><td><b></b>
+</td><td> 
+</td></tr><tr><td>@var
+</td><td>@v
+</td><td> 
+</td><td>+
+</td><td> 
+</td></tr><tr><td>@version
+</td><td> 
+</td><td>+
+</td><td>+
+</td><td>+
+</td></tr></table><p>
+And now the meaning of the individual commands, with some generalities
+beforehand.
+</p><ul><li>
+	Every command is on a single line, all text behind up to the end
+	of the line is considered as its argument(s).
+    <li>
+	All text referring to the same entity (file, class, procedure) is
+	concatenated together. Line breaks and superfluous whitespace will
+	be eliminated. The HTML-browser is made responsible for a nice
+	presentation.
+    <li>
+	All commands can be freely mixed. The extractor takes care that
+	their data is placed into separate sections.
+    </ul><dl><dt>@argument &lt;name&gt;:<dd>
+	Describes the argument &lt;name&gt; given to the surrounding procedure.
+    <dt>@author<dd>
+	Describes the author of the referred entity. Entities not having an
+	explicitly mentioned author automatically get the author of the
+	containing entity.
+
+	Distribution -&gt; Package -&gt; File -&gt; Procedure, (Class -&gt; Method)
+    <dt>@bug<dd>
+	The text is interpreted as the description of a bug in the
+	refered entity.
+    <dt>@comment<dd>
+	The text is interpreted as description of the referred entity.
+    <dt>@danger<dd>
+	The text is interpreted  as comment about restrictions, traps,
+	pitfalls, ... the user of the described code has to be aware of.
+    <dt>@date<dd>
+	The text is interpreted as date information pertaining to the
+	refered object.
+    <dt>@example<dd>
+	The text is interpreted as an example about the usage of the
+	refered entity. All formatting, especially whitespace, is
+	preserved.
+    <dt>@index<dd>
+	The text is interpreted as a comma-separated list of keywords to
+	be used for indexing of the referred entity.
+
+	Procedures and classes without keywords of their own are automatically
+	indexed under the phrases defined for the containing file.
+    <dt>@note<dd>
+	As above, but less strong. May include musings, references to external
+	material, explanation of decisions, hacks, etc. too. In short:
+        Everything neither fitting into the more formal <b>@comment</b> nor
+        the signpost <b>@danger</b>.
+    <dt>@result<dd>
+	Describes the result returned by the surrounding procedure/method.
+    <dt>@see<dd>
+	Cross references to related material (classes, procedures, ...).
+    <dt>@short<dd>
+	The text is interpreted as short description of the referred entity.
+    <dt>@option &lt;name&gt;:<dd>
+	Describes option (parameter) &lt;name&gt; of a class.
+    <dt>@var &lt;name&gt;:<dd>
+	Describes member variable &lt;name&gt; of a class. The old syntax
+	('@member') is still recognized, but marked as error, and not
+	evaluated.
+    <dt>@version<dd>
+	Contain versioning information about the refered entity.
+    </dl><p>Remarks:</p><ul><li>
+	Unknown commands are simply ignored by the engine.
+    <li>
+	Method definitions inside a class are treated the
+	same way as procedures.
+    <li>
+        The texts may contain <a href="ref.htm">cross references</a>, these
+	will be resolved before output.
+    </ul><p><a href="ref.htm">Next</a></p><hr><p class="generated-by">Generated by <a href="http://www.purl.org/NET/akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 01/22/2001, invoked by <a href="mailto:nwilson@nateland" class="generated-by">Unknown</a></p></body>
+</html>

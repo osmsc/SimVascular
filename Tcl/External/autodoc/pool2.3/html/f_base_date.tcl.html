@@ -1,0 +1,1121 @@
+<html>
+<head>
+<title>File 'base/date.tcl' (part of 'Pool_Base')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'base/date.tcl' (part of '<a href="pkg_Pool_Base.html" class="package">Pool_Base</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Additional date/time functionality</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Additional date/time functionality</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">date operations,  operations on dates and times,  time operations, data conversion</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_2month" class="proc">::pool::date::2month</a> <span class="arg-list">(date)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_StripLeadingZeros" class="proc">::pool::date::StripLeadingZeros</a> <span class="arg-list">(x)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_eq" class="proc">::pool::date::eq</a> <span class="arg-list">(a b)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_ge" class="proc">::pool::date::ge</a> <span class="arg-list">(a b)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_gt" class="proc">::pool::date::gt</a> <span class="arg-list">(a b)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_index" class="proc">::pool::date::index</a> <span class="arg-list">(date)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_intervalIsMonth" class="proc">::pool::date::intervalIsMonth</a> <span class="arg-list">(a b)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_intervalIsYear" class="proc">::pool::date::intervalIsYear</a> <span class="arg-list">(a b)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_isYearStart" class="proc">::pool::date::isYearStart</a> <span class="arg-list">(date)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_join" class="proc">::pool::date::join</a> <span class="arg-list">(y m d)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_joinMonth" class="proc">::pool::date::joinMonth</a> <span class="arg-list">(y m)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_joinMonthDay" class="proc">::pool::date::joinMonthDay</a> <span class="arg-list">(month day)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_le" class="proc">::pool::date::le</a> <span class="arg-list">(a b)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_leMonth" class="proc">::pool::date::leMonth</a> <span class="arg-list">(a b)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_leapYear" class="proc">::pool::date::leapYear</a> <span class="arg-list">(y)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_lt" class="proc">::pool::date::lt</a> <span class="arg-list">(a b)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_monthFirstDay" class="proc">::pool::date::monthFirstDay</a> <span class="arg-list">(month)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_monthLastDay" class="proc">::pool::date::monthLastDay</a> <span class="arg-list">(month)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_monthLength" class="proc">::pool::date::monthLength</a> <span class="arg-list">(month)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_monthName" class="proc">::pool::date::monthName</a> <span class="arg-list">(m)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_monthNumber" class="proc">::pool::date::monthNumber</a> <span class="arg-list">(monthname)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_ne" class="proc">::pool::date::ne</a> <span class="arg-list">(a b)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_next" class="proc">::pool::date::next</a> <span class="arg-list">(date)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_nextMonth" class="proc">::pool::date::nextMonth</a> <span class="arg-list">(month)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_now" class="proc">::pool::date::now</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_nowTime" class="proc">::pool::date::nowTime</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_prev" class="proc">::pool::date::prev</a> <span class="arg-list">(date)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_prevMonth" class="proc">::pool::date::prevMonth</a> <span class="arg-list">(month)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_printCalendar" class="proc">::pool::date::printCalendar</a> <span class="arg-list">(month year chan)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_split" class="proc">::pool::date::split</a> <span class="arg-list">(date y m d)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_splitMonth" class="proc">::pool::date::splitMonth</a> <span class="arg-list">(month y m)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_weekday" class="proc">::pool::date::weekday</a> <span class="arg-list">(date)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_weekdayName" class="proc">::pool::date::weekdayName</a> <span class="arg-list">(weekday)</span>
+<li class="proc-listing"><a href="f_base_date.tcl.html#p_pool_date_yearLength" class="proc">::pool::date::yearLength</a> <span class="arg-list">(year)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_date_2month"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::2month</span> <span class="arg-list">(date)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Extract the month information from a <span class="argument"><span class="proc">date</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: date
+</td>
+<td class="argument-description">
+The date to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A month in the form mm/yyyy.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_StripLeadingZeros"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::StripLeadingZeros</span> <span class="arg-list">(x)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Strips leading zeros from a number, preventing octal interpretation</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This implementation is significantly faster than 'regsub {^0*((1-90-9*)|0)$} $x {\1} x'. The regsub averages 160 microsecs in all cases. This realization however requires only ~142 microsecs in the worst case and goes down to ~128 or ~85 microsecs (0-series, {}).<br>
+ Note, '0 != string compare &quot;&quot; $x' is definitely faster than '$x != {}'. The same holds for the second comparison.<br>
+ All timings done using tcl 8.0
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: x
+</td>
+<td class="argument-description">
+Number forced into decimal interpretation
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a decimal number
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_eq"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::eq</span> <span class="arg-list">(a b)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Are the dates <span class="argument"><span class="proc">a</span></span> and <span class="argument"><span class="proc">b</span></span> equal?</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: a
+</td>
+<td class="argument-description">
+first date to compare
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: b
+</td>
+<td class="argument-description">
+second date to compare
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1, if answer is yes, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_ge"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::ge</span> <span class="arg-list">(a b)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Is date <span class="argument"><span class="proc">a</span></span> greater than or equal to date <span class="argument"><span class="proc">b</span></span>?</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: a
+</td>
+<td class="argument-description">
+first date to compare
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: b
+</td>
+<td class="argument-description">
+second date to compare
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1, if answer is yes, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_gt"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::gt</span> <span class="arg-list">(a b)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Is date <span class="argument"><span class="proc">a</span></span> greater than date <span class="argument"><span class="proc">b</span></span>?</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: a
+</td>
+<td class="argument-description">
+first date to compare
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: b
+</td>
+<td class="argument-description">
+second date to compare
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1, if answer is yes, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_index"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::index</span> <span class="arg-list">(date)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Convert given <span class="argument"><span class="proc">date</span></span> into index of day (01/01/year is mapped onto day 1).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: date
+</td>
+<td class="argument-description">
+The date to convert.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Index of date into its year.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_intervalIsMonth"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::intervalIsMonth</span> <span class="arg-list">(a b)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Checks wether the interval defined by dates <span class="argument"><span class="proc">a</span></span> and <span class="argument"><span class="proc">b</span></span> covers a single month.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: a
+</td>
+<td class="argument-description">
+Start of interval, inclusive
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: b
+</td>
+<td class="argument-description">
+End of interval, inclusive
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1, if answer is yes, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_intervalIsYear"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::intervalIsYear</span> <span class="arg-list">(a b)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Checks wether the interval defined by dates <span class="argument"><span class="proc">a</span></span> and <span class="argument"><span class="proc">b</span></span> covers a single year.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: a
+</td>
+<td class="argument-description">
+Start of interval, inclusive
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: b
+</td>
+<td class="argument-description">
+End of interval, inclusive
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1, if answer is yes, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_isYearStart"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::isYearStart</span> <span class="arg-list">(date)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Checks wether the given <span class="argument"><span class="proc">date</span></span> is the first of january or not.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: date
+</td>
+<td class="argument-description">
+The date to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1, if answer is yes, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_join"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::join</span> <span class="arg-list">(y m d)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">compose a date from single components</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: y
+</td>
+<td class="argument-description">
+The year to use in the composed date
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: m
+</td>
+<td class="argument-description">
+The month to use in the composed date
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: d
+</td>
+<td class="argument-description">
+The day to use in the composed date
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A date in the form mm/dd/yyyy
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_joinMonth"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::joinMonth</span> <span class="arg-list">(y m)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">compose a month from single components</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: y
+</td>
+<td class="argument-description">
+The year to use in the composed date
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: m
+</td>
+<td class="argument-description">
+The month to use in the composed date
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A month in the form mm/yyyy
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_joinMonthDay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::joinMonthDay</span> <span class="arg-list">(month day)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">merge month and day into a complete date</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: month
+</td>
+<td class="argument-description">
+The month (mm/yyyy) to use in the composition
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: day
+</td>
+<td class="argument-description">
+The day to use in the composition
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A date in the form mm/dd/yyyy
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_le"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::le</span> <span class="arg-list">(a b)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Is date <span class="argument"><span class="proc">a</span></span> smaller than or equal to date <span class="argument"><span class="proc">b</span></span>?</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: a
+</td>
+<td class="argument-description">
+first date to compare
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: b
+</td>
+<td class="argument-description">
+second date to compare
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1, if answer is yes, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_leMonth"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::leMonth</span> <span class="arg-list">(a b)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Is month <span class="argument"><span class="proc">a</span></span> smaller than or equal to month <span class="argument"><span class="proc">b</span></span>?</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: a
+</td>
+<td class="argument-description">
+first month to compare
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: b
+</td>
+<td class="argument-description">
+second month to compare
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1, if answer is yes, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_leapYear"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::leapYear</span> <span class="arg-list">(y)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines wether the given year is a leap year or not. The gregorian rule is used, i.e.: Every 4th is a leap year, with the exception of every 100th, but every 400th is one nevertheless.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: y
+</td>
+<td class="argument-description">
+The year to check
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1 for a leap year, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_lt"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::lt</span> <span class="arg-list">(a b)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Is date <span class="argument"><span class="proc">a</span></span> smaller than date <span class="argument"><span class="proc">b</span></span>?</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: a
+</td>
+<td class="argument-description">
+first date to compare
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: b
+</td>
+<td class="argument-description">
+second date to compare
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1, if answer is yes, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_monthFirstDay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::monthFirstDay</span> <span class="arg-list">(month)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: month
+</td>
+<td class="argument-description">
+month to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The date for the first day of the given <span class="argument"><span class="proc">month</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_monthLastDay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::monthLastDay</span> <span class="arg-list">(month)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: month
+</td>
+<td class="argument-description">
+month to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The date for the last day of the given <span class="argument"><span class="proc">month</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_monthLength"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::monthLength</span> <span class="arg-list">(month)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Computes the length of the specified <span class="argument"><span class="proc">month</span></span>, in days</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: month
+</td>
+<td class="argument-description">
+The month whose length shall be determined.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The length of <span class="argument"><span class="proc">month</span></span>, in days.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_monthName"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::monthName</span> <span class="arg-list">(m)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Map a month-number <span class="argument"><span class="proc">m</span></span> to an english name.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: m
+</td>
+<td class="argument-description">
+The index to convert (range 01..12)
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The english name of the month <span class="argument"><span class="proc">m</span></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_monthNumber"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::monthNumber</span> <span class="arg-list">(monthname)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Map the english name of a month (<span class="argument"><span class="proc">monthname</span></span>) to its number (range 1..12).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: monthname
+</td>
+<td class="argument-description">
+The name to convert into an number.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The month number associated to the name.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_ne"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::ne</span> <span class="arg-list">(a b)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Are the dates <span class="argument"><span class="proc">a</span></span> and <span class="argument"><span class="proc">b</span></span> different?</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: a
+</td>
+<td class="argument-description">
+first date to compare
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: b
+</td>
+<td class="argument-description">
+second date to compare
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1, if answer is yes, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_next"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::next</span> <span class="arg-list">(date)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Step from <span class="argument"><span class="proc">date</span></span> to next day.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Dangers</span>: A hack is used to get Normal/DST switches (+26 hours instead auf +24). A gregorian calendar is assumed. Entirely missing days are not handled.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: date
+</td>
+<td class="argument-description">
+The date to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The day after <span class="argument"><span class="proc">date</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_nextMonth"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::nextMonth</span> <span class="arg-list">(month)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">step from specified month to the month after that</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: month
+</td>
+<td class="argument-description">
+The month to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The month after <span class="argument"><span class="proc">month</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_now"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::now</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines current date</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The current date in the form mm/dd/yyyy
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_nowTime"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::nowTime</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines current date and time, default format</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The current date and time.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_prev"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::prev</span> <span class="arg-list">(date)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Step from <span class="argument"><span class="proc">date</span></span> to previous day.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Dangers</span>: A hack is used to get Normal/DST switches (-22 hours instead of -24). A gregorian calendar is assumed. Entirely missing days are not handled.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: date
+</td>
+<td class="argument-description">
+The date to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The day before <span class="argument"><span class="proc">date</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_prevMonth"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::prevMonth</span> <span class="arg-list">(month)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">step from specified month to the month before that</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: month
+</td>
+<td class="argument-description">
+The month to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The month before <span class="argument"><span class="proc">month</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_printCalendar"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::printCalendar</span> <span class="arg-list">(month year chan)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">by</span> <a href="mailto:klaren@cs.utwente.nl>." class="proc">Ric Klaren <</a>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Prints a formatted calendar (like from the 'cal' application) to the specified channel.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: month
+</td>
+<td class="argument-description">
+Month of the <span class="argument"><span class="argument-description">year</span></span> to print the calendar for.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: year
+</td>
+<td class="argument-description">
+Year to print the calendar for.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: chan (= stdout)
+</td>
+<td class="argument-description">
+The channel to print the calendar to.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_split"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::split</span> <span class="arg-list">(date y m d)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Split a date into its components, strip away leading zeros to avoid misintepretation as octal numbers.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: date
+</td>
+<td class="argument-description">
+The date to decompose
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: y
+</td>
+<td class="argument-description">
+Name of the variable to store the year into.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: m
+</td>
+<td class="argument-description">
+Name of the variable to store the month into.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: d
+</td>
+<td class="argument-description">
+Name of the variable to store the day into.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_splitMonth"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::splitMonth</span> <span class="arg-list">(month y m)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Split a month into its components, strip away leading zeros to avoid misintepretation as octal numbers.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: month
+</td>
+<td class="argument-description">
+The month to decompose.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: y
+</td>
+<td class="argument-description">
+Name of the variable to store the year into.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: m
+</td>
+<td class="argument-description">
+Name of the variable to store the month into.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_weekday"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::weekday</span> <span class="arg-list">(date)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines day index in a week of a given date</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: date
+</td>
+<td class="argument-description">
+The date to calculate the day index from.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_weekdayName"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::weekdayName</span> <span class="arg-list">(weekday)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Map a <span class="argument"><span class="proc">weekday</span></span> index (0..6, 0 = sunday) to the english name of the weekday. To obtain a short version do something like (string range (date weekdayName ..) 1 2).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: weekday
+</td>
+<td class="argument-description">
+The index to convert.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_date_yearLength"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::date::yearLength</span> <span class="arg-list">(year)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Computes the length of the given <span class="argument"><span class="proc">year</span></span>, in days.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: year
+</td>
+<td class="argument-description">
+Year whose length shall be determined
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The length of <span class="argument"><span class="proc">year</span></span>, in days.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

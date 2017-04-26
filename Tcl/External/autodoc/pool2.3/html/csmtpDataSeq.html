@@ -1,0 +1,214 @@
+<html>
+<head>
+<title>File 'net/smtp/data.cls' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/smtp/data.cls' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Transfer message to smtp demon (DATA)</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Defines the sequencer to execute a SMTP DATA transfer</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">SMTP,  Message transfer,  DATA command</span>
+</dl>
+</div>
+<h1 class="class">Class 'smtpDataSeq'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.oche.de/~akupries/tcltk.html" class="xref-dep">Memchan</a></span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="csmtpSequencer.html" class="class">smtpSequencer</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#oprogress" class="options">progress</a><br>
+<a href="#oblocksize" class="options">blocksize</a><br>
+<a href="#omessage" class="options">message</a><br>
+<a href="#ostring" class="options">string</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="csmtpDataSeq.html#psmtpDataSeq_DataTransferProgress" class="proc">DataTransferProgress</a> <span class="arg-list">(n)</span><br>
+<a href="csmtpDataSeq.html#psmtpDataSeq_DataTry" class="proc">DataTry</a> <span class="arg-list">()</span><br>
+<a href="csmtpDataSeq.html#psmtpDataSeq_GotDataResponse" class="proc">GotDataResponse</a> <span class="arg-list">(line)</span><br>
+<a href="csmtpDataSeq.html#psmtpDataSeq_GotTransferResponse" class="proc">GotTransferResponse</a> <span class="arg-list">(line)</span><br>
+<a href="csmtpDataSeq.html#psmtpDataSeq_StartTransfer" class="proc">StartTransfer</a> <span class="arg-list">()</span><br>
+<a href="csmtpDataSeq.html#psmtpDataSeq_smtpDataSeq" class="proc">smtpDataSeq</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vcloseChannel" class="members">closeChannel</a><br>
+<a href="#vnTransfered" class="members">nTransfered</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="oprogress"></a>
+<dt><span class="option-name">-progress</span>
+<dd><span class="option-description">   If not empty, a command to evaluate with current connection   and number of bytes transfered so far as arguments.</span>
+<a name="oblocksize"></a>
+<dt><span class="option-name">-blocksize</span>
+<dd><span class="option-description">  Companion option to <span class="xref-oref"><a href="csmtpDataSeq.html#oprogress" class="xref-oref">progress</a></span>, optional. Defines the  size of the blocks to transfer between invocations of  <span class="xref-oref"><a href="csmtpDataSeq.html#oprogress" class="xref-oref">progress</a></span>. Ignored if <span class="xref-oref"><a href="csmtpDataSeq.html#oprogress" class="xref-oref">progress</a></span> is empty.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">1024</span>
+<a name="omessage"></a>
+<dt><span class="option-name">-message</span>
+<dd><span class="option-description">  Either the handle of a channel containing the message to  sent, or the message itself. This is determined by the  contents of <span class="xref-oref"><a href="csmtpDataSeq.html#ostring" class="xref-oref">string</a></span>.</span>
+<a name="ostring"></a>
+<dt><span class="option-name">-string</span>
+<dd><span class="option-description">   A boolean value indicating wether <span class="xref-oref"><a href="csmtpDataSeq.html#omessage" class="xref-oref">message</a></span> is the channel   containing it (false), or the message itself (true). This is   optional and defaults to false.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">0</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="psmtpDataSeq_DataTransferProgress"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">DataTransferProgress</span> <span class="arg-list">(n)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Callback for transfer. Completes whole transfer or initiates next chunk. Executes the progress-handler, if it was defined.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: n
+</td>
+<td class="argument-description">
+Number of bytes transfered by 'fcopy'.
+</td>
+</tr>
+</table>
+</p>
+<a name="psmtpDataSeq_DataTry"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">DataTry</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The first action taken after the construction of the sequencer completes. Writes out the command initiating a data transfer to the demon, then waits for its response.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="psmtpDataSeq_GotDataResponse"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">GotDataResponse</span> <span class="arg-list">(line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called after smtp demon reacted on DATA. A specific response code is expected, everything else is considered as failure. Initiates the real transfer of data in case of success.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+Response of demon
+</td>
+</tr>
+</table>
+</p>
+<a name="psmtpDataSeq_GotTransferResponse"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">GotTransferResponse</span> <span class="arg-list">(line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">After the completion of a transfer a closing response is send by the demon. It is catched here and depending on its response code the operation terminates with either success or failure.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+Response of demon.
+</td>
+</tr>
+</table>
+</p>
+<a name="psmtpDataSeq_StartTransfer"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">StartTransfer</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Starts transfer of data. If <span class="xref-oref"><a href="csmtpDataSeq.html#oprogress" class="xref-oref">progress</a></span> was specified the initiated transfer is cut into individual chunks of <span class="xref-oref"><a href="csmtpDataSeq.html#oblocksize" class="xref-oref">blocksize</a></span> bytes each.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="psmtpDataSeq_smtpDataSeq"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">smtpDataSeq</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Constructor.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vcloseChannel"></a>
+<dt><span class="variable-name">closeChannel</span>
+<dd><span class="variable-description">  If <span class="xref-oref"><a href="csmtpDataSeq.html#omessage" class="xref-oref">message</a></span> contains the message itself an internal  memory channel is used to allow us the placement of the  transfer into the background and this flag is set to  true, reminding us that we are responsible for the  closing of the message channel.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">0</span>
+<a name="vnTransfered"></a>
+<dt><span class="variable-name">nTransfered</span>
+<dd><span class="variable-description">  Internal counter, keeps track of the total number of  bytes transfered by a single call to 'fcopy'. Used only  if <span class="xref-oref"><a href="csmtpDataSeq.html#oprogress" class="xref-oref">progress</a></span> is set.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">0</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

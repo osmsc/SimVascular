@@ -1,0 +1,162 @@
+<html>
+<head>
+<title>File 'lib/problems.cls' (part of 'AutoDOC')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'lib/problems.cls' (part of '<a href="pkg_AutoDOC.html" class="package">AutoDOC</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Problem management</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Management of problems for an entity</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">problem management,  management of problems</span>
+</dl>
+</div>
+<h1 class="class">Class 'problems'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Common behaviour and variables of all classes which are able to record problems of their respectivee entity.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cproblemBase.html" class="class">problemBase</a><br>
+<a href="cindexBaseEntry.html" class="class">indexBaseEntry</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cproblems.html#pproblems_addProblem" class="proc">addProblem</a> <span class="arg-list">(category errortext url)</span><br>
+<a href="cproblems.html#pproblems_clear" class="proc">clear</a> <span class="arg-list">()</span><br>
+<a href="cproblems.html#pproblems_numProblems" class="proc">numProblems</a> <span class="arg-list">()</span><br>
+<a href="cproblems.html#pproblems_writeProblems" class="proc">writeProblems</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vnumProblems" class="members">numProblems</a><br>
+<a href="#vproblems" class="members">problems</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pproblems_addProblem"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">addProblem</span> <span class="arg-list">(category errortext url)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds a problem specified by <span class="argument"><span class="proc">category</span></span>, <span class="argument"><span class="proc">errortext</span></span> and a place to link to to the list of problems</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: category
+</td>
+<td class="argument-description">
+Either <span class="argument-description">crossref</span> or <span class="argument-description">desc</span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: errortext
+</td>
+<td class="argument-description">
+A description of the problem.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: url
+</td>
+<td class="argument-description">
+Reference to the place of the problem.
+</td>
+</tr>
+</table>
+</p>
+<a name="pproblems_clear"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">clear</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cproblemBase.html" class="class">problemBase</a>:<a href="cproblemBase.html#pproblemBase_clear" class="proc">clear</a><br>
+<span class="header-description-value">Resets state information.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pproblems_numProblems"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">numProblems</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The number of reported problems.
+</td>
+</tr>
+</table>
+</p>
+<a name="pproblems_writeProblems"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">writeProblems</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Generates the formatting for all reported problems.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vnumProblems"></a>
+<dt><span class="variable-name">numProblems</span>
+<dd><span class="variable-description">  Number of problems reported so far.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">0</span>
+<a name="vproblems"></a>
+<dt><span class="variable-name">problems</span>
+<dd><span class="variable-description">  Map from error categories to the actual problem  descriptions. The system currently recognizes  <span class="members">crossref</span>erencing and <span class="members">desc</span>ription related  problems. A problem description is a 2-element list  containing the error text and a page reference to link to,  in this order. The latter is allowed to be empty.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">
+	crossref {}
+	desc     {}
+    </span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/07/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<html>
+<head>
+<title>File 'net/pop3/seq.cls' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/pop3/seq.cls' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">POP3 sequencer base</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Base functionality of all sequencers handling a POP3 command.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">POP3,  sequencer base</span>
+</dl>
+</div>
+<h1 class="class">Class 'pop3Sequencer'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Special sequencer containing the common information and functionality required by a sequencer handling an POP command</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="csequencer.html" class="class">sequencer</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#oconn" class="options">conn</a><br>
+<a href="#odone" class="options">done</a><br>
+<a href="#osock" class="options">sock</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cpop3Sequencer.html#ppop3Sequencer_IsError" class="proc">IsError</a> <span class="arg-list">(line)</span><br>
+<a href="cpop3Sequencer.html#ppop3Sequencer_Log" class="proc">Log</a> <span class="arg-list">(text)</span><br>
+<a href="cpop3Sequencer.html#ppop3Sequencer_OnDone" class="proc">OnDone</a> <span class="arg-list">()</span><br>
+<a href="cpop3Sequencer.html#ppop3Sequencer_Write" class="proc">Write</a> <span class="arg-list">(text)</span>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="oconn"></a>
+<dt><span class="option-name">-conn</span>
+<dd><span class="option-description">  Handle of the <span class="xref-classes"><a href="cpop3Connection.html" class="class">pop3Connection</a></span> object which created the  sequencer.</span>
+<a name="odone"></a>
+<dt><span class="option-name">-done</span>
+<dd><span class="option-description">  Name of the method to call at <span class="xref-oref"><a href="cpop3Sequencer.html#oconn" class="xref-oref">conn</a></span> after completion of the  sequence.</span>
+<a name="osock"></a>
+<dt><span class="option-name">-sock</span>
+<dd><span class="option-description">  The socket to use to talk with the pop3 demon.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="ppop3Sequencer_IsError"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">IsError</span> <span class="arg-list">(line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines the error state of the POP3 response contained in <span class="argument"><span class="proc">line</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+The response to check.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1 in case of an error detected, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Sequencer_Log"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Log</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Logs the specified <span class="argument"><span class="proc">text</span></span> using syslog facility of Pool.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The text to log.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Sequencer_OnDone"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">OnDone</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_OnDone" class="proc">OnDone</a><br>
+<span class="header-description-value">Overides base class definition <span class="xref-mref"><a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_OnDone" class="proc">OnDone</a></span> to call the completion method in the associated pop3 connection object.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Sequencer_Write"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Write</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Send the specified <span class="argument"><span class="proc">text</span></span> to the pop3 demon. Additionally logs it using the syslog facility of Pool.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The text to send to the pop3 demon.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

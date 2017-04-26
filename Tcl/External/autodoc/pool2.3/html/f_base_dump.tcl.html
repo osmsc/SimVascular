@@ -1,0 +1,250 @@
+<html>
+<head>
+<title>File 'base/dump.tcl' (part of 'Pool_Base')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'base/dump.tcl' (part of '<a href="pkg_Pool_Base.html" class="package">Pool_Base</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Dump datastructures into sourceable strings.</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Dump various interpreter information into strings, for save and later restoration. The information is packed into sourceable tcl scripts thus making restauration trivial.</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">dump datastructures,  info dump, procedure dump, namespace dump, variable dump, stack trace,  tracing the stack</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_base_dump.tcl.html#p_pool_dump_callstack" class="proc">::pool::dump::callstack</a> <span class="arg-list">(stackName)</span>
+<li class="proc-listing"><a href="f_base_dump.tcl.html#p_pool_dump_namespace" class="proc">::pool::dump::namespace</a> <span class="arg-list">(args)</span>
+<li class="proc-listing"><a href="f_base_dump.tcl.html#p_pool_dump_nsopt" class="proc">::pool::dump::nsopt</a> <span class="arg-list">(o v)</span>
+<li class="proc-listing"><a href="f_base_dump.tcl.html#p_pool_dump_nsvar" class="proc">::pool::dump::nsvar</a> <span class="arg-list">(args)</span>
+<li class="proc-listing"><a href="f_base_dump.tcl.html#p_pool_dump_proc" class="proc">::pool::dump::proc</a> <span class="arg-list">(procName)</span>
+<li class="proc-listing"><a href="f_base_dump.tcl.html#p_pool_dump_var" class="proc">::pool::dump::var</a> <span class="arg-list">(args)</span>
+<li class="proc-listing"><a href="f_base_dump.tcl.html#p_pool_dump_varopt" class="proc">::pool::dump::varopt</a> <span class="arg-list">(o v)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_dump_callstack"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::dump::callstack</span> <span class="arg-list">(stackName)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Returns a string containing the procedure callstack at the place of the procedures calling</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: stackName (= {})
+</td>
+<td class="argument-description">
+Name given to this trace
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_dump_namespace"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::dump::namespace</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Dumps a namespace and its contents into a string. Evaluating the string will restore the namespace.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+A list of options and their values, followed by the name of the namespace. The options known to this procedure are '-proc', '-var', '-ns', '-imports' and '-array'. Allowed values are 'on', 'off' and 'compact'. The single exception to this is '-array', see <span class="xref-procs"><a href="f_base_dump.tcl.html#p_pool_dump_var" class="proc">::pool::dump::var</a></span> for more. The value of an option determines whether the associated part of the namespace is dumped (on), left out (off) or in a short form (compact). The latter can be a simple statement (variables, procedures), or a comment (imported commands, nested namespaces).
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A string containing a tcl statement to restore the specified namespace and its contents.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_dump_nsopt"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::dump::nsopt</span> <span class="arg-list">(o v)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal type checker for all options except '-array'. Accepts 'on', 'off' and 'copmpact'</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the option to check.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: v
+</td>
+<td class="argument-description">
+The value to check.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A boolean value. True signals acceptance of <span class="argument"><span class="proc">v</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_dump_nsvar"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::dump::nsvar</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Dumps a namespace variable and its contents into a string. Evaluating the string will restore the variable. See <span class="xref-procs"><a href="f_base_dump.tcl.html#p_pool_dump_var" class="proc">::pool::dump::var</a></span> too. Expects to be called in the namespace containing the variable.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+A list of options and their values, followed by the name of the variable. The only option known to this procedure is '-array'. Allowed values are 'compact' and 'verbose', the first is used as default. Only dumping of arrays is affected by this option. In compact format an 'array set' statement will be generated, otherwise a sequence of individual 'set's.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A string containing a tcl statement to restore the specified variable and its contents.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_dump_proc"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::dump::proc</span> <span class="arg-list">(procName)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Dumps procedure <span class="argument"><span class="proc">procName</span></span> into a string. Evaluating the string in a tcl interpreter will restore the procedure and add it to that interpreter.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Dangers</span>: Qualifying namespaces are removed from the procedure name in the returned statement
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: procName
+</td>
+<td class="argument-description">
+The name of the procedure to dump. Absolute and/or relative namespace identifiers are allowed here.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A string containing a tcl statement to restore the procedure definition.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_dump_var"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::dump::var</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Dumps a global (or procedure local) variable and its contents into a string. Evaluating the string will restore the variable. See <span class="xref-procs"><a href="f_base_dump.tcl.html#p_pool_dump_nsvar" class="proc">::pool::dump::nsvar</a></span> too.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+A list of options and their values, followed by the name of the variable. The only option known to this procedure is '-array'. Allowed values are 'compact' and 'verbose', the first is used as default. Only dumping of arrays is affected by this option. In compact format an 'array set' statement will be generated, otherwise a sequence of individual 'set's.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A string containing a tcl statement to restore the specified variable and its contents.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_dump_varopt"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::dump::varopt</span> <span class="arg-list">(o v)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal type checker for option '-array'. Accepts only 'verbose' and 'copmpact'</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the option to check.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: v
+</td>
+<td class="argument-description">
+The value to check.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A boolean value. True signals acceptance of <span class="argument"><span class="proc">v</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

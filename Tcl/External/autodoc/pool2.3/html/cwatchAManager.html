@@ -1,0 +1,229 @@
+<html>
+<head>
+<title>File 'gui/watchaman.cls' (part of 'Pool_GuiBase')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'gui/watchaman.cls' (part of '<a href="pkg_Pool_GuiBase.html" class="package">Pool_GuiBase</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">value management (-value), as in <a href="http://tix.mne.com/" class="xref-dep">Tix</a></span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">management for option -variable of a widget displaying an array. Actually a stripped down version of <span class="xref-classes"><a href="cvalueManager.html" class="class">valueManager</a></span>.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">value management,  -value,  widgets</span>
+</dl>
+</div>
+<h1 class="class">Class 'watchAManager'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Defines and manages the option '-variable'. Derived classes must provide the methods 'initDisplay', 'updateDisplay' and 'clearDisplay'. They have to refresh the shown information according to the changed value.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cwidget.html" class="class">widget</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ovariable" class="options">variable</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cwatchAManager.html#pwatchAManager_InitializeManager" class="proc">InitializeManager</a> <span class="arg-list">()</span><br>
+<a href="cwatchAManager.html#pwatchAManager_TrackVarContents" class="proc">TrackVarContents</a> <span class="arg-list">(var idx op)</span><br>
+<a href="cwatchAManager.html#pwatchAManager_TrackVariable" class="proc">TrackVariable</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cwatchAManager.html#pwatchAManager_initDisplay" class="proc">initDisplay</a> <span class="arg-list">()</span><br>
+<a href="cwatchAManager.html#pwatchAManager_updateDisplay" class="proc">updateDisplay</a> <span class="arg-list">()</span><br>
+<a href="cwatchAManager.html#pwatchAManager_watchAManager" class="proc">watchAManager</a> <span class="arg-list">()</span><br>
+<a href="cwatchAManager.html#pwatchAManager_~watchAManager" class="proc">~watchAManager</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#voperation" class="members">operation</a><br>
+<a href="#vitem" class="members">item</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ovariable"></a>
+<dt><span class="option-name">-variable</span>
+<dd><span class="option-description">  Name of the (global) variable associated to the widget.  Any changes to its contents are propagated into the widget  and vice versa.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pwatchAManager_InitializeManager"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">InitializeManager</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Special method, is called after the completion of the construction of widget and its components. Initializes the value of the widget according to the contents of the associated variable, if defined.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pwatchAManager_TrackVarContents"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackVarContents</span> <span class="arg-list">(var idx op)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal trace callback to monitor the value of the array variable associated to the widget.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: var
+</td>
+<td class="argument-description">
+Standard trace argument, base name of traced variable
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: idx
+</td>
+<td class="argument-description">
+Standard trace argument, name of array item.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: op
+</td>
+<td class="argument-description">
+Standard trace argument, operation invoking the trace.
+</td>
+</tr>
+</table>
+</p>
+<a name="pwatchAManager_TrackVariable"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackVariable</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Configure procedure. Used to track changes to the value of -variable. Removes the traces set upon the old associated variable, then links in the new variable and its contents.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The value of the option before the change.
+</td>
+</tr>
+</table>
+</p>
+<a name="pwatchAManager_initDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">initDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Dummy method, must be overridden by derived classes. This one will only throw an error.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pwatchAManager_updateDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">updateDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Dummy method, must be overridden by derived classes. This one will only throw an error.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pwatchAManager_watchAManager"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">watchAManager</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Special constructor. Schedules the execution of the real initialization to happen after the standard initialization and the creation of all component widgets of the derived class.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pwatchAManager_~watchAManager"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">~watchAManager</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Special destructor. Removes the association between the widget and the variable specified in '-variable', if the latter is not empty. This is accomplished through the deletion of the variable trace set earlier by this widget.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="voperation"></a>
+<dt><span class="variable-name">operation</span>
+<dd><span class="variable-description">  The last operation on the array we are connected to, as  given by the trace callback (<span class="xref-mref"><a href="cwatchAManager.html#pwatchAManager_TrackVarContents" class="proc">TrackVarContents</a></span>).</span>
+<a name="vitem"></a>
+<dt><span class="variable-name">item</span>
+<dd><span class="variable-description">  The key used by the last operation on the array we are connected  to, as given by the trace callback (<span class="xref-mref"><a href="cwatchAManager.html#pwatchAManager_TrackVarContents" class="proc">TrackVarContents</a></span>).</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

@@ -1,0 +1,20 @@
+Hello world,
+
+I hereby announce memchan 2.1p2.
+It is 
+	an extension implementing two new channel-types. Instances
+	store their contents in memory, not on disk.
+    
+
+Changes from 2.1 to 2.1p1
+
+*	Bug fix in the TEA makefile.
+
+
+The distribution can be found at
+	<http://www.purl.org/NET/akupries/tcltk.html>
+	<http://www.purl.org/NET/akupries/soft/memchan/>
+	<http://www.purl.org/NET/akupries/soft/memchan/download/memchan2.1p2.README>
+	<http://www.purl.org/NET/akupries/soft/memchan/download/memchan2.1p2.tar.gz>
+	<http://www.purl.org/NET/akupries/soft/memchan/download/memchan2.1p2.tar.bz2>
+	<http://www.purl.org/NET/akupries/soft/memchan/download/memchan2.1p2.zip>

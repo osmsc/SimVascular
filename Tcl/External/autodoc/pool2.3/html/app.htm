@@ -1,0 +1,49 @@
+<html><head><title>Distributed applications</title><link rel=stylesheet href="styles.css"
+type="text/css"></head><body ><h1>Distributed applications</h1><hr class="navbar"><p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a></p><hr class="navbar"><dl><dt>apps/gen_cls <dd>Invoked without arguments. Searches the directory hierarchy
+beginning at the current working directory for '.cls'-files
+and compiles the contained class definitions (see <a href="pkg_Pool_Base.html" class="package">Pool_Base</a>) into pure tcl. The compilation result
+of file <b>X.cls</b> is stored into <b>X.tcl</b>.
+Additionally generates the file <b>clsIndex</b> in
+the current working directory, an index of the found classes.<dt>apps/gen_idx <dd>Invoked without arguments. Searches the directory hierarchy
+beginning at the current working directory for '.tcl'-files
+and generates a <b>tclIndex</b> suitable for autoloading.
+Recognizes standard procedures, classes as above (gen_cls),
+aliases and usage of all class instantiation commands defined in <b>clsIndex</b> (see above).<dt>apps/gen_pkg <dd>Invoked as 'gen_pkg packagename packageversion indexfile'.
+Generates <b>pkgIndex.tcl</b> from 'indexfile'
+(usually <b>tclIndex</b>).<dt>apps/nserver <dd>Called without arguments. Should be put into background. Uses <a href="pkg_Pool_Net.html" class="package">Pool_Net</a>/ns/* to create a simple name server.<dt>apps/nwho <dd>Called without arguments. Connects to a running <b>nserver</b>and lists all registered applications, together with their port
+numbers.<dt>apps/mail_sendfile <dd>Invoked as 'mail_sendfile -to recipient [-from sender]
+[-talkto host] file... Prepends each of the listed files with
+a mail header, then sends them via SMTP at the given host to
+the specified recipients. The sender defaults to the invoker,
+and the host to 'localhost'. The argument to '-to' may contain
+a valid tcl list. The file(s) are then send to each of the
+addresses on the list.<dt>apps/popsy <dd>A small POP3 server, written mainly for testing purposes (popeye).
+Built around the server core code in <a href="cpop3Server.html" class="file">net/pop3/server.cls</a>,
+uses <a href="caDB.html" class="file">net/adb.cls</a> and <a href="cmbox.html" class="file">net/pop3/mbox.cls</a>as well. Registers itself at 'nserver', see above. Can be remote
+controlled because of this, see next 2 entries. The available
+interface is described in <a href="popsyrc.htm" class="xref-xref">POPsy RC interface</a>. <br><br>Invoked as 'popsy ?-userdb filename? ?-mailfolder path? ?-port number?'.<br><br>Reads '~/.popsyrc' too. See <b>apps/dotpopsyrc</b> for an
+example. Hard coded defaults (lowest priority) are /var/adm/pop_userdb,
+/var/spool/mail and pop3.<dt>apps/popsy_man <dd>Mini utility to control a running popsy process. Command line based.
+Invoke without arguments, then use '?' or 'h' to get help.<dt>apps/popsymon <dd>The big brother to 'popsy_man'. GUI based application to monitor and
+control a running popsy process. Invoked without arguments. This
+application uses <a href="http://www.purl.org/net/hobbs/tcl/capp/" class="xref-dep">Tktable</a>, the spreadsheet extension
+by <a href="mailto:jhobbs@acm.org" class="xref-xref">Jeffrey Hobbs</a>.<dt>apps/popeye <dd>A pop3 client based upon <a href="cpop3Client.html" class="file">net/pop3/client.cls</a>, in the tradition of 'fetchmail', 'suck',
+etc. Uses the smtp interface (<span class="file-header">net/smtp/</span>) to deliver
+fetched mail locally, after appropriate munging of 'To:' header. The
+currently used classificator accepts all mail. Registers itself at
+'nserver', see above. Can be remote controlled because of this, see next
+entry. The available interface is described in <a href="popeyrc.htm" class="xref-xref">POPeye RC interface</a>. Other controllers I can think of are cron,
+with some intermediary shell/tcl script, or tkgoodstuff. <br><br>Invoked as 'popeye ?-user name? ?-password string? ?-host name?
+?-auth upass/apop? ?-to mailaddress? ?-port number? ?-use-top-for-retr 0/1?'.<br><br>Reads '~/.popeyerc' too. See <b>apps/dotpopeyerc</b> for an
+example. Hard coded defaults (lowest priority) for -auth, -use-top-for-retr,
+-port and -host only (upass, 0, pop3, localhost). <br><br><b>Important:</b> apop authentication requires the packages <a href="http://www.oche.de/~akupries/soft/trf/index.html" class="xref-dep">Trf</a> and <a href="http://www.oche.de/~akupries/tcltk.html" class="xref-dep">Memchan</a>. <br><br>Setting '-use-top-for-retr' to 1 forces the system to use 'TOP x 0' instead
+of 'RETR x'. It is in here because my provider had a brain dead pop3 server
+for some time. It didn't accept RETR, but delivered the whole mail if 0
+was given as 2nd argument to TOP. I don't know wether similar versions of
+this server are lurking out there, but better be prepared. This option
+should be left alone under normal circumstances.<dt>apps/popeyemon <dd>A simple graphical monitor to watch a running popeye process. Invoked
+without arguments.<dt>apps/popeye_trigger <dd>Simple tcl script to trigger a fetch cycle of popeye. Add to crontab for
+regular execution (see <b>apps/my.crontab</b> for an example).
+Invoked without arguments.</dl><p>Remarks:
+popeye, popeyemon and popeye_trigger are in actual use here at home,
+fetching the mail from my provider (<a href="http://www.westend.com" class="xref-xref">Westend GbR, Aachen</a>).</p><p>Idea: delay trigger 'flist'-operation of exmh after each fetch cycle.</p><hr><p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p></body></html>

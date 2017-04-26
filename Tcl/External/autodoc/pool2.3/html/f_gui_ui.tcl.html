@@ -1,0 +1,652 @@
+<html>
+<head>
+<title>File 'gui/ui.tcl' (part of 'Pool_GuiBase')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'gui/ui.tcl' (part of '<a href="pkg_Pool_GuiBase.html" class="package">Pool_GuiBase</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Helper procedures for manipulation of user interfaces.</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Helper procedures for manipulation of user interfaces.</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">User interface manipulation,  interface manipulation,  manipulation of user interfaces, window hierarchy traversal,  scan windows,  traverse window hierarchy,  window traversal, synchronous scrolling, separator bars, not-yet-implemented dialog,  under construction,  incompletion hints</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_MsConvertDirection" class="proc">::pool::ui::MsConvertDirection</a> <span class="arg-list">(dir)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_MsHandleScrollbar" class="proc">::pool::ui::MsHandleScrollbar</a> <span class="arg-list">(widgets dir args)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_MsHandleWidget" class="proc">::pool::ui::MsHandleWidget</a> <span class="arg-list">(scrollbar widgets dir first last)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_appendBindTag" class="proc">::pool::ui::appendBindTag</a> <span class="arg-list">(w tag)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_bool2state" class="proc">::pool::ui::bool2state</a> <span class="arg-list">(booleanValue)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_center" class="proc">::pool::ui::center</a> <span class="arg-list">(w)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_centerMain" class="proc">::pool::ui::centerMain</a> <span class="arg-list">(w h)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_gridSeparator" class="proc">::pool::ui::gridSeparator</a> <span class="arg-list">(w args)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_mapWindow" class="proc">::pool::ui::mapWindow</a> <span class="arg-list">(w args)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_multiScroll" class="proc">::pool::ui::multiScroll</a> <span class="arg-list">(scrollbar dir args)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_multiScrollList" class="proc">::pool::ui::multiScrollList</a> <span class="arg-list">(scrollbar dir widgets)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_nyi" class="proc">::pool::ui::nyi</a> <span class="arg-list">(args)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_orientation" class="proc">::pool::ui::orientation</a> <span class="arg-list">(o v)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_packSeparator" class="proc">::pool::ui::packSeparator</a> <span class="arg-list">(w args)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_prependBindTag" class="proc">::pool::ui::prependBindTag</a> <span class="arg-list">(w tag)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_relief" class="proc">::pool::ui::relief</a> <span class="arg-list">(o v)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_ymOrder" class="proc">::pool::ui::ymOrder</a> <span class="arg-list">(o v)</span>
+<li class="proc-listing"><a href="f_gui_ui.tcl.html#p_pool_ui_ymdOrder" class="proc">::pool::ui::ymdOrder</a> <span class="arg-list">(o v)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_ui_MsConvertDirection"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::MsConvertDirection</span> <span class="arg-list">(dir)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Converts the specified direction into the subcommand to use for scrolling (either xscrollcommand or yscrollcommand).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: dir
+</td>
+<td class="argument-description">
+The scroll direction, possible values are 'x', 'y', 'horizontal', 'vertical' and all unique prefixes.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The unique prefix of the scrollcommand to give to the scrollbar widget, i.e. 'x' or 'y'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_MsHandleScrollbar"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::MsHandleScrollbar</span> <span class="arg-list">(widgets dir args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Scrollbar callback. Just propagates the given scroll data (in <span class="argument"><span class="proc">args</span></span>) to the associated <span class="argument"><span class="proc">widgets</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: widgets
+</td>
+<td class="argument-description">
+List of synchronized widgets.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: dir
+</td>
+<td class="argument-description">
+Scroll direction.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+Scroll information, as given by tk.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_MsHandleWidget"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::MsHandleWidget</span> <span class="arg-list">(scrollbar widgets dir first last)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Callback for listboxes bound to <span class="argument"><span class="proc">scrollbar</span></span>. Updates the <span class="argument"><span class="proc">scrollbar</span></span> and all <span class="argument"><span class="proc">widgets</span></span> connected to it.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This code doesn't care to exclude the invoking widget from the update. It assumes that the invoker detects and aborts the possible looping.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: scrollbar
+</td>
+<td class="argument-description">
+Scrollbar widget connected to all <span class="argument"><span class="argument-description">widgets</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: widgets
+</td>
+<td class="argument-description">
+List of widgets synchronized by <span class="argument"><span class="argument-description">scrollbar</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: dir
+</td>
+<td class="argument-description">
+Scroll direction.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: first
+</td>
+<td class="argument-description">
+Standard scroll parameter, as given by Tk.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: last
+</td>
+<td class="argument-description">
+Standard scroll parameter, as given by Tk.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_appendBindTag"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::appendBindTag</span> <span class="arg-list">(w tag)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Add the <span class="argument"><span class="proc">tag</span></span> to the binding tags of <span class="argument"><span class="proc">w</span></span>. The new tag is added behind the end of the current tag-list.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+The widget to add the <span class="argument"><span class="argument-description">tag</span></span> to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: tag
+</td>
+<td class="argument-description">
+The name of the tag to add to widget <span class="argument"><span class="argument-description">w</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_bool2state"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::bool2state</span> <span class="arg-list">(booleanValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Converts a boolean value as accepted by 'expr', 'if', etc. into a state value as accepted by most widgets (option -state). True is equivalent to 'normal', false means 'disabled'.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: booleanValue
+</td>
+<td class="argument-description">
+The value to convert.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: is one of 'normal' and 'disabled'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_center"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::center</span> <span class="arg-list">(w)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Centers the widget <span class="argument"><span class="proc">w</span></span> on the screen.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Does not work for the main window ('.').
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+The path of the window to center on the screen.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_centerMain"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::centerMain</span> <span class="arg-list">(w h)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Centers the main window on the screen. Uses information from `wm geometry` to calculate the positioning.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+Requested width of the main window.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: h
+</td>
+<td class="argument-description">
+Requested height of the main window.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_gridSeparator"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::gridSeparator</span> <span class="arg-list">(w args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Generates a horizontal/vertical separator bar named <span class="argument"><span class="proc">w</span></span>. The separator is actually a frame, but forced into a thin line by the 'grid' geometry manager.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+Name of the separator window.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+List of &lt;option,value&gt;-pairs. Accepts '-orientation', '-in', '-row', '-column', '-span' and all unique prefixes.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_mapWindow"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::mapWindow</span> <span class="arg-list">(w args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executes the partial command stored in <span class="argument"><span class="proc">args</span></span> for window <span class="argument"><span class="proc">w</span></span> and all its children.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+top of window hierarchy to traverse
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+partial command to execute
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_multiScroll"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::multiScroll</span> <span class="arg-list">(scrollbar dir args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Essentially the same as <span class="xref-procs"><a href="f_gui_ui.tcl.html#p_pool_ui_multiScrollList" class="proc">::pool::ui::multiScrollList</a></span>. The difference: The widgets to scroll as unit are specified by a variable number of arguments, instead of a list.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: scrollbar
+</td>
+<td class="argument-description">
+Scrollbar to manipulate all widgets in <span class="argument"><span class="argument-description">args</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: dir
+</td>
+<td class="argument-description">
+Scroll direction
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+List of widgets to synchronize via <span class="argument"><span class="argument-description">scrollbar</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_multiScrollList"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::multiScrollList</span> <span class="arg-list">(scrollbar dir widgets)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Binds the <span class="argument"><span class="proc">scrollbar</span></span> to all specified <span class="argument"><span class="proc">widgets</span></span> to let them scroll together.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: scrollbar
+</td>
+<td class="argument-description">
+Scrollbar to manipulate all <span class="argument"><span class="argument-description">widgets</span></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: dir
+</td>
+<td class="argument-description">
+Scroll direction.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: widgets
+</td>
+<td class="argument-description">
+List of widgets to synchronize via <span class="argument"><span class="argument-description">scrollbar</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_nyi"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::nyi</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Shows a modal dialog warning the user about entering a missing part of the application.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+Additional to text to display in the dialog.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_orientation"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::orientation</span> <span class="arg-list">(o v)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Type checker procedure. Accepts only the keys of 'scrollcmd' as directional values.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the option to check.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: v
+</td>
+<td class="argument-description">
+The value to check
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A boolean value. True signal acceptance of <span class="argument"><span class="proc">v</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_packSeparator"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::packSeparator</span> <span class="arg-list">(w args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Generates a horizontal/vertical separator bar named <span class="argument"><span class="proc">w</span></span>. The separator is actually a frame, but forced into a thin line by the 'pack' geometry manager.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+name of the separator window.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+List of &lt;option,value&gt;-pairs. Accepts '-orientation', '-in' and all unique prefixes.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_prependBindTag"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::prependBindTag</span> <span class="arg-list">(w tag)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Add the <span class="argument"><span class="proc">tag</span></span> to the binding tags of <span class="argument"><span class="proc">w</span></span>. The new tag is added at the front of the current tag-list.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+The widget to add the <span class="argument"><span class="argument-description">tag</span></span> to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: tag
+</td>
+<td class="argument-description">
+The name of the tag to add to widget <span class="argument"><span class="argument-description">w</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_relief"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::relief</span> <span class="arg-list">(o v)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Type checker procedure. Accepts only the standard relief codes.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the option to check.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: v
+</td>
+<td class="argument-description">
+The value to check
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A boolean value. True signal acceptance of <span class="argument"><span class="proc">v</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_ymOrder"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::ymOrder</span> <span class="arg-list">(o v)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Type checker procedure. Accepts the order codes used by <span class="xref-classes"><a href="cmonthBrowserTixB.html" class="class">monthBrowserTixB</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the option to check.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: v
+</td>
+<td class="argument-description">
+The value to check
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A boolean value. True signal acceptance of <span class="argument"><span class="proc">v</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_ui_ymdOrder"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::ui::ymdOrder</span> <span class="arg-list">(o v)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Type checker procedure. Accepts the order codes used by <span class="xref-classes"><a href="ccalendarTix.html" class="class">calendarTix</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the option to check.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: v
+</td>
+<td class="argument-description">
+The value to check
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A boolean value. True signal acceptance of <span class="argument"><span class="proc">v</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

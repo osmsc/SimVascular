@@ -1,0 +1,61 @@
+# -*- tcl -*-
+# --------------------------------------------------
+# (C) 1997	Andreas Kupries <a.kupries@westend.com>
+#
+# Background and usage info for base/cgi.tcl (cgi tools)
+#
+# CVS:	$Id: cgitools.doc,v 1.3 1998/06/01 19:55:33 aku Exp $
+# --------------------------------------------------
+
+newPage cgitools.htm "Cgi Tools, Usage"
+
+par "
+Each of the procedures defined in [fileRef base/cgi.tcl]
+falls into one of 2 categories:
+"
+
+enumerate {
+    item "Support of multi-page generation, or"
+    item "
+    support of redirection of output into
+    strings, with later retrieval of the saved code.
+    "
+}
+
+par "The following combinations are possible:"
+
+itemize {
+    item "Use only the procedures of one category."
+    item "
+    Start with multi-page generation, then use the
+    string support between open/close file
+    "
+    item "
+    Start with string support, then open/close files as desired
+    "
+}
+
+par "
+A deeper nesting is (currently) [strong not] possible. So please
+don't try to open a file, stack some string buffers and then open
+another file.
+"
+
+section "Some remarks"
+
+par "
+The benefit of multi-page support should be obvious,
+but why the support of stacked string buffers ?
+"
+
+par "
+Well, some of the commands in the [xRef cgilib] (made by
+[xRef libes]) don't evaluate their input, but take preformatted
+text only. An example of this are [strong cgi_li] and
+[strong cgi_term_definition]. This prevents the deeper nesting of
+list structures, although possible in native HTML. The redirection
+into strings now allows pre-generation of the nested parts and their
+insertion whereever desired.
+"
+
+closePage

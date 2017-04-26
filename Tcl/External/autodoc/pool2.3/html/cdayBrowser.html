@@ -1,0 +1,506 @@
+<html>
+<head>
+<title>File 'clock/dayBrowse.cls' (part of 'Pool_Clock')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'clock/dayBrowse.cls' (part of '<a href="pkg_Pool_Clock.html" class="package">Pool_Clock</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Day choice</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Widget to choose day, depending on given month and year</span>
+<dt><span class="header-title">See also</span>
+<dd><span class="header-value"><span class="xref-classes"><a href="ccalendar.html" class="class">calendar</a></span></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">calendar,  choosing a day,  day choice</span>
+</dl>
+</div>
+<h1 class="class">Class 'dayBrowser'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cvalueManager.html" class="class">valueManager</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#oonwrap" class="options">onwrap</a><br>
+<a href="#omonth" class="options">month</a><br>
+<a href="#oheading" class="options">heading</a><br>
+<a href="#osunday" class="options">sunday</a><br>
+<a href="#oweekno" class="options">weekno</a><br>
+<a href="#odayrelief" class="options">dayrelief</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cdayBrowser.html#pdayBrowser_GetOffset" class="proc">GetOffset</a> <span class="arg-list">()</span><br>
+<a href="cdayBrowser.html#pdayBrowser_OnWrap" class="proc">OnWrap</a> <span class="arg-list">(direction)</span><br>
+<a href="cdayBrowser.html#pdayBrowser_RefreshDay" class="proc">RefreshDay</a> <span class="arg-list">(storeChange day)</span><br>
+<a href="cdayBrowser.html#pdayBrowser_RefreshDisplay" class="proc">RefreshDisplay</a> <span class="arg-list">()</span><br>
+<a href="cdayBrowser.html#pdayBrowser_TrackDayrelief" class="proc">TrackDayrelief</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cdayBrowser.html#pdayBrowser_TrackHeading" class="proc">TrackHeading</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cdayBrowser.html#pdayBrowser_TrackMonth" class="proc">TrackMonth</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cdayBrowser.html#pdayBrowser_TrackSunday" class="proc">TrackSunday</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cdayBrowser.html#pdayBrowser_TrackWeekno" class="proc">TrackWeekno</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cdayBrowser.html#pdayBrowser_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span><br>
+<a href="cdayBrowser.html#pdayBrowser_dayBrowser" class="proc">dayBrowser</a> <span class="arg-list">()</span><br>
+<a href="cdayBrowser.html#pdayBrowser_downOne" class="proc">downOne</a> <span class="arg-list">()</span><br>
+<a href="cdayBrowser.html#pdayBrowser_downSeven" class="proc">downSeven</a> <span class="arg-list">()</span><br>
+<a href="cdayBrowser.html#pdayBrowser_setBindings" class="proc">setBindings</a> <span class="arg-list">()</span><br>
+<a href="cdayBrowser.html#pdayBrowser_setBindingsTo" class="proc">setBindingsTo</a> <span class="arg-list">(w)</span><br>
+<a href="cdayBrowser.html#pdayBrowser_upOne" class="proc">upOne</a> <span class="arg-list">()</span><br>
+<a href="cdayBrowser.html#pdayBrowser_upSeven" class="proc">upSeven</a> <span class="arg-list">()</span><br>
+<a href="cdayBrowser.html#pdayBrowser_updateDisplay" class="proc">updateDisplay</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vm" class="members">m</a><br>
+<a href="#vy" class="members">y</a><br>
+<a href="#vmonlen" class="members">monlen</a><br>
+<a href="#voffset" class="members">offset</a><br>
+<a href="#vchosen" class="members">chosen</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="oonwrap"></a>
+<dt><span class="option-name">-onwrap</span>
+<dd><span class="option-description">  Script to evaluate in the case of a wrap around, either at the  start or the end of the month. The evaluation takes place  before the execution of <span class="xref-oref"><a href="cvalueManager.html" class="class">valueManager</a>:<a href="cvalueManager.html#ocommand" class="xref-oref">command</a></span>. A single  argument is appended before the actual evaluation, it  specifies the direction of the wrap. Possible values are 'up'  (wrap 12 -&gt; 1) and 'down' (wrap 1-&gt;12). A possible use is the  modification of an associated yearBrowser.</span>
+<a name="omonth"></a>
+<dt><span class="option-name">-month</span>
+<dd><span class="option-description">  External month/year information (in format mm/yyyy)  to control the appearance of the widget.</span>
+<a name="oheading"></a>
+<dt><span class="option-name">-heading</span>
+<dd><span class="option-description">  Color to mark header row.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">black</span>
+<a name="osunday"></a>
+<dt><span class="option-name">-sunday</span>
+<dd><span class="option-description">   Color to mark sundays.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">red</span>
+<a name="oweekno"></a>
+<dt><span class="option-name">-weekno</span>
+<dd><span class="option-description">   Color to mark week numbers</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">black</span>
+<a name="odayrelief"></a>
+<dt><span class="option-name">-dayrelief</span>
+<dd><span class="option-description">  Relief of button associated to currently chosen day</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">sunken</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pdayBrowser_GetOffset"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">GetOffset</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal method. Computes the weekday associated to the first day in a month. This is used to correctly indent the topmost row of day buttons.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_OnWrap"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">OnWrap</span> <span class="arg-list">(direction)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Propagates wraparound events, if possible</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: direction
+</td>
+<td class="argument-description">
+direction of wrap, one 'up' or 'down' respectively.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_RefreshDay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">RefreshDay</span> <span class="arg-list">(storeChange day)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Refreshes the day buttons after a change of the current value.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: storeChange
+</td>
+<td class="argument-description">
+1 if called by day button <span class="argument"><span class="argument-description">day</span></span>. This requires propagation of the new value to all internal data structures. 0 makes internal changes visible to the user, by changing the appearance of the buttons.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: day
+</td>
+<td class="argument-description">
+Relevant for <span class="argument"><span class="argument-description">storeChange</span></span>=1, index of activated button.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_RefreshDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">RefreshDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Refreshes the area containing the day buttons according to changes in day, month or year.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_TrackDayrelief"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackDayrelief</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executed whenever the relief of the buttons is set.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option, always '-dayrelief'.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_TrackHeading"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackHeading</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executed whenever the color of the heading is changed.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option, always '-heading'.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_TrackMonth"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackMonth</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executed every time the month/year information is changed.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option, always '-month'.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_TrackSunday"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackSunday</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executed whenever the color of the sunday column requires a refresh.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option, always '-sunday'.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_TrackWeekno"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackWeekno</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executed whenever the color of the weeknumber column requires a refresh.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option, always '-weekno'.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cwidget.html#pwidget_createSubwidgets" class="proc">createSubwidgets</a><br>
+<span class="header-description-value">Called by the framework to generate the subwidgets and their layout.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_dayBrowser"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">dayBrowser</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Initializes the value to the current day if not set already by the user. Initializes the month/year information to the current month/year if not already set by the user.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_downOne"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">downOne</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Decrements chosen day by one. Touching the lower bound triggers a wrap-around to the highest value possible. This event might be propagated.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_downSeven"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">downSeven</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Increments chosen day by seven (ahead a week). Touching the upper bound triggers a wrap-around. This event might be propagated.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_setBindings"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">setBindings</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cwidget.html#pwidget_setBindings" class="proc">setBindings</a><br>
+<span class="header-description-value">Adds various keyboard accelerators to the daybrowser.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_setBindingsTo"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">setBindingsTo</span> <span class="arg-list">(w)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds various keyboard accelerators to the given widget.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+The widget the accelerators are added to.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_upOne"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">upOne</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Increments the chosen day by one. Touching the upper bound triggers a wrap-around to the lowest value possible. This event might be propagated.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_upSeven"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">upSeven</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Decrements chosen day by seven (back a week). Touching the lower bound triggers a wrap-around. This event might be propagated.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdayBrowser_updateDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">updateDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cvalueManager.html#pvalueManager_updateDisplay" class="proc">updateDisplay</a><br>
+<span class="header-description-value">Method required by the superclass <span class="xref-classes"><a href="cvalueManager.html" class="class">valueManager</a></span> to propagate changes to the value into the display. Requests are simply forwarded to <span class="xref-mref"><a href="cdayBrowser.html" class="class">dayBrowser</a>:<a href="cdayBrowser.html#pdayBrowser_RefreshDay" class="proc">RefreshDay</a></span></span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vm"></a>
+<dt><span class="variable-name">m</span>
+<dd><span class="variable-description">       Derived information, he month part of <span class="xref-oref"><a href="cdayBrowser.html" class="class">dayBrowser</a>:<a href="cdayBrowser.html#omonth" class="xref-oref">month</a></span>.</span>
+<a name="vy"></a>
+<dt><span class="variable-name">y</span>
+<dd><span class="variable-description">       Derived information, he year  part of <span class="xref-oref"><a href="cdayBrowser.html" class="class">dayBrowser</a>:<a href="cdayBrowser.html#omonth" class="xref-oref">month</a></span>.</span>
+<a name="vmonlen"></a>
+<dt><span class="variable-name">monlen</span>
+<dd><span class="variable-description">  Derived information, the length of the specified  <span class="xref-oref"><a href="cdayBrowser.html" class="class">dayBrowser</a>:<a href="cdayBrowser.html#omonth" class="xref-oref">month</a></span>.</span>
+<a name="voffset"></a>
+<dt><span class="variable-name">offset</span>
+<dd><span class="variable-description">  Offset of first day in month into the day-area. Alternative  description: Difference between day and number of associated  button.</span>
+<a name="vchosen"></a>
+<dt><span class="variable-name">chosen</span>
+<dd><span class="variable-description">  Index of chosen button for chosen day.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">-1</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

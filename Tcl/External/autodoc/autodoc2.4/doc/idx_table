@@ -1,0 +1,16 @@
+Indices im System, und ihre Konfiguration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+logischer Name	Kurzer Name		HTML-Seite	HTML Titel
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+packages	Packages		packages.htm	Index of packages
+files		Files			files.htm	Index of files
+procs		Procedures		procs.htm	Index of procedures
+classes		Classes			classes.htm	Index of classes
+keywords	Keywords		keywords.htm	Keywords
+dep		External packages	deps.htm	External packages and their users
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+		^^^^^^^^^^^^^^^^^
+		NEU NEU
+
+	Vereinfachten Setup ermoeglichen.

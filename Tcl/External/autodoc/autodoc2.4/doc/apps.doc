@@ -1,0 +1,149 @@
+# -*- tcl -*-
+
+
+newPage     app.htm "Distributed applications"
+add2Sidebar app.htm "Applications"
+
+par "
+Two applications are distributed, [strong autodoc] and [strong tkautodoc].
+The difference between them is that [strong autodoc] starts scanning immediately,
+[strong tkautodoc] on the other hand pops up a graphical interface, allowing for
+interactive redefinition of some options before the start of the scan.
+"
+
+par "General invocation of both is as [strong "(tk)autodoc ?-option value?..."]."
+par "Recognized options are:"
+
+definitionList {
+    defterm -v {
+	Possible values are 0 and 1. If set to 1 the values of all
+	options are written to stdout. Defaults to 0.
+    }
+
+    defterm -srcdir {
+	The directory containing the distribution to be documented.
+	Defaults to the current working directory.
+    }
+
+    defterm -outputdir {
+	The directory to write the generated HTML pages into. Defaults
+	to subdirectory 'html' of the current working directory. Will
+	be made, if not in existence already.
+    }
+
+    defterm -tables {
+	Possible values are 0 and 1. Has effect only if the distribution
+	contains '.doc'-files generating additional pages. Influences the
+	layout of the homepage. If set to 1 distribution description and
+	links to the additional pages are placed side by side. Otherwise
+	the additional links are placed below the description. Defaults
+	to 0.
+    }
+
+    defterm -replyaddr "
+	The mail-address used at the bottom of every page. Defaults to
+        [strong "\[logname]@\[info hostname]"]. 'logname' is defined
+        in the package [depRef Pool_Base].
+    "
+
+    defterm -psort {
+	Possible values are 0 and 1. Determines wether procedure/method
+	definitions of a file/class are written alphabetically sorted (1),
+	or in the order encountered during the scan (0). Defaults to 1.
+    }
+
+    defterm -ptable {
+	Possible values are 0 and 1. Determines wether procedure/method
+	definitions of a file/class are written as table (1) or definition
+	list (0). Defaults to 1.
+    }
+
+    defterm -up-link {
+	The url to use as target in the uplink to the site containing
+	the generated documentation. Ignored if neither -up-title nor
+	-up-image is set.
+    }
+
+    defterm -up-title {
+	The string to use in the uplink to the site containing the
+	generated documentation.
+    }
+
+    defterm -up-image "
+	The symbolic name of the image to use in the uplink to the
+	site containing the generated documentation, as defined with a
+	call [strong imgDef].
+    "
+
+    defterm -up-imglink {
+	A boolean flag. Determines wether the image is made a part of
+	the generated uplink or not. Ignored if no text was given, the
+	image has to be the link in such a case.
+    }
+
+    defterm -exclude {
+	A list of glob patterns. All files with names matching at
+	least one of the patterns will be excluded from the scan and
+	documentation processing. This option takes effect while the
+	system is searching for files to document and while searching
+	for additional .doc and .predoc files.
+    }
+
+    defterm -clisttype "
+        Either one of [strong comma] or [strong par].  Defines the
+        appearance of the lists used in classes to reference
+        superclasses, options, methods and member variables.
+    "
+
+    defterm -no-problems {
+	Boolean option. If set the system will not write the
+	accumulated problem reports / pages. It will still write that
+	there are problems and how many, if any. Default is 0 == no
+	supression.
+    }
+
+    defterm -css {
+	Boolean option to control support for cascading style sheets
+	(CSS). Support is enabled by default.
+    }
+
+    defterm -fsort-fullpath {
+	Boolean option. If set the listing of files in their index is
+	sorted by their full path. Else the first letter of the real
+	filename (directories stripped).
+    }
+
+    defterm -file-prefix {
+	In effect only if -fsort-fullpath is set. Defines a prefix to
+	remove from the path before taking the first letter.
+    }
+
+    defterm -class-prefix {
+	Defines a prefix to remove from the namespace of a class
+	before taking the first letter.
+    }
+
+    defterm -proc-prefix {
+	Defines a prefix to remove from the namespace of a procedure
+	before taking the first letter.
+    }
+
+    defterm -namespace-prefix {
+	Defines a prefix to remove from the namespace of a namespace
+	before taking the first letter.
+    }
+
+    defterm -itk-opt-alias "
+	The name of a custom command found in the code to scan and
+	equivalent to [strong itk_options].
+    "
+}
+
+par "
+Both applications read the file '.autodocrc' in the home directory of the
+caller, if present, and incorporate any option-values defined in it.
+These definitions take precedence over the hardwired defaults, but can be
+overridden by the command line.
+"
+
+closePage

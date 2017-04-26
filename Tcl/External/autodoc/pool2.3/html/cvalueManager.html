@@ -1,0 +1,274 @@
+<html>
+<head>
+<title>File 'gui/valueman.cls' (part of 'Pool_GuiBase')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'gui/valueman.cls' (part of '<a href="pkg_Pool_GuiBase.html" class="package">Pool_GuiBase</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">value management (-value, -command, -variable), as in <a href="http://tix.mne.com/" class="xref-dep">Tix</a></span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">management for options -value, -variable and -command of a widget using a single value. Actually snarfed from <a href="http://tix.mne.com/" class="xref-dep">Tix</a> and adapted to our oo system.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">value management,  -value,  -variable,  -command,  widgets</span>
+</dl>
+</div>
+<h1 class="class">Class 'valueManager'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Defines and manages the options '-value', '-variable', '-command' and their interactions. Derived classes must provide a method 'updateDisplay'. It will be called after changes to the value and has to refresh the shown information according to the changed value.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cwidget.html" class="class">widget</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ocommand" class="options">command</a><br>
+<a href="#ovalue" class="options">value</a><br>
+<a href="#ovariable" class="options">variable</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cvalueManager.html#pvalueManager_ExecuteCmd" class="proc">ExecuteCmd</a> <span class="arg-list">()</span><br>
+<a href="cvalueManager.html#pvalueManager_InitializeManager" class="proc">InitializeManager</a> <span class="arg-list">()</span><br>
+<a href="cvalueManager.html#pvalueManager_TrackValue" class="proc">TrackValue</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cvalueManager.html#pvalueManager_TrackVarContents" class="proc">TrackVarContents</a> <span class="arg-list">(var idx op)</span><br>
+<a href="cvalueManager.html#pvalueManager_TrackVariable" class="proc">TrackVariable</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cvalueManager.html#pvalueManager_UpdateVariable" class="proc">UpdateVariable</a> <span class="arg-list">()</span><br>
+<a href="cvalueManager.html#pvalueManager_updateDisplay" class="proc">updateDisplay</a> <span class="arg-list">()</span><br>
+<a href="cvalueManager.html#pvalueManager_valueManager" class="proc">valueManager</a> <span class="arg-list">()</span><br>
+<a href="cvalueManager.html#pvalueManager_~valueManager" class="proc">~valueManager</a> <span class="arg-list">()</span>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ocommand"></a>
+<dt><span class="option-name">-command</span>
+<dd><span class="option-description">  Script to evaluate after changes to the  <span class="xref-oref"><a href="cvalueManager.html#ovalue" class="xref-oref">value</a></span>. A single argument is appended,  it contains the new value given to the widget.</span>
+<a name="ovalue"></a>
+<dt><span class="option-name">-value</span>
+<dd><span class="option-description">  The value managed by instances of this  class and all its derived classes.</span>
+<a name="ovariable"></a>
+<dt><span class="option-name">-variable</span>
+<dd><span class="option-description">  Name of the (global) variable associated to the widget.  Any changes to its contents are propagated into the widget  and vice versa.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pvalueManager_ExecuteCmd"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">ExecuteCmd</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executes the tcl script associated to changes of the widget value, if defined.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Technicalities as in <span class="xref-mref"><a href="cvalueManager.html#pvalueManager_UpdateVariable" class="proc">UpdateVariable</a></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="pvalueManager_InitializeManager"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">InitializeManager</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Special method, is called after the completion of the construction of widget and its components. Initializes the value of the widget according to the contents of the associated variable, if defined.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pvalueManager_TrackValue"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackValue</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Configure procedure. Internal method used to track changes made to the contents of option '-value'. Updates the associated global variable, executes the specified command, then shows the new value in the display. As both setting the -variable and execution of the -command are allowed to change the -value this order must not be changed or else we will be left with an inaccurate display.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The value of the option before the change.
+</td>
+</tr>
+</table>
+</p>
+<a name="pvalueManager_TrackVarContents"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackVarContents</span> <span class="arg-list">(var idx op)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal trace callback to monitor the value of the variable associated to the widget.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: var
+</td>
+<td class="argument-description">
+Standard trace argument, base name of traced variable
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: idx
+</td>
+<td class="argument-description">
+Standard trace argument, index of traced variable, if an array item
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: op
+</td>
+<td class="argument-description">
+Standard trace argument, operation invoking the trace.
+</td>
+</tr>
+</table>
+</p>
+<a name="pvalueManager_TrackVariable"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackVariable</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Configure procedure. Used to track changes to the value of -variable. Removes the traces set upon the old associated variable, then links in the new variable and its contents.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The value of the option before the change.
+</td>
+</tr>
+</table>
+</p>
+<a name="pvalueManager_UpdateVariable"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">UpdateVariable</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called after changes to the value. Updates the associated global variable, if defined.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Some technicalities to note:<br>
+ The internal trace is temporarily removed to avoid a (possibly infinite) recursive invocation of traces. The value of the global variable is reread after its setting to catch restrictions made by other traces.<br>
+ The code is originally from <a href="http://tix.mne.com/" class="xref-dep">Tix</a>, and was modified to fit into this oo framework.
+</td>
+</tr>
+</table>
+</p>
+<a name="pvalueManager_updateDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">updateDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Dummy method, must be overridden by derived classes. This one will only throw an error.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pvalueManager_valueManager"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">valueManager</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Special constructor. Schedules the execution of the real initialization to happen after the standard initialization and the creation of all component widgets of the derived class.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pvalueManager_~valueManager"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">~valueManager</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Special destructor. Removes the association between the widget and the variable specified in '-variable', if the latter is not empty. This is accomplished through the deletion of the variable trace set earlier by this widget.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

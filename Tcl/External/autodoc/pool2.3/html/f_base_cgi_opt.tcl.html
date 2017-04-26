@@ -1,0 +1,225 @@
+<html>
+<head>
+<title>File 'base/cgi_opt.tcl' (part of 'Pool_Base')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'base/cgi_opt.tcl' (part of '<a href="pkg_Pool_Base.html" class="package">Pool_Base</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Option handling</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Defines an option handling package like the standard one coming with Pool_base, see <span class="xref-files"><a href="f_base_getopt.tcl.html" class="file">base/getopt.tcl</a></span>, but using <span class="file-header">key=value</span> pairs to specify data instead of <span class="file-header">-key value</span> as is usual. This is done to blend in with the standard attribute handling of cgi and HTML. Uses the functionality of <span class="xref-files"><a href="f_base_getopt.tcl.html" class="file">base/getopt.tcl</a></span> internally. Especially the typecheckers are borrowed from that part of the Pool.</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">options,  key,  value,  attribute,  cgi,  html</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_base_cgi_opt.tcl.html#p_pool_cgi_checkValues" class="proc">::pool::cgi::checkValues</a> <span class="arg-list">(optDef optVal)</span>
+<li class="proc-listing"><a href="f_base_cgi_opt.tcl.html#p_pool_cgi_initValues" class="proc">::pool::cgi::initValues</a> <span class="arg-list">(optDef optVal)</span>
+<li class="proc-listing"><a href="f_base_cgi_opt.tcl.html#p_pool_cgi_parseArguments" class="proc">::pool::cgi::parseArguments</a> <span class="arg-list">(optDef optList optVal)</span>
+<li class="proc-listing"><a href="f_base_cgi_opt.tcl.html#p_pool_cgi_process" class="proc">::pool::cgi::process</a> <span class="arg-list">(optDef optlist optval)</span>
+<li class="proc-listing"><a href="f_base_cgi_opt.tcl.html#p_pool_cgi_processOpt" class="proc">::pool::cgi::processOpt</a> <span class="arg-list">(optDef optlist optval)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_cgi_checkValues"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::cgi::checkValues</span> <span class="arg-list">(optDef optVal)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Checks the values in the given array using the type checker procedures mentioned in the definition array.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optDef
+</td>
+<td class="argument-description">
+The name of the array containing the option and alias definitions and their type checkers.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optVal
+</td>
+<td class="argument-description">
+The name of the array containing the values to check
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_cgi_initValues"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::cgi::initValues</span> <span class="arg-list">(optDef optVal)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Initializes the given storage array with the default values of the options in the definition array.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optDef
+</td>
+<td class="argument-description">
+The name of the array containing the option and alias definitions and their default values
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optVal
+</td>
+<td class="argument-description">
+The name of the array to initalize.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_cgi_parseArguments"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::cgi::parseArguments</span> <span class="arg-list">(optDef optList optVal)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">This is the main parser procedure.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optDef
+</td>
+<td class="argument-description">
+The name of the array containing the option and alias definitions to recognize here.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optList
+</td>
+<td class="argument-description">
+The name of the variable containing the list of arguments to parse.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optVal
+</td>
+<td class="argument-description">
+The name of the array to hold the found values.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_cgi_process"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::cgi::process</span> <span class="arg-list">(optDef optlist optval)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Parses <span class="argument"><span class="proc">optlist</span></span> as a list of key=value elements followed by normal arguments. The end of the option sequence is detected by the presence of arguments not containing '='. Only options and aliases defined in <span class="argument"><span class="proc">optDef</span></span> are allowed. Values given to an alias are stored under the name of the option, *not* the alias. All values are stored in the array <span class="argument"><span class="proc">optval</span></span>. The option-names are used as keys. The storage array is initialized with the default values of the allowed options. The moment all option values are known and not changing anymore the 'type' procedures are called with option-names and -values to determine the legality of the specified value. The return value 'False' signals an illegal value.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optDef
+</td>
+<td class="argument-description">
+The name of the array containing the option and alias definitions to recognize.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optlist
+</td>
+<td class="argument-description">
+The list of arguments to parse.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optval
+</td>
+<td class="argument-description">
+The name of the array to hold the found values.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A list containing the arguments not processed here.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_cgi_processOpt"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::cgi::processOpt</span> <span class="arg-list">(optDef optlist optval)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Basically the same functionality as <span class="xref-procs"><a href="f_base_cgi_opt.tcl.html#p_pool_cgi_process" class="proc">::pool::cgi::process</a></span>, but with the following differences:<br>
+ The storage array is <span class="proc">not</span> initialized with the default values.<br>
+ The &lt;optlist&gt; must not contain arguments after the key=value elements.<br>
+ There is no return value.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optDef
+</td>
+<td class="argument-description">
+The name of the array containing the option and alias definitions to recognize here.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optlist
+</td>
+<td class="argument-description">
+The list of arguments to parse.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optval
+</td>
+<td class="argument-description">
+The name of the array to hold the found values.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

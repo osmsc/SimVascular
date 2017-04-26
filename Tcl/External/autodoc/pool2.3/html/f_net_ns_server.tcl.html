@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>File 'net/ns/server.tcl' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/ns/server.tcl' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Mini nameserver, application registry, server</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Serverside of mini nameserver / registry system. It is built on top of the Comm package by <a href="mailto:loverso@schooner.com" class="xref-xref">John R. LoVerso</a>.</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a>, <a href="http://www.schooner.com/~loverso/tcl-tk/#comm" class="xref-dep">Comm</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">nameserver,  registry,  application registry,  name service</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_net_ns_server.tcl.html#p_pool_nameserver_server_init" class="proc">::pool::nameserver::server::init</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_net_ns_server.tcl.html#p_pool_nameserver_server_lookup" class="proc">::pool::nameserver::server::lookup</a> <span class="arg-list">(pattern)</span>
+<li class="proc-listing"><a href="f_net_ns_server.tcl.html#p_pool_nameserver_server_register" class="proc">::pool::nameserver::server::register</a> <span class="arg-list">(as)</span>
+<li class="proc-listing"><a href="f_net_ns_server.tcl.html#p_pool_nameserver_server_revoke" class="proc">::pool::nameserver::server::revoke</a> <span class="arg-list">(who)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_nameserver_server_init"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::nameserver::server::init</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Initializes the serverside facilities of the name service. Does actually nothing, serves as entry point for the autoloader only.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_nameserver_server_lookup"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::nameserver::server::lookup</span> <span class="arg-list">(pattern)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called by the client to search for applications matching the <span class="argument"><span class="proc">pattern</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: pattern
+</td>
+<td class="argument-description">
+The glob style pattern to use while searching the registration database.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_nameserver_server_register"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::nameserver::server::register</span> <span class="arg-list">(as)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called by client to register the application with id 'comm remoteid' under the name of <span class="argument"><span class="proc">as</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: as
+</td>
+<td class="argument-description">
+The name to use for registration
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_nameserver_server_revoke"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::nameserver::server::revoke</span> <span class="arg-list">(who)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called by the client to unregister the application <span class="argument"><span class="proc">who</span></span>. The system checks that the application executing the revocation is the same as the registrator.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Dangers</span>: The application 'nsmon' is permitted to remove other applications than itself. Use this application only in a trusted environment!
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: who
+</td>
+<td class="argument-description">
+Name to remove from the database.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

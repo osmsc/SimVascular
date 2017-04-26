@@ -1,0 +1,264 @@
+<html>
+<head>
+<title>File 'gui/logger.cls' (part of 'Pool_GuiBase')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'gui/logger.cls' (part of '<a href="pkg_Pool_GuiBase.html" class="package">Pool_GuiBase</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Log widget</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Logger based upon modified text widget. Suitable for usage in conjunction with <span class="xref-procs"><a href="f_base_syslog.tcl.html#p_pool_syslog_syslog" class="proc">::pool::syslog::syslog</a></span>.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">syslog,  log widget</span>
+</dl>
+</div>
+<h1 class="class">Class 'logger'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cwidget.html" class="class">widget</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#oslow" class="options">slow</a><br>
+<a href="#olevel" class="options">level</a><br>
+<a href="#otheight" class="options">theight</a><br>
+<a href="#otwidth" class="options">twidth</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="clogger.html#plogger_TrackTHeight" class="proc">TrackTHeight</a> <span class="arg-list">(o oldv)</span><br>
+<a href="clogger.html#plogger_TrackTWidth" class="proc">TrackTWidth</a> <span class="arg-list">(o oldv)</span><br>
+<a href="clogger.html#plogger_clear" class="proc">clear</a> <span class="arg-list">()</span><br>
+<a href="clogger.html#plogger_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span><br>
+<a href="clogger.html#plogger_levelcolor" class="proc">levelcolor</a> <span class="arg-list">(level color)</span><br>
+<a href="clogger.html#plogger_log" class="proc">log</a> <span class="arg-list">(level text)</span><br>
+<a href="clogger.html#plogger_logger" class="proc">logger</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vlcolor" class="members">lcolor</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="oslow"></a>
+<dt><span class="option-name">-slow</span>
+<dd><span class="option-description">  Boolean flag. If set this widget will cause an  update cycle of the display after each message  added and displayed.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">0</span>
+<a name="olevel"></a>
+<dt><span class="option-name">-level</span>
+<dd><span class="option-description">  The lowest level a message must have to be displayed  by this widget</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">debug</span>
+<a name="otheight"></a>
+<dt><span class="option-name">-theight</span>
+<dd><span class="option-description">  Width to be requested by the internal text-widget.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">10</span>
+<a name="otwidth"></a>
+<dt><span class="option-name">-twidth</span>
+<dd><span class="option-description">  Width to be requested by the internal text-widget.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">80</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="plogger_TrackTHeight"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackTHeight</span> <span class="arg-list">(o oldv)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Configure procedure. Propagates changes to the height of the widget into the display.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The changed option.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldv
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="plogger_TrackTWidth"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackTWidth</span> <span class="arg-list">(o oldv)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Configure procedure. Propagates changes to the width of the widget into the display.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The changed option.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldv
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="plogger_clear"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">clear</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Clear log</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="plogger_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cwidget.html" class="class">widget</a>:<a href="cwidget.html#pwidget_createSubwidgets" class="proc">createSubwidgets</a><br>
+<span class="header-description-value">Create and pack the internally used widgets (text, scrollbar)</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="plogger_levelcolor"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">levelcolor</span> <span class="arg-list">(level color)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Changes the <span class="argument"><span class="proc">color</span></span> used to display messages of <span class="argument"><span class="proc">level</span></span>. Affects all messages, even already added ones.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: level
+</td>
+<td class="argument-description">
+The name of the level to change the color for.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: color
+</td>
+<td class="argument-description">
+The new color to use.
+</td>
+</tr>
+</table>
+</p>
+<a name="plogger_log"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">log</span> <span class="arg-list">(level text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds <span class="argument"><span class="proc">text</span></span> to log, under the given <span class="argument"><span class="proc">level</span></span>. Ignores all messages with a <span class="argument"><span class="proc">level</span></span> below <span class="xref-oref"><a href="clogger.html#olevel" class="xref-oref">level</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: level
+</td>
+<td class="argument-description">
+Message level, used as tag.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+Text to log
+</td>
+</tr>
+</table>
+</p>
+<a name="plogger_logger"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">logger</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Constructor. Reads the level colors from the syslog facility of Pool, see <span class="xref-files"><a href="f_base_syslog.tcl.html" class="file">base/syslog.tcl</a></span>, to allow changes without affecting the defaults.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vlcolor"></a>
+<dt><span class="variable-name">lcolor</span>
+<dd><span class="variable-description">  Array mapping from level names to the colors used as  background for the messages of this level.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

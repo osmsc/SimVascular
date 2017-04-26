@@ -1,0 +1,294 @@
+<html>
+<head>
+<title>File 'base/math.tcl' (part of 'Pool_Base')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'base/math.tcl' (part of '<a href="pkg_Pool_Base.html" class="package">Pool_Base</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Mathematical procedures</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Some mathematical procedures</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">minimum search, maximum search</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_base_math.tcl.html#p_pool_math_max" class="proc">::pool::math::max</a> <span class="arg-list">(x y)</span>
+<li class="proc-listing"><a href="f_base_math.tcl.html#p_pool_math_maxList" class="proc">::pool::math::maxList</a> <span class="arg-list">(list)</span>
+<li class="proc-listing"><a href="f_base_math.tcl.html#p_pool_math_maxVarargs" class="proc">::pool::math::maxVarargs</a> <span class="arg-list">(args)</span>
+<li class="proc-listing"><a href="f_base_math.tcl.html#p_pool_math_min" class="proc">::pool::math::min</a> <span class="arg-list">(x y)</span>
+<li class="proc-listing"><a href="f_base_math.tcl.html#p_pool_math_minList" class="proc">::pool::math::minList</a> <span class="arg-list">(list)</span>
+<li class="proc-listing"><a href="f_base_math.tcl.html#p_pool_math_minVarargs" class="proc">::pool::math::minVarargs</a> <span class="arg-list">(args)</span>
+<li class="proc-listing"><a href="f_base_math.tcl.html#p_pool_math_setMax" class="proc">::pool::math::setMax</a> <span class="arg-list">(varName value)</span>
+<li class="proc-listing"><a href="f_base_math.tcl.html#p_pool_math_setMin" class="proc">::pool::math::setMin</a> <span class="arg-list">(varName value)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_math_max"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::math::max</span> <span class="arg-list">(x y)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: x
+</td>
+<td class="argument-description">
+First number to check
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: y
+</td>
+<td class="argument-description">
+Second number to check
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Maximum of <span class="argument"><span class="proc">x</span></span> and <span class="argument"><span class="proc">y</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_math_maxList"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::math::maxList</span> <span class="arg-list">(list)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines the maximum number contained in <span class="argument"><span class="proc">list</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+list of numbers to search the maximum in.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Maximum element in <span class="argument"><span class="proc">list</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_math_maxVarargs"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::math::maxVarargs</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines the maximum of an arbitrary number of arguments. Uses <span class="xref-procs"><a href="f_base_math.tcl.html#p_pool_math_maxList" class="proc">::pool::math::maxList</a></span> to accomplish this.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+list of numbers to search the maximum in.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Maximum element in <span class="argument"><span class="proc">args</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_math_min"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::math::min</span> <span class="arg-list">(x y)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: x
+</td>
+<td class="argument-description">
+First number to check
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: y
+</td>
+<td class="argument-description">
+Second number to check
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Minimum of <span class="argument"><span class="proc">x</span></span> and <span class="argument"><span class="proc">y</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_math_minList"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::math::minList</span> <span class="arg-list">(list)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines the minimum number contained in <span class="argument"><span class="proc">list</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+list of numbers to search the minimum in.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Minimum element in <span class="argument"><span class="proc">list</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_math_minVarargs"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::math::minVarargs</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines the minimum of an arbitrary number of arguments. Uses <span class="xref-procs"><a href="f_base_math.tcl.html#p_pool_math_minList" class="proc">::pool::math::minList</a></span> to accomplish this.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+list of numbers to search the minimum in.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Minimum element in <span class="argument"><span class="proc">args</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_math_setMax"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::math::setMax</span> <span class="arg-list">(varName value)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">by</span> <a href="mailto:welch@ajubasolutions.com" class="proc">Brent Welch</a>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Set the variable <span class="argument"><span class="proc">varName</span></span> to the maximum of its current and the specified <span class="argument"><span class="proc">value</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: varName
+</td>
+<td class="argument-description">
+The name of the variable to maximize.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: value
+</td>
+<td class="argument-description">
+The value to compare against.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1 if the value of the variable, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_math_setMin"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::math::setMin</span> <span class="arg-list">(varName value)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">by</span> <a href="mailto:welch@ajubasolutions.com" class="proc">Brent Welch</a>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Set the variable <span class="argument"><span class="proc">varName</span></span> to the minimum of its current and the specified <span class="argument"><span class="proc">value</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: varName
+</td>
+<td class="argument-description">
+The name of the variable to minimize.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: value
+</td>
+<td class="argument-description">
+The value to compare against.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1 if the value of the variable, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

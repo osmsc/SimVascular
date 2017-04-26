@@ -1,0 +1,35 @@
+# -*- tcl -*-
+extension memchan {
+    author       {Andreas Kupries (a.kupries@westend.com)}
+    maintenance  {Andreas Kupries (a.kupries@westend.com)}
+
+    version	   2.1p2
+    copying-policy {BSD-Style, see 'tcl'-license}
+    date           {October 04, 2000}
+
+    description {
+	an extension implementing two new channel-types. Instances
+	store their contents in memory, not on disk.
+    }
+
+    primary-urls {
+	http://www.purl.org/NET/akupries/tcltk.html
+	http://www.purl.org/NET/akupries/soft/memchan/
+	http://www.purl.org/NET/akupries/soft/memchan/download/memchan2.1p2.README
+	http://www.purl.org/NET/akupries/soft/memchan/download/memchan2.1p2.tar.gz
+	http://www.purl.org/NET/akupries/soft/memchan/download/memchan2.1p2.tar.bz2
+	http://www.purl.org/NET/akupries/soft/memchan/download/memchan2.1p2.zip
+    }
+
+    dependencies {
+	Tcl 8.0 or 8.1. Does not work with 8.0(ab)*
+	Works with tcl 8.1a2 and 8.1b1/2/3, but don't leave channels open
+	before 'exit'ing. This is solved since 8.1.0.
+    }
+
+    comments {
+	Pre-release of a TEA compliant version. (As far as TEA currently goes).
+    }
+}
+
+

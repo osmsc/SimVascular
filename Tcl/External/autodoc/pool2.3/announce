@@ -1,0 +1,28 @@
+Hello world,
+
+I hereby announce pool 2.3.
+It is 
+	A collection of generally usable tcl commands for various areas:
+
+	Calendar widgets, additional date, string, list and file functions.
+	Operations on mail/netnews messages, smtp, pop3 handling.
+	Yet another OO system for tcl, pure tcl.
+	Generic option processing routines.
+	Url manipulation and extractions (regexp's).
+    
+
+Changes from 2.2
+
+*	Some fixes from Sebastien BARRE <sbarre@claranet.fr> to make
+	it better behaved on Win* systems.
+
+*	Contributions to the date functionality by Ric Klaren
+	<klaren@cs.utwente.nl>.
+
+
+The distribution can be found at
+	<http://www.purl.org/NET/akupries/soft/pool/download/pool2.3.README>
+	<http://www.purl.org/NET/akupries/soft/pool/download/pool2.3.tar.gz>
+	<http://www.purl.org/NET/akupries/soft/pool/download/pool2.3.tar.bz2>
+	<http://www.purl.org/NET/akupries/soft/pool/download/pool2.3.zip>
+	<http://www.purl.org/NET/akupries/soft/pool/index.htm>

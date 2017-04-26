@@ -1,0 +1,287 @@
+<html>
+<head>
+<title>File 'net/adb.cls' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/adb.cls' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">User authentication database</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Management of a database to map from users to authentication codes (passwords) and storage references. Complete definition.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">User authentication,  authentication database,  user database,  passwords</span>
+</dl>
+</div>
+<h1 class="class">Class 'aDB'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">A file based implementation of the interface as defined by <span class="xref-classes"><a href="cuserdbBase.html" class="class">userdbBase</a></span>.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cuserdbBase.html" class="class">userdbBase</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="caDB.html#paDB_add" class="proc">add</a> <span class="arg-list">(usrName pwd storage)</span><br>
+<a href="caDB.html#paDB_isRegistered" class="proc">isRegistered</a> <span class="arg-list">(usrName)</span><br>
+<a href="caDB.html#paDB_lookup" class="proc">lookup</a> <span class="arg-list">(usrName)</span><br>
+<a href="caDB.html#paDB_read" class="proc">read</a> <span class="arg-list">(file)</span><br>
+<a href="caDB.html#paDB_remove" class="proc">remove</a> <span class="arg-list">(usrName)</span><br>
+<a href="caDB.html#paDB_rename" class="proc">rename</a> <span class="arg-list">(usrName newName)</span><br>
+<a href="caDB.html#paDB_save" class="proc">save</a> <span class="arg-list">(file)</span><br>
+<a href="caDB.html#paDB_who" class="proc">who</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vuser" class="members">user</a><br>
+<a href="#vexternalFile" class="members">externalFile</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="paDB_add"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">add</span> <span class="arg-list">(usrName pwd storage)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Add the user <span class="argument"><span class="proc">usrName</span></span> to the database, together with its password and a storage reference. The latter is stored and passed through this system without interpretation of the given value.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: usrName
+</td>
+<td class="argument-description">
+The name of the user defined here.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: pwd
+</td>
+<td class="argument-description">
+Password given to the user.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: storage
+</td>
+<td class="argument-description">
+symbolic reference to the maildrop of user <span class="argument"><span class="argument-description">usrName</span></span>. Usable for a storage system only.
+</td>
+</tr>
+</table>
+</p>
+<a name="paDB_isRegistered"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">isRegistered</span> <span class="arg-list">(usrName)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines wether user <span class="argument"><span class="proc">usrName</span></span> is registered or not.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: usrName
+</td>
+<td class="argument-description">
+The name of the user to check for.
+</td>
+</tr>
+</table>
+</p>
+<a name="paDB_lookup"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">lookup</span> <span class="arg-list">(usrName)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cuserdbBase.html" class="class">userdbBase</a>:<a href="cuserdbBase.html#puserdbBase_lookup" class="proc">lookup</a><br>
+<span class="header-description-value">Query database for information about user <span class="argument"><span class="proc">usrName</span></span>. Overrides <span class="xref-mref"><a href="cuserdbBase.html" class="class">userdbBase</a>:<a href="cuserdbBase.html#puserdbBase_lookup" class="proc">lookup</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: usrName
+</td>
+<td class="argument-description">
+Name of the user to query for.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a 2-element list containing password and storage reference for user <span class="argument"><span class="proc">usrName</span></span>, in this order.
+</td>
+</tr>
+</table>
+</p>
+<a name="paDB_read"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">read</span> <span class="arg-list">(file)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Reads the contents of the specified <span class="argument"><span class="proc">file</span></span> into the in-memory database of users, passwords and storage references.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: The name of the file is remembered internally, and used by <span class="xref-mref"><a href="caDB.html#paDB_save" class="proc">save</a></span> (if called without or empty argument).
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: file
+</td>
+<td class="argument-description">
+The name of the file to read.
+</td>
+</tr>
+</table>
+</p>
+<a name="paDB_remove"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">remove</span> <span class="arg-list">(usrName)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Remove the user <span class="argument"><span class="proc">usrName</span></span> from the database.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: usrName
+</td>
+<td class="argument-description">
+The name of the user to remove.
+</td>
+</tr>
+</table>
+</p>
+<a name="paDB_rename"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">rename</span> <span class="arg-list">(usrName newName)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Renames user <span class="argument"><span class="proc">usrName</span></span> to <span class="argument"><span class="proc">newName</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: usrName
+</td>
+<td class="argument-description">
+The name of the user to rename.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: newName
+</td>
+<td class="argument-description">
+The new name to give to the user
+</td>
+</tr>
+</table>
+</p>
+<a name="paDB_save"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">save</span> <span class="arg-list">(file)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Stores the current contents of the in-memory user database into the specified file.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: file (= {})
+</td>
+<td class="argument-description">
+The name of the file to write to. If it is not specified, or as empty, the value of the member variable <span class="xref-vref"><a href="caDB.html#vexternalFile" class="xref-vref">externalFile</a></span> is used instead.
+</td>
+</tr>
+</table>
+</p>
+<a name="paDB_who"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">who</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines the names of all registered users.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A list containing the names of all registered users.
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vuser"></a>
+<dt><span class="variable-name">user</span>
+<dd><span class="variable-description">  The in-memory database. It is indexed by user names and maps  them to 2-element lists containing the associated password and  storage reference, in this order.</span>
+<a name="vexternalFile"></a>
+<dt><span class="variable-name">externalFile</span>
+<dd><span class="variable-description">  The name of the last file used as argument to <span class="xref-mref"><a href="caDB.html#paDB_read" class="proc">read</a></span>.  Used by <span class="xref-mref"><a href="caDB.html#paDB_save" class="proc">save</a></span> if called without or empty argument.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

@@ -1,0 +1,51 @@
+# -*- tcl -*-
+# the name of this file is a shortcut of todo.doc,
+# but I didn't like the dodo repetition.
+
+newPage     todo.htm "Things waiting to be done..."
+add2Sidebar todo.htm "TODO List"
+
+par "In no particular order"
+
+itemize {
+    item {
+	Make verbosity switchable (possible options -quiet, -verbose)
+    }
+
+#    item "
+#	Evaluate [strong "package require"]s and use this to place
+#	more cross-references into the file descriptions.
+#    "
+
+#    item {
+#	Add commands to associate documentation to class members and
+#	options. Something along the lines of @argument, @a.
+#    }
+
+    item {
+	Document definition and usage of global variables (@global, @g)
+    }
+
+#    item "
+#    Generate page containing indexer statistics.
+#    Idea: [xRef jma], creator of [xRef tcldoc].
+#    "
+
+    item "
+    Incremental indexing to speed things up.
+    Idea: [xRef jma]
+    "
+
+    item {
+	Generate class hierarchy pages to allow quick navigation in the
+	tree/dag. Maybe even an automatically layouted graph, via
+	[strong vcg] or some other tool.
+    }
+
+    item "
+	[strong far] future: Add more more output formats
+	(ASCII, postscript, ...) to the system.
+    "
+}
+
+closePage

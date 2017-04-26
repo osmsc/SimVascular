@@ -1,0 +1,22 @@
+#!/usr/local/bin/tclsh
+# -*- tcl -*-
+#		Pool @mFullVersion@, as of @mDate@
+#
+# @comment generate index of tcl procedures suitable for autoloading by tcl
+# CVS : $Id: nwho,v 1.4 1998/06/02 20:05:01 aku Exp $
+#
+# -- query name server for information about all applications registered.
+
+package require Pool_Base
+package require Pool_Net
+
+proc bgerror {text} {
+    global errorInfo
+    ::pool::syslog::syslog error $text, $errorInfo
+    return
+}
+
+::pool::array::def n_registry
+array set          n_registry [::pool::nameserver::lookup]
+parray             n_registry
+exit

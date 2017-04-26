@@ -1,0 +1,187 @@
+<html>
+<head>
+<title>File 'gui/watchArray.cls' (part of 'Pool_GuiBase')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'gui/watchArray.cls' (part of '<a href="pkg_Pool_GuiBase.html" class="package">Pool_GuiBase</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Watch the contents of an array variable.</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Generation and maintenance of a variable watcher display.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">watch array variable,  array variable watching,  animated feedback,  feedback</span>
+</dl>
+</div>
+<h1 class="class">Class 'watchArray'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Instances of this class are coupled to an array variable, then display its current contents, tracking any changes made to it.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cwatchAManager.html" class="class">watchAManager</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ovarnamecolor" class="options">varnamecolor</a><br>
+<a href="#ovarvaluecolor" class="options">varvaluecolor</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cwatchArray.html#pwatchArray_BuildDisplay" class="proc">BuildDisplay</a> <span class="arg-list">()</span><br>
+<a href="cwatchArray.html#pwatchArray_Map2Lines" class="proc">Map2Lines</a> <span class="arg-list">()</span><br>
+<a href="cwatchArray.html#pwatchArray_clearDisplay" class="proc">clearDisplay</a> <span class="arg-list">()</span><br>
+<a href="cwatchArray.html#pwatchArray_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span><br>
+<a href="cwatchArray.html#pwatchArray_initDisplay" class="proc">initDisplay</a> <span class="arg-list">()</span><br>
+<a href="cwatchArray.html#pwatchArray_updateDisplay" class="proc">updateDisplay</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vkeys" class="members">keys</a><br>
+<a href="#vmaxKey" class="members">maxKey</a><br>
+<a href="#vsortedKeys" class="members">sortedKeys</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ovarnamecolor"></a>
+<dt><span class="option-name">-varnamecolor</span>
+<dd><span class="option-description">   The name of the color to use for the variable name.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">red</span>
+<a name="ovarvaluecolor"></a>
+<dt><span class="option-name">-varvaluecolor</span>
+<dd><span class="option-description">  The name of the color to use for the variable contents.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">blue</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pwatchArray_BuildDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">BuildDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Clear the display and recreate it from the ground.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pwatchArray_Map2Lines"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Map2Lines</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Build a map associating the keys of the array we are connected to to lines in our text widget.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pwatchArray_clearDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">clearDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Method required by the superclass <span class="xref-classes"><a href="cwatchManager.html" class="class">watchManager</a></span> initialize the display after changes to -variable (but not the contents of the associated variable!)</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pwatchArray_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cwatchAManager.html" class="class">watchAManager</a>:<a href="cwidget.html#pwidget_createSubwidgets" class="proc">createSubwidgets</a><br>
+<span class="header-description-value">Called after object construction. Generates the internal widgets and their layout.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pwatchArray_initDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">initDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cwatchAManager.html" class="class">watchAManager</a>:<a href="cwatchAManager.html#pwatchAManager_initDisplay" class="proc">initDisplay</a><br>
+<span class="header-description-value">Method required by the superclass <span class="xref-classes"><a href="cwatchManager.html" class="class">watchManager</a></span> initialize the display after changes to -variable (but not the contents of the associated variable!)</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pwatchArray_updateDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">updateDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cwatchAManager.html" class="class">watchAManager</a>:<a href="cwatchAManager.html#pwatchAManager_updateDisplay" class="proc">updateDisplay</a><br>
+<span class="header-description-value">Method required by the superclass <span class="xref-classes"><a href="cwatchManager.html" class="class">watchManager</a></span> to propagate changes to the value into the display.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vkeys"></a>
+<dt><span class="variable-name">keys</span>
+<dd><span class="variable-description">  Shadow array mapping the keys in the tracked array to the line  in the text widget displaying key and value.</span>
+<a name="vmaxKey"></a>
+<dt><span class="variable-name">maxKey</span>
+<dd><span class="variable-description">  Length of longest key, to correct vertical alignment of keys  and values.</span>
+<a name="vsortedKeys"></a>
+<dt><span class="variable-name">sortedKeys</span>
+<dd><span class="variable-description">  The list of keys used in the array referenced by  <span class="xref-oref"><a href="cwatchAManager.html#ovariable" class="xref-oref">variable</a></span>, sorted in ascending order, to get stability  into the display and no changing of lines due to internals  of the hash table.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

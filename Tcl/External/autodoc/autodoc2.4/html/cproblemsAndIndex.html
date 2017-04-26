@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>File 'lib/problemsAndIndex.cls' (part of 'AutoDOC')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'lib/problemsAndIndex.cls' (part of '<a href="pkg_AutoDOC.html" class="package">AutoDOC</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Helper class for problem management</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Helper for classes having problems and having subordinate objects having problems.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">problem management,  management of problems</span>
+</dl>
+</div>
+<h1 class="class">Class 'problemsAndIndex'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Entities managing a set of problems of their own <span class="class-header">and</span> an index of problematic objects contained in them should derive from this class. Its special feature is an automatic inclusion of both required base classes plus the propagation of problem signals to their own superior. That is, if a contained object marks itself as problematic this object will be problematic for its superiors too.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cproblems.html" class="class">problems</a><br>
+<a href="cproblemIndex.html" class="class">problemIndex</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cproblemsAndIndex.html#pproblemsAndIndex_addProblemObject" class="proc">addProblemObject</a> <span class="arg-list">(o)</span><br>
+<a href="cproblemsAndIndex.html#pproblemsAndIndex_clear" class="proc">clear</a> <span class="arg-list">()</span>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pproblemsAndIndex_addProblemObject"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">addProblemObject</span> <span class="arg-list">(o)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cproblemIndex.html" class="class">problemIndex</a>:<a href="cproblemIndex.html#pproblemIndex_addProblemObject" class="proc">addProblemObject</a><br>
+<span class="header-description-value">Overrides base class functionality (<span class="xref-mref"><a href="cproblemIndex.html" class="class">problemIndex</a>:<a href="cproblemIndex.html#pproblemIndex_addProblemObject" class="proc">addProblemObject</a></span>) to add signal propagation capabilities to it.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The handle of the problematic object.
+</td>
+</tr>
+</table>
+</p>
+<a name="pproblemsAndIndex_clear"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">clear</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cproblems.html" class="class">problems</a>:<a href="cproblems.html#pproblems_clear" class="proc">clear</a>, <a href="cproblemIndex.html" class="class">problemIndex</a>:<a href="cproblemIndex.html#pproblemIndex_clear" class="proc">clear</a><br>
+<span class="header-description-value">Resets state information</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/07/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

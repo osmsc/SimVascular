@@ -1,0 +1,46 @@
+#!/usr/local/bin/wish
+# -*- tcl -*-
+# present calendar
+# ------------------------------------------------------
+
+puts "demonstration of the 'calendar'-widget"
+puts "\tuse cursor keys to move the day around"
+puts "\tuse +/- to change the month"
+puts "\tuse < > to change the year"
+puts "\talternatively click around"
+puts "\tnote the wrap-arounds at beginning/end of a month"
+puts "\t'Q' will exit the program"
+
+# ------------------------------------------------------
+#package require Pool_GuiBase
+package require Pool_Clock
+
+
+# ------------------------------------------------------
+wm title . "Calendar"
+
+calendar .c                              \
+	-highlightthickness 0            \
+	-fg                 yellow       \
+	-bg                 steelblue    \
+	-heading            white        \
+	-sunday             red          \
+	-weekno             seagreen1    \
+	-command            {puts stdout}
+
+if {$argc > 0} {
+    # reconfigure to wishes of user
+    eval .c configure $argv
+}
+
+pack .c -side top -fill both -expand 1
+
+# enable keyboard accelerators
+#y_chooser_setkeys .c.y
+#m_list_setkeys    .c.m
+#d_chooser_setkeys .c.d
+
+.c setBindingsTo .
+
+bind . <Key-Q>    exit
+bind . <Key-q>    exit

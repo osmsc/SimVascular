@@ -1,0 +1,351 @@
+<html>
+<head>
+<title>File 'gui/widget.cls' (part of 'Pool_GuiBase')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'gui/widget.cls' (part of '<a href="pkg_Pool_GuiBase.html" class="package">Pool_GuiBase</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">megawidget base</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">base class of all megawidgets</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">megawidget base,  widget base class</span>
+</dl>
+</div>
+<h1 class="class">Class 'widget'</h1>
+<div class="class-header">
+<dl>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#oforeground" class="options">foreground</a><br>
+<a href="#obackground" class="options">background</a><br>
+<a href="#oactiveforeground" class="options">activeforeground</a><br>
+<a href="#oactivebackground" class="options">activebackground</a><br>
+<a href="#ohighlightthickness" class="options">highlightthickness</a><br>
+<a href="#orelief" class="options">relief</a><br>
+<a href="#oborder" class="options">border</a><br>
+<a href="#owidth" class="options">width</a><br>
+<a href="#oheight" class="options">height</a><br>
+<a href="#odata" class="options">data</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cwidget.html#pwidget_PropagateOption" class="proc">PropagateOption</a> <span class="arg-list">(option oldValue)</span><br>
+<a href="cwidget.html#pwidget_SetFrame" class="proc">SetFrame</a> <span class="arg-list">(option oldValue)</span><br>
+<a href="cwidget.html#pwidget_WidgetProp" class="proc">WidgetProp</a> <span class="arg-list">()</span><br>
+<a href="cwidget.html#pwidget_addSubwidget" class="proc">addSubwidget</a> <span class="arg-list">(name path)</span><br>
+<a href="cwidget.html#pwidget_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span><br>
+<a href="cwidget.html#pwidget_frameWidget" class="proc">frameWidget</a> <span class="arg-list">(args)</span><br>
+<a href="cwidget.html#pwidget_setBindings" class="proc">setBindings</a> <span class="arg-list">()</span><br>
+<a href="cwidget.html#pwidget_subwidget" class="proc">subwidget</a> <span class="arg-list">(name args)</span><br>
+<a href="cwidget.html#pwidget_widget" class="proc">widget</a> <span class="arg-list">()</span><br>
+<a href="cwidget.html#pwidget_~widget" class="proc">~widget</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vwidgetType" class="members">widgetType</a><br>
+<a href="#vsubWidgets" class="members">subWidgets</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="oforeground"></a>
+<dt><span class="option-name">-foreground</span>
+<dd><span class="option-description">          Foreground color of widget.</span>
+<a name="obackground"></a>
+<dt><span class="option-name">-background</span>
+<dd><span class="option-description">          Background color of widget.</span>
+<a name="oactiveforeground"></a>
+<dt><span class="option-name">-activeforeground</span>
+<dd><span class="option-description">    Foreground color of widget in active state.</span>
+<a name="oactivebackground"></a>
+<dt><span class="option-name">-activebackground</span>
+<dd><span class="option-description">    Background color of widget in active state.</span>
+<a name="ohighlightthickness"></a>
+<dt><span class="option-name">-highlightthickness</span>
+<dd><span class="option-description">  Width of border (in pixels)  reserved for highlighting of widget.</span>
+<a name="orelief"></a>
+<dt><span class="option-name">-relief</span>
+<dd><span class="option-description">              Relief of widget (sunken, raised, ...)</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">flat</span>
+<a name="oborder"></a>
+<dt><span class="option-name">-border</span>
+<dd><span class="option-description">              Width of widget border, in pixels.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">0</span>
+<a name="owidth"></a>
+<dt><span class="option-name">-width</span>
+<dd><span class="option-description">               The requested width of the widget, in pixels.</span>
+<a name="oheight"></a>
+<dt><span class="option-name">-height</span>
+<dd><span class="option-description">              The requested height of the widget, in pixels.</span>
+<a name="odata"></a>
+<dt><span class="option-name">-data</span>
+<dd><span class="option-description">  Allows the association of arbitrary information with the widget.  This class will not interpret the contents of this option and  its subclasses should not do it either.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pwidget_PropagateOption"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">PropagateOption</span> <span class="arg-list">(option oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Configure procedure. Sets the new value of the option into the megawidget container and all its children.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: option
+</td>
+<td class="argument-description">
+The name of the changed option.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The value the option had before the change.
+</td>
+</tr>
+</table>
+</p>
+<a name="pwidget_SetFrame"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">SetFrame</span> <span class="arg-list">(option oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Configure procedure. Sets the new value of the option into the megawidget container.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: option
+</td>
+<td class="argument-description">
+The name of the changed option.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The value the option had before the change.
+</td>
+</tr>
+</table>
+</p>
+<a name="pwidget_WidgetProp"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">WidgetProp</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executed after the complete initialization of the new megawidget. Initializes the recursively propagated options.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pwidget_addSubwidget"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">addSubwidget</span> <span class="arg-list">(name path)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Interface to derived classes. Allows them to register part of their widget structure as user-visible components of the megawidget.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+Symbolic name of the registered component.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: path
+</td>
+<td class="argument-description">
+tk widet path of the registered component.
+</td>
+</tr>
+</table>
+</p>
+<a name="pwidget_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Delayed construction of the container widget holding the megawidget components. Subclasses may have changed the 'widgetType' during standard object construction. The <span class="xref-classes"><a href="cdialog.html" class="class">dialog</a></span>-class is an example of this.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pwidget_frameWidget"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">frameWidget</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Basically the same as <span class="xref-mref"><a href="cwidget.html#pwidget_subwidget" class="proc">subwidget</a></span>, but specialized on accessing the container widget holding the components of the megawidget. The arguments are interpreted as subcommand of the container and arguments supplied to it. This command is then executed in the calling level and its result returned as the result of this method.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+Subcommand to invoke, and its arguments.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: See description.
+</td>
+</tr>
+</table>
+</p>
+<a name="pwidget_setBindings"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">setBindings</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Delayed association of a binding reacting to the destruction of a megawidget.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pwidget_subwidget"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">subwidget</span> <span class="arg-list">(name args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">General accessor method to user-visible subwidgets as registered by <span class="xref-mref"><a href="cwidget.html#pwidget_addSubwidget" class="proc">addSubwidget</a></span>. Two modes of calling are possible. Without additional arguments after the name the widget path of the specified component is retrieved and returned to the user. Otherwise the arguments will be interpreted as subcommand of the component and arguments supplied to it. This command is then executed in the calling level and its result returned as the result of this method. This mode is usually used to configure the component (like: x subwidget y configure -z w).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+Symbolic name of the component, must be the same as used in the call to <span class="xref-mref"><a href="cwidget.html#pwidget_addSubwidget" class="proc">addSubwidget</a></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+Subcommand to invoke, and its arguments. Can be empty, see description.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: See description.
+</td>
+</tr>
+</table>
+</p>
+<a name="pwidget_widget"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">widget</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Megawidget base constructor. Uses the special runtime support to delay actual construction of widgets and binding until the completion of the standard construction. 'chainToDerived' uses the same calling sequence as the constructor itself.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pwidget_~widget"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">~widget</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Standard destructor. Depending on the way of invocation it is possible that the widget associated to this megawidget is already destroyed. We not only have nothing to do in this case, it is actually forbidden as it would cause an error.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vwidgetType"></a>
+<dt><span class="variable-name">widgetType</span>
+<dd><span class="variable-description">  Type of the master widget containing the components of  the megawidgets. Defaults to 'frame', but is overiden  by <span class="xref-classes"><a href="cdialog.html" class="class">dialog</a></span> to 'toplevel'.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">frame</span>
+<a name="vsubWidgets"></a>
+<dt><span class="variable-name">subWidgets</span>
+<dd><span class="variable-description">  Maps from logical names of the user visible widget  components to their actual paths. Such components are  registered during widget creation (in  <span class="xref-mref"><a href="cwidget.html#pwidget_createSubwidgets" class="proc">createSubwidgets</a></span>) by calling <span class="xref-mref"><a href="cwidget.html#pwidget_addSubwidget" class="proc">addSubwidget</a></span>.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

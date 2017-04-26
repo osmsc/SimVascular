@@ -1,0 +1,503 @@
+<html>
+<head>
+<title>File 'net/pop3/mbox.cls' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/pop3/mbox.cls' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Mailbox management based on files and directories</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">File- and directorybased mailbox management. Currently ussed by the small scale pop3 server application (<span class="xref-files"><span class="file-header">apps/popsy</span></span>).</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">Mailbox management,  pop3 server</span>
+</dl>
+</div>
+<h1 class="class">Class 'mbox'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">A file and directory based implementation of the <span class="xref-classes"><a href="cpopServerStorageBase.html" class="class">popServerStorageBase</a></span>-interface. Each mailbox is implemented as a directory below <span class="xref-oref"><a href="cmbox.html#odir" class="xref-oref">dir</a></span>, and every mail is stored in a single file.</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.oche.de/~akupries/tcltk.html" class="xref-dep">Memchan</a></span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cpopServerStorageBase.html" class="class">popServerStorageBase</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#odir" class="options">dir</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cmbox.html#pmbox_Check" class="proc">Check</a> <span class="arg-list">(mbox)</span><br>
+<a href="cmbox.html#pmbox_TransferDone" class="proc">TransferDone</a> <span class="arg-list">(mbox outchan chan transId n)</span><br>
+<a href="cmbox.html#pmbox_add" class="proc">add</a> <span class="arg-list">(mbox)</span><br>
+<a href="cmbox.html#pmbox_dele" class="proc">dele</a> <span class="arg-list">(mbox msgList)</span><br>
+<a href="cmbox.html#pmbox_exists" class="proc">exists</a> <span class="arg-list">(mbox)</span><br>
+<a href="cmbox.html#pmbox_lock" class="proc">lock</a> <span class="arg-list">(mbox)</span><br>
+<a href="cmbox.html#pmbox_locked" class="proc">locked</a> <span class="arg-list">(mbox)</span><br>
+<a href="cmbox.html#pmbox_mbox" class="proc">mbox</a> <span class="arg-list">()</span><br>
+<a href="cmbox.html#pmbox_move" class="proc">move</a> <span class="arg-list">(old new)</span><br>
+<a href="cmbox.html#pmbox_remove" class="proc">remove</a> <span class="arg-list">(mbox)</span><br>
+<a href="cmbox.html#pmbox_size" class="proc">size</a> <span class="arg-list">(mbox msgId)</span><br>
+<a href="cmbox.html#pmbox_stat" class="proc">stat</a> <span class="arg-list">(mbox)</span><br>
+<a href="cmbox.html#pmbox_transfer" class="proc">transfer</a> <span class="arg-list">(args)</span><br>
+<a href="cmbox.html#pmbox_unlock" class="proc">unlock</a> <span class="arg-list">(mbox)</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vlocked" class="members">locked</a><br>
+<a href="#vstate" class="members">state</a><br>
+<a href="#vtransfer" class="members">transfer</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="odir"></a>
+<dt><span class="option-name">-dir</span>
+<dd><span class="option-description">  The path to the base directory containing mailboxes and mails.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pmbox_Check"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Check</span> <span class="arg-list">(mbox)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal procedure. Used to map a mailbox handle to the directory containing the messages.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Reference to the mailbox to be operated on.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Path of directory holding the message files of the specified mailbox.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmbox_TransferDone"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TransferDone</span> <span class="arg-list">(mbox outchan chan transId n)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal procedure. Called by 'fcopy' after completion of the transfer. Executes the '-done' script specified at the call to <span class="xref-mref"><a href="cmbox.html#pmbox_transfer" class="proc">transfer</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Reference to the mailbox to be operated on. Ignored.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: outchan
+</td>
+<td class="argument-description">
+The channel contained the data written.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: chan
+</td>
+<td class="argument-description">
+The channel to write the data into.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: transId
+</td>
+<td class="argument-description">
+The id of the transfer
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: n
+</td>
+<td class="argument-description">
+Number of bytes sent, courtesy by 'fcopy'. Ignored here.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmbox_add"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">add</span> <span class="arg-list">(mbox)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Create a mailbox with handle <span class="argument"><span class="proc">mbox</span></span>. The handle is used as the name of the directory to contain the mails too.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Reference to the mailbox to be operated on.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmbox_dele"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">dele</span> <span class="arg-list">(mbox msgList)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cpopServerStorageBase.html" class="class">popServerStorageBase</a>:<a href="cpopServerStorageBase.html#ppopServerStorageBase_dele" class="proc">dele</a><br>
+<span class="header-description-value">Deletes the specified messages from the mailbox. This should be followed by a <span class="xref-mref"><a href="cmbox.html#pmbox_unlock" class="proc">unlock</a></span> as the state is not updated accordingly.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Dangers</span>: The code assumes that the id's in the list were already checked against the maximal number of messages.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Reference to the mailbox to be operated on.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: msgList
+</td>
+<td class="argument-description">
+List of message ids.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmbox_exists"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">exists</span> <span class="arg-list">(mbox)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines existence of mailbox <span class="argument"><span class="proc">mbox</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Reference to the mailbox to check for.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1 if the mailbox exists, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmbox_lock"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">lock</span> <span class="arg-list">(mbox)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cpopServerStorageBase.html" class="class">popServerStorageBase</a>:<a href="cpopServerStorageBase.html#ppopServerStorageBase_lock" class="proc">lock</a><br>
+<span class="header-description-value">Locks the given mailbox, additionally stores a list of the available files in the manager state. All files (= messages) added to the mailbox after this operation will be ignored during the session.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Reference to the mailbox to be locked.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1 if mailbox was locked sucessfully, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmbox_locked"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">locked</span> <span class="arg-list">(mbox)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Checks wether the specified mailbox is locked or not.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Reference to the mailbox to check.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1 if the mailbox is locked, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmbox_mbox"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">mbox</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Constructor. Does some more checks on the given base directory.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pmbox_move"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">move</span> <span class="arg-list">(old new)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Change the handle of mailbox <span class="argument"><span class="proc">old</span></span> to <span class="argument"><span class="proc">new</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: old
+</td>
+<td class="argument-description">
+Reference to the mailbox to be operated on.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: new
+</td>
+<td class="argument-description">
+New reference to the mailbox
+</td>
+</tr>
+</table>
+</p>
+<a name="pmbox_remove"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">remove</span> <span class="arg-list">(mbox)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Remove mailbox with handle <span class="argument"><span class="proc">mbox</span></span>. This will destroy all mails contained in it too.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Reference to the mailbox to be operated on.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmbox_size"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">size</span> <span class="arg-list">(mbox msgId)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cpopServerStorageBase.html" class="class">popServerStorageBase</a>:<a href="cpopServerStorageBase.html#ppopServerStorageBase_size" class="proc">size</a><br>
+<span class="header-description-value">Determines the size of the specified message, in bytes.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Reference to the mailbox to be operated on.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: msgId
+</td>
+<td class="argument-description">
+Numerical index of the message to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: size of the message in bytes.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmbox_stat"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">stat</span> <span class="arg-list">(mbox)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cpopServerStorageBase.html" class="class">popServerStorageBase</a>:<a href="cpopServerStorageBase.html#ppopServerStorageBase_stat" class="proc">stat</a><br>
+<span class="header-description-value">Determines the number of messages picked up by <span class="xref-mref"><a href="cmbox.html#pmbox_lock" class="proc">lock</a></span>. Will fail if the mailbox was not locked.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Reference to the mailbox queried.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The number of messages in the mailbox
+</td>
+</tr>
+</table>
+</p>
+<a name="pmbox_transfer"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">transfer</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cpopServerStorageBase.html" class="class">popServerStorageBase</a>:<a href="cpopServerStorageBase.html#ppopServerStorageBase_transfer" class="proc">transfer</a><br>
+<span class="header-description-value">Starts a (partial) transfer of the given message. Configured via a list of option/value-pairs, followed by the mailbox to look at, the numerical id of the message to transfer and the channel to sent the mail to, in this order.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+List of option/value-pairs, followed by 3 arguments (explained in the method description). Recognized options are '-done' and '-lines'.<br>
+ The value of -done is interpreted as a script to call after completion of the transfer. Its specification is required. <br>
+ On the other hand, specification of -lines is optional. It is interpreted as the number of lines to transfer, beyond the usual message header. The complete message is transfered if it is not specified.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmbox_unlock"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">unlock</span> <span class="arg-list">(mbox)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cpopServerStorageBase.html" class="class">popServerStorageBase</a>:<a href="cpopServerStorageBase.html#ppopServerStorageBase_unlock" class="proc">unlock</a><br>
+<span class="header-description-value">A locked mailbox is unlocked, thereby made available to other sessions.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Reference to the mailbox to be locked.
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vlocked"></a>
+<dt><span class="variable-name">locked</span>
+<dd><span class="variable-description">  Every locked mailbox has entry in this array, its name is  used as index.</span>
+<a name="vstate"></a>
+<dt><span class="variable-name">state</span>
+<dd><span class="variable-description">   Every locked mailbox has entry in this array, its name is   used as index. The associated value is a list of the files in   the mailbox (= list of stored mails).</span>
+<a name="vtransfer"></a>
+<dt><span class="variable-name">transfer</span>
+<dd><span class="variable-description">  This array contains the state for every running transfer.  This state is currently only the callback script to execute  after its completion.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

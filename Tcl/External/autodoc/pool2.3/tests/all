@@ -1,0 +1,24 @@
+# -*- tcl -*-
+# This file contains a top-level script to run all of the Tcl
+# tests.  Execute it by invoking "source all" when running tclTest
+# in this directory.
+#
+# CVS: $Id: all,v 1.2 1998/10/01 19:12:30 aku Exp $
+
+
+foreach {path pkg} {
+    ../base Pool_Base
+} {
+    # extend the auto-loader search list, force it to look at our directories
+    # first, to avoid interference by installed versions of the packages,
+    # then populate the index table
+
+    set auto_path [concat $path $auto_path]
+    package require $pkg
+}
+
+
+foreach i [lsort [glob *.test]] {
+    puts stdout $i
+    source $i
+}

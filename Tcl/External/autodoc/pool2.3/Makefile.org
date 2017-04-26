@@ -1,0 +1,171 @@
+# Makefile for (Script)Pool packages
+# ----------------------------------
+#
+# Pool 2.3, as of September 14, 2000
+#
+# (C) 1997 Andreas Kupries <a.kupries@westend.cm>
+#
+# ----------------------------------
+# Some versions of make, like SGI's, use the following variable to
+# determine which shell to use for executing commands:
+SHELL =		/bin/sh
+
+
+prefix		= /usr/local
+exec_prefix	= /usr/local
+
+# Directory to install the packages into
+LIBDIR		= ${prefix}/lib
+
+# Directory to install the helper scripts into
+BINDIR		= ${prefix}/bin
+
+# Using prefix as everything is a script,
+# and therefore system independent :-))))
+
+# use this command to install the files
+INSTALL		= cp
+
+# directories containing packages
+PKGDIRS		= base gui clock net
+
+# directories containing classes
+CLASSDIRS	= base gui clock net net/smtp net/pop3 net/pop3/storage
+
+# locations of 'tclsh' and 'wish'
+# I'm not sure wether the 'which' command is portable or not.
+# So I wrote it myself
+
+TCLSH_PATH	=	`tclsh apps/findinpath tclsh`
+WISH_PATH	=	`tclsh apps/findinpath wish`
+
+# ----------------------------------
+# below this line nothing should be modified
+
+
+Applications	=	gen_cls gen_idx gen_pkg 	\
+			nserver nsmon nwho		\
+			popsy  popsymon  popsy_man	\
+			popeye popeyemon popeye_trigger \
+			exmh_triggerfetch http_suck 	\
+			clean_cls mail_sendfile		\
+			fixhbline findinpath
+
+Packages	=	net base clock gui
+
+# ----------------------------------
+
+install:	install-pkg install-bin
+
+install-pkg:	${Packages}
+	for i in ${Packages}; do ${MAKE} install-$$i; done
+
+install-bin:	fix-hashbang-line
+	for i in ${Applications};		\
+	do 					\
+		$(INSTALL) apps/$$i ${BINDIR};	\
+		chmod 755 ${BINDIR}/$$i;	\
+	done
+
+
+test:
+	cd tests ; tclsh all
+
+# Test assumptions: all directories containing tested functionality
+# have to have complete tclIndex files. The 'all' scripts adds these
+# paths to the 'auto_path' variable.
+#
+# 'tclsh' must be reachable via PATH.
+
+
+fix-hashbang-line:
+	for i in ${Applications};		\
+	do 					\
+		tclsh apps/fixhbline ${TCLSH_PATH} ${WISH_PATH} apps/$$i; \
+	done
+
+
+# -----------------------------------------------------------
+# -- internal development targets --
+# -----------------------------------------------------------
+
+itest:	test-prepare
+	cd tests ; tclsh all
+
+test-prepare:
+	for i in base; do cd $$i ; gen_cls ; gen_idx ; cd .. ; done
+	touch test-prepare
+
+# test-prepare assumes installed Pool, maybe an earlier version.
+# enforced correct index files for pickup by the test scripts.
+
+
+refresh:
+	for i in $(PKGDIRS); do echo cls $$i ; cd $$i ; ../apps/gen_cls -R ; cd .. ; done
+	for i in $(PKGDIRS); do echo idx $$i ; cd $$i ; ../apps/gen_idx -R ; rm clsIndex ; cd .. ; done
+	cd base  ; ../apps/gen_pkg Pool_Base    3.0 tclIndex > /dev/null ; rm tclIndex
+	cd gui   ; ../apps/gen_pkg Pool_GuiBase 3.0 tclIndex > /dev/null ; rm tclIndex
+	cd clock ; ../apps/gen_pkg Pool_Clock   3.0 tclIndex > /dev/null ; rm tclIndex
+	cd net   ; ../apps/gen_pkg Pool_Net     3.0 tclIndex > /dev/null ; rm tclIndex
+
+rbase:
+	cd base ; ../apps/gen_cls -R ; cd ..
+	cd base ; ../apps/gen_idx -R ; rm clsIndex ; cd ..
+	cd base ; ../apps/gen_pkg Pool_Base 3.0 tclIndex > /dev/null ; rm tclIndex
+
+rgui:
+	cd gui ; ../apps/gen_cls -R ; cd ..
+	cd gui ; ../apps/gen_idx -R ; rm clsIndex ; cd ..
+	cd gui ; ../apps/gen_pkg Pool_GuiBase 3.0 tclIndex > /dev/null #; rm tclIndex
+
+rclock:
+	cd clock ; ../apps/gen_cls -R ; cd ..
+	cd clock ; ../apps/gen_idx -R ; rm clsIndex ; cd ..
+	cd clock ; ../apps/gen_pkg Pool_Clock 3.0 tclIndex > /dev/null ; rm tclIndex
+
+rnet:
+	cd net ; ../apps/gen_cls -R ; cd ..
+	cd net ; ../apps/gen_idx -R ; rm clsIndex ; cd ..
+	cd net ; ../apps/gen_pkg Pool_Net 3.0 tclIndex > /dev/null ; rm tclIndex
+
+clsclean:
+	here=`pwd` ; for i in $(CLASSDIRS); do echo clean $$i ; cd $$i ; clean_cls ; cd $$here ; done
+
+xclean:	clsclean
+	find . -name clsIndex     -exec rm {} \;
+	find . -name tclIndex     -exec rm {} \;
+	find . -name pkgIndex.tcl -exec rm {} \;
+
+# regen base8
+regenbase:
+	cd base ; gen_cls ; gen_idx ; gen_pkg Pool_Base 3.0 tclIndex > /dev/null ; cd ..
+
+# ----------------------------------
+#
+install-net:
+	@echo "installing net..."
+	-@mkdir          $(LIBDIR)/Pool_Net2.1
+	@cd net ; cp -r * $(LIBDIR)/Pool_Net2.1
+	@cd              $(LIBDIR)/Pool_Net2.1 ; find . -name '*.cls' -print | xargs rm -f ; chmod -R 755 *
+
+install-base:
+	@echo "installing base..."
+	-@mkdir          $(LIBDIR)/Pool_Base2.2
+	@cd base ; cp -r * $(LIBDIR)/Pool_Base2.2
+	@cd              $(LIBDIR)/Pool_Base2.2 ; find . -name '*.cls' -print | xargs rm -f ; chmod -R 755 *
+
+install-clock:
+	@echo "installing clock..."
+	-@mkdir          $(LIBDIR)/Pool_Clock2.1
+	@cd clock ; cp -r * $(LIBDIR)/Pool_Clock2.1
+	@cd              $(LIBDIR)/Pool_Clock2.1 ; find . -name '*.cls' -print | xargs rm -f ; chmod -R 755 *
+
+install-gui:
+	@echo "installing gui..."
+	-@mkdir          $(LIBDIR)/Pool_GuiBase2.1
+	@cd gui ; cp -r * $(LIBDIR)/Pool_GuiBase2.1
+	@cd              $(LIBDIR)/Pool_GuiBase2.1 ; find . -name '*.cls' -print | xargs rm -f ; chmod -R 755 *
+
+
+# ----------------------------------
+

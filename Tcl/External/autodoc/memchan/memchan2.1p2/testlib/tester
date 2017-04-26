@@ -1,0 +1,125 @@
+#!/usr/local/bin/wish
+# -*- tcl -*-
+# This file contains generic support code for test suites built along the
+# lines of the Tcl test suite and the suites of various extensions.
+#
+# Assumptions:
+# * [pwd] == toplevel directory of extension to test.
+# * Test suite in standard location ([pwd]/tests)
+# * Code of this application possibly in the tests directory.
+#   (As long as this is not part of the official distribution
+#   everyone has to send it along with their test suite).
+#
+# Note: This is/shall be some basic software running everywhere. This
+# automatically leads to the requirement that this is written in
+# 'pure Tcl/Tk'.
+#
+# Copyright (c) 1999 Andreas Kupries, <akupries@westend.com>
+# ----------------------------------------------------------------------
+
+# -- Handle options --
+
+set auto  0
+set delay 0
+
+while {[llength $argv] > 0} {
+    switch -- [lindex $argv 0] {
+	-a     -
+	-au    -
+	-aut   -
+	-auto  {
+	    # Automatic execution of the test suite after the start
+	    set auto 1
+	}
+	-d     -
+	-de    -
+	-del   -
+	-dela  -
+	-delay {
+	    # Delay the automatic execution by -delay seconds.
+	    # Irrelevant if -auto was *not* set.
+
+	    set delay [lindex $argv 1]
+	    set argv  [lrange $argv 1 end]
+	}
+	default {
+	    break;
+	}
+    }
+    set argv [lrange $argv 1 end]
+}
+
+
+# Locate extension / library and its test suite.
+# Locate our support package too.
+# -------------------------------------------------------------------
+# Possibilities for starting the tester
+#
+# 1) In the toplevel directory. This contains 'tests' and the platform
+#    specific directories (unix, win, mac) or none of the latter.
+# 2) In the 'tests' directory.
+# 3) In one of the platform specific directories, not necessarily the
+#    correct one.
+
+if {![file exists tests]} {
+    if {[file exists [file join .. tests]]} {
+	cd ..
+    } else {
+	# unable to locate top directory of extension
+	error "unable to locate extension and its testsuite"
+    }
+}
+
+#-W- get setup script, maintainer information via platform dir and fixed
+#    files / this interface is not yet fixed. => pkgUtil.tcl encapsulates this.
+
+# pwd = toplevel directory of the extension.
+#
+# Location of the tester support library (order of preference):
+#
+# a) Installed somewhere, reachable through the default 'auto_path'.
+# b) Installed in the subdirectory 'testlib'.
+# c) Installed in the 'tests' directory.
+
+set auto_path [concat [list \
+	[file join [pwd] testlib] \
+	[pwd] \
+	[file join [pwd] tests] \
+	[file join [pwd] [file dirname $argv0]]] $auto_path]
+
+package require Testlib
+cd tests
+
+
+# Locates the setup script, bails if it cannot be found, remembers the result.
+pkgTestSetup
+
+
+# -------------------------------------------------------------------
+# -- Main body of operation --
+
+wm withdraw .
+
+#if {[splashDialog Text Ok Cancel] == 1} {exit}
+
+splashIntro
+#splashWait Ok
+
+after 1000
+
+splashScan
+tsScan [pkgTestSetup]
+
+ifBuild
+splashRemove
+
+# now wait for user input or start the execution of tests,
+# if '-auto' was given, maybe after a delay, as
+# specified via '-delay'.
+
+if {$auto} {
+    after [expr {$delay * 1000}] {tsRun [pkgTestSetup]}
+}
+
+# -----------------------------------------
+#parray testDef

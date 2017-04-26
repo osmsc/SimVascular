@@ -1,0 +1,22 @@
+#!/usr/local/bin/tclsh
+# -*- tcl -*-
+#		Pool @mFullVersion@, as of @mDate@
+#
+# @comment generate index of tcl procedures suitable for autoloading by tcl
+# CVS : $Id: nserver,v 1.3 1998/06/02 20:05:01 aku Exp $
+#
+# -- name server application, uses Pool_Net/ns/*
+
+package require Pool_Base
+package require Pool_Net
+
+
+remoteLog rl -portspec {}
+
+proc ns_logto {portspec} {
+    rl configure -portspec $portspec
+    return
+}
+
+::pool::nameserver::server::init
+vwait forever

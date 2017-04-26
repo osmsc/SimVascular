@@ -1,0 +1,14 @@
+# -*- tcl -*-
+bindist 2.0-winnt-gcc2.95-811stubs.threads {
+    version     2.0
+    dev.environ {<a href="http://sourceware.cygnus.com/cygwin/">gcc 2.95-19990715</a>}
+    system      {Windows 95/98/2000/NT}
+    by          {Jan Nijtmans <nijtmans@wxs.nl>}
+    tcl         {8.1.1(+) or higher}
+    comments    {
+	uses stubs, is thread aware (but usable for non-threaded
+	versions of tcl too), usable for Windows NT/98/95/2000.
+    }
+    date        {07/29/1999}
+    arch        zip
+}

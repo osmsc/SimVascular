@@ -1,0 +1,35 @@
+#!/usr/local/bin/wish
+# -*- tcl -*-
+# present calendar
+# ------------------------------------------------------
+
+puts "demonstration of the 'tix_calendar'-widget"
+puts "\tnote the wrap-arounds at beginning/end of a month"
+puts "\t'Q' will exit the program"
+
+# ------------------------------------------------------
+#package require Pool_GuiBase
+package require Pool_Clock
+
+
+# ------------------------------------------------------
+wm title . "Calendar"
+
+calendarTix .c                           \
+	-highlightthickness 0            \
+	-fg                 yellow       \
+	-bg                 steelblue    \
+	-order              dmy          \
+	-command            {puts stdout}
+
+if {$argc > 0} {
+    # reconfigure to wishes of user
+    eval .c configure $argv
+}
+
+pack .c -side top -fill both -expand 1
+
+.c setBindingsTo .
+
+bind . <Key-Q>    exit
+bind . <Key-q>    exit

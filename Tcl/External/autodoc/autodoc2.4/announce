@@ -1,0 +1,40 @@
+Hello world,
+
+I hereby announce autodoc 2.4.
+It is 
+	An application to convert specially formatted documentation
+	embedded into tcl code into a cross-referenced set of
+	HTML pages describing this code.
+    
+
+Changes from 2.3 to 2.4
+
+*	File names and anchors are now derived from the name of the
+	original object and much less subject to change than before.
+
+*	Additional tags: @bug, @date, @version and @example (@ex)
+
+*	Support for [incr Tcl] (and [incr Tk]: components, options).
+
+*	Information about inheritance automatically grafted to
+	method descriptions.
+
+*	New index listing all used namespaces.
+
+*	Better support for superclasses defined outside of the
+	documented package.
+
+*	Added support for CSS. The styles.css file coming with the
+	distribution was written by Sebastien BARRE
+	<sebastien@barre.nom.fr>.
+
+*	Forward and backward links for the sections in a class
+	description.
+
+
+The distribution can be found at
+	<http://www.purl.org/NET/akupries/soft/autodoc/download/autodoc2.4.README>
+	<http://www.purl.org/NET/akupries/soft/autodoc/download/autodoc2.4.tar.gz>
+	<http://www.purl.org/NET/akupries/soft/autodoc/download/autodoc2.4.tar.bz2>
+	<http://www.purl.org/NET/akupries/soft/autodoc/download/autodoc2.4.zip>
+	<http://www.purl.org/NET/akupries/soft/autodoc/index.htm>

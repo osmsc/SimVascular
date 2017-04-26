@@ -1,0 +1,26 @@
+Write an application to
+
+-	run an existing test suite without changes
+	(but from the outside of the package, not
+	as part of it)
+
+	=> backward compatibility required.
+
+
+-	provide a graphical interface to all tests
+	in a suite, allowing the user to look at them,
+	enable and/or disable them, see their state
+	at a glance.
+
+-	allow an user to write / modify tests
+	=> management of test suites
+	=> editor for a test suite.
+
+Additionals
+
+-	Define a new format for tests, allowing the
+	additional specification of setup/cleanup scripts
+	and dependencies between tests.
+
+-	needs support from the make system for proper
+	operation ((un/re)loading of the package to test)

@@ -1,0 +1,157 @@
+<html>
+<head>
+<title>File 'base/remoteLog.cls' (part of 'Pool_Base')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'base/remoteLog.cls' (part of '<a href="pkg_Pool_Base.html" class="package">Pool_Base</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Helper to syslog. Allows users to prepend the generated messages with a prefix of their own choice.</span>
+</dl>
+</div>
+<h1 class="class">Class 'remoteLog'</h1>
+<div class="class-header">
+<dl>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#oportspec" class="options">portspec</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cremoteLog.html#premoteLog_TrackPortSpec" class="proc">TrackPortSpec</a> <span class="arg-list">(option oldValue)</span><br>
+<a href="cremoteLog.html#premoteLog_log" class="proc">log</a> <span class="arg-list">(level text)</span><br>
+<a href="cremoteLog.html#premoteLog_remoteLog" class="proc">remoteLog</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vhost" class="members">host</a><br>
+<a href="#vport" class="members">port</a><br>
+<a href="#vsocket" class="members">socket</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="oportspec"></a>
+<dt><span class="option-name">-portspec</span>
+<dd><span class="option-description">  The specification of the port to send the logged messages  to. A list containing two elements, the name of the target  host, and the port used there, in this order.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="premoteLog_TrackPortSpec"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackPortSpec</span> <span class="arg-list">(option oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Configure procedure. Propagates changes to the port specification to <span class="xref-vref"><a href="cremoteLog.html#vhost" class="xref-vref">host</a></span>, <span class="xref-vref"><a href="cremoteLog.html#vport" class="xref-vref">port</a></span> and <span class="xref-vref"><a href="cremoteLog.html#vsocket" class="xref-vref">socket</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: option
+</td>
+<td class="argument-description">
+The changed option.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="premoteLog_log"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">log</span> <span class="arg-list">(level text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">This method sends the incoming messages down the <span class="xref-vref"><a href="cremoteLog.html#vsocket" class="xref-vref">socket</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: level
+</td>
+<td class="argument-description">
+Relative importance of the logged message. Should be one of the strings returned by <span class="xref-procs"><a href="f_base_syslog.tcl.html#p_pool_syslog_levels" class="proc">::pool::syslog::levels</a></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The message to log.
+</td>
+</tr>
+</table>
+</p>
+<a name="premoteLog_remoteLog"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">remoteLog</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Constructor, initializes the port specification (as empty) <span class="xref-oref"><a href="cremoteLog.html#oportspec" class="xref-oref">portspec</a></span>.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vhost"></a>
+<dt><span class="variable-name">host</span>
+<dd><span class="variable-description">    The host-part of <span class="xref-oref"><a href="cremoteLog.html#oportspec" class="xref-oref">portspec</a></span></span>
+<a name="vport"></a>
+<dt><span class="variable-name">port</span>
+<dd><span class="variable-description">    The port-part of <span class="xref-oref"><a href="cremoteLog.html#oportspec" class="xref-oref">portspec</a></span></span>
+<a name="vsocket"></a>
+<dt><span class="variable-name">socket</span>
+<dd><span class="variable-description">  The handle of the channel created via <span class="xref-oref"><a href="cremoteLog.html#oportspec" class="xref-oref">portspec</a></span>.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

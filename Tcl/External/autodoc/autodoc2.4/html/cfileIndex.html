@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>File 'lib/fileIndex.cls' (part of 'AutoDOC')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'lib/fileIndex.cls' (part of '<a href="pkg_AutoDOC.html" class="package">AutoDOC</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">File indices.</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Management of file indices.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">files,  file index,  indices</span>
+</dl>
+</div>
+<h1 class="class">Class 'fileIndex'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Manages a single files index. Entries are the tcl files encountered during the scan of the directory hierarchy.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cazIndex.html" class="class">azIndex</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cfileIndex.html#pfileIndex_clear" class="proc">clear</a> <span class="arg-list">()</span><br>
+<a href="cfileIndex.html#pfileIndex_fileIndex" class="proc">fileIndex</a> <span class="arg-list">()</span><br>
+<a href="cfileIndex.html#pfileIndex_getRef" class="proc">getRef</a> <span class="arg-list">(name)</span><br>
+<a href="cfileIndex.html#pfileIndex_writeProblemPage" class="proc">writeProblemPage</a> <span class="arg-list">()</span>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pfileIndex_clear"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">clear</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cazIndex.html" class="class">azIndex</a>:<a href="cazIndex.html#pazIndex_clear" class="proc">clear</a><br>
+<span class="header-description-value">Resets state information</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pfileIndex_fileIndex"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">fileIndex</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Constructor, parameterizes the baseclass.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pfileIndex_getRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">getRef</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cazIndex.html" class="class">azIndex</a>:<a href="cindexBase.html#pindexBase_getRef" class="proc">getRef</a><br>
+<span class="header-description-value">Override of baseclass functionality (<span class="xref-mref"><a href="cindexBase.html" class="class">indexBase</a>:<a href="cindexBase.html#pindexBase_getRef" class="proc">getRef</a></span>). A file not in the index is searched relative to the basedir of the distribution and not marked as error (if it exists.)</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the file searched by the caller.
+</td>
+</tr>
+</table>
+</p>
+<a name="pfileIndex_writeProblemPage"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">writeProblemPage</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Writes a page containing references to the detailed problem descriptions of files having such.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/07/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<html>
+<head>
+<title>File 'base/cgi.tcl' (part of 'Pool_Base')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'base/cgi.tcl' (part of '<a href="pkg_Pool_Base.html" class="package">Pool_Base</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">HTML generation commands,</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Helper procedures to facilitate multipage generation of HTML Redirection of output into a string is possible too. Is built on top of the <a href="http://expect.nist.gov/cgi.tcl/" class="xref-xref">cgi library</a> by <a href="mailto:libes@nist.gov" class="xref-xref">Don Libes</a>.</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a>, <a href="http://expect.nist.gov/cgi.tcl/" class="xref-dep">cgi</a></span>
+<dt><span class="header-title">See also</span>
+<dd><span class="header-value"><a href="cgitools.htm" class="xref-xref">Cgi tools Usage</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">HTML generation,  multipage HTML,  string HTML,  cgi</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_base_cgi.tcl.html#p_pool_cgi_closePage" class="proc">::pool::cgi::closePage</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_cgi.tcl.html#p_pool_cgi_closeString" class="proc">::pool::cgi::closeString</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_cgi.tcl.html#p_pool_cgi_getString" class="proc">::pool::cgi::getString</a> <span class="arg-list">(script)</span>
+<li class="proc-listing"><a href="f_base_cgi.tcl.html#p_pool_cgi_openPage" class="proc">::pool::cgi::openPage</a> <span class="arg-list">(file)</span>
+<li class="proc-listing"><a href="f_base_cgi.tcl.html#p_pool_cgi_openString" class="proc">::pool::cgi::openString</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_cgi.tcl.html#p_pool_cgi_putsFile" class="proc">::pool::cgi::putsFile</a> <span class="arg-list">(args)</span>
+<li class="proc-listing"><a href="f_base_cgi.tcl.html#p_pool_cgi_putsString" class="proc">::pool::cgi::putsString</a> <span class="arg-list">(args)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_cgi_closePage"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::cgi::closePage</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Closes the current output file and switches back to the normal mode of HTML generation.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_cgi_closeString"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::cgi::closeString</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Returns the HTML code stored in the currently active string buffer. Pops off one level of redirection afterward.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The HTML code stored in the currently active stringbuffer.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_cgi_getString"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::cgi::getString</span> <span class="arg-list">(script)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Wrapper to <span class="xref-procs"><a href="f_base_cgi.tcl.html#p_pool_cgi_openString" class="proc">::pool::cgi::openString</a></span> and <span class="xref-procs"><a href="f_base_cgi.tcl.html#p_pool_cgi_closeString" class="proc">::pool::cgi::closeString</a></span>. Ensures correct nesting of these procedures.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: script
+</td>
+<td class="argument-description">
+Tcl code to evaluate, should contain cgi commands producing HTML code. Nested 'getString' calls are possible.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The HTML code produced by <span class="argument"><span class="proc">script</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_cgi_openPage"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::cgi::openPage</span> <span class="arg-list">(file)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Opens the <span class="argument"><span class="proc">file</span></span> for writing and sets up everything required to redirect generated HTML code into it.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: file
+</td>
+<td class="argument-description">
+Name of the file to write into.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_cgi_openString"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::cgi::openString</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Activates redirection of HTML output into a stringbuffer. A stack of such buffers is managed to allow for multiple redirections.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_cgi_putsFile"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::cgi::putsFile</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">This is a replacement procedure for 'cgi_puts' as contained in <a href="http://expect.nist.gov/cgi.tcl/" class="xref-xref">cgi library</a> (by <a href="mailto:libes@nist.gov" class="xref-xref">Don Libes</a>). This version allows generation of more than one page.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+as accepted/required by the builtin 'puts'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_cgi_putsString"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::cgi::putsString</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">This is a replacement procedure for 'cgi_puts' as contained in <a href="http://expect.nist.gov/cgi.tcl/" class="xref-xref">cgi library</a> (by <a href="mailto:libes@nist.gov" class="xref-xref">Don Libes</a>). This version writes the HTML code into a string which then can be retriieved later.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+as accepted/required by the builtin 'puts'.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

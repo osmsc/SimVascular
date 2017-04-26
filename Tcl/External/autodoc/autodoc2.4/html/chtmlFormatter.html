@@ -1,0 +1,1132 @@
+<html>
+<head>
+<title>File 'lib/htmlFormatter.cls' (part of 'AutoDOC')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'lib/htmlFormatter.cls' (part of '<a href="pkg_AutoDOC.html" class="package">AutoDOC</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Strategy class, produces HTML output</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">The strategy class for production of HTML formatted output.</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://expect.nist.gov/cgi.tcl/" class="xref-dep">cgi</a></span>
+</dl>
+</div>
+<h1 class="class">Class 'htmlFormatter'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://expect.nist.gov/cgi.tcl/" class="xref-dep">cgi</a><br>
+<a href="http://expect.nist.gov/cgi.tcl/" class="xref-dep">cgi</a></span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cgenericFormatter.html" class="class">genericFormatter</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="chtmlFormatter.html#phtmlFormatter_RecordPage" class="proc">RecordPage</a> <span class="arg-list">(pagefile)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_ampersand" class="proc">ampersand</a> <span class="arg-list">()</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_blockClass" class="proc">blockClass</a> <span class="arg-list">(script)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_caption" class="proc">caption</a> <span class="arg-list">(args)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_chapter" class="proc">chapter</a> <span class="arg-list">(title)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_clear" class="proc">clear</a> <span class="arg-list">()</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_closePage" class="proc">closePage</a> <span class="arg-list">()</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_definitionList" class="proc">definitionList</a> <span class="arg-list">(script)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_defterm" class="proc">defterm</a> <span class="arg-list">(term text)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_defterm2" class="proc">defterm2</a> <span class="arg-list">(term)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_emph" class="proc">emph</a> <span class="arg-list">(text)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_enumerate" class="proc">enumerate</a> <span class="arg-list">(script)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_getAnchor" class="proc">getAnchor</a> <span class="arg-list">(name)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_getString" class="proc">getString</a> <span class="arg-list">(script)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_hrule" class="proc">hrule</a> <span class="arg-list">()</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_htmlFormatter" class="proc">htmlFormatter</a> <span class="arg-list">()</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_imgDef" class="proc">imgDef</a> <span class="arg-list">(code text geometry imgfile)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_imgRef" class="proc">imgRef</a> <span class="arg-list">(code)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_item" class="proc">item</a> <span class="arg-list">(text)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_itemize" class="proc">itemize</a> <span class="arg-list">(script)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_link" class="proc">link</a> <span class="arg-list">(text url)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_linkDef" class="proc">linkDef</a> <span class="arg-list">(code text url)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_linkRef" class="proc">linkRef</a> <span class="arg-list">(code)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_markError" class="proc">markError</a> <span class="arg-list">(text)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_markVisibility" class="proc">markVisibility</a> <span class="arg-list">(text)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_markWithClass" class="proc">markWithClass</a> <span class="arg-list">(class text)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_newPage" class="proc">newPage</a> <span class="arg-list">(file title firstheading)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_par" class="proc">par</a> <span class="arg-list">(args)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_parbreak" class="proc">parbreak</a> <span class="arg-list">()</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_preformatted" class="proc">preformatted</a> <span class="arg-list">(text)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_quote" class="proc">quote</a> <span class="arg-list">(string)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_sample" class="proc">sample</a> <span class="arg-list">(text)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_section" class="proc">section</a> <span class="arg-list">(title)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_setAnchor" class="proc">setAnchor</a> <span class="arg-list">(name)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_strong" class="proc">strong</a> <span class="arg-list">(text)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_table" class="proc">table</a> <span class="arg-list">(args)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_table_data" class="proc">table_data</a> <span class="arg-list">(args)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_table_head" class="proc">table_head</a> <span class="arg-list">(args)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_table_row" class="proc">table_row</a> <span class="arg-list">(args)</span><br>
+<a href="chtmlFormatter.html#phtmlFormatter_write" class="proc">write</a> <span class="arg-list">(text)</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vpages" class="members">pages</a><br>
+<a href="#vfooter" class="members">footer</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="phtmlFormatter_RecordPage"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">RecordPage</span> <span class="arg-list">(pagefile)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal method used by <span class="xref-mref"><a href="chtmlFormatter.html#phtmlFormatter_newPage" class="proc">newPage</a></span> to keep track of all generated files. Trying to write a file twice causes an exception aborting the engine.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: pagefile
+</td>
+<td class="argument-description">
+The name of the to write.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_ampersand"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">ampersand</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_ampersand" class="proc">ampersand</a><br>
+<span class="header-description-value">Writes an ampersand (&amp;) into the current page.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_blockClass"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">blockClass</span> <span class="arg-list">(script)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_blockClass" class="proc">blockClass</a><br>
+<span class="header-description-value">Encloses a block of output with a marker for an output class.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: script
+</td>
+<td class="argument-description">
+Script to execute to create the output to enclose in the markers.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_caption"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">caption</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_caption" class="proc">caption</a><br>
+<span class="header-description-value">Executes the specified script (last argument) in the calling context, captures the produced formatted text and organizes it into a table caption. The arguments before the script are interpreted as 'name=value'-style parameterization.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+A list of 'name=value' parameters and a script to evaluate in the calling context (last element).
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_chapter"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">chapter</span> <span class="arg-list">(title)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_chapter" class="proc">chapter</a><br>
+<span class="header-description-value">Adds a chapter <span class="argument"><span class="proc">title</span></span> to the current page.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: title
+</td>
+<td class="argument-description">
+The text of the title.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_clear"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">clear</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_clear" class="proc">clear</a><br>
+<span class="header-description-value">Clear internal state, prepare for new scan.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_closePage"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">closePage</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_closePage" class="proc">closePage</a><br>
+<span class="header-description-value">Completes the generation of the current page</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_definitionList"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">definitionList</span> <span class="arg-list">(script)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_definitionList" class="proc">definitionList</a><br>
+<span class="header-description-value">Executes the specified <span class="argument"><span class="proc">script</span></span> in the calling context and captures any generated output in a string, which is then formatted as definition list.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: script
+</td>
+<td class="argument-description">
+The tcl code to execute in the calling context.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_defterm"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">defterm</span> <span class="arg-list">(term text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_defterm" class="proc">defterm</a><br>
+<span class="header-description-value">Generates an item in a definition list.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: term
+</td>
+<td class="argument-description">
+The name of the thing to explain.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The text explaining the <span class="argument"><span class="argument-description">term</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_defterm2"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">defterm2</span> <span class="arg-list">(term)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_defterm2" class="proc">defterm2</a><br>
+<span class="header-description-value">Generates an item in a definition list.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: term
+</td>
+<td class="argument-description">
+The name of the thing to explain. But without explanation.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_emph"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">emph</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_emph" class="proc">emph</a><br>
+<span class="header-description-value">Adds the appropriate formatting to the given <span class="argument"><span class="proc">text</span></span> to make it emphasized, then returns the result.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to mark as sample.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The emphasized <span class="argument"><span class="proc">text</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_enumerate"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">enumerate</span> <span class="arg-list">(script)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_enumerate" class="proc">enumerate</a><br>
+<span class="header-description-value">Executes the specified <span class="argument"><span class="proc">script</span></span> in the calling context and captures any generated output in a string, which is then formatted as itemized list.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: script
+</td>
+<td class="argument-description">
+The tcl code to execute in the calling context.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_getAnchor"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">getAnchor</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_getAnchor" class="proc">getAnchor</a><br>
+<span class="header-description-value">Generates a <span class="argument"><span class="proc">name</span></span>d anchor and returns the HTML to the caller.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the generated anchor.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: the HTML string defining the <span class="argument"><span class="proc">name</span></span>d anchor.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_getString"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">getString</span> <span class="arg-list">(script)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_getString" class="proc">getString</a><br>
+<span class="header-description-value">Executes the specified <span class="argument"><span class="proc">script</span></span> in the calling context and captures any generated output in a string, which is then returned as the result of the call.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: script
+</td>
+<td class="argument-description">
+The tcl code to execute in the calling context.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a string containing all output produced by the <span class="argument"><span class="proc">script</span></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_hrule"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">hrule</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_hrule" class="proc">hrule</a><br>
+<span class="header-description-value">Writes a horizontal rule into the current page.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_htmlFormatter"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">htmlFormatter</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Constructor, initializes the file extension.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_imgDef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">imgDef</span> <span class="arg-list">(code text geometry imgfile)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_imgDef" class="proc">imgDef</a><br>
+<span class="header-description-value">Stores an hyperlink to an image under <span class="argument"><span class="proc">code</span></span>, allowing later retrieval via <span class="xref-mref"><a href="chtmlFormatter.html#phtmlFormatter_imgRef" class="proc">imgRef</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: code
+</td>
+<td class="argument-description">
+The identifier for storage and retrieval of the image link.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+Alternative text describing the contents of the picture.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: geometry
+</td>
+<td class="argument-description">
+A list containing the width and height of the image, in this order. Can be empty. Used to insert geometry information into the link, for better display even if the image is not loaded.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: imgfile
+</td>
+<td class="argument-description">
+The location to point at, i.e. the image file.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_imgRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">imgRef</span> <span class="arg-list">(code)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_imgRef" class="proc">imgRef</a><br>
+
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: code
+</td>
+<td class="argument-description">
+The identifier for storage and retrieval of the image link.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: the image link generated by <span class="xref-mref"><a href="chtmlFormatter.html#phtmlFormatter_imgDef" class="proc">imgDef</a></span> and then stored under <span class="argument"><span class="proc">code</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_item"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">item</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_item" class="proc">item</a><br>
+<span class="header-description-value">Generates an item in an itemized list.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The paragraph to format as item in the list.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_itemize"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">itemize</span> <span class="arg-list">(script)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_itemize" class="proc">itemize</a><br>
+<span class="header-description-value">Executes the specified <span class="argument"><span class="proc">script</span></span> in the calling context and captures any generated output in a string, which is then formatted as itemized list.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: script
+</td>
+<td class="argument-description">
+The tcl code to execute in the calling context.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_link"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">link</span> <span class="arg-list">(text url)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_link" class="proc">link</a><br>
+<span class="header-description-value">Combines its arguments into a hyperlink having the <span class="argument"><span class="proc">text</span></span> and pointing to the location specified via <span class="argument"><span class="proc">url</span></span></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to use as textual part of the hyperlink.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: url
+</td>
+<td class="argument-description">
+The location to point at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: the formatted hyperlink.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_linkDef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">linkDef</span> <span class="arg-list">(code text url)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_linkDef" class="proc">linkDef</a><br>
+<span class="header-description-value">The same as in <span class="xref-mref"><a href="chtmlFormatter.html#phtmlFormatter_link" class="proc">link</a></span>, but the result is stored internally instead, using <span class="argument"><span class="proc">code</span></span> as reference.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: code
+</td>
+<td class="argument-description">
+The identifier for storage and retrieval of the hyperlink.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to use as textual part of the hyperlink.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: url
+</td>
+<td class="argument-description">
+The location to point at.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_linkRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">linkRef</span> <span class="arg-list">(code)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_linkRef" class="proc">linkRef</a><br>
+
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: code
+</td>
+<td class="argument-description">
+The identifier for storage and retrieval of the hyperlink.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: the hyperlink generated by <span class="xref-mref"><a href="chtmlFormatter.html#phtmlFormatter_linkDef" class="proc">linkDef</a></span> and then stored under <span class="argument"><span class="proc">code</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_markError"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">markError</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_markError" class="proc">markError</a><br>
+<span class="header-description-value">Formats the incoming <span class="argument"><span class="proc">text</span></span> as error and returns the modified information.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The text to reformat.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a string containing the given <span class="argument"><span class="proc">text</span></span> formatted as error.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_markVisibility"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">markVisibility</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_markVisibility" class="proc">markVisibility</a><br>
+<span class="header-description-value">Formats the incoming <span class="argument"><span class="proc">text</span></span> for display as visibility/usage add-on to a variable or method description.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The text to reformat.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a string containing the reformatted <span class="argument"><span class="proc">text</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_markWithClass"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">markWithClass</span> <span class="arg-list">(class text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_markWithClass" class="proc">markWithClass</a><br>
+<span class="header-description-value">Uses the specified output <span class="argument"><span class="proc">class</span></span> to mark the given <span class="argument"><span class="proc">text</span></span> and returns the marked text.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+The class to use as marker.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The text to mark with an output <span class="argument"><span class="argument-description">class</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Returns the marked <span class="argument"><span class="proc">text</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_newPage"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">newPage</span> <span class="arg-list">(file title firstheading)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_newPage" class="proc">newPage</a><br>
+<span class="header-description-value">Start a new page, implicitly completes the current page.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: file
+</td>
+<td class="argument-description">
+name of file to contain the generated page
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: title
+</td>
+<td class="argument-description">
+string to be used as title of the page
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: firstheading (= {})
+</td>
+<td class="argument-description">
+string to use in toplevel heading. Defaults to <span class="argument"><span class="argument-description">title</span></span>. Required to allow hyperlinks in toplevel headings without violating HTML syntax in the title.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_par"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">par</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_par" class="proc">par</a><br>
+<span class="header-description-value">Writes a paragraph into the current page, uses all arguments as one string.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+The text to format and write as paragraph. Actually a list of arguments put together into one string
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_parbreak"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">parbreak</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_parbreak" class="proc">parbreak</a><br>
+<span class="header-description-value">Writes a paragraph break into the current page.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_preformatted"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">preformatted</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_preformatted" class="proc">preformatted</a><br>
+<span class="header-description-value">Adds the appropriate formatting to the given <span class="argument"><span class="proc">text</span></span> to preserve its exact structure, then returns the result.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to mark as preformatted text.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The emphasized <span class="argument"><span class="proc">text</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_quote"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">quote</span> <span class="arg-list">(string)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_quote" class="proc">quote</a><br>
+<span class="header-description-value">Takes the specified <span class="argument"><span class="proc">string</span></span>, add protective signs to all character (sequences) having special meaning for the formatter and returns the so enhanced text.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: string
+</td>
+<td class="argument-description">
+The string to protect against interpretation by the formatter.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a string containing no unprotected special character (sequences).
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_sample"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">sample</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_sample" class="proc">sample</a><br>
+<span class="header-description-value">Adds the appropriate formatting to the given <span class="argument"><span class="proc">text</span></span> to emphasize it as sample program output, then returns the result.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to mark as sample.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The emphasized <span class="argument"><span class="proc">text</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_section"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">section</span> <span class="arg-list">(title)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_section" class="proc">section</a><br>
+<span class="header-description-value">Adds a section <span class="argument"><span class="proc">title</span></span> to the current page.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: title
+</td>
+<td class="argument-description">
+The text of the title.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_setAnchor"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">setAnchor</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_setAnchor" class="proc">setAnchor</a><br>
+<span class="header-description-value">Generates a <span class="argument"><span class="proc">name</span></span>d anchor at the current location in the current page.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Dangers</span>: Usable only in conjunction with cgi 0.7, and not cgi 0.4, as for earlier versions of autodoc.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the generated anchor.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_strong"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">strong</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_strong" class="proc">strong</a><br>
+<span class="header-description-value">Adds the appropriate formatting to the given <span class="argument"><span class="proc">text</span></span> to emphasize it as strong, then returns the result.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to mark as strong.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The emphasized <span class="argument"><span class="proc">text</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_table"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">table</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_table" class="proc">table</a><br>
+<span class="header-description-value">Executes the specified script (last argument) in the calling context, captures the produced formatted text and organizes it into a table. The arguments before the scripts are interpreted as 'name=value'-style parameterization.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+A list of 'name=value' parameters and a script to evaluate in the calling context (last element).
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_table_data"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">table_data</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_table_data" class="proc">table_data</a><br>
+<span class="header-description-value">Executes the specified script (last argument) in the calling context, captures the produced formatted text and organizes it into a table cell. The arguments before the script are interpreted as 'name=value'-style parameterization.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+A list of 'name=value' parameters and a script to evaluate in the calling context (last element).
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_table_head"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">table_head</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_table_head" class="proc">table_head</a><br>
+<span class="header-description-value">Executes the specified script (last argument) in the calling context, captures the produced formatted text and organizes it into a table cell formatted as heading. The arguments before the script are interpreted as 'name=value'-style parameterization.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+A list of 'name=value' parameters and a script to evaluate in the calling context (last element).
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_table_row"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">table_row</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_table_row" class="proc">table_row</a><br>
+<span class="header-description-value">Executes the specified script (last argument) in the calling context, captures the produced formatted text and organizes it into a table row. The arguments before the script are interpreted as 'name=value'-style parameterization.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+A list of 'name=value' parameters and a script to evaluate in the calling context (last element).
+</td>
+</tr>
+</table>
+</p>
+<a name="phtmlFormatter_write"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">write</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_write" class="proc">write</a><br>
+<span class="header-description-value">Has to write the specified <span class="argument"><span class="proc">text</span></span> into the current page.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to place into the current page.
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vpages"></a>
+<dt><span class="variable-name">pages</span>
+<dd><span class="variable-description">        Array containing the names of all HTML files generated        so far.</span>
+<a name="vfooter"></a>
+<dt><span class="variable-name">footer</span>
+<dd><span class="variable-description">       Contains the HTML commands to generate the footer line.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/07/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

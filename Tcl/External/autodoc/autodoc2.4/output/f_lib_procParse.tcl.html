@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>File 'lib/procParse.tcl' (part of 'AutoDOC')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'lib/procParse.tcl' (part of '<a href="pkg_AutoDOC.html" class="package">AutoDOC</a>')</h1><hr class="navbar"><p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p><hr class="navbar">
+<div class="file-header"><dl><dt><span class="header-title">Description (short)</span><dd><span class="header-description-value"><span class="xref-classes"><a href="cprocDescription.html" class="class">procDescription</a></span> helper procedures.</span><dt><span class="header-title">Written by</span><dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span><dt><span class="header-title">Description</span><dd><span class="header-description-title">Helper procedures used by <span class="xref-classes"><a href="cprocDescription.html" class="class">procDescription</a></span> to extract procedure level documentation.</span><dt><span class="header-title">Depends on</span><dd><span class="header-value"><a href="http://www.oche.de/~akupries/soft/pool/index.htm" class="xref-dep">Pool_Base</a></span><dt><span class="header-title">Keywords</span><dd><span class="header-value">helper procedures,  documentation parsing,  definition extraction</span></dl></div><hr class="file"><ul class="proc-listing"><li class="proc-listing"><a href="f_lib_procParse.tcl.html#ppd_argument" class="proc">pd_argument</a> <span class="arg-list">(line)</span><li class="proc-listing"><a href="f_lib_procParse.tcl.html#ppd_author" class="proc">pd_author</a> <span class="arg-list">(line)</span><li class="proc-listing"><a href="f_lib_procParse.tcl.html#ppd_bug" class="proc">pd_bug</a> <span class="arg-list">(line)</span><li class="proc-listing"><a href="f_lib_procParse.tcl.html#ppd_comment" class="proc">pd_comment</a> <span class="arg-list">(line)</span><li class="proc-listing"><a href="f_lib_procParse.tcl.html#ppd_danger" class="proc">pd_danger</a> <span class="arg-list">(line)</span><li class="proc-listing"><a href="f_lib_procParse.tcl.html#ppd_date" class="proc">pd_date</a> <span class="arg-list">(line)</span><li class="proc-listing"><a href="f_lib_procParse.tcl.html#ppd_example" class="proc">pd_example</a> <span class="arg-list">(line)</span><li class="proc-listing"><a href="f_lib_procParse.tcl.html#ppd_index" class="proc">pd_index</a> <span class="arg-list">(line)</span><li class="proc-listing"><a href="f_lib_procParse.tcl.html#ppd_note" class="proc">pd_note</a> <span class="arg-list">(line)</span><li class="proc-listing"><a href="f_lib_procParse.tcl.html#ppd_result" class="proc">pd_result</a> <span class="arg-list">(line)</span><li class="proc-listing"><a href="f_lib_procParse.tcl.html#ppd_util_init" class="proc">pd_util_init</a> <span class="arg-list">()</span><li class="proc-listing"><a href="f_lib_procParse.tcl.html#ppd_version" class="proc">pd_version</a> <span class="arg-list">(line)</span></ul><hr class="file"><a name="ppd_argument"></a>
+<p class="proc"><table border width=100% class="proc"><tr class="proc"><td colspan=2 class="proc"><h2 class="proc"><span class="proc-name">pd_argument</span> <span class="arg-list">(line)</span></h2></td></tr><tr class="proc"><td colspan=2 class="proc"><span class="header-description-value">Process @argument, @a commands</span>
+</td></tr><tr class="proc"><td class="argument-name"><span class="argument-name">Argument</span>: line
+</td><td class="argument-description">tail of line containing the command (= the embedded documentation)
+</td></tr></table></p><a name="ppd_author"></a>
+<p class="proc"><table border width=100% class="proc"><tr class="proc"><td colspan=2 class="proc"><h2 class="proc"><span class="proc-name">pd_author</span> <span class="arg-list">(line)</span></h2></td></tr><tr class="proc"><td colspan=2 class="proc"><span class="header-description-value">Process @author commands</span>
+</td></tr><tr class="proc"><td class="argument-name"><span class="argument-name">Argument</span>: line
+</td><td class="argument-description">tail of line containing the command (= the embedded documentation)
+</td></tr></table></p><a name="ppd_bug"></a>
+<p class="proc"><table border width=100% class="proc"><tr class="proc"><td colspan=2 class="proc"><h2 class="proc"><span class="proc-name">pd_bug</span> <span class="arg-list">(line)</span></h2></td></tr><tr class="proc"><td colspan=2 class="proc"><span class="header-description-value">Process @bug, @b commands</span>
+</td></tr><tr class="proc"><td class="argument-name"><span class="argument-name">Argument</span>: line
+</td><td class="argument-description">tail of line containing the command (= the embedded documentation)
+</td></tr></table></p><a name="ppd_comment"></a>
+<p class="proc"><table border width=100% class="proc"><tr class="proc"><td colspan=2 class="proc"><h2 class="proc"><span class="proc-name">pd_comment</span> <span class="arg-list">(line)</span></h2></td></tr><tr class="proc"><td colspan=2 class="proc"><span class="header-description-value">Process @comment, @c commands</span>
+</td></tr><tr class="proc"><td class="argument-name"><span class="argument-name">Argument</span>: line
+</td><td class="argument-description">tail of line containing the command (= the embedded documentation)
+</td></tr></table></p><a name="ppd_danger"></a>
+<p class="proc"><table border width=100% class="proc"><tr class="proc"><td colspan=2 class="proc"><h2 class="proc"><span class="proc-name">pd_danger</span> <span class="arg-list">(line)</span></h2></td></tr><tr class="proc"><td colspan=2 class="proc"><span class="header-description-value">Process @danger, @d commands</span>
+</td></tr><tr class="proc"><td class="argument-name"><span class="argument-name">Argument</span>: line
+</td><td class="argument-description">tail of line containing the command (= the embedded documentation)
+</td></tr></table></p><a name="ppd_date"></a>
+<p class="proc"><table border width=100% class="proc"><tr class="proc"><td colspan=2 class="proc"><h2 class="proc"><span class="proc-name">pd_date</span> <span class="arg-list">(line)</span></h2></td></tr><tr class="proc"><td colspan=2 class="proc"><span class="header-description-value">Process @date commands. No shortcut, @d is already used for @danger.</span>
+</td></tr><tr class="proc"><td class="argument-name"><span class="argument-name">Argument</span>: line
+</td><td class="argument-description">tail of line containing the command (= the embedded documentation). Each line in the input will be on a separate line in the output.
+</td></tr></table></p><a name="ppd_example"></a>
+<p class="proc"><table border width=100% class="proc"><tr class="proc"><td colspan=2 class="proc"><h2 class="proc"><span class="proc-name">pd_example</span> <span class="arg-list">(line)</span></h2></td></tr><tr class="proc"><td colspan=2 class="proc"><span class="header-description-value">Process @example, @ex commands.</span>
+</td></tr><tr class="proc"><td class="argument-name"><span class="argument-name">Argument</span>: line
+</td><td class="argument-description">tail of line containing the command (= the embedded documentation). Each line in the input will be on a separate line in the output. Leading whitespace is preserved, trailing whitespace not.
+</td></tr></table></p><a name="ppd_index"></a>
+<p class="proc"><table border width=100% class="proc"><tr class="proc"><td colspan=2 class="proc"><h2 class="proc"><span class="proc-name">pd_index</span> <span class="arg-list">(line)</span></h2></td></tr><tr class="proc"><td colspan=2 class="proc"><span class="header-description-value">Process @index, @i commands</span>
+</td></tr><tr class="proc"><td class="argument-name"><span class="argument-name">Argument</span>: line
+</td><td class="argument-description">tail of line containing the command (= the embedded documentation)
+</td></tr></table></p><a name="ppd_note"></a>
+<p class="proc"><table border width=100% class="proc"><tr class="proc"><td colspan=2 class="proc"><h2 class="proc"><span class="proc-name">pd_note</span> <span class="arg-list">(line)</span></h2></td></tr><tr class="proc"><td colspan=2 class="proc"><span class="header-description-value">Process @note, @n commands</span>
+</td></tr><tr class="proc"><td class="argument-name"><span class="argument-name">Argument</span>: line
+</td><td class="argument-description">tail of line containing the command (= the embedded documentation)
+</td></tr></table></p><a name="ppd_result"></a>
+<p class="proc"><table border width=100% class="proc"><tr class="proc"><td colspan=2 class="proc"><h2 class="proc"><span class="proc-name">pd_result</span> <span class="arg-list">(line)</span></h2></td></tr><tr class="proc"><td colspan=2 class="proc"><span class="header-description-value">Process @result, @r commands</span>
+</td></tr><tr class="proc"><td class="argument-name"><span class="argument-name">Argument</span>: line
+</td><td class="argument-description">tail of line containing the command (= the embedded documentation)
+</td></tr></table></p><a name="ppd_util_init"></a>
+<p class="proc"><table border width=100% class="proc"><tr class="proc"><td colspan=2 class="proc"><h2 class="proc"><span class="proc-name">pd_util_init</span> <span class="arg-list">()</span></h2></td></tr><tr class="proc"><td colspan=2 class="proc"><span class="header-description-value">Noop. Just an entrypoint for autoloading.</span>
+</td></tr></table></p><a name="ppd_version"></a>
+<p class="proc"><table border width=100% class="proc"><tr class="proc"><td colspan=2 class="proc"><h2 class="proc"><span class="proc-name">pd_version</span> <span class="arg-list">(line)</span></h2></td></tr><tr class="proc"><td colspan=2 class="proc"><span class="header-description-value">Process @version commands. No shortcut, @v is already used for @var.</span>
+</td></tr><tr class="proc"><td class="argument-name"><span class="argument-name">Argument</span>: line
+</td><td class="argument-description">tail of line containing the command (= the embedded documentation). Each line in the input will be on a separate line in the output.
+</td></tr></table></p><hr class="navbar"><p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p><hr class="navbar">
+<hr><p class="generated-by">Generated by <a href="http://www.purl.org/NET/akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 01/22/2001, invoked by <a href="mailto:nwilson@nateland" class="generated-by">Unknown</a></p></body>
+</html>

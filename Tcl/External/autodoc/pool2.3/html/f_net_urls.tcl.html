@@ -1,0 +1,333 @@
+<html>
+<head>
+<title>File 'net/urls.tcl' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/urls.tcl' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">URL related utilities</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">URL related utilities (extraction from documents, split, join, ...)</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a>, <a href="http://expect.nist.gov/cgi.tcl/" class="xref-dep">cgi</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">URL related utilities,  regular expressions (for urls), url splitting,  splitting an url into its constituents, url extraction,  extraction of urls from text</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_net_urls.tcl.html#p_pool_urls_GetHostPort" class="proc">::pool::urls::GetHostPort</a> <span class="arg-list">(urlvar)</span>
+<li class="proc-listing"><a href="f_net_urls.tcl.html#p_pool_urls_GetUPHP" class="proc">::pool::urls::GetUPHP</a> <span class="arg-list">(urlvar)</span>
+<li class="proc-listing"><a href="f_net_urls.tcl.html#p_pool_urls_SplitFile" class="proc">::pool::urls::SplitFile</a> <span class="arg-list">(url)</span>
+<li class="proc-listing"><a href="f_net_urls.tcl.html#p_pool_urls_SplitFtp" class="proc">::pool::urls::SplitFtp</a> <span class="arg-list">(url)</span>
+<li class="proc-listing"><a href="f_net_urls.tcl.html#p_pool_urls_SplitHttp" class="proc">::pool::urls::SplitHttp</a> <span class="arg-list">(url)</span>
+<li class="proc-listing"><a href="f_net_urls.tcl.html#p_pool_urls_SplitMailto" class="proc">::pool::urls::SplitMailto</a> <span class="arg-list">(url)</span>
+<li class="proc-listing"><a href="f_net_urls.tcl.html#p_pool_urls_extract" class="proc">::pool::urls::extract</a> <span class="arg-list">(text)</span>
+<li class="proc-listing"><a href="f_net_urls.tcl.html#p_pool_urls_findUrls" class="proc">::pool::urls::findUrls</a> <span class="arg-list">(text)</span>
+<li class="proc-listing"><a href="f_net_urls.tcl.html#p_pool_urls_hyperize" class="proc">::pool::urls::hyperize</a> <span class="arg-list">(text)</span>
+<li class="proc-listing"><a href="f_net_urls.tcl.html#p_pool_urls_split" class="proc">::pool::urls::split</a> <span class="arg-list">(url)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_urls_GetHostPort"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::urls::GetHostPort</span> <span class="arg-list">(urlvar)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Parse host and port out of the url stored in variable <span class="argument"><span class="proc">urlvar</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Dangers</span>: Side effect: The extracted information is removed from the given url.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: urlvar
+</td>
+<td class="argument-description">
+Name of the variable containing the url to parse.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: List containing the extracted information in a format suitable for 'array set'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_urls_GetUPHP"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::urls::GetUPHP</span> <span class="arg-list">(urlvar)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Parse user, password host and port out of the url stored in variable <span class="argument"><span class="proc">urlvar</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Dangers</span>: Side effect: The extracted information is removed from the given url.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: urlvar
+</td>
+<td class="argument-description">
+Name of the variable containing the url to parse.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: List containing the extracted information in a format suitable for 'array set'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_urls_SplitFile"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::urls::SplitFile</span> <span class="arg-list">(url)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Splits the given file-<span class="argument"><span class="proc">url</span></span> into its constituents.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: url
+</td>
+<td class="argument-description">
+The url to split, without! scheme specification.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: List containing the constituents, suitable for 'array set'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_urls_SplitFtp"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::urls::SplitFtp</span> <span class="arg-list">(url)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Splits the given ftp-<span class="argument"><span class="proc">url</span></span> into its constituents.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: url
+</td>
+<td class="argument-description">
+The url to split, without! scheme specification.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: List containing the constituents, suitable for 'array set'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_urls_SplitHttp"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::urls::SplitHttp</span> <span class="arg-list">(url)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Splits the given http-<span class="argument"><span class="proc">url</span></span> into its constituents.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: url
+</td>
+<td class="argument-description">
+The url to split, without! scheme specification.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: List containing the constituents, suitable for 'array set'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_urls_SplitMailto"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::urls::SplitMailto</span> <span class="arg-list">(url)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Splits the given mailto-<span class="argument"><span class="proc">url</span></span> into its constituents.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: url
+</td>
+<td class="argument-description">
+The url to split, without! scheme specification.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: List containing the constituents, suitable for 'array set'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_urls_extract"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::urls::extract</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Scans through the HTML <span class="argument"><span class="proc">text</span></span> and extracts all URLs referenced in it (links and image references)</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The HTML string to search in.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: List of urls found in the <span class="argument"><span class="proc">text</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_urls_findUrls"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::urls::findUrls</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Scans through the given <span class="argument"><span class="proc">text</span></span> and extracts all embedded URL's.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to search in.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: List of urls found in the <span class="argument"><span class="proc">text</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_urls_hyperize"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::urls::hyperize</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Detects and transforms all urls found in <span class="argument"><span class="proc">text</span></span> into equivalent hyperlinks. All special HTML characters found in the non-url text are protected against their special interpretation afterward.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+string to search urls in.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A string with all urls transformed into hyperlinks
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_urls_split"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::urls::split</span> <span class="arg-list">(url)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Splits the given <span class="argument"><span class="proc">url</span></span> into its constituents.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This procedure absolutely requires existence of the 'scheme'-constituent in the given <span class="argument"><span class="proc">url</span></span>, it is unable to parse a lone scheme-specific string.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: url
+</td>
+<td class="argument-description">
+The url to split, scheme part required.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: List containing the constituents, suitable for 'array set'.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

@@ -1,0 +1,28 @@
+#!/usr/local/bin/wish
+#-!/usr/local/bin/tclsh
+# -*- tcl -*-
+
+package require Pool_GuiBase
+package require Pool_Base
+package require Tix
+
+tix addbitmapdir [file join [::pool::misc::here] .. gui img]
+
+
+
+wm withdraw .
+okCancelDialog .x -width 300 -title OkCancelTest
+
+set w [.x subwidget childsite]
+label  $w.b -image [tix getimage construction3] -relief flat -bd 0 -anchor c
+pack   $w.b -side top -expand 1 -fill both -ipady 2m
+
+#after 2000 {destroy .x ; exit}
+#after 2000 {.x delete ; exit}
+
+after 1000 .x setText xxx Hello
+after 2000 .x setText yyy Hi
+after 3000 .x setText yyy [list {}]
+after 4000 .x setText xxx [list {}]
+after 5000 exit
+

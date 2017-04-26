@@ -1,0 +1,17 @@
+Begin3
+Title:          pool
+Version:        2.3
+Entered-date:   14-SEP-2000
+Description:    A collection of generally usable tcl commands for
+	various areas: Calendar widgets, additional date, string, list and file
+	functions. Operations on mail/netnews messages, smtp, pop3 handling.
+	Yet another OO system for tcl, pure tcl. Generic option processing
+	routines. Url manipulation and extractions (regexp's).
+Keywords:       tcl, tk, tix, calendar, date functions, oo system,
+	smtp, pop3, string functions, list functions, url manipulation, file
+	handling, option handling, mail operations
+Author:         Andreas Kupries <a.kupries@westend.com>
+Maintained-by:  Andreas Kupries <a.kupries@westend.com>
+Platforms:      Tcl, Tk, Tix, cgi, Tktable, Comm, Trf, Memchan
+Copying-policy: BSD, see 'tcl'-license
+End

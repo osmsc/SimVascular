@@ -1,0 +1,746 @@
+# -*- tcl -*-
+# pages to describe ideas behind autodoc, and the interfaces employed.
+
+linkDef Knuth   "Donald Knuth's" "http://www-cs-staff.Stanford.EDU/~knuth/"
+linkDef fmtcmds "formatting commands" "cmd.htm"
+
+# name of the different pages
+
+set intro     "intro.htm"
+set model     "model.htm"
+set cmd       "cmd.htm"
+set ref       "ref.htm"
+set extpag    "morepag.htm"
+set changes   "changes.htm"
+set change2   "changes2.htm"
+
+newPage	    interf.htm "The interface between AutoDoc and the scanned code"
+add2Sidebar interf.htm "Interface"
+
+itemize {
+    item [link "Introduction"                  $intro]
+    item [link "General model"                 $model]
+    item [link "Formatting commands"           $cmd]
+    item [link "Cross referencing"             $ref]
+    item [link "Integration of external pages" $extpag]
+}
+
+itemize {
+    item [link "Changes from 1.0 to 2.0" $changes]
+    item [link "Changes from 2.0 to 2.1" $change2]
+}
+
+closePage
+
+# ------------------------------------------------------------------------
+
+newPage intro.htm "Introduction"
+par "
+The general idea of AutoDOC is to dispense with the notion of 2 documents, one
+containing the code, the other its documentation and to integrate both into a
+single document instead.  This is not a new idea, its origins can be traced
+back to [linkRef Knuth] WEB system.
+"
+
+par "
+In contrast to WEB documentation and code do [strong not] stand side by side,
+as equals. Here the documentation is embedded into the comments sprinkled
+throughout the code. Special [linkRef fmtcmds] are used to distinguish regular
+comments and documentation.
+"
+
+par "
+The following sections will describe these commands and all other interfaces
+and assumptions made by AutoDoc in detail.
+"
+
+par [link "Next" $model]
+closePage
+
+# ------------------------------------------------------------------------
+
+newPage model.htm "General model"
+
+par "
+AutoDoc's view of the world is very simple. It is given a single directory,
+which serves as starting point for the distribution to be scanned. A
+[classRef distribution] is seen as collection of packages, these then contain
+the tcl code to be analysed. In case of no packages found the engine assumes
+that the whole distribution is a single unnamed package. Why is this important,
+some might ask. Well, the engine will search only the directories  containing
+packages for files containing tcl code. Everything else is left out. Except if
+there are no explicit packages. The assumption told of before then causes
+search of the entire tree.
+"
+
+par "
+Packages are detected by the presence of a file named [strong pkg.doc] in a
+directory. It is sourced, the description contained will be integrated into
+the HTML pages later. See [fileRef lib/pkg.doc] of this distribution for an
+example.
+"
+
+par "
+The engine assumes that all files with extensions '.tcl' or '.cls' contain tcl
+code to be analysed, but no more. '.cls'-files are the ones I use to store
+class definitions based on the OO framework of [depRef Pool]. They get separate
+files as I use a tcl-based compiler to convert such definitions into pure tcl
+code, the resulting files get the usual extension, aka '.tcl'. Another
+behaviour caused by this: If two files [strong X.cls] and [strong X.tcl] are
+found the latter one will be skipped, assuming that it was/will be generated
+out of the former. Package indices ([strong pkgIndex.tcl]) are recognized and
+will be skipped too.
+"
+
+par "
+Some more files are recognized, but I delay explanation of purpose and usage
+until we talk about [link "integration" $extpag] of manually (or
+semi-automatically) written html pages.
+"
+
+par "
+Back to the files with tcl code. Their documentation is searched in the
+top/first chunk of comments only. The first non-comment line will stop the
+search. The same holds for class definitions, only the chunk of comments at the
+very beginning is searched. On the other hand the whole body of a procedure is
+searched for embedded documentation commands.
+"
+
+par "
+The engine recognizes 'package require' commands and uses them to track
+dependencies on external packages. For every detected package X an external
+reference extpkg_X is searched for (See [link "integration" $extpag] for more
+information about such). If present, the reference is used to insert an
+appropriate hyperlink into the generated pages. Without such a reference plain
+text is used to display the dependency. To help the user in providing this
+references all dependencies without such are logged with a warning.
+"
+
+par "As for the output, it is generally structured like"
+par align=center [imgRef org_overview]
+
+par [link "Next" $cmd]
+closePage
+
+# ------------------------------------------------------------------------
+
+newPage cmd.htm "Available formatting commands"
+
+par "First a table of all commands and their possible place of use:"
+
+table border {
+    caption {
+	par "Available formatting commands"
+    }
+
+    table_row {
+	table_head {write Command}
+	table_head {write "Short form"}
+	table_head {write File}
+	table_head {write Class}
+	table_head {write Procedure}
+    }
+
+    table_row {
+	table_data {write @argument}
+	table_data {write @a}
+	table_data {write " "}
+	table_data {write " "}
+	table_data {write +}
+    }
+    table_row {
+	table_data {write @author}
+	table_data {write " "}
+	table_data {write +}
+	table_data {write +}
+	table_data {write +}
+    }
+    table_row {
+	table_data {write @bug}
+	table_data {write @b}
+	table_data {write +}
+	table_data {write +}
+	table_data {write +}
+    }
+    table_row {
+	table_data {write @comment}
+	table_data {write @c}
+	table_data {write +}
+	table_data {write +}
+	table_data {write +}
+    }
+    table_row {
+	table_data {write @danger}
+	table_data {write @d}
+	table_data {write +}
+	table_data {write +}
+	table_data {write +}
+    }
+    table_row {
+	table_data {write @date}
+	table_data {write " "}
+	table_data {write +}
+	table_data {write +}
+	table_data {write +}
+    }
+    table_row {
+	table_data {write @example}
+	table_data {write @ex}
+	table_data {write " "}
+	table_data {write +}
+	table_data {write +}
+    }
+    table_row {
+	table_data {write @index}
+	table_data {write @i}
+	table_data {write +}
+	table_data {write +}
+	table_data {write +}
+    }
+    table_row {
+	table_data {write @note}
+	table_data {write @n}
+	table_data {write +}
+	table_data {write +}
+	table_data {write +}
+    }
+    table_row {
+	table_data {write @option}
+	table_data {write @o}
+	table_data {write " "}
+	table_data {write +}
+	table_data {write " "}
+    }
+    table_row {
+	table_data {write @result}
+	table_data {write @r}
+	table_data {write " "}
+	table_data {write " "}
+	table_data {write +}
+    }
+    table_row {
+	table_data {write @see}
+	table_data {write " "}
+	table_data {write +}
+	table_data {write +}
+	table_data {write " "}
+    }
+    table_row {
+	table_data {write @short}
+	table_data {write @s}
+	table_data {write +}
+	table_data {write "[strong ""]"}
+	table_data {write " "}
+    }
+    table_row {
+	table_data {write @var}
+	table_data {write @v}
+	table_data {write " "}
+	table_data {write +}
+	table_data {write " "}
+    }
+    table_row {
+	table_data {write @version}
+	table_data {write " "}
+	table_data {write +}
+	table_data {write +}
+	table_data {write +}
+    }
+}
+
+
+par "
+And now the meaning of the individual commands, with some generalities
+beforehand.
+"
+
+itemize {
+    item {
+	Every command is on a single line, all text behind up to the end
+	of the line is considered as its argument(s).
+    }
+    item {
+	All text referring to the same entity (file, class, procedure) is
+	concatenated together. Line breaks and superfluous whitespace will
+	be eliminated. The HTML-browser is made responsible for a nice
+	presentation.
+    }
+    item {
+	All commands can be freely mixed. The extractor takes care that
+	their data is placed into separate sections.
+    }
+}
+
+definitionList {
+    defterm	[quote "@argument <name>:"] [quote {
+	Describes the argument <name> given to the surrounding procedure.
+    }]
+
+    defterm	@author [quote {
+	Describes the author of the referred entity. Entities not having an
+	explicitly mentioned author automatically get the author of the
+	containing entity.
+
+	Distribution -> Package -> File -> Procedure, (Class -> Method)
+    }]
+
+    defterm @bug {
+	The text is interpreted as the description of a bug in the
+	refered entity.
+    }
+
+    defterm	@comment {
+	The text is interpreted as description of the referred entity.
+    }
+
+    defterm	@danger {
+	The text is interpreted  as comment about restrictions, traps,
+	pitfalls, ... the user of the described code has to be aware of.
+    }
+
+    defterm	@date {
+	The text is interpreted as date information pertaining to the
+	refered object.
+    }
+
+    defterm	@example {
+	The text is interpreted as an example about the usage of the
+	refered entity. All formatting, especially whitespace, is
+	preserved.
+    }
+
+    defterm	@index {
+	The text is interpreted as a comma-separated list of keywords to
+	be used for indexing of the referred entity.
+
+	Procedures and classes without keywords of their own are automatically
+	indexed under the phrases defined for the containing file.
+    }
+
+    defterm	@note "
+	As above, but less strong. May include musings, references to external
+	material, explanation of decisions, hacks, etc. too. In short:
+        Everything neither fitting into the more formal [strong @comment] nor
+        the signpost [strong @danger].
+    "
+
+    defterm	@result {
+	Describes the result returned by the surrounding procedure/method.
+    }
+
+    defterm	@see {
+	Cross references to related material (classes, procedures, ...).
+    }
+
+    defterm	@short {
+	The text is interpreted as short description of the referred entity.
+    }
+
+    defterm [quote "@option <name>:"] [quote {
+	Describes option (parameter) <name> of a class.
+    }]
+
+    defterm [quote "@var <name>:"] [quote {
+	Describes member variable <name> of a class. The old syntax
+	('@member') is still recognized, but marked as error, and not
+	evaluated.
+    }]
+
+    defterm @version {
+	Contain versioning information about the refered entity.
+    }
+}
+
+
+par "Remarks:"
+
+itemize {
+    item {
+	Unknown commands are simply ignored by the engine.
+    }
+    item {
+	Method definitions inside a class are treated the
+	same way as procedures.
+    }
+    item "
+        The texts may contain [link "cross references" $ref], these
+	will be resolved before output.
+    "
+}
+
+par [link "Next" $ref]
+closePage
+
+# ------------------------------------------------------------------------
+
+newPage ref.htm "Cross referencing"
+
+par "
+As said in the last page about [link "available commands" $cmd] the
+documentation is allowed to contain cross references to other packages, files,
+classes, procedures and external entities. Here I describe the reference
+format recognized by engine.
+"
+
+par "
+This interface was changed in the transition from version 1.0 to 2.0. Please
+read the [link "change report" $changes] too.
+"
+
+itemize {
+    item [quote {
+	All cross references are of the form: <key argument>.
+    }]
+}
+
+par "Possible keys are"
+
+table border {
+    table_row {
+	table_head {write Key}
+	table_head {write "Short key"}
+    }
+    table_row {table_data {write arg};      table_data {write a}}
+    table_row {table_data {write class};    table_data {write c}}
+    table_row {table_data {write ext};      table_data {write e}}
+    table_row {table_data {write file};     table_data {write f}}
+    table_row {table_data {write img};      table_data {write i}}
+    table_row {table_data {write method};   table_data {write m}}
+    table_row {table_data {write option};   table_data {write o}}
+    table_row {table_data {write pkg};      table_data {write " "}}
+    table_row {table_data {write proc};     table_data {write p}}
+    table_row {table_data {write variable}; table_data {write v}}
+    table_row {table_data {write xref};     table_data {write x}}
+}
+
+definitionList {
+    defterm	arg {
+	Reference to a procedure argument. Never a hyperlink.
+    }
+
+    defterm	class {
+	Reference to a class. Argument is the referred name.
+    }
+
+    defterm	ext "
+    Reference to an external 'required' package. Argument is the name of the
+    package. Formatted as hyperlink if additional information about the named
+    package was given separately (See [link "integration" $extpag] page,
+    'depDef').
+    "
+
+    defterm	file {
+	Reference to a file. Argument is the referred path,
+	relative to the source directory of the distribution.
+    }
+
+    defterm     img "
+    Reference to an image. Argument is the code of the image, as it was
+    registered via [methodRef distribution imgDef]. The referenced image is
+    inserted into the documentation at the place of the reference.
+    "
+
+    defterm	method {
+	Reference to a method of a class. The argument contains
+	both class and method name, in the form 'class:method'.
+    }
+
+    defterm	option {
+	Reference to an option of a class. The argument contains
+	both class and option name, in the form 'class:option'.
+    }
+
+    defterm	pkg {
+	Reference to a package defined in the distribution.
+	Argument is the referred name.
+    }
+
+    defterm	proc {
+	Reference to a procedure. Argument is the referred name.
+    }
+
+    defterm	variable {
+	Reference to a variable of a class. The argument contains
+	both class and variable name, in the form 'class:variable'.
+    }
+
+    defterm	xref "
+    Reference of an external hyperlink. Argument is the internal symbolic name
+    of the link, as defined via [methodRef distribution xrefDef].
+    "
+}
+
+par {
+    The crossreference commands 'method', 'option' and 'variable'
+    allow the usage of a short form without a classname prefix.
+    Such references will automatically use the class the reference
+    is in as the class of the refered entity.
+}
+
+par "
+Another recognized command is [strong "[ampersand]p"]. It is not a cross
+reference, but allows the introduction of paragraph breaks.
+"
+
+par [link "Next" $extpag]
+closePage
+
+# ------------------------------------------------------------------------
+
+newPage morepag.htm "Integration of external pages"
+
+
+par "
+To facilitate the integration of manually written pages (either in html or with
+[xRef cgilib]) the engine will search for files with extensions '.predoc',
+'.doc' and execute them as tcl code, in a special environment.
+"
+
+par "
+This interface was changed in the transition from version 1.0 to 2.0. Please
+read the [link "change report" $changes] too.
+"
+
+definitionList {
+    defterm .predoc "
+    They are searched for immediately after the scanning for packages took
+    place and executed at once, if found. This is done in a separate
+    interpreter. A restricted set of the methods provided by the global
+    [classRef distribution] object is made available. These are
+
+    [getString {
+	parbreak
+	parbreak
+	table border {
+	    table_row {
+		table_data {write "depDef"}
+		table_data {write "See [methodRef distribution depDef]"}
+	    }
+	    table_row {
+		table_data {write "docfile"}
+		table_data {write "See [methodRef distribution docfile]"}
+	    }
+	    table_row {
+		table_data {write "imgConverter"}
+		table_data {write "See [methodRef distribution imgConverter]"}
+	    }
+	    table_row {
+		table_data {write "imgDef"}
+		table_data {write "See [methodRef distribution imgDef]"}
+	    }
+	    table_row {
+		table_data {write "xrefDef"}
+		table_data {write "See [methodRef distribution xrefDef]"}
+	    }
+	}
+	parbreak
+    }]
+
+    They allow the user to define external links, specify additional
+    information about required packages and to mark other files as part of the
+    documentation. The latter might be images used in other pages or native
+    html files as well.
+
+    See [strong refs.predoc] for an example.
+    "
+
+    defterm .doc "
+    They are searched at the same time as the '.predoc'-files, but
+    executed after all documentation pages were generated, with the
+    exception of the distribution home page. The execution takes
+    place in a separate interpreter. A restricted set of the methods
+    provided by the global [classRef distribution] object is made
+    available, together with the full interface to the formatting object.
+    [getString {parbreak}]
+    The code is able to generate pages, create external references,
+    mark other files as being part of the documentation, resolve cross
+    references to packages, files, ..., define and use
+    information about external packages.
+
+    Here is a complete table:
+
+    [getString {
+	parbreak
+	parbreak
+	table border {
+	    table_row {
+		table_data {write "add2Sidebar"}
+		table_data {write "See [methodRef distribution add2Sidebar]"}
+	    }
+	    table_row {
+		table_data {write "classRef"}
+		table_data {write "See [methodRef distribution classRef]"}
+	    }
+	    table_row {
+		table_data {write "depDef"}
+		table_data {write "See [methodRef distribution depDef]"}
+	    }
+	    table_row {
+		table_data {write "docfile"}
+		table_data {write "See [methodRef distribution docfile]"}
+	    }
+	    table_row {
+		table_data {write "fileRef"}
+		table_data {write "See [methodRef distribution fileRef]"}
+	    }
+	    table_row {
+		table_data {write "imgConverter"}
+		table_data {write "See [methodRef distribution imgConverter]"}
+	    }
+	    table_row {
+		table_data {write "imgDef"}
+		table_data {write "See [methodRef distribution imgDef]"}
+	    }
+	    table_row {
+		table_data {write "imgRef"}
+		table_data {write "See [methodRef distribution imgRef]"}
+	    }
+	    table_row {
+		table_data {write "methodRef"}
+		table_data {write "See [methodRef distribution methodRef]"}
+	    }
+	    table_row {
+		table_data {write "newPage"}
+		table_data {write "See [methodRef distribution NewPage]"}
+	    }
+	    table_row {
+		table_data {write "optionRef"}
+		table_data {write "See [methodRef distribution optionRef]"}
+	    }
+	    table_row {
+		table_data {write "pkgRef"}
+		table_data {write "See [methodRef distribution pkgRef]"}
+	    }
+	    table_row {
+		table_data {write "procRef"}
+		table_data {write "See [methodRef distribution procRef]"}
+	    }
+	    table_row {
+		table_data {write "xrefDef"}
+		table_data {write "See [methodRef distribution xrefDef]"}
+	    }
+	    table_row {
+		table_data {write "xRef"}
+		table_data {write "See [methodRef distribution xRef]"}
+	    }
+	    table_row {
+		table_data colspan=2 {
+		    write "All formatting methods of
+		    [classRef genericFormatter], with the exception of
+		    [methodRef genericFormatter newPage]."
+		}
+	    }
+	}
+	parbreak
+    }]
+
+    Examples are [fileRef doc/to.doc] and [fileRef doc/if.doc].
+    "
+}
+
+par [link "Top (Introduction)" $intro]
+closePage
+
+
+newPage changes.htm "Changes from 1.0 to 2.0"
+
+par "
+The interface from AutoDoc to .predoc and .doc files was changed.
+
+In version 1.0 a single command, 'dist', was used to give the user limited
+access to the facilities of the global distribution object.
+
+The new interface however links all available commands directly into the safe
+interpreter evaluating the files. Please read the [link integration $extpag]
+page for more.
+"
+
+par "
+The [link "crossreference interface" $ref] was changed in the
+following way
+
+[getString {
+    itemize {
+	item {
+	    Added command 'variable' to allow references to
+	    member variables of the defined classes.
+	}
+	item {
+	    Added shortcut 'x' for 'xref' command.
+	}
+	item {
+	    Enhanced the commands 'method', 'option' and 'variable'
+	    to allow references without specification of a classname.
+	    The class enclosing the reference is automatically used.
+	}
+	item "
+	    Changed the separator character used by the command
+	    'method', 'option' and 'variable' from '[strong /]' to
+	    '[strong :]'. References using the old character are
+	    recognized, but marked as error and not evaluated.
+	"
+	item "
+	    Added methods to handle images (conversion, definition and
+	    referencing), see [methodRef distribution imgConverter],
+	    [methodRef distribution imgDef] and
+	    [methodRef distribution imgRef].
+	"
+	item {
+	    Added commands to allow the crossreferencing of images from code
+	    documentation. These are 'img' and its shortcut 'i'.
+	}
+	item "
+	    Moved the substitution phase of crossreference resolution into a
+	    separate interpreter. Made the the formatting commands
+	    [methodRef genericFormatter strong] and
+	    [methodRef genericFormatter ampersand] available. 'strong' was
+	    already available, but only due to the fact that [xRef libes]
+	    [xRef cgilib] was imported (it provides 'strong' as a shortcut of
+	    'cgi_strong'). The correct result was purely accidential. Now it
+	    is made right, and extensible in the future.
+	"
+    }
+}]
+"
+
+par "
+The embbeded command [strong @member] (short form [strong @m]) was replaced
+with [strong @var] and [strong @v]. The former is recognized, but marked as
+error and not evaluated. See the [link command $cmd] page for more.
+"
+
+closePage
+
+
+newPage changes2.htm "Changes from 2.0 to 2.1"
+
+par "The generated filenames for the various pages are now derived
+from the names of the files, classes, proocedures and namespaces they
+describe. In other words, pages inside of a generated documentation
+don't change anymore with the addition or removal of new entities as
+was the case with names derived from a serial number."
+
+par "Four more tags were defined to allow integration of bug, date and
+version information, and of examples. The tags are [strong @bug],
+[strong @date], [strong @version] and [strong @example]. The tags
+[strong @bug] and [strong @example] have the shortcuts [strong @b] and
+[strong @ex]."
+
+par "Added support for [xRef iTcl] and [xRef iTk], like common
+variables, components, options and visibility of subentities (public,
+protected ansd private)."
+
+par "Information about inheritance and overides is now automatically
+added to method descriptions."
+
+par "A new index now lists all namespaces found in the scanned code."
+
+par "Autodoc now supports the usage of superclasses defined outside of
+the scanned code. If a superclass is not found the system now
+automatically seraches for a crossreference or dependecy reference
+using the name of the superclass as key."
+
+par "Autodoc is now able to generate HTML with support for CSS."
+
+closePage
+# ------------------------------------------------------------------------

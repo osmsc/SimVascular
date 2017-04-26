@@ -1,0 +1,150 @@
+<html>
+<head>
+<title>File 'gui/mcDialog.cls' (part of 'Pool_GuiBase')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'gui/mcDialog.cls' (part of '<a href="pkg_Pool_GuiBase.html" class="package">Pool_GuiBase</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Base of dialogs with buttonbar</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Base class of all megadialogs with a button bar</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">dialog with buttonbar,  feedback,  stateline</span>
+</dl>
+</div>
+<h1 class="class">Class 'multipleChoiceDialog'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">This class is the base of all dialogs containing a stateline (inherited) and a button bar at their bottom.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cfeedbackDialog.html" class="class">feedbackDialog</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ocommand" class="options">command</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cmultipleChoiceDialog.html#pmultipleChoiceDialog_HandleButton" class="proc">HandleButton</a> <span class="arg-list">(button)</span><br>
+<a href="cmultipleChoiceDialog.html#pmultipleChoiceDialog_addButton" class="proc">addButton</a> <span class="arg-list">(name text)</span><br>
+<a href="cmultipleChoiceDialog.html#pmultipleChoiceDialog_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vbbox" class="members">bbox</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ocommand"></a>
+<dt><span class="option-name">-command</span>
+<dd><span class="option-description">  The script evaluate after the invocation of a registered  button. The symbolic name of the button will be appended  as its argument.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pmultipleChoiceDialog_HandleButton"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">HandleButton</span> <span class="arg-list">(button)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal callback. Invoked by the activation of a registered button. Evaluates the script given to the option -command and destroys the dialog afterward.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: button
+</td>
+<td class="argument-description">
+Symbolic name of the invoked button.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmultipleChoiceDialog_addButton"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">addButton</span> <span class="arg-list">(name text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Accessor allowing the registration of an arbitrary set of buttons. Every button registered with this method can be retrieved via <span class="xref-mref"><a href="cwidget.html" class="class">widget</a>:<a href="cwidget.html#pwidget_subwidget" class="proc">subwidget</a></span>, the <span class="argument"><span class="proc">name</span></span> specified here is its handle for this too.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The symbolic name of the registered button.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The text to display in the button.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmultipleChoiceDialog_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cfeedbackDialog.html" class="class">feedbackDialog</a>:<a href="cfeedbackDialog.html#pfeedbackDialog_createSubwidgets" class="proc">createSubwidgets</a><br>
+<span class="header-description-value">Create the widgets required by this dialog, then place them appropriately. The childsite of the superclass is used to place our buttonbox and then redefined to our childsite.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vbbox"></a>
+<dt><span class="variable-name">bbox</span>
+<dd><span class="variable-description">  Reference to the internal buttonbox widget.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

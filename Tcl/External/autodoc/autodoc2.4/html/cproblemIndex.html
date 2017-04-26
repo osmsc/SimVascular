@@ -1,0 +1,139 @@
+<html>
+<head>
+<title>File 'lib/problemIndex.cls' (part of 'AutoDOC')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'lib/problemIndex.cls' (part of '<a href="pkg_AutoDOC.html" class="package">AutoDOC</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Problem indices.</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Management of problem indices.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">problem management,  management of problems,  problem index,  indices</span>
+</dl>
+</div>
+<h1 class="class">Class 'problemIndex'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">This class contains the common variables and behaviour of all indices whose entities are able to record problems. It records all objects signaling to have problems (via <span class="xref-mref"><a href="cproblemIndex.html#pproblemIndex_addProblemObject" class="proc">addProblemObject</a></span>) and provides functionality to generate a block of references to their detailed problem descriptions.</span>
+<dt><span class="header-title">See also</span>
+<dd><span class="header-value"><span class="xref-classes"><a href="cproblems.html" class="class">problems</a></span>.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cproblemBase.html" class="class">problemBase</a><br>
+<a href="cformatterInterface.html" class="class">formatterInterface</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cproblemIndex.html#pproblemIndex_addProblemObject" class="proc">addProblemObject</a> <span class="arg-list">(object)</span><br>
+<a href="cproblemIndex.html#pproblemIndex_clear" class="proc">clear</a> <span class="arg-list">()</span><br>
+<a href="cproblemIndex.html#pproblemIndex_numProblemObjects" class="proc">numProblemObjects</a> <span class="arg-list">()</span><br>
+<a href="cproblemIndex.html#pproblemIndex_writeProblemIndex" class="proc">writeProblemIndex</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vproblemObjects" class="members">problemObjects</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pproblemIndex_addProblemObject"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">addProblemObject</span> <span class="arg-list">(object)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds the <span class="argument"><span class="proc">object</span></span> to the list of problematic entities. The class automatically filters duplicate entries.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: object
+</td>
+<td class="argument-description">
+The handle of the added object.
+</td>
+</tr>
+</table>
+</p>
+<a name="pproblemIndex_clear"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">clear</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cproblemBase.html" class="class">problemBase</a>:<a href="cproblemBase.html#pproblemBase_clear" class="proc">clear</a><br>
+<span class="header-description-value">Resets state information.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pproblemIndex_numProblemObjects"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">numProblemObjects</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The number of registered problematic objects.
+</td>
+</tr>
+</table>
+</p>
+<a name="pproblemIndex_writeProblemIndex"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">writeProblemIndex</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Generates a list of references to the detailed problem descriptions of all registered objects.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vproblemObjects"></a>
+<dt><span class="variable-name">problemObjects</span>
+<dd><span class="variable-description">  The ist of objects having problems (at least they  said so).</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/07/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

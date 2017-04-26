@@ -1,0 +1,132 @@
+# -*- tcl -*-
+
+set pbreak [getString {parbreak}]
+
+newPage    app.htm "Distributed applications"
+add2Sidebar app.htm "Applications"
+
+definitionList {
+    defterm apps/gen_cls "
+    Invoked without arguments. Searches the directory hierarchy
+    beginning at the current working directory for '.cls'-files
+    and compiles the contained class definitions (see
+    [pkgRef Pool_Base]) into pure tcl. The compilation result
+    of file [strong X.cls] is stored into [strong X.tcl].
+    Additionally generates the file [strong clsIndex] in
+    the current working directory, an index of the found classes.
+    "
+
+    defterm apps/gen_idx "
+    Invoked without arguments. Searches the directory hierarchy
+    beginning at the current working directory for '.tcl'-files
+    and generates a [strong tclIndex] suitable for autoloading.
+    Recognizes standard procedures, classes as above (gen_cls),
+    aliases and usage of all class instantiation commands defined in
+    [strong clsIndex] (see above).
+    "
+
+    defterm apps/gen_pkg "
+    Invoked as 'gen_pkg packagename packageversion indexfile'.
+    Generates [strong pkgIndex.tcl] from 'indexfile'
+    (usually [strong tclIndex]).
+    "
+
+    defterm apps/nserver "
+    Called without arguments. Should be put into background. Uses
+    [pkgRef Pool_Net]/ns/* to create a simple name server.
+    "
+
+    defterm apps/nwho "
+    Called without arguments. Connects to a running [strong nserver]
+    and lists all registered applications, together with their port
+    numbers.
+    "
+
+    defterm apps/mail_sendfile "
+    Invoked as 'mail_sendfile -to recipient \[-from sender\]
+    \[-talkto host\] file... Prepends each of the listed files with
+    a mail header, then sends them via SMTP at the given host to
+    the specified recipients. The sender defaults to the invoker,
+    and the host to 'localhost'. The argument to '-to' may contain
+    a valid tcl list. The file(s) are then send to each of the
+    addresses on the list.
+    "
+
+    defterm apps/popsy "
+    A small POP3 server, written mainly for testing purposes (popeye).
+    Built around the server core code in [fileRef net/pop3/server.cls],
+    uses [fileRef net/adb.cls] and [fileRef net/pop3/mbox.cls]
+    as well. Registers itself at 'nserver', see above. Can be remote
+    controlled because of this, see next 2 entries. The available
+    interface is described in [xRef popsy_interface]. $pbreak$pbreak
+
+    Invoked as 'popsy ?-userdb filename? ?-mailfolder path? ?-port number?'.
+    $pbreak$pbreak
+    Reads '~/.popsyrc' too. See [fileRef apps/dotpopsyrc] for an
+    example. Hard coded defaults (lowest priority) are /var/adm/pop_userdb,
+    /var/spool/mail and pop3.
+    "
+
+    defterm apps/popsy_man "
+    Mini utility to control a running popsy process. Command line based.
+    Invoke without arguments, then use '?' or 'h' to get help.
+    "
+
+    defterm apps/popsymon "
+    The big brother to 'popsy_man'. GUI based application to monitor and
+    control a running popsy process. Invoked without arguments. This
+    application uses [depRef Tktable], the spreadsheet extension
+    by [xRef jhobbs].
+    "
+
+    defterm apps/popeye "A pop3 client based upon
+    [fileRef net/pop3/client.cls], in the tradition of 'fetchmail', 'suck',
+    etc. Uses the smtp interface ([fileRef net/smtp/]) to deliver
+    fetched mail locally, after appropriate munging of 'To:' header. The
+    currently used classificator accepts all mail. Registers itself at
+    'nserver', see above. Can be remote controlled because of this, see next
+    entry. The available interface is described in
+    [xRef popeye_interface]. Other controllers I can think of are cron,
+    with some intermediary shell/tcl script, or tkgoodstuff. $pbreak$pbreak
+    
+    Invoked as 'popeye ?-user name? ?-password string? ?-host name?
+    ?-auth upass/apop? ?-to mailaddress? ?-port number? ?-use-top-for-retr 0/1?'.
+    $pbreak$pbreak
+    Reads '~/.popeyerc' too. See [fileRef apps/dotpopeyerc] for an
+    example. Hard coded defaults (lowest priority) for -auth, -use-top-for-retr,
+    -port and -host only (upass, 0, pop3, localhost). $pbreak$pbreak
+
+    [strong Important:] apop authentication requires the packages
+    [depRef Trf] and  [depRef Memchan]. $pbreak$pbreak
+
+    Setting '-use-top-for-retr' to 1 forces the system to use 'TOP x 0' instead
+    of 'RETR x'. It is in here because my provider had a brain dead pop3 server
+    for some time. It didn't accept RETR, but delivered the whole mail if 0
+    was given as 2nd argument to TOP. I don't know wether similar versions of
+    this server are lurking out there, but better be prepared. This option
+    should be left alone under normal circumstances.
+    "
+
+    defterm apps/popeyemon "
+    A simple graphical monitor to watch a running popeye process. Invoked
+    without arguments.
+    "
+
+    defterm apps/popeye_trigger "
+    Simple tcl script to trigger a fetch cycle of popeye. Add to crontab for
+    regular execution (see [fileRef apps/my.crontab] for an example).
+    Invoked without arguments.
+    "
+}
+
+
+par "
+Remarks:
+popeye, popeyemon and popeye_trigger are in actual use here at home,
+fetching the mail from my provider ([xRef westend])."
+
+par "
+Idea: delay trigger 'flist'-operation of exmh after each fetch cycle.
+"
+
+closePage

@@ -1,0 +1,189 @@
+#!/usr/local/bin/tclsh
+# -*- tcl -*-
+#
+# POPeye, a pop3 fetch client
+# uses <f net/pop3/client.tcl>
+#
+# todo
+# * extend popeyemon to count deliveries.
+
+# -- lunshift auto_path [pwd]/../net
+
+package require Pool_Base
+package require Pool_Net
+
+
+# -------------------------------------------------------
+# configure client
+::pool::array::def           odef
+::pool::getopt::defOption    odef user             -d ""
+::pool::getopt::defOption    odef password         -d ""
+::pool::getopt::defOption    odef auth             -d apop
+::pool::getopt::defOption    odef port             -d ""
+::pool::getopt::defOption    odef to               -d ""
+::pool::getopt::defOption    odef host             -d localhost
+::pool::getopt::defOption    odef use-top-for-retr -d 0
+::pool::getopt::defOption    odef maxtries         -d 1
+::pool::getopt::defOption    odef retrydelay       -d 10000
+::pool::getopt::defOption    odef junkdir          -d /tmp
+::pool::getopt::defOption    odef from             -d ""
+::pool::getopt::defOption    odef spooldir         -d ""
+::pool::getopt::defOption    odef spoolfiles       -d q*
+::pool::getopt::defShortcuts odef
+
+foreach opt {
+    user password auth to host maxtries retrydelay
+    junkdir spooldir spoolfiles from
+} {
+    proc $opt {v} "global odef; ::pool::getopt::changeDefault odef $opt \$v"
+}
+
+# user dependent configuration
+catch {source [file join $env(HOME) .popeyerc]}
+
+# caller configuration
+::pool::array::def                    opt
+::pool::getopt::initValues odef       opt
+::pool::getopt::processOpt odef $argv opt
+
+
+
+# enforce usage of non-default port
+if {$opt(-port) != {}} {
+    # load old definition (and its namespaces), then redefine the procedure
+
+    catch {::pool::pop3::port}
+
+    proc ::pool::pop3::port {} "return $opt(-port)"
+}
+
+# -------------------------------------------------------
+# exported interfaces
+
+proc bgerror {text} {
+    global errorInfo
+    #::pool::syslog::syslog error $text, $errorInfo
+    puts stderr "$text"
+    puts stderr "$errorInfo"
+    return
+}
+
+
+set log_host   ""
+set log_port   ""
+set log_socket ""
+
+
+proc popeye_shutdown   {} {exit}
+
+
+remoteLog rl -portspec {}
+
+proc popeye_logto {portspec} {
+    rl configure -portspec $portspec
+
+    # Reinstate local logging, this will be routed through 'rl', and write to
+    # stderr to, for a standard log into a file.
+
+    ::pool::syslog::def popeye_log
+    return
+}
+
+
+proc popeye_fetch {} {
+    ::pool::syslog::syslog \
+	    debug \
+	    -----------------------------------------------------
+    pc run
+}
+
+
+proc popeye_log {level text} {
+    # standard log
+    puts stderr "$level\t$text"
+    rl   log     $level $text
+    return
+}
+
+proc popeye_start_spooler {args} {
+    # start the outbound spooler too, if all relevant information defined
+    global opt
+
+    ::pool::syslog::syslog debug check spooler
+
+    if {$opt(-spooldir)   == {}} {return}
+    if {$opt(-spoolfiles) == {}} {return}
+    if {$opt(-from)       == {}} {return}
+
+    ::pool::syslog::syslog debug spooler activated
+
+    # Usually all outbound mail is send in parallel, in that many
+    # connections. If there is too much, then avoid overloading
+    # the remote server and serialize instead.
+
+    set fail [catch {
+	spooler start \
+		[glob -nocomplain [file join $opt(-spooldir) $opt(-spoolfiles)]]
+    }] ;# {}
+    if {$fail} {
+	::pool::syslog::syslog debug $msg
+    }
+    return	    
+}
+
+
+proc tick {args} {
+    # trigger something external after completing a fetch-and-deliver-cycle
+    ::pool::syslog::syslog notice "popeye ********* tick EXMH *********"
+    after 2000 exec exmh_triggerfetch
+    return
+}
+
+
+# -------------------------------------------------------
+# internals (classificator, storage system, spooler, client, ...)
+
+acceptEverything ca
+smtpSpooler      spooler      \
+	-helo [info hostname] \
+	-host $opt(-host)     \
+	-from $opt(-from)     \
+	-n    2
+
+smtpStorage ss \
+	-helo "popeye.[info hostname]" \
+	-from "popeye@[info hostname]" \
+	-to    $opt(-to)
+
+dirStorage     ds -dir $opt(-junkdir)
+memStorage     mems
+multiStorage   ms
+triggerStorage ts -command tick -target ms
+
+# setup multi storage trying: smtp, directory, memory
+
+ms add ss
+ms add ds
+ms add mems
+
+pop3Client pc \
+	-host             $opt(-host)          \
+	-user             $opt(-user)          \
+	-secret           $opt(-password)      \
+	-auth             $opt(-auth)          \
+	-classificator    ca                   \
+	-storage          ts                   \
+	-on-connect       popeye_start_spooler \
+	-timeout          10000                \
+	-maxtries         $opt(-maxtries)      \
+	-retrydelay       $opt(-retrydelay)    \
+	-done             {ts clientDone}      \
+	-use-top-for-retr $opt(-use-top-for-retr)
+
+#syslog_stderr
+::pool::syslog::def          popeye_log
+::pool::nameserver::register popeye
+::pool::syslog::syslog debug popeye ready...
+
+#after 500 popeye_run
+vwait forever

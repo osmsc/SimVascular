@@ -1,0 +1,171 @@
+<html>
+<head>
+<title>File 'gui/trackScalar.cls' (part of 'Pool_GuiBase')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'gui/trackScalar.cls' (part of '<a href="pkg_Pool_GuiBase.html" class="package">Pool_GuiBase</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Watch the contents of a variable.</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Generation and maintenance of a variable watcher display.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">watch variable,  variable watching,  animated feedback,  feedback</span>
+</dl>
+</div>
+<h1 class="class">Class 'trackScalar'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Instances of this class are coupled to a scalar variable, then display its current contents, tracking any changes made to it. Although the purpose of the class is the same as for <span class="xref-classes"><a href="cwatchScalar.html" class="class">watchScalar</a></span> the means of displaying is different. While the former only shows the current value this widget will display the entire of the variable. A scrollable text widget is used to do this.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cwatchManager.html" class="class">watchManager</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ovarnamecolor" class="options">varnamecolor</a><br>
+<a href="#ovarvaluecolor" class="options">varvaluecolor</a><br>
+<a href="#onumbercolor" class="options">numbercolor</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="ctrackScalar.html#ptrackScalar_ResetDisplay" class="proc">ResetDisplay</a> <span class="arg-list">()</span><br>
+<a href="ctrackScalar.html#ptrackScalar_TrackVariable" class="proc">TrackVariable</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="ctrackScalar.html#ptrackScalar_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span><br>
+<a href="ctrackScalar.html#ptrackScalar_updateDisplay" class="proc">updateDisplay</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vline" class="members">line</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ovarnamecolor"></a>
+<dt><span class="option-name">-varnamecolor</span>
+<dd><span class="option-description">   The name of the color to use for the variable name.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">red</span>
+<a name="ovarvaluecolor"></a>
+<dt><span class="option-name">-varvaluecolor</span>
+<dd><span class="option-description">  The name of the color to use for the variable contents.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">blue</span>
+<a name="onumbercolor"></a>
+<dt><span class="option-name">-numbercolor</span>
+<dd><span class="option-description">    The name of the color to use for the history numbers.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">black</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="ptrackScalar_ResetDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">ResetDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Clears the display, then writes the current contents of the asssociated variable into it. Used to refressh the display after changes to the option <span class="xref-oref"><a href="cwatchManager.html#ovariable" class="xref-oref">variable</a></span>.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ptrackScalar_TrackVariable"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackVariable</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cwatchManager.html" class="class">watchManager</a>:<a href="cwatchManager.html#pwatchManager_TrackVariable" class="proc">TrackVariable</a><br>
+<span class="header-description-value">Overide superclass definition to allow us the insertion of our own code into the action following the change of the variable the widget is connected to.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The value of the option before the change.
+</td>
+</tr>
+</table>
+</p>
+<a name="ptrackScalar_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cwatchManager.html" class="class">watchManager</a>:<a href="cwidget.html#pwidget_createSubwidgets" class="proc">createSubwidgets</a><br>
+<span class="header-description-value">Called after object construction. Generates the internal widgets and their layout.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ptrackScalar_updateDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">updateDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cwatchManager.html" class="class">watchManager</a>:<a href="cwatchManager.html#pwatchManager_updateDisplay" class="proc">updateDisplay</a><br>
+<span class="header-description-value">Method required by the superclass <span class="xref-classes"><a href="cwatchManager.html" class="class">watchManager</a></span> to propagate changes to the value into the display.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vline"></a>
+<dt><span class="variable-name">line</span>
+<dd><span class="variable-description">  Counts the number of written so far. Alternative meaning: The  number of changes made to the contents of the variable  specified in <span class="xref-oref"><a href="cwatchManager.html#ovariable" class="xref-oref">variable</a></span>.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">1</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

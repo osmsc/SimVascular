@@ -1,0 +1,115 @@
+
+# test file and results to measure the speed of different algorithms to remove
+# leading zeros from a number, to prevent octal interpretation.
+
+
+
+proc stripzerosA {x} {
+    if {0 != [string compare "" $x]} {
+	set x [string trimleft $x 0]
+	if {0 == [string compare "" $x]} {
+	    return 0
+	}
+    }
+    return $x
+}
+
+proc stripzerosB {x} {
+    scan   $x %d x
+    return $x
+}
+
+proc stripzerosC {x} {
+	return [expr [string trimleft $x 0]+0]
+}
+
+proc stripzerosD {x} {
+    regsub {^0*((1-90-9*)|0)$} $x {\1} x
+    return $x
+}
+
+
+proc comparison {A B Acomment Bcomment} {
+    puts "+-----+-----+-----+-----+-----+-----------------"
+    puts "| $A = $Acomment"
+    puts "| $B = $Bcomment"
+    puts "+-----+-----+-----+-----+-----+-----------------"
+    puts "| ex. | r$A  | r$B  | ti$A | ti$B | $A/$B"
+    puts "+-----+-----+-----+-----+-----+-----------------"
+
+    foreach {x r} {
+	0               0
+	0000000000000000000000000000000 0
+	00000001        1
+	000103          103
+	234             234
+	{}              {}
+    } {
+	set ca stripzeros$A
+	set cb stripzeros$B
+
+	set rA [lindex [time {$ca $x} 8000] 0]
+	set rB [lindex [time {$cb $x} 8000] 0]
+
+	if {($x == {}) && ([$ca $x] == {}) && ([$cb $x] == {})} {
+	    # The result is ok, I checked it.
+	    puts "|     |     |     | [format %3d $rA] | [format %3d $rB] | [expr {double ($rA) / double($rB)}]"
+	} elseif {($x == {}) && ([$cb $x] == {})} {
+	    puts "|     | [format %3d [$ca $x]] |     | [format %3d $rA] | [format %3d $rB] | [expr {double ($rA) / double($rB)}]"
+	} elseif {($x == {}) && ([$ca $x] == {})} {
+	    puts "|     |     | [format %3d [$cb $x]] | [format %3d $rA] | [format %3d $rB] | [expr {double ($rA) / double($rB)}]"
+	} else {
+	    puts "| [format %3d $r] | [format %3d [$ca $x]] | [format %3d [$cb $x]] | [format %3d $rA] | [format %3d $rB] | [expr {double ($rA) / double($rB)}]"
+	}
+    }
+}
+
+
+puts "Tcl $tcl_version"
+puts "Legend:\tex. = expected result"
+puts        "\trA  = result of A"
+puts        "\trA  = time   of A (milliseconds)"
+puts        "\tA/B = Factor between A and B (>1: A slower)"
+
+
+comparison B A {scan   $x %d x}                       {complex proc}
+comparison C A {expr [string trimleft $x 0]+0}        {complex proc}
+comparison D A {regsub {^0*((1-90-9*)|0)$} $x {\1} x} {complex proc}
+
+comparison B C {scan   $x %d x} {expr [string trimleft $x 0]+0}
+comparison B D {scan   $x %d x} {regsub {^0*((1-90-9*)|0)$} $x {\1} x}
+
+comparison C D {expr [string trimleft $x 0]+0} {regsub {^0*((1-90-9*)|0)$} $x {\1} x}
+
+
+
+puts "+-----+-----+-----+-----+-----+-----------------"
+
+
+# Results --------------------------------------------
+# Linux 2.0.29, Pentium 133
+# ----------------------------------------------------
+#
+# Tcl 7.6
+# +-----+-----+-----+-----+-----+-----------------
+# | ex. | rA  | rB  | tiA | tiB | A/B
+# +-----+-----+-----+-----+-----+-----------------
+# |   0 |   0 |   0 | 127 | 225 | 0.564444
+# |   0 |   0 |   0 | 152 | 259 | 0.586873
+# |   1 |   1 |   1 | 133 | 233 | 0.570815
+# | 103 | 103 | 103 | 135 | 235 | 0.574468
+# | 234 | 234 | 234 | 149 | 260 | 0.573077
+# |     |     |     |  98 | 136 | 0.720588
+# +-----+-----+-----+-----+-----+-----------------
+#
+# Tcl 8.0
+# +-----+-----+-----+-----+-----+-----------------
+# | ex. | rA  | rB  | tiA | tiB | A/B
+# +-----+-----+-----+-----+-----+-----------------
+# |   0 |   0 |   0 | 174 | 134 | 1.29850746269
+# |   0 |   0 |   0 | 193 | 137 | 1.40875912409
+# |   1 |   1 |   1 | 173 | 143 | 1.20979020979
+# | 103 | 103 | 103 | 161 | 144 | 1.11805555556
+# | 234 | 234 | 234 | 162 | 141 | 1.14893617021
+# |     |     |     | 120 |  86 | 1.39534883721
+# +-----+-----+-----+-----+-----+-----------------

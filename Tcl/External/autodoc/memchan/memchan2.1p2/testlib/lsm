@@ -1,0 +1,13 @@
+Begin3
+Title:          tg
+Version:        0.1
+Entered-date:   04-OCT-2000
+Description:    A generic interface to test suites. Interactive
+	execution of tests, visual highlighting of failed and/or problematic
+	tests. Allows filing of bug reports to the package maintainer.
+Keywords:       tcl, test suite, visual interface, package management
+Author:         Andreas Kupries <a.kupries@westend.com>
+Maintained-by:  Andreas Kupries <a.kupries@westend.com>
+Platforms:      Tcl
+Copying-policy: BSD, see 'tcl'-license
+End

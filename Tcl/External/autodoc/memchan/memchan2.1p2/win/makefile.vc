@@ -1,0 +1,227 @@
+# Visual C++ 2.x and 4.0 makefile for memchan 2.1p2 (as of October 04, 2000)
+#
+# See the file "doc/license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+# CVS:	$Id: makefile.vc,v 1.8 1999/09/13 23:04:18 aku Exp $
+# 
+
+# Does not depend on the presence of any environment variables in
+# order to compile tcl; all needed information is derived from 
+# location of the compiler directories.
+
+#
+# Project directories
+#
+# ROOT    = top of source tree
+#
+# TMPDIR  = location where .obj files should be stored during build
+#
+# TOOLS32 = location of VC++ 32-bit development tools. Note that the
+#	    VC++ 2.0 header files are broken, so you need to use the
+#	    ones that come with the developer network CD's, or later
+#	    versions of VC++.
+#
+# TCL     =	location where Tcl is installed.
+#
+# PKZIP	  =	name and path to pkzip archiver application
+#		(required for generation of binary distribution only)
+#
+# TCLSH/TCLLIB
+#	choose the definitions matching your version of tcl.
+#
+
+ROOT		= ..
+TMPDIR		= .
+TOOLS32		= c:\msdev
+TCL		= c:\tcl
+TCLSH		= $(TCL)\bin\tclsh80.exe
+TCLLIB		= $(TCL)\bin\tcl80.lib
+#	TCLSH		= $(TCL)\bin\tclsh81.exe
+#	TCLLIB		= $(TCL)\bin\tcl81.lib
+PKZIP		= pkzip.exe
+MSVCRT		= msvcrt.dll
+MSVCRT_SYS	= c:\windows\system\msvcrt.dll
+
+
+# Set this to the appropriate value of /MACHINE: for your platform
+MACHINE	= IX86
+
+# Comment the following line to compile with symbols
+NODEBUG=1
+
+
+######################################################################
+# Do not modify below this line
+######################################################################
+
+MC		=	memchan21
+MCLIB		=	$(MC).lib
+MCDLL		=	$(MC).dll
+INSTALLDIR	=	$(TCL)\lib\$(MC)
+
+MCOBJS		=	$(TMPDIR)\memchan.obj	\
+			$(TMPDIR)\fifo.obj	\
+			$(TMPDIR)\init.obj	\
+			$(TMPDIR)\counter.obj	\
+			$(TMPDIR)\dllEntry.obj
+
+
+PATH=$(TOOLS32)\bin;$(PATH)
+
+cc32		= $(TOOLS32)\bin\cl.exe
+link32		= $(TOOLS32)\bin\link.exe
+rc32		= $(TOOLS32)\bin\rc.exe
+include32	= -I$(TOOLS32)\include
+CP      	= copy
+RM      	= del
+
+WINDIR          = $(ROOT)\win
+GENERICDIR	= $(ROOT)\generic
+
+MC_INCLUDES	= -I$(WINDIR) -I$(GENERICDIR) -I$(ROOT) -I$(TCL)\include
+MC_DEFINES	= -nologo -D__WIN32__ -DHAVE_STDLIB_H -DMEMCHAN_VERSION=\"2.1p2\" -DBUILD_Memchan -DDLL_BUILD -DHAVE_LTOA
+
+#!include <ntwin32.mak> # what is this for?
+
+
+MC_CFLAGS	=	$(cdebug) $(cflags) $(cvarsdll) $(include32) \
+			$(MC_INCLUDES) $(MC_DEFINES)
+CON_CFLAGS	=	$(cdebug) $(cflags) $(cvars) $(include32) -DCONSOLE
+DOS_CFLAGS	=	$(cdebug) $(cflags) $(include16) -AL 
+
+######################################################################
+# Link flags
+######################################################################
+
+!IFDEF NODEBUG
+ldebug = /RELEASE
+!ELSE
+ldebug = -debug:full -debugtype:cv
+!ENDIF
+
+# declarations common to all linker options
+lcommon = /NODEFAULTLIB /RELEASE /NOLOGO
+
+# declarations for use on Intel i386, i486, and Pentium systems
+!IF "$(MACHINE)" == "IX86"
+DLLENTRY = @12
+lflags   = $(lcommon) -align:0x1000 /MACHINE:$(MACHINE)
+!ELSE
+lflags   = $(lcommon) /MACHINE:$(MACHINE)
+!ENDIF
+
+conlflags = $(lflags) -subsystem:console -entry:mainCRTStartup
+guilflags = $(lflags) -subsystem:windows -entry:WinMainCRTStartup
+dlllflags = $(lflags) -entry:_DllMainCRTStartup$(DLLENTRY) -dll
+
+!IF "$(MACHINE)" == "PPC"
+libc = libc.lib
+libcdll = crtdll.lib
+!ELSE
+libc = libc.lib oldnames.lib
+libcdll = msvcrt.lib oldnames.lib
+!ENDIF
+
+baselibs   = kernel32.lib $(optlibs) advapi32.lib
+winlibs    = $(baselibs) user32.lib gdi32.lib comdlg32.lib winspool.lib
+
+guilibs	   = $(libc) $(winlibs)
+conlibs	   = $(libc) $(baselibs)
+guilibsdll = $(libcdll) $(winlibs)
+conlibsdll = $(libcdll) $(baselibs)
+
+######################################################################
+# Compile flags
+######################################################################
+
+!IFDEF NODEBUG
+cdebug = -Ox
+!ELSE
+cdebug = -Z7 -Od -WX
+!ENDIF
+
+# declarations common to all compiler options
+ccommon = -c -W3 -nologo -YX -Dtry=__try -Dexcept=__except
+
+# NEED BYTEORDER INFORMATION HERE !!
+!IF "$(MACHINE)" == "IX86"
+cflags = $(ccommon) -D_X86_=1
+!ELSE
+!IF "$(MACHINE)" == "MIPS"
+cflags = $(ccommon) -D_MIPS_=1
+!ELSE
+!IF "$(MACHINE)" == "PPC"
+cflags = $(ccommon) -D_PPC_=1
+!ELSE
+!IF "$(MACHINE)" == "ALPHA"
+cflags = $(ccommon) -D_ALPHA_=1
+!ENDIF
+!ENDIF
+!ENDIF
+!ENDIF
+
+cvars      = -DWIN32 -D_WIN32
+cvarsmt    = $(cvars) -D_MT
+cvarsdll   = $(cvarsmt) -D_DLL
+
+######################################################################
+# Project specific targets
+######################################################################
+
+release:    $(MCDLL)
+all:	    $(MCDLL)
+test:	    $(MCDLL)
+	$(TCLSH) <<
+		load $(MCDLL)
+		cd ../tests
+		source all
+<<
+
+install:	$(MCDLL)
+	-@md	$(INSTALLDIR)
+	-@$(CP) $(MCDLL)		$(INSTALLDIR)
+	-@$(CP) $(WINDIR)\pkgIndex.tcl	$(INSTALLDIR)\pkgIndex.tcl
+
+
+$(MCDLL): $(MCOBJS)
+	$(link32) $(ldebug) $(dlllflags) $(TCLLIB) \
+		$(guilibsdll) -out:$(MCDLL) $(MCOBJS)
+
+
+bindist:	$(MCDLL)
+	-@md	$(MC)
+	-@$(CP) $(MCDLL)		$(MC)\$(MCDLL)
+	-@$(CP) $(ROOT)\pkgIndex.win	$(MC)\pkgIndex.tcl
+	$(PKZIP) -rp $(MC)b.zip	$(MC)\*.*
+	-@$(RM)	$(MC)\$(MCDLL)
+	-@$(RM)	$(MC)\pkgIndex.tcl
+	-@rd	$(MC)
+
+
+#
+# Implicit rules
+#
+
+{$(WINDIR)}.c{$(TMPDIR)}.obj:
+    $(cc32) $(MC_CFLAGS) -Fo$(TMPDIR)\ $<
+
+{$(GENERICDIR)}.c{$(TMPDIR)}.obj:
+    $(cc32) $(MC_CFLAGS) -Fo$(TMPDIR)\ $<
+
+{$(ROOT)\compat}.c{$(TMPDIR)}.obj:
+    $(cc32) $(MC_CFLAGS) -Fo$(TMPDIR)\ $<
+
+{$(WINDIR)}.rc{$(TMPDIR)}.res:
+	$(rc32) -fo $@ -r -i $(GENERICDIR) -i $(WINDIR) -D__WIN32__ \
+		$(MC_DEFINES) $<
+
+
+
+clean:
+        -@del *.exp 
+	-@del *.lib 
+	-@del *.dll 
+	-@del *.pch
+        -@del $(TMPDIR)\*.obj
+

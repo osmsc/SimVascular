@@ -1,0 +1,3130 @@
+From: nase
+To: aku
+Subject: test, pool/net/smtp
+
+Test
+# -*- tcl -*-
+#		Pool @mFullVersion@, as of @mDate@
+#		Pool_Net
+#
+# CVS: $Id: fake3,v 1.1 1997/07/07 19:41:45 aku Exp $
+#
+# @c Framework for building sequencers
+# @s Sequencer framework
+# @i Sequencer, State machines, automatons
+# -----------------------------
+package require Pool_Base
+
+
+# -----------------------------
+# base tasks: creation, destruction
+
+proc seq_create {args} {
+    # @c Generates and configures a new sequencer descriptor.
+    # @a args: List of options and corresponding values.&
+    # @a args: Recognized options are -timeout, -on-done,
+    # @a args: -on-next and -on-line.&All of them default
+    # @a args: to the empty string.&-timeout specifies the
+    # @a args: number of milliseconds to wait before aborting
+    # @a args: a wait for input on an channel (see <p seq_wait>).&
+    # @a args: -on-done specifies the script to be executed
+    # @a args: upon events 'eof', 'error', 'timeout' and 'done'.&
+    # @a args: -on-line specifies the script to be executed
+    # @a args: upon event 'line'.&-on-next specifies the script
+    # @a args: to be executed upon event 'next'.
+    # @r The name of the array variable holding sequencer
+    # @r state and configuration.
+
+    set seq_desc seq#[serial_new]
+    upvar #0 $seq_desc state
+
+    array set state {
+	status   ""
+	-timeout  ""
+	-on-done  ""
+	-on-next  ""
+	-on-line  ""
+    }
+
+    getopt_all state $args
+    return $seq_desc
+}
+
+
+proc seq_delete {seq_desc} {
+    # @c Destroy the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    catch {uplevel #0 unset $seq_desc}
+}
+
+
+# -----------------------------
+# accessors, manipulation
+
+proc seq_config {seq_desc args} {
+    # @c Reconfigures the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    upvar #0 $seq_desc state
+    getopt_all state $args
+}
+
+
+proc seq_aset {seq_desc args} {
+    # @c Associates information with the sequencer. This
+    # @c allows attachment of arbitrary information, as
+    # @c required by the user defined event handlers.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a args: A list of attribute/value pairs to be added
+    # @a args: to the sequencer.
+
+    # @a attr: Name of the attribute to set to <a value>.
+    # @a value: Value to associate with <a attr>.
+
+    upvar #0 $seq_desc state   
+
+    getopt_all _ $args
+    foreach k [array names _ -*] {set state(att,$k) $_($k)}
+}
+
+
+proc seq_aget {seq_desc attr} {
+    # @c Returns the information associated to the attribute
+    # @c <a attr>. See <proc seq_aset> too.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to retrieve.
+    # @r Value associated to attribute <a attr>.
+
+    upvar #0 $seq_desc state   
+    return $state(att,$attr)
+}
+
+
+proc seq_incr {seq_desc attr {n 1}} {
+    # @c Convenience procedure. Increments the value of
+    # @c attribute <a attr> by <a n>.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to increment.
+
+    upvar #0 $seq_desc state
+    incr state(att,$attr) $n   
+}
+
+
+proc seq_state {seq_desc} {
+    # @c Retrieve state information of given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The state of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state   
+    return $state(status)
+}
+
+
+proc seq_error {seq_desc} {
+    # @c Retrieve error information of given sequencer.
+    # @c Valid only in case of state = error.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The error information of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state
+    return $state(error)   
+}
+
+
+# -----------------------------
+# event management
+
+proc seq_event {seq_desc event args} {
+    # @c Raises <a event> in the given sequencer. Automatically
+    # @c the last command executed in the surounding context,
+    # @c i.e behaves as 'return'. The actual handling of the
+    # @c event is delayed by 'after'.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    after 1 _seq_event $seq_desc $event $args
+
+    # behave as if equivalent to 'return' command.
+    return -code return
+}
+
+
+proc _seq_event {seq_desc event args} {
+    # @c The real event handler. Execution is set up by
+    # @c <p seq_event>. Takes the same arguments.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    upvar #0 $seq_desc state
+
+    set state(status) $event
+    if {"$event" == "error"} {
+	set state(error) [lindex $args 0]
+    }
+
+    switch -- $event {
+	error   -
+	timeout -
+	eof     -
+	done    {
+	    if {$state(-on-done) != {}} {
+		if {[catch {uplevel #0 $state(-on-done) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_delete $seq_desc
+		    error "$errmsg $errorInfo"
+		}
+	    }
+	    seq_delete $seq_desc
+	}
+	next    {
+	    if {$state(-on-next) != {}} {
+		if {[catch {uplevel #0 $state(-on-next) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no sucessor defined"
+	    }
+	}
+	line {
+	    if {$state(-on-line) != {}} {
+		if {[catch {uplevel #0 $state(-on-line) $seq_desc [list [lindex $args 0]]} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no line handler defined"
+	    }
+	}
+	default {
+	    seq_event $seq_desc error "unknown event \"$event\""
+	}
+    }
+}
+
+
+proc seq_wait {seq_desc channel script} {
+    # @c Convenience procedure to setup the sequencer to wait
+    # @c for input on a <a channel>. After receiving a complete
+    # @c line the appropriate event will be raised. The wait
+    # @c will be able to time out if such information is part
+    # @c of the sequencer configuration. Removes any existing
+    # @c 'next' handler .
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel to wait on for input.
+    # @a script: Code to execute after a line was received
+
+    upvar #0 $seq_desc state
+
+    if {$state(-timeout) != {}} {
+	set state(after) [after $state(-timeout) seq_timeout $seq_desc $channel]
+    }
+
+    fileevent $channel readable [list seq_receive $seq_desc $channel]
+
+    seq_config $seq_desc -on-next {} -on-line $script
+}
+
+
+proc seq_timeout {seq_desc channel} {
+    # @c Callback executed in case of timeout during the wait
+    # @c for input at <a channel>. Removes the fileevent handler,
+    # @c then raises the 'timeout' event at the sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    unset state(after)
+    fileevent $channel readable {}
+
+    seq_event $seq_desc timeout
+}
+
+
+proc seq_receive {seq_desc channel} {
+    # @c Callback executed in case of data arriving at
+    # @c <a channel>. May raise 'eof' and 'line' events
+    # @c at the sequencer. Will disable the timeout in
+    # @c this cases. In case of having received an
+    # @c incomplete line the system will just go to sleep
+    # @c again, to wait for more data.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    if {[eof $channel]} {
+	catch {after cancel $state(after)}
+	seq_event $seq_desc eof
+    }
+
+    if {[gets $channel line] < 0} {
+	# incomplete line, wait for more
+	return
+    }
+
+    fileevent $channel readable {}
+
+    seq_event $seq_desc line $line
+}
+
+
+proc seq_next {seq_desc script} {
+    # @c Defines a script to be executed if the 'next' event was triggered.
+    # @c Removes any existing 'line' handler.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a script: The script to set as 'next' handler.
+
+    seq_config $seq_desc -on-line {} -on-next $script
+}
+From: nase
+To: aku
+Subject: test, pool/net/smtp
+
+Test
+# -*- tcl -*-
+#		Pool @mFullVersion@, as of @mDate@
+#		Pool_Net
+#
+# CVS: $Id: fake3,v 1.1 1997/07/07 19:41:45 aku Exp $
+#
+# @c Framework for building sequencers
+# @s Sequencer framework
+# @i Sequencer, State machines, automatons
+# -----------------------------
+package require Pool_Base
+
+
+# -----------------------------
+# base tasks: creation, destruction
+
+proc seq_create {args} {
+    # @c Generates and configures a new sequencer descriptor.
+    # @a args: List of options and corresponding values.&
+    # @a args: Recognized options are -timeout, -on-done,
+    # @a args: -on-next and -on-line.&All of them default
+    # @a args: to the empty string.&-timeout specifies the
+    # @a args: number of milliseconds to wait before aborting
+    # @a args: a wait for input on an channel (see <p seq_wait>).&
+    # @a args: -on-done specifies the script to be executed
+    # @a args: upon events 'eof', 'error', 'timeout' and 'done'.&
+    # @a args: -on-line specifies the script to be executed
+    # @a args: upon event 'line'.&-on-next specifies the script
+    # @a args: to be executed upon event 'next'.
+    # @r The name of the array variable holding sequencer
+    # @r state and configuration.
+
+    set seq_desc seq#[serial_new]
+    upvar #0 $seq_desc state
+
+    array set state {
+	status   ""
+	-timeout  ""
+	-on-done  ""
+	-on-next  ""
+	-on-line  ""
+    }
+
+    getopt_all state $args
+    return $seq_desc
+}
+
+
+proc seq_delete {seq_desc} {
+    # @c Destroy the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    catch {uplevel #0 unset $seq_desc}
+}
+
+
+# -----------------------------
+# accessors, manipulation
+
+proc seq_config {seq_desc args} {
+    # @c Reconfigures the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    upvar #0 $seq_desc state
+    getopt_all state $args
+}
+
+
+proc seq_aset {seq_desc args} {
+    # @c Associates information with the sequencer. This
+    # @c allows attachment of arbitrary information, as
+    # @c required by the user defined event handlers.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a args: A list of attribute/value pairs to be added
+    # @a args: to the sequencer.
+
+    # @a attr: Name of the attribute to set to <a value>.
+    # @a value: Value to associate with <a attr>.
+
+    upvar #0 $seq_desc state   
+
+    getopt_all _ $args
+    foreach k [array names _ -*] {set state(att,$k) $_($k)}
+}
+
+
+proc seq_aget {seq_desc attr} {
+    # @c Returns the information associated to the attribute
+    # @c <a attr>. See <proc seq_aset> too.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to retrieve.
+    # @r Value associated to attribute <a attr>.
+
+    upvar #0 $seq_desc state   
+    return $state(att,$attr)
+}
+
+
+proc seq_incr {seq_desc attr {n 1}} {
+    # @c Convenience procedure. Increments the value of
+    # @c attribute <a attr> by <a n>.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to increment.
+
+    upvar #0 $seq_desc state
+    incr state(att,$attr) $n   
+}
+
+
+proc seq_state {seq_desc} {
+    # @c Retrieve state information of given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The state of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state   
+    return $state(status)
+}
+
+
+proc seq_error {seq_desc} {
+    # @c Retrieve error information of given sequencer.
+    # @c Valid only in case of state = error.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The error information of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state
+    return $state(error)   
+}
+
+
+# -----------------------------
+# event management
+
+proc seq_event {seq_desc event args} {
+    # @c Raises <a event> in the given sequencer. Automatically
+    # @c the last command executed in the surounding context,
+    # @c i.e behaves as 'return'. The actual handling of the
+    # @c event is delayed by 'after'.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    after 1 _seq_event $seq_desc $event $args
+
+    # behave as if equivalent to 'return' command.
+    return -code return
+}
+
+
+proc _seq_event {seq_desc event args} {
+    # @c The real event handler. Execution is set up by
+    # @c <p seq_event>. Takes the same arguments.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    upvar #0 $seq_desc state
+
+    set state(status) $event
+    if {"$event" == "error"} {
+	set state(error) [lindex $args 0]
+    }
+
+    switch -- $event {
+	error   -
+	timeout -
+	eof     -
+	done    {
+	    if {$state(-on-done) != {}} {
+		if {[catch {uplevel #0 $state(-on-done) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_delete $seq_desc
+		    error "$errmsg $errorInfo"
+		}
+	    }
+	    seq_delete $seq_desc
+	}
+	next    {
+	    if {$state(-on-next) != {}} {
+		if {[catch {uplevel #0 $state(-on-next) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no sucessor defined"
+	    }
+	}
+	line {
+	    if {$state(-on-line) != {}} {
+		if {[catch {uplevel #0 $state(-on-line) $seq_desc [list [lindex $args 0]]} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no line handler defined"
+	    }
+	}
+	default {
+	    seq_event $seq_desc error "unknown event \"$event\""
+	}
+    }
+}
+
+
+proc seq_wait {seq_desc channel script} {
+    # @c Convenience procedure to setup the sequencer to wait
+    # @c for input on a <a channel>. After receiving a complete
+    # @c line the appropriate event will be raised. The wait
+    # @c will be able to time out if such information is part
+    # @c of the sequencer configuration. Removes any existing
+    # @c 'next' handler .
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel to wait on for input.
+    # @a script: Code to execute after a line was received
+
+    upvar #0 $seq_desc state
+
+    if {$state(-timeout) != {}} {
+	set state(after) [after $state(-timeout) seq_timeout $seq_desc $channel]
+    }
+
+    fileevent $channel readable [list seq_receive $seq_desc $channel]
+
+    seq_config $seq_desc -on-next {} -on-line $script
+}
+
+
+proc seq_timeout {seq_desc channel} {
+    # @c Callback executed in case of timeout during the wait
+    # @c for input at <a channel>. Removes the fileevent handler,
+    # @c then raises the 'timeout' event at the sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    unset state(after)
+    fileevent $channel readable {}
+
+    seq_event $seq_desc timeout
+}
+
+
+proc seq_receive {seq_desc channel} {
+    # @c Callback executed in case of data arriving at
+    # @c <a channel>. May raise 'eof' and 'line' events
+    # @c at the sequencer. Will disable the timeout in
+    # @c this cases. In case of having received an
+    # @c incomplete line the system will just go to sleep
+    # @c again, to wait for more data.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    if {[eof $channel]} {
+	catch {after cancel $state(after)}
+	seq_event $seq_desc eof
+    }
+
+    if {[gets $channel line] < 0} {
+	# incomplete line, wait for more
+	return
+    }
+
+    fileevent $channel readable {}
+
+    seq_event $seq_desc line $line
+}
+
+
+proc seq_next {seq_desc script} {
+    # @c Defines a script to be executed if the 'next' event was triggered.
+    # @c Removes any existing 'line' handler.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a script: The script to set as 'next' handler.
+
+    seq_config $seq_desc -on-line {} -on-next $script
+}
+From: nase
+To: aku
+Subject: test, pool/net/smtp
+
+Test
+# -*- tcl -*-
+#		Pool @mFullVersion@, as of @mDate@
+#		Pool_Net
+#
+# CVS: $Id: fake3,v 1.1 1997/07/07 19:41:45 aku Exp $
+#
+# @c Framework for building sequencers
+# @s Sequencer framework
+# @i Sequencer, State machines, automatons
+# -----------------------------
+package require Pool_Base
+
+
+# -----------------------------
+# base tasks: creation, destruction
+
+proc seq_create {args} {
+    # @c Generates and configures a new sequencer descriptor.
+    # @a args: List of options and corresponding values.&
+    # @a args: Recognized options are -timeout, -on-done,
+    # @a args: -on-next and -on-line.&All of them default
+    # @a args: to the empty string.&-timeout specifies the
+    # @a args: number of milliseconds to wait before aborting
+    # @a args: a wait for input on an channel (see <p seq_wait>).&
+    # @a args: -on-done specifies the script to be executed
+    # @a args: upon events 'eof', 'error', 'timeout' and 'done'.&
+    # @a args: -on-line specifies the script to be executed
+    # @a args: upon event 'line'.&-on-next specifies the script
+    # @a args: to be executed upon event 'next'.
+    # @r The name of the array variable holding sequencer
+    # @r state and configuration.
+
+    set seq_desc seq#[serial_new]
+    upvar #0 $seq_desc state
+
+    array set state {
+	status   ""
+	-timeout  ""
+	-on-done  ""
+	-on-next  ""
+	-on-line  ""
+    }
+
+    getopt_all state $args
+    return $seq_desc
+}
+
+
+proc seq_delete {seq_desc} {
+    # @c Destroy the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    catch {uplevel #0 unset $seq_desc}
+}
+
+
+# -----------------------------
+# accessors, manipulation
+
+proc seq_config {seq_desc args} {
+    # @c Reconfigures the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    upvar #0 $seq_desc state
+    getopt_all state $args
+}
+
+
+proc seq_aset {seq_desc args} {
+    # @c Associates information with the sequencer. This
+    # @c allows attachment of arbitrary information, as
+    # @c required by the user defined event handlers.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a args: A list of attribute/value pairs to be added
+    # @a args: to the sequencer.
+
+    # @a attr: Name of the attribute to set to <a value>.
+    # @a value: Value to associate with <a attr>.
+
+    upvar #0 $seq_desc state   
+
+    getopt_all _ $args
+    foreach k [array names _ -*] {set state(att,$k) $_($k)}
+}
+
+
+proc seq_aget {seq_desc attr} {
+    # @c Returns the information associated to the attribute
+    # @c <a attr>. See <proc seq_aset> too.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to retrieve.
+    # @r Value associated to attribute <a attr>.
+
+    upvar #0 $seq_desc state   
+    return $state(att,$attr)
+}
+
+
+proc seq_incr {seq_desc attr {n 1}} {
+    # @c Convenience procedure. Increments the value of
+    # @c attribute <a attr> by <a n>.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to increment.
+
+    upvar #0 $seq_desc state
+    incr state(att,$attr) $n   
+}
+
+
+proc seq_state {seq_desc} {
+    # @c Retrieve state information of given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The state of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state   
+    return $state(status)
+}
+
+
+proc seq_error {seq_desc} {
+    # @c Retrieve error information of given sequencer.
+    # @c Valid only in case of state = error.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The error information of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state
+    return $state(error)   
+}
+
+
+# -----------------------------
+# event management
+
+proc seq_event {seq_desc event args} {
+    # @c Raises <a event> in the given sequencer. Automatically
+    # @c the last command executed in the surounding context,
+    # @c i.e behaves as 'return'. The actual handling of the
+    # @c event is delayed by 'after'.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    after 1 _seq_event $seq_desc $event $args
+
+    # behave as if equivalent to 'return' command.
+    return -code return
+}
+
+
+proc _seq_event {seq_desc event args} {
+    # @c The real event handler. Execution is set up by
+    # @c <p seq_event>. Takes the same arguments.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    upvar #0 $seq_desc state
+
+    set state(status) $event
+    if {"$event" == "error"} {
+	set state(error) [lindex $args 0]
+    }
+
+    switch -- $event {
+	error   -
+	timeout -
+	eof     -
+	done    {
+	    if {$state(-on-done) != {}} {
+		if {[catch {uplevel #0 $state(-on-done) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_delete $seq_desc
+		    error "$errmsg $errorInfo"
+		}
+	    }
+	    seq_delete $seq_desc
+	}
+	next    {
+	    if {$state(-on-next) != {}} {
+		if {[catch {uplevel #0 $state(-on-next) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no sucessor defined"
+	    }
+	}
+	line {
+	    if {$state(-on-line) != {}} {
+		if {[catch {uplevel #0 $state(-on-line) $seq_desc [list [lindex $args 0]]} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no line handler defined"
+	    }
+	}
+	default {
+	    seq_event $seq_desc error "unknown event \"$event\""
+	}
+    }
+}
+
+
+proc seq_wait {seq_desc channel script} {
+    # @c Convenience procedure to setup the sequencer to wait
+    # @c for input on a <a channel>. After receiving a complete
+    # @c line the appropriate event will be raised. The wait
+    # @c will be able to time out if such information is part
+    # @c of the sequencer configuration. Removes any existing
+    # @c 'next' handler .
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel to wait on for input.
+    # @a script: Code to execute after a line was received
+
+    upvar #0 $seq_desc state
+
+    if {$state(-timeout) != {}} {
+	set state(after) [after $state(-timeout) seq_timeout $seq_desc $channel]
+    }
+
+    fileevent $channel readable [list seq_receive $seq_desc $channel]
+
+    seq_config $seq_desc -on-next {} -on-line $script
+}
+
+
+proc seq_timeout {seq_desc channel} {
+    # @c Callback executed in case of timeout during the wait
+    # @c for input at <a channel>. Removes the fileevent handler,
+    # @c then raises the 'timeout' event at the sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    unset state(after)
+    fileevent $channel readable {}
+
+    seq_event $seq_desc timeout
+}
+
+
+proc seq_receive {seq_desc channel} {
+    # @c Callback executed in case of data arriving at
+    # @c <a channel>. May raise 'eof' and 'line' events
+    # @c at the sequencer. Will disable the timeout in
+    # @c this cases. In case of having received an
+    # @c incomplete line the system will just go to sleep
+    # @c again, to wait for more data.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    if {[eof $channel]} {
+	catch {after cancel $state(after)}
+	seq_event $seq_desc eof
+    }
+
+    if {[gets $channel line] < 0} {
+	# incomplete line, wait for more
+	return
+    }
+
+    fileevent $channel readable {}
+
+    seq_event $seq_desc line $line
+}
+
+
+proc seq_next {seq_desc script} {
+    # @c Defines a script to be executed if the 'next' event was triggered.
+    # @c Removes any existing 'line' handler.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a script: The script to set as 'next' handler.
+
+    seq_config $seq_desc -on-line {} -on-next $script
+}
+From: nase
+To: aku
+Subject: test, pool/net/smtp
+
+Test
+# -*- tcl -*-
+#		Pool @mFullVersion@, as of @mDate@
+#		Pool_Net
+#
+# CVS: $Id: fake3,v 1.1 1997/07/07 19:41:45 aku Exp $
+#
+# @c Framework for building sequencers
+# @s Sequencer framework
+# @i Sequencer, State machines, automatons
+# -----------------------------
+package require Pool_Base
+
+
+# -----------------------------
+# base tasks: creation, destruction
+
+proc seq_create {args} {
+    # @c Generates and configures a new sequencer descriptor.
+    # @a args: List of options and corresponding values.&
+    # @a args: Recognized options are -timeout, -on-done,
+    # @a args: -on-next and -on-line.&All of them default
+    # @a args: to the empty string.&-timeout specifies the
+    # @a args: number of milliseconds to wait before aborting
+    # @a args: a wait for input on an channel (see <p seq_wait>).&
+    # @a args: -on-done specifies the script to be executed
+    # @a args: upon events 'eof', 'error', 'timeout' and 'done'.&
+    # @a args: -on-line specifies the script to be executed
+    # @a args: upon event 'line'.&-on-next specifies the script
+    # @a args: to be executed upon event 'next'.
+    # @r The name of the array variable holding sequencer
+    # @r state and configuration.
+
+    set seq_desc seq#[serial_new]
+    upvar #0 $seq_desc state
+
+    array set state {
+	status   ""
+	-timeout  ""
+	-on-done  ""
+	-on-next  ""
+	-on-line  ""
+    }
+
+    getopt_all state $args
+    return $seq_desc
+}
+
+
+proc seq_delete {seq_desc} {
+    # @c Destroy the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    catch {uplevel #0 unset $seq_desc}
+}
+
+
+# -----------------------------
+# accessors, manipulation
+
+proc seq_config {seq_desc args} {
+    # @c Reconfigures the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    upvar #0 $seq_desc state
+    getopt_all state $args
+}
+
+
+proc seq_aset {seq_desc args} {
+    # @c Associates information with the sequencer. This
+    # @c allows attachment of arbitrary information, as
+    # @c required by the user defined event handlers.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a args: A list of attribute/value pairs to be added
+    # @a args: to the sequencer.
+
+    # @a attr: Name of the attribute to set to <a value>.
+    # @a value: Value to associate with <a attr>.
+
+    upvar #0 $seq_desc state   
+
+    getopt_all _ $args
+    foreach k [array names _ -*] {set state(att,$k) $_($k)}
+}
+
+
+proc seq_aget {seq_desc attr} {
+    # @c Returns the information associated to the attribute
+    # @c <a attr>. See <proc seq_aset> too.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to retrieve.
+    # @r Value associated to attribute <a attr>.
+
+    upvar #0 $seq_desc state   
+    return $state(att,$attr)
+}
+
+
+proc seq_incr {seq_desc attr {n 1}} {
+    # @c Convenience procedure. Increments the value of
+    # @c attribute <a attr> by <a n>.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to increment.
+
+    upvar #0 $seq_desc state
+    incr state(att,$attr) $n   
+}
+
+
+proc seq_state {seq_desc} {
+    # @c Retrieve state information of given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The state of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state   
+    return $state(status)
+}
+
+
+proc seq_error {seq_desc} {
+    # @c Retrieve error information of given sequencer.
+    # @c Valid only in case of state = error.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The error information of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state
+    return $state(error)   
+}
+
+
+# -----------------------------
+# event management
+
+proc seq_event {seq_desc event args} {
+    # @c Raises <a event> in the given sequencer. Automatically
+    # @c the last command executed in the surounding context,
+    # @c i.e behaves as 'return'. The actual handling of the
+    # @c event is delayed by 'after'.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    after 1 _seq_event $seq_desc $event $args
+
+    # behave as if equivalent to 'return' command.
+    return -code return
+}
+
+
+proc _seq_event {seq_desc event args} {
+    # @c The real event handler. Execution is set up by
+    # @c <p seq_event>. Takes the same arguments.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    upvar #0 $seq_desc state
+
+    set state(status) $event
+    if {"$event" == "error"} {
+	set state(error) [lindex $args 0]
+    }
+
+    switch -- $event {
+	error   -
+	timeout -
+	eof     -
+	done    {
+	    if {$state(-on-done) != {}} {
+		if {[catch {uplevel #0 $state(-on-done) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_delete $seq_desc
+		    error "$errmsg $errorInfo"
+		}
+	    }
+	    seq_delete $seq_desc
+	}
+	next    {
+	    if {$state(-on-next) != {}} {
+		if {[catch {uplevel #0 $state(-on-next) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no sucessor defined"
+	    }
+	}
+	line {
+	    if {$state(-on-line) != {}} {
+		if {[catch {uplevel #0 $state(-on-line) $seq_desc [list [lindex $args 0]]} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no line handler defined"
+	    }
+	}
+	default {
+	    seq_event $seq_desc error "unknown event \"$event\""
+	}
+    }
+}
+
+
+proc seq_wait {seq_desc channel script} {
+    # @c Convenience procedure to setup the sequencer to wait
+    # @c for input on a <a channel>. After receiving a complete
+    # @c line the appropriate event will be raised. The wait
+    # @c will be able to time out if such information is part
+    # @c of the sequencer configuration. Removes any existing
+    # @c 'next' handler .
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel to wait on for input.
+    # @a script: Code to execute after a line was received
+
+    upvar #0 $seq_desc state
+
+    if {$state(-timeout) != {}} {
+	set state(after) [after $state(-timeout) seq_timeout $seq_desc $channel]
+    }
+
+    fileevent $channel readable [list seq_receive $seq_desc $channel]
+
+    seq_config $seq_desc -on-next {} -on-line $script
+}
+
+
+proc seq_timeout {seq_desc channel} {
+    # @c Callback executed in case of timeout during the wait
+    # @c for input at <a channel>. Removes the fileevent handler,
+    # @c then raises the 'timeout' event at the sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    unset state(after)
+    fileevent $channel readable {}
+
+    seq_event $seq_desc timeout
+}
+
+
+proc seq_receive {seq_desc channel} {
+    # @c Callback executed in case of data arriving at
+    # @c <a channel>. May raise 'eof' and 'line' events
+    # @c at the sequencer. Will disable the timeout in
+    # @c this cases. In case of having received an
+    # @c incomplete line the system will just go to sleep
+    # @c again, to wait for more data.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    if {[eof $channel]} {
+	catch {after cancel $state(after)}
+	seq_event $seq_desc eof
+    }
+
+    if {[gets $channel line] < 0} {
+	# incomplete line, wait for more
+	return
+    }
+
+    fileevent $channel readable {}
+
+    seq_event $seq_desc line $line
+}
+
+
+proc seq_next {seq_desc script} {
+    # @c Defines a script to be executed if the 'next' event was triggered.
+    # @c Removes any existing 'line' handler.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a script: The script to set as 'next' handler.
+
+    seq_config $seq_desc -on-line {} -on-next $script
+}
+From: nase
+To: aku
+Subject: test, pool/net/smtp
+
+Test
+# -*- tcl -*-
+#		Pool @mFullVersion@, as of @mDate@
+#		Pool_Net
+#
+# CVS: $Id: fake3,v 1.1 1997/07/07 19:41:45 aku Exp $
+#
+# @c Framework for building sequencers
+# @s Sequencer framework
+# @i Sequencer, State machines, automatons
+# -----------------------------
+package require Pool_Base
+
+
+# -----------------------------
+# base tasks: creation, destruction
+
+proc seq_create {args} {
+    # @c Generates and configures a new sequencer descriptor.
+    # @a args: List of options and corresponding values.&
+    # @a args: Recognized options are -timeout, -on-done,
+    # @a args: -on-next and -on-line.&All of them default
+    # @a args: to the empty string.&-timeout specifies the
+    # @a args: number of milliseconds to wait before aborting
+    # @a args: a wait for input on an channel (see <p seq_wait>).&
+    # @a args: -on-done specifies the script to be executed
+    # @a args: upon events 'eof', 'error', 'timeout' and 'done'.&
+    # @a args: -on-line specifies the script to be executed
+    # @a args: upon event 'line'.&-on-next specifies the script
+    # @a args: to be executed upon event 'next'.
+    # @r The name of the array variable holding sequencer
+    # @r state and configuration.
+
+    set seq_desc seq#[serial_new]
+    upvar #0 $seq_desc state
+
+    array set state {
+	status   ""
+	-timeout  ""
+	-on-done  ""
+	-on-next  ""
+	-on-line  ""
+    }
+
+    getopt_all state $args
+    return $seq_desc
+}
+
+
+proc seq_delete {seq_desc} {
+    # @c Destroy the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    catch {uplevel #0 unset $seq_desc}
+}
+
+
+# -----------------------------
+# accessors, manipulation
+
+proc seq_config {seq_desc args} {
+    # @c Reconfigures the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    upvar #0 $seq_desc state
+    getopt_all state $args
+}
+
+
+proc seq_aset {seq_desc args} {
+    # @c Associates information with the sequencer. This
+    # @c allows attachment of arbitrary information, as
+    # @c required by the user defined event handlers.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a args: A list of attribute/value pairs to be added
+    # @a args: to the sequencer.
+
+    # @a attr: Name of the attribute to set to <a value>.
+    # @a value: Value to associate with <a attr>.
+
+    upvar #0 $seq_desc state   
+
+    getopt_all _ $args
+    foreach k [array names _ -*] {set state(att,$k) $_($k)}
+}
+
+
+proc seq_aget {seq_desc attr} {
+    # @c Returns the information associated to the attribute
+    # @c <a attr>. See <proc seq_aset> too.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to retrieve.
+    # @r Value associated to attribute <a attr>.
+
+    upvar #0 $seq_desc state   
+    return $state(att,$attr)
+}
+
+
+proc seq_incr {seq_desc attr {n 1}} {
+    # @c Convenience procedure. Increments the value of
+    # @c attribute <a attr> by <a n>.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to increment.
+
+    upvar #0 $seq_desc state
+    incr state(att,$attr) $n   
+}
+
+
+proc seq_state {seq_desc} {
+    # @c Retrieve state information of given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The state of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state   
+    return $state(status)
+}
+
+
+proc seq_error {seq_desc} {
+    # @c Retrieve error information of given sequencer.
+    # @c Valid only in case of state = error.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The error information of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state
+    return $state(error)   
+}
+
+
+# -----------------------------
+# event management
+
+proc seq_event {seq_desc event args} {
+    # @c Raises <a event> in the given sequencer. Automatically
+    # @c the last command executed in the surounding context,
+    # @c i.e behaves as 'return'. The actual handling of the
+    # @c event is delayed by 'after'.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    after 1 _seq_event $seq_desc $event $args
+
+    # behave as if equivalent to 'return' command.
+    return -code return
+}
+
+
+proc _seq_event {seq_desc event args} {
+    # @c The real event handler. Execution is set up by
+    # @c <p seq_event>. Takes the same arguments.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    upvar #0 $seq_desc state
+
+    set state(status) $event
+    if {"$event" == "error"} {
+	set state(error) [lindex $args 0]
+    }
+
+    switch -- $event {
+	error   -
+	timeout -
+	eof     -
+	done    {
+	    if {$state(-on-done) != {}} {
+		if {[catch {uplevel #0 $state(-on-done) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_delete $seq_desc
+		    error "$errmsg $errorInfo"
+		}
+	    }
+	    seq_delete $seq_desc
+	}
+	next    {
+	    if {$state(-on-next) != {}} {
+		if {[catch {uplevel #0 $state(-on-next) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no sucessor defined"
+	    }
+	}
+	line {
+	    if {$state(-on-line) != {}} {
+		if {[catch {uplevel #0 $state(-on-line) $seq_desc [list [lindex $args 0]]} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no line handler defined"
+	    }
+	}
+	default {
+	    seq_event $seq_desc error "unknown event \"$event\""
+	}
+    }
+}
+
+
+proc seq_wait {seq_desc channel script} {
+    # @c Convenience procedure to setup the sequencer to wait
+    # @c for input on a <a channel>. After receiving a complete
+    # @c line the appropriate event will be raised. The wait
+    # @c will be able to time out if such information is part
+    # @c of the sequencer configuration. Removes any existing
+    # @c 'next' handler .
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel to wait on for input.
+    # @a script: Code to execute after a line was received
+
+    upvar #0 $seq_desc state
+
+    if {$state(-timeout) != {}} {
+	set state(after) [after $state(-timeout) seq_timeout $seq_desc $channel]
+    }
+
+    fileevent $channel readable [list seq_receive $seq_desc $channel]
+
+    seq_config $seq_desc -on-next {} -on-line $script
+}
+
+
+proc seq_timeout {seq_desc channel} {
+    # @c Callback executed in case of timeout during the wait
+    # @c for input at <a channel>. Removes the fileevent handler,
+    # @c then raises the 'timeout' event at the sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    unset state(after)
+    fileevent $channel readable {}
+
+    seq_event $seq_desc timeout
+}
+
+
+proc seq_receive {seq_desc channel} {
+    # @c Callback executed in case of data arriving at
+    # @c <a channel>. May raise 'eof' and 'line' events
+    # @c at the sequencer. Will disable the timeout in
+    # @c this cases. In case of having received an
+    # @c incomplete line the system will just go to sleep
+    # @c again, to wait for more data.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    if {[eof $channel]} {
+	catch {after cancel $state(after)}
+	seq_event $seq_desc eof
+    }
+
+    if {[gets $channel line] < 0} {
+	# incomplete line, wait for more
+	return
+    }
+
+    fileevent $channel readable {}
+
+    seq_event $seq_desc line $line
+}
+
+
+proc seq_next {seq_desc script} {
+    # @c Defines a script to be executed if the 'next' event was triggered.
+    # @c Removes any existing 'line' handler.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a script: The script to set as 'next' handler.
+
+    seq_config $seq_desc -on-line {} -on-next $script
+}
+From: nase
+To: aku
+Subject: test, pool/net/smtp
+
+Test
+# -*- tcl -*-
+#		Pool @mFullVersion@, as of @mDate@
+#		Pool_Net
+#
+# CVS: $Id: fake3,v 1.1 1997/07/07 19:41:45 aku Exp $
+#
+# @c Framework for building sequencers
+# @s Sequencer framework
+# @i Sequencer, State machines, automatons
+# -----------------------------
+package require Pool_Base
+
+
+# -----------------------------
+# base tasks: creation, destruction
+
+proc seq_create {args} {
+    # @c Generates and configures a new sequencer descriptor.
+    # @a args: List of options and corresponding values.&
+    # @a args: Recognized options are -timeout, -on-done,
+    # @a args: -on-next and -on-line.&All of them default
+    # @a args: to the empty string.&-timeout specifies the
+    # @a args: number of milliseconds to wait before aborting
+    # @a args: a wait for input on an channel (see <p seq_wait>).&
+    # @a args: -on-done specifies the script to be executed
+    # @a args: upon events 'eof', 'error', 'timeout' and 'done'.&
+    # @a args: -on-line specifies the script to be executed
+    # @a args: upon event 'line'.&-on-next specifies the script
+    # @a args: to be executed upon event 'next'.
+    # @r The name of the array variable holding sequencer
+    # @r state and configuration.
+
+    set seq_desc seq#[serial_new]
+    upvar #0 $seq_desc state
+
+    array set state {
+	status   ""
+	-timeout  ""
+	-on-done  ""
+	-on-next  ""
+	-on-line  ""
+    }
+
+    getopt_all state $args
+    return $seq_desc
+}
+
+
+proc seq_delete {seq_desc} {
+    # @c Destroy the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    catch {uplevel #0 unset $seq_desc}
+}
+
+
+# -----------------------------
+# accessors, manipulation
+
+proc seq_config {seq_desc args} {
+    # @c Reconfigures the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    upvar #0 $seq_desc state
+    getopt_all state $args
+}
+
+
+proc seq_aset {seq_desc args} {
+    # @c Associates information with the sequencer. This
+    # @c allows attachment of arbitrary information, as
+    # @c required by the user defined event handlers.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a args: A list of attribute/value pairs to be added
+    # @a args: to the sequencer.
+
+    # @a attr: Name of the attribute to set to <a value>.
+    # @a value: Value to associate with <a attr>.
+
+    upvar #0 $seq_desc state   
+
+    getopt_all _ $args
+    foreach k [array names _ -*] {set state(att,$k) $_($k)}
+}
+
+
+proc seq_aget {seq_desc attr} {
+    # @c Returns the information associated to the attribute
+    # @c <a attr>. See <proc seq_aset> too.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to retrieve.
+    # @r Value associated to attribute <a attr>.
+
+    upvar #0 $seq_desc state   
+    return $state(att,$attr)
+}
+
+
+proc seq_incr {seq_desc attr {n 1}} {
+    # @c Convenience procedure. Increments the value of
+    # @c attribute <a attr> by <a n>.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to increment.
+
+    upvar #0 $seq_desc state
+    incr state(att,$attr) $n   
+}
+
+
+proc seq_state {seq_desc} {
+    # @c Retrieve state information of given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The state of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state   
+    return $state(status)
+}
+
+
+proc seq_error {seq_desc} {
+    # @c Retrieve error information of given sequencer.
+    # @c Valid only in case of state = error.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The error information of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state
+    return $state(error)   
+}
+
+
+# -----------------------------
+# event management
+
+proc seq_event {seq_desc event args} {
+    # @c Raises <a event> in the given sequencer. Automatically
+    # @c the last command executed in the surounding context,
+    # @c i.e behaves as 'return'. The actual handling of the
+    # @c event is delayed by 'after'.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    after 1 _seq_event $seq_desc $event $args
+
+    # behave as if equivalent to 'return' command.
+    return -code return
+}
+
+
+proc _seq_event {seq_desc event args} {
+    # @c The real event handler. Execution is set up by
+    # @c <p seq_event>. Takes the same arguments.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    upvar #0 $seq_desc state
+
+    set state(status) $event
+    if {"$event" == "error"} {
+	set state(error) [lindex $args 0]
+    }
+
+    switch -- $event {
+	error   -
+	timeout -
+	eof     -
+	done    {
+	    if {$state(-on-done) != {}} {
+		if {[catch {uplevel #0 $state(-on-done) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_delete $seq_desc
+		    error "$errmsg $errorInfo"
+		}
+	    }
+	    seq_delete $seq_desc
+	}
+	next    {
+	    if {$state(-on-next) != {}} {
+		if {[catch {uplevel #0 $state(-on-next) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no sucessor defined"
+	    }
+	}
+	line {
+	    if {$state(-on-line) != {}} {
+		if {[catch {uplevel #0 $state(-on-line) $seq_desc [list [lindex $args 0]]} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no line handler defined"
+	    }
+	}
+	default {
+	    seq_event $seq_desc error "unknown event \"$event\""
+	}
+    }
+}
+
+
+proc seq_wait {seq_desc channel script} {
+    # @c Convenience procedure to setup the sequencer to wait
+    # @c for input on a <a channel>. After receiving a complete
+    # @c line the appropriate event will be raised. The wait
+    # @c will be able to time out if such information is part
+    # @c of the sequencer configuration. Removes any existing
+    # @c 'next' handler .
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel to wait on for input.
+    # @a script: Code to execute after a line was received
+
+    upvar #0 $seq_desc state
+
+    if {$state(-timeout) != {}} {
+	set state(after) [after $state(-timeout) seq_timeout $seq_desc $channel]
+    }
+
+    fileevent $channel readable [list seq_receive $seq_desc $channel]
+
+    seq_config $seq_desc -on-next {} -on-line $script
+}
+
+
+proc seq_timeout {seq_desc channel} {
+    # @c Callback executed in case of timeout during the wait
+    # @c for input at <a channel>. Removes the fileevent handler,
+    # @c then raises the 'timeout' event at the sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    unset state(after)
+    fileevent $channel readable {}
+
+    seq_event $seq_desc timeout
+}
+
+
+proc seq_receive {seq_desc channel} {
+    # @c Callback executed in case of data arriving at
+    # @c <a channel>. May raise 'eof' and 'line' events
+    # @c at the sequencer. Will disable the timeout in
+    # @c this cases. In case of having received an
+    # @c incomplete line the system will just go to sleep
+    # @c again, to wait for more data.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    if {[eof $channel]} {
+	catch {after cancel $state(after)}
+	seq_event $seq_desc eof
+    }
+
+    if {[gets $channel line] < 0} {
+	# incomplete line, wait for more
+	return
+    }
+
+    fileevent $channel readable {}
+
+    seq_event $seq_desc line $line
+}
+
+
+proc seq_next {seq_desc script} {
+    # @c Defines a script to be executed if the 'next' event was triggered.
+    # @c Removes any existing 'line' handler.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a script: The script to set as 'next' handler.
+
+    seq_config $seq_desc -on-line {} -on-next $script
+}
+From: nase
+To: aku
+Subject: test, pool/net/smtp
+
+Test
+# -*- tcl -*-
+#		Pool @mFullVersion@, as of @mDate@
+#		Pool_Net
+#
+# CVS: $Id: fake3,v 1.1 1997/07/07 19:41:45 aku Exp $
+#
+# @c Framework for building sequencers
+# @s Sequencer framework
+# @i Sequencer, State machines, automatons
+# -----------------------------
+package require Pool_Base
+
+
+# -----------------------------
+# base tasks: creation, destruction
+
+proc seq_create {args} {
+    # @c Generates and configures a new sequencer descriptor.
+    # @a args: List of options and corresponding values.&
+    # @a args: Recognized options are -timeout, -on-done,
+    # @a args: -on-next and -on-line.&All of them default
+    # @a args: to the empty string.&-timeout specifies the
+    # @a args: number of milliseconds to wait before aborting
+    # @a args: a wait for input on an channel (see <p seq_wait>).&
+    # @a args: -on-done specifies the script to be executed
+    # @a args: upon events 'eof', 'error', 'timeout' and 'done'.&
+    # @a args: -on-line specifies the script to be executed
+    # @a args: upon event 'line'.&-on-next specifies the script
+    # @a args: to be executed upon event 'next'.
+    # @r The name of the array variable holding sequencer
+    # @r state and configuration.
+
+    set seq_desc seq#[serial_new]
+    upvar #0 $seq_desc state
+
+    array set state {
+	status   ""
+	-timeout  ""
+	-on-done  ""
+	-on-next  ""
+	-on-line  ""
+    }
+
+    getopt_all state $args
+    return $seq_desc
+}
+
+
+proc seq_delete {seq_desc} {
+    # @c Destroy the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    catch {uplevel #0 unset $seq_desc}
+}
+
+
+# -----------------------------
+# accessors, manipulation
+
+proc seq_config {seq_desc args} {
+    # @c Reconfigures the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    upvar #0 $seq_desc state
+    getopt_all state $args
+}
+
+
+proc seq_aset {seq_desc args} {
+    # @c Associates information with the sequencer. This
+    # @c allows attachment of arbitrary information, as
+    # @c required by the user defined event handlers.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a args: A list of attribute/value pairs to be added
+    # @a args: to the sequencer.
+
+    # @a attr: Name of the attribute to set to <a value>.
+    # @a value: Value to associate with <a attr>.
+
+    upvar #0 $seq_desc state   
+
+    getopt_all _ $args
+    foreach k [array names _ -*] {set state(att,$k) $_($k)}
+}
+
+
+proc seq_aget {seq_desc attr} {
+    # @c Returns the information associated to the attribute
+    # @c <a attr>. See <proc seq_aset> too.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to retrieve.
+    # @r Value associated to attribute <a attr>.
+
+    upvar #0 $seq_desc state   
+    return $state(att,$attr)
+}
+
+
+proc seq_incr {seq_desc attr {n 1}} {
+    # @c Convenience procedure. Increments the value of
+    # @c attribute <a attr> by <a n>.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to increment.
+
+    upvar #0 $seq_desc state
+    incr state(att,$attr) $n   
+}
+
+
+proc seq_state {seq_desc} {
+    # @c Retrieve state information of given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The state of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state   
+    return $state(status)
+}
+
+
+proc seq_error {seq_desc} {
+    # @c Retrieve error information of given sequencer.
+    # @c Valid only in case of state = error.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The error information of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state
+    return $state(error)   
+}
+
+
+# -----------------------------
+# event management
+
+proc seq_event {seq_desc event args} {
+    # @c Raises <a event> in the given sequencer. Automatically
+    # @c the last command executed in the surounding context,
+    # @c i.e behaves as 'return'. The actual handling of the
+    # @c event is delayed by 'after'.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    after 1 _seq_event $seq_desc $event $args
+
+    # behave as if equivalent to 'return' command.
+    return -code return
+}
+
+
+proc _seq_event {seq_desc event args} {
+    # @c The real event handler. Execution is set up by
+    # @c <p seq_event>. Takes the same arguments.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    upvar #0 $seq_desc state
+
+    set state(status) $event
+    if {"$event" == "error"} {
+	set state(error) [lindex $args 0]
+    }
+
+    switch -- $event {
+	error   -
+	timeout -
+	eof     -
+	done    {
+	    if {$state(-on-done) != {}} {
+		if {[catch {uplevel #0 $state(-on-done) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_delete $seq_desc
+		    error "$errmsg $errorInfo"
+		}
+	    }
+	    seq_delete $seq_desc
+	}
+	next    {
+	    if {$state(-on-next) != {}} {
+		if {[catch {uplevel #0 $state(-on-next) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no sucessor defined"
+	    }
+	}
+	line {
+	    if {$state(-on-line) != {}} {
+		if {[catch {uplevel #0 $state(-on-line) $seq_desc [list [lindex $args 0]]} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no line handler defined"
+	    }
+	}
+	default {
+	    seq_event $seq_desc error "unknown event \"$event\""
+	}
+    }
+}
+
+
+proc seq_wait {seq_desc channel script} {
+    # @c Convenience procedure to setup the sequencer to wait
+    # @c for input on a <a channel>. After receiving a complete
+    # @c line the appropriate event will be raised. The wait
+    # @c will be able to time out if such information is part
+    # @c of the sequencer configuration. Removes any existing
+    # @c 'next' handler .
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel to wait on for input.
+    # @a script: Code to execute after a line was received
+
+    upvar #0 $seq_desc state
+
+    if {$state(-timeout) != {}} {
+	set state(after) [after $state(-timeout) seq_timeout $seq_desc $channel]
+    }
+
+    fileevent $channel readable [list seq_receive $seq_desc $channel]
+
+    seq_config $seq_desc -on-next {} -on-line $script
+}
+
+
+proc seq_timeout {seq_desc channel} {
+    # @c Callback executed in case of timeout during the wait
+    # @c for input at <a channel>. Removes the fileevent handler,
+    # @c then raises the 'timeout' event at the sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    unset state(after)
+    fileevent $channel readable {}
+
+    seq_event $seq_desc timeout
+}
+
+
+proc seq_receive {seq_desc channel} {
+    # @c Callback executed in case of data arriving at
+    # @c <a channel>. May raise 'eof' and 'line' events
+    # @c at the sequencer. Will disable the timeout in
+    # @c this cases. In case of having received an
+    # @c incomplete line the system will just go to sleep
+    # @c again, to wait for more data.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    if {[eof $channel]} {
+	catch {after cancel $state(after)}
+	seq_event $seq_desc eof
+    }
+
+    if {[gets $channel line] < 0} {
+	# incomplete line, wait for more
+	return
+    }
+
+    fileevent $channel readable {}
+
+    seq_event $seq_desc line $line
+}
+
+
+proc seq_next {seq_desc script} {
+    # @c Defines a script to be executed if the 'next' event was triggered.
+    # @c Removes any existing 'line' handler.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a script: The script to set as 'next' handler.
+
+    seq_config $seq_desc -on-line {} -on-next $script
+}
+From: nase
+To: aku
+Subject: test, pool/net/smtp
+
+Test
+# -*- tcl -*-
+#		Pool @mFullVersion@, as of @mDate@
+#		Pool_Net
+#
+# CVS: $Id: fake3,v 1.1 1997/07/07 19:41:45 aku Exp $
+#
+# @c Framework for building sequencers
+# @s Sequencer framework
+# @i Sequencer, State machines, automatons
+# -----------------------------
+package require Pool_Base
+
+
+# -----------------------------
+# base tasks: creation, destruction
+
+proc seq_create {args} {
+    # @c Generates and configures a new sequencer descriptor.
+    # @a args: List of options and corresponding values.&
+    # @a args: Recognized options are -timeout, -on-done,
+    # @a args: -on-next and -on-line.&All of them default
+    # @a args: to the empty string.&-timeout specifies the
+    # @a args: number of milliseconds to wait before aborting
+    # @a args: a wait for input on an channel (see <p seq_wait>).&
+    # @a args: -on-done specifies the script to be executed
+    # @a args: upon events 'eof', 'error', 'timeout' and 'done'.&
+    # @a args: -on-line specifies the script to be executed
+    # @a args: upon event 'line'.&-on-next specifies the script
+    # @a args: to be executed upon event 'next'.
+    # @r The name of the array variable holding sequencer
+    # @r state and configuration.
+
+    set seq_desc seq#[serial_new]
+    upvar #0 $seq_desc state
+
+    array set state {
+	status   ""
+	-timeout  ""
+	-on-done  ""
+	-on-next  ""
+	-on-line  ""
+    }
+
+    getopt_all state $args
+    return $seq_desc
+}
+
+
+proc seq_delete {seq_desc} {
+    # @c Destroy the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    catch {uplevel #0 unset $seq_desc}
+}
+
+
+# -----------------------------
+# accessors, manipulation
+
+proc seq_config {seq_desc args} {
+    # @c Reconfigures the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    upvar #0 $seq_desc state
+    getopt_all state $args
+}
+
+
+proc seq_aset {seq_desc args} {
+    # @c Associates information with the sequencer. This
+    # @c allows attachment of arbitrary information, as
+    # @c required by the user defined event handlers.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a args: A list of attribute/value pairs to be added
+    # @a args: to the sequencer.
+
+    # @a attr: Name of the attribute to set to <a value>.
+    # @a value: Value to associate with <a attr>.
+
+    upvar #0 $seq_desc state   
+
+    getopt_all _ $args
+    foreach k [array names _ -*] {set state(att,$k) $_($k)}
+}
+
+
+proc seq_aget {seq_desc attr} {
+    # @c Returns the information associated to the attribute
+    # @c <a attr>. See <proc seq_aset> too.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to retrieve.
+    # @r Value associated to attribute <a attr>.
+
+    upvar #0 $seq_desc state   
+    return $state(att,$attr)
+}
+
+
+proc seq_incr {seq_desc attr {n 1}} {
+    # @c Convenience procedure. Increments the value of
+    # @c attribute <a attr> by <a n>.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to increment.
+
+    upvar #0 $seq_desc state
+    incr state(att,$attr) $n   
+}
+
+
+proc seq_state {seq_desc} {
+    # @c Retrieve state information of given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The state of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state   
+    return $state(status)
+}
+
+
+proc seq_error {seq_desc} {
+    # @c Retrieve error information of given sequencer.
+    # @c Valid only in case of state = error.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The error information of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state
+    return $state(error)   
+}
+
+
+# -----------------------------
+# event management
+
+proc seq_event {seq_desc event args} {
+    # @c Raises <a event> in the given sequencer. Automatically
+    # @c the last command executed in the surounding context,
+    # @c i.e behaves as 'return'. The actual handling of the
+    # @c event is delayed by 'after'.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    after 1 _seq_event $seq_desc $event $args
+
+    # behave as if equivalent to 'return' command.
+    return -code return
+}
+
+
+proc _seq_event {seq_desc event args} {
+    # @c The real event handler. Execution is set up by
+    # @c <p seq_event>. Takes the same arguments.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    upvar #0 $seq_desc state
+
+    set state(status) $event
+    if {"$event" == "error"} {
+	set state(error) [lindex $args 0]
+    }
+
+    switch -- $event {
+	error   -
+	timeout -
+	eof     -
+	done    {
+	    if {$state(-on-done) != {}} {
+		if {[catch {uplevel #0 $state(-on-done) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_delete $seq_desc
+		    error "$errmsg $errorInfo"
+		}
+	    }
+	    seq_delete $seq_desc
+	}
+	next    {
+	    if {$state(-on-next) != {}} {
+		if {[catch {uplevel #0 $state(-on-next) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no sucessor defined"
+	    }
+	}
+	line {
+	    if {$state(-on-line) != {}} {
+		if {[catch {uplevel #0 $state(-on-line) $seq_desc [list [lindex $args 0]]} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no line handler defined"
+	    }
+	}
+	default {
+	    seq_event $seq_desc error "unknown event \"$event\""
+	}
+    }
+}
+
+
+proc seq_wait {seq_desc channel script} {
+    # @c Convenience procedure to setup the sequencer to wait
+    # @c for input on a <a channel>. After receiving a complete
+    # @c line the appropriate event will be raised. The wait
+    # @c will be able to time out if such information is part
+    # @c of the sequencer configuration. Removes any existing
+    # @c 'next' handler .
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel to wait on for input.
+    # @a script: Code to execute after a line was received
+
+    upvar #0 $seq_desc state
+
+    if {$state(-timeout) != {}} {
+	set state(after) [after $state(-timeout) seq_timeout $seq_desc $channel]
+    }
+
+    fileevent $channel readable [list seq_receive $seq_desc $channel]
+
+    seq_config $seq_desc -on-next {} -on-line $script
+}
+
+
+proc seq_timeout {seq_desc channel} {
+    # @c Callback executed in case of timeout during the wait
+    # @c for input at <a channel>. Removes the fileevent handler,
+    # @c then raises the 'timeout' event at the sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    unset state(after)
+    fileevent $channel readable {}
+
+    seq_event $seq_desc timeout
+}
+
+
+proc seq_receive {seq_desc channel} {
+    # @c Callback executed in case of data arriving at
+    # @c <a channel>. May raise 'eof' and 'line' events
+    # @c at the sequencer. Will disable the timeout in
+    # @c this cases. In case of having received an
+    # @c incomplete line the system will just go to sleep
+    # @c again, to wait for more data.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    if {[eof $channel]} {
+	catch {after cancel $state(after)}
+	seq_event $seq_desc eof
+    }
+
+    if {[gets $channel line] < 0} {
+	# incomplete line, wait for more
+	return
+    }
+
+    fileevent $channel readable {}
+
+    seq_event $seq_desc line $line
+}
+
+
+proc seq_next {seq_desc script} {
+    # @c Defines a script to be executed if the 'next' event was triggered.
+    # @c Removes any existing 'line' handler.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a script: The script to set as 'next' handler.
+
+    seq_config $seq_desc -on-line {} -on-next $script
+}
+From: nase
+To: aku
+Subject: test, pool/net/smtp
+
+Test
+# -*- tcl -*-
+#		Pool @mFullVersion@, as of @mDate@
+#		Pool_Net
+#
+# CVS: $Id: fake3,v 1.1 1997/07/07 19:41:45 aku Exp $
+#
+# @c Framework for building sequencers
+# @s Sequencer framework
+# @i Sequencer, State machines, automatons
+# -----------------------------
+package require Pool_Base
+
+
+# -----------------------------
+# base tasks: creation, destruction
+
+proc seq_create {args} {
+    # @c Generates and configures a new sequencer descriptor.
+    # @a args: List of options and corresponding values.&
+    # @a args: Recognized options are -timeout, -on-done,
+    # @a args: -on-next and -on-line.&All of them default
+    # @a args: to the empty string.&-timeout specifies the
+    # @a args: number of milliseconds to wait before aborting
+    # @a args: a wait for input on an channel (see <p seq_wait>).&
+    # @a args: -on-done specifies the script to be executed
+    # @a args: upon events 'eof', 'error', 'timeout' and 'done'.&
+    # @a args: -on-line specifies the script to be executed
+    # @a args: upon event 'line'.&-on-next specifies the script
+    # @a args: to be executed upon event 'next'.
+    # @r The name of the array variable holding sequencer
+    # @r state and configuration.
+
+    set seq_desc seq#[serial_new]
+    upvar #0 $seq_desc state
+
+    array set state {
+	status   ""
+	-timeout  ""
+	-on-done  ""
+	-on-next  ""
+	-on-line  ""
+    }
+
+    getopt_all state $args
+    return $seq_desc
+}
+
+
+proc seq_delete {seq_desc} {
+    # @c Destroy the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    catch {uplevel #0 unset $seq_desc}
+}
+
+
+# -----------------------------
+# accessors, manipulation
+
+proc seq_config {seq_desc args} {
+    # @c Reconfigures the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    upvar #0 $seq_desc state
+    getopt_all state $args
+}
+
+
+proc seq_aset {seq_desc args} {
+    # @c Associates information with the sequencer. This
+    # @c allows attachment of arbitrary information, as
+    # @c required by the user defined event handlers.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a args: A list of attribute/value pairs to be added
+    # @a args: to the sequencer.
+
+    # @a attr: Name of the attribute to set to <a value>.
+    # @a value: Value to associate with <a attr>.
+
+    upvar #0 $seq_desc state   
+
+    getopt_all _ $args
+    foreach k [array names _ -*] {set state(att,$k) $_($k)}
+}
+
+
+proc seq_aget {seq_desc attr} {
+    # @c Returns the information associated to the attribute
+    # @c <a attr>. See <proc seq_aset> too.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to retrieve.
+    # @r Value associated to attribute <a attr>.
+
+    upvar #0 $seq_desc state   
+    return $state(att,$attr)
+}
+
+
+proc seq_incr {seq_desc attr {n 1}} {
+    # @c Convenience procedure. Increments the value of
+    # @c attribute <a attr> by <a n>.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to increment.
+
+    upvar #0 $seq_desc state
+    incr state(att,$attr) $n   
+}
+
+
+proc seq_state {seq_desc} {
+    # @c Retrieve state information of given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The state of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state   
+    return $state(status)
+}
+
+
+proc seq_error {seq_desc} {
+    # @c Retrieve error information of given sequencer.
+    # @c Valid only in case of state = error.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The error information of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state
+    return $state(error)   
+}
+
+
+# -----------------------------
+# event management
+
+proc seq_event {seq_desc event args} {
+    # @c Raises <a event> in the given sequencer. Automatically
+    # @c the last command executed in the surounding context,
+    # @c i.e behaves as 'return'. The actual handling of the
+    # @c event is delayed by 'after'.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    after 1 _seq_event $seq_desc $event $args
+
+    # behave as if equivalent to 'return' command.
+    return -code return
+}
+
+
+proc _seq_event {seq_desc event args} {
+    # @c The real event handler. Execution is set up by
+    # @c <p seq_event>. Takes the same arguments.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    upvar #0 $seq_desc state
+
+    set state(status) $event
+    if {"$event" == "error"} {
+	set state(error) [lindex $args 0]
+    }
+
+    switch -- $event {
+	error   -
+	timeout -
+	eof     -
+	done    {
+	    if {$state(-on-done) != {}} {
+		if {[catch {uplevel #0 $state(-on-done) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_delete $seq_desc
+		    error "$errmsg $errorInfo"
+		}
+	    }
+	    seq_delete $seq_desc
+	}
+	next    {
+	    if {$state(-on-next) != {}} {
+		if {[catch {uplevel #0 $state(-on-next) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no sucessor defined"
+	    }
+	}
+	line {
+	    if {$state(-on-line) != {}} {
+		if {[catch {uplevel #0 $state(-on-line) $seq_desc [list [lindex $args 0]]} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no line handler defined"
+	    }
+	}
+	default {
+	    seq_event $seq_desc error "unknown event \"$event\""
+	}
+    }
+}
+
+
+proc seq_wait {seq_desc channel script} {
+    # @c Convenience procedure to setup the sequencer to wait
+    # @c for input on a <a channel>. After receiving a complete
+    # @c line the appropriate event will be raised. The wait
+    # @c will be able to time out if such information is part
+    # @c of the sequencer configuration. Removes any existing
+    # @c 'next' handler .
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel to wait on for input.
+    # @a script: Code to execute after a line was received
+
+    upvar #0 $seq_desc state
+
+    if {$state(-timeout) != {}} {
+	set state(after) [after $state(-timeout) seq_timeout $seq_desc $channel]
+    }
+
+    fileevent $channel readable [list seq_receive $seq_desc $channel]
+
+    seq_config $seq_desc -on-next {} -on-line $script
+}
+
+
+proc seq_timeout {seq_desc channel} {
+    # @c Callback executed in case of timeout during the wait
+    # @c for input at <a channel>. Removes the fileevent handler,
+    # @c then raises the 'timeout' event at the sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    unset state(after)
+    fileevent $channel readable {}
+
+    seq_event $seq_desc timeout
+}
+
+
+proc seq_receive {seq_desc channel} {
+    # @c Callback executed in case of data arriving at
+    # @c <a channel>. May raise 'eof' and 'line' events
+    # @c at the sequencer. Will disable the timeout in
+    # @c this cases. In case of having received an
+    # @c incomplete line the system will just go to sleep
+    # @c again, to wait for more data.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    if {[eof $channel]} {
+	catch {after cancel $state(after)}
+	seq_event $seq_desc eof
+    }
+
+    if {[gets $channel line] < 0} {
+	# incomplete line, wait for more
+	return
+    }
+
+    fileevent $channel readable {}
+
+    seq_event $seq_desc line $line
+}
+
+
+proc seq_next {seq_desc script} {
+    # @c Defines a script to be executed if the 'next' event was triggered.
+    # @c Removes any existing 'line' handler.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a script: The script to set as 'next' handler.
+
+    seq_config $seq_desc -on-line {} -on-next $script
+}
+From: nase
+To: aku
+Subject: test, pool/net/smtp
+
+Test
+# -*- tcl -*-
+#		Pool @mFullVersion@, as of @mDate@
+#		Pool_Net
+#
+# CVS: $Id: fake3,v 1.1 1997/07/07 19:41:45 aku Exp $
+#
+# @c Framework for building sequencers
+# @s Sequencer framework
+# @i Sequencer, State machines, automatons
+# -----------------------------
+package require Pool_Base
+
+
+# -----------------------------
+# base tasks: creation, destruction
+
+proc seq_create {args} {
+    # @c Generates and configures a new sequencer descriptor.
+    # @a args: List of options and corresponding values.&
+    # @a args: Recognized options are -timeout, -on-done,
+    # @a args: -on-next and -on-line.&All of them default
+    # @a args: to the empty string.&-timeout specifies the
+    # @a args: number of milliseconds to wait before aborting
+    # @a args: a wait for input on an channel (see <p seq_wait>).&
+    # @a args: -on-done specifies the script to be executed
+    # @a args: upon events 'eof', 'error', 'timeout' and 'done'.&
+    # @a args: -on-line specifies the script to be executed
+    # @a args: upon event 'line'.&-on-next specifies the script
+    # @a args: to be executed upon event 'next'.
+    # @r The name of the array variable holding sequencer
+    # @r state and configuration.
+
+    set seq_desc seq#[serial_new]
+    upvar #0 $seq_desc state
+
+    array set state {
+	status   ""
+	-timeout  ""
+	-on-done  ""
+	-on-next  ""
+	-on-line  ""
+    }
+
+    getopt_all state $args
+    return $seq_desc
+}
+
+
+proc seq_delete {seq_desc} {
+    # @c Destroy the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    catch {uplevel #0 unset $seq_desc}
+}
+
+
+# -----------------------------
+# accessors, manipulation
+
+proc seq_config {seq_desc args} {
+    # @c Reconfigures the given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+
+    upvar #0 $seq_desc state
+    getopt_all state $args
+}
+
+
+proc seq_aset {seq_desc args} {
+    # @c Associates information with the sequencer. This
+    # @c allows attachment of arbitrary information, as
+    # @c required by the user defined event handlers.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a args: A list of attribute/value pairs to be added
+    # @a args: to the sequencer.
+
+    # @a attr: Name of the attribute to set to <a value>.
+    # @a value: Value to associate with <a attr>.
+
+    upvar #0 $seq_desc state   
+
+    getopt_all _ $args
+    foreach k [array names _ -*] {set state(att,$k) $_($k)}
+}
+
+
+proc seq_aget {seq_desc attr} {
+    # @c Returns the information associated to the attribute
+    # @c <a attr>. See <proc seq_aset> too.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to retrieve.
+    # @r Value associated to attribute <a attr>.
+
+    upvar #0 $seq_desc state   
+    return $state(att,$attr)
+}
+
+
+proc seq_incr {seq_desc attr {n 1}} {
+    # @c Convenience procedure. Increments the value of
+    # @c attribute <a attr> by <a n>.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a attr: Name of the attribute to increment.
+
+    upvar #0 $seq_desc state
+    incr state(att,$attr) $n   
+}
+
+
+proc seq_state {seq_desc} {
+    # @c Retrieve state information of given sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The state of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state   
+    return $state(status)
+}
+
+
+proc seq_error {seq_desc} {
+    # @c Retrieve error information of given sequencer.
+    # @c Valid only in case of state = error.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @r The error information of sequencer <a seq_desc>.
+
+    upvar #0 $seq_desc state
+    return $state(error)   
+}
+
+
+# -----------------------------
+# event management
+
+proc seq_event {seq_desc event args} {
+    # @c Raises <a event> in the given sequencer. Automatically
+    # @c the last command executed in the surounding context,
+    # @c i.e behaves as 'return'. The actual handling of the
+    # @c event is delayed by 'after'.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    after 1 _seq_event $seq_desc $event $args
+
+    # behave as if equivalent to 'return' command.
+    return -code return
+}
+
+
+proc _seq_event {seq_desc event args} {
+    # @c The real event handler. Execution is set up by
+    # @c <p seq_event>. Takes the same arguments.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a event: Name of event to raise. Allowed values
+    # @a event: are 'error', 'timeout', 'eof', 'line',
+    # @a event: 'next' and 'done'.
+    # @a args: Arbitrary arguments given to the event.
+    # @a args: Only 'error' and 'line' actually use
+    # @a args: arguments (the first one only), all else
+    # @a args: ignore this information.
+
+    upvar #0 $seq_desc state
+
+    set state(status) $event
+    if {"$event" == "error"} {
+	set state(error) [lindex $args 0]
+    }
+
+    switch -- $event {
+	error   -
+	timeout -
+	eof     -
+	done    {
+	    if {$state(-on-done) != {}} {
+		if {[catch {uplevel #0 $state(-on-done) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_delete $seq_desc
+		    error "$errmsg $errorInfo"
+		}
+	    }
+	    seq_delete $seq_desc
+	}
+	next    {
+	    if {$state(-on-next) != {}} {
+		if {[catch {uplevel #0 $state(-on-next) $seq_desc} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no sucessor defined"
+	    }
+	}
+	line {
+	    if {$state(-on-line) != {}} {
+		if {[catch {uplevel #0 $state(-on-line) $seq_desc [list [lindex $args 0]]} errmsg]} {
+		    # errors in callback are reported via 'bgerror'.
+		    global errorInfo
+
+		    seq_event $seq_desc error "$errmsg $errorInfo"
+		}
+	    } else {
+		seq_event $seq_desc error "no line handler defined"
+	    }
+	}
+	default {
+	    seq_event $seq_desc error "unknown event \"$event\""
+	}
+    }
+}
+
+
+proc seq_wait {seq_desc channel script} {
+    # @c Convenience procedure to setup the sequencer to wait
+    # @c for input on a <a channel>. After receiving a complete
+    # @c line the appropriate event will be raised. The wait
+    # @c will be able to time out if such information is part
+    # @c of the sequencer configuration. Removes any existing
+    # @c 'next' handler .
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel to wait on for input.
+    # @a script: Code to execute after a line was received
+
+    upvar #0 $seq_desc state
+
+    if {$state(-timeout) != {}} {
+	set state(after) [after $state(-timeout) seq_timeout $seq_desc $channel]
+    }
+
+    fileevent $channel readable [list seq_receive $seq_desc $channel]
+
+    seq_config $seq_desc -on-next {} -on-line $script
+}
+
+
+proc seq_timeout {seq_desc channel} {
+    # @c Callback executed in case of timeout during the wait
+    # @c for input at <a channel>. Removes the fileevent handler,
+    # @c then raises the 'timeout' event at the sequencer.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    unset state(after)
+    fileevent $channel readable {}
+
+    seq_event $seq_desc timeout
+}
+
+
+proc seq_receive {seq_desc channel} {
+    # @c Callback executed in case of data arriving at
+    # @c <a channel>. May raise 'eof' and 'line' events
+    # @c at the sequencer. Will disable the timeout in
+    # @c this cases. In case of having received an
+    # @c incomplete line the system will just go to sleep
+    # @c again, to wait for more data.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a channel: Name of channel the sequencer waited for.
+
+    upvar #0 $seq_desc state
+
+    if {[eof $channel]} {
+	catch {after cancel $state(after)}
+	seq_event $seq_desc eof
+    }
+
+    if {[gets $channel line] < 0} {
+	# incomplete line, wait for more
+	return
+    }
+
+    fileevent $channel readable {}
+
+    seq_event $seq_desc line $line
+}
+
+
+proc seq_next {seq_desc script} {
+    # @c Defines a script to be executed if the 'next' event was triggered.
+    # @c Removes any existing 'line' handler.
+    # @a seq_desc: Name of the array variable containing
+    # @a seq_desc: sequencer configuration and state.
+    # @a script: The script to set as 'next' handler.
+
+    seq_config $seq_desc -on-line {} -on-next $script
+}

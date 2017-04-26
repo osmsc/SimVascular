@@ -1,0 +1,184 @@
+#!/usr/local/bin/tclsh
+# -*- tcl -*-
+#
+# small scale pop3 server
+# uses net/pop3/server.tcl, net/adb.tcl and net/mdrop.tcl
+
+package require Pool_Base
+package require Pool_Net
+
+# -------------------------------------------------------
+# configure server
+
+::pool::array::def         oDef
+::pool::getopt::defOption  oDef mailfolder -d /var/spool/mail
+::pool::getopt::defOption  oDef userdb     -d /var/adm/pop_userdb
+::pool::getopt::defOption  oDef port       -d ""
+
+proc bgerror {text} {
+    global errorInfo
+    ::pool::syslog::syslog error $text, $errorInfo
+    return
+}
+
+
+proc mailFolder {d}  {
+    global oDef
+    ::pool::getopt::changeDefault oDef mailfolder $d
+    return
+}
+
+
+proc userDb {db} {
+    global oDef
+    ::pool::getopt::changeDefault oDef userdb $db
+    return
+}
+
+
+proc port {p} {
+    global oDef
+    ::pool::getopt::changeDefault oDef port $p
+    return
+}
+
+
+
+# user dependent configuration, influences default values
+catch {
+    source [file join $env(HOME) .popsyrc]
+}
+
+# caller configuration
+set argv [::pool::getopt::process oDef $argv opt]
+
+# enforce usage of non-default port
+if {$opt(-port) != {}} {
+    # load old definition (and its namespaces), then redefine the procedure
+
+    catch {::pool::pop3::port}
+
+    proc ::pool::pop3::port {} "return $opt(-port)"
+}
+
+
+
+# -------------------------------------------------------
+# exported interfaces
+
+
+proc popsy_add_user {user pwd {spooldir {}}} {
+
+    if {$spooldir == {}} {
+	set spooldir $user
+    }
+
+    if {[adb isRegistered $user]} {
+	error "$user already defined"
+
+    } elseif {[mbx exists $spooldir]} {
+	error "$spooldir already used"
+
+    } else {
+	adb add $user $pwd $spooldir
+	mbx add            $spooldir
+    }
+
+    return
+}
+
+
+proc popsy_remove_user {user} {
+    set info [adb lookup $user]
+
+    if {[lindex info 0] == {}} {
+	return
+    }
+
+    adb remove $user
+    mbx remove [lindex $info 1]
+    return
+}
+
+
+proc popsy_rename_user {user newname} {
+    if {[adb isRegistered $newname]} {
+
+	error "$newname already defined"
+    } else {
+
+	adb rename $user $newname
+    }
+
+    return
+}
+
+
+proc popsy_cd_user {user newdir} {
+    if {$newdir == {}} {
+	error "no spooldir specified"
+    }
+    if {[mbx exists $newdir]} {
+	error "$newdir already used"
+    }
+
+    set info [adb lookup $user]
+
+    adb remove $user
+    adb add    $user [lindex $info 0] $newdir
+    mbx move         [lindex $info 1] $newdir
+    return
+}
+
+
+proc popsy_cp_user {user newpwd} {
+    if {$newpwd == {}} {
+	error "no password specified"
+    }
+
+    set info [adb lookup $user]
+
+    adb remove $user
+    adb add    $user $newpwd [lindex $info 1]
+    return
+}
+
+
+proc popsy_query_user {user} {adb lookup $user}
+proc popsy_users      {} {adb who}
+proc popsy_user_save  {} {adb save}
+proc popsy_shutdown   {} {exit}
+
+proc popsy_configuration {} {
+    global opt
+
+    return [list $opt(-mailfolder) \
+	    $opt(-userdb) \
+	    [::pool::pop3::port] \
+	    [rl cget -portspec]]
+}
+
+
+remoteLog rl -portspec {}
+
+proc popsy_logto {portspec} {
+    rl configure -portspec $portspec
+    return
+}
+
+
+
+# missing things:
+# -- interfaces to manage mailboxes: quotas
+
+::pool::syslog::def          popsy_log
+::pool::nameserver::register popsy
+# -------------------------------------------------------
+
+aDB        adb
+mbox       mbx -dir $opt(-mailfolder)
+pop3Server pop -userd adb -storage mbx
+
+adb   read $opt(-userdb)
+pop   start
+vwait forever

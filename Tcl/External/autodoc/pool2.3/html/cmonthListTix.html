@@ -1,0 +1,242 @@
+<html>
+<head>
+<title>File 'clock/monthListTix.cls' (part of 'Pool_Clock')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'clock/monthListTix.cls' (part of '<a href="pkg_Pool_Clock.html" class="package">Pool_Clock</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Month choice, tix</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Widget to choose a month by name.</span>
+<dt><span class="header-title">See also</span>
+<dd><span class="header-value"><span class="xref-classes"><a href="cmonthList.html" class="class">monthList</a></span>, <span class="xref-classes"><a href="ccalendarTix.html" class="class">calendarTix</a></span></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">calendar,  choosing a month,  month choice,  tix</span>
+</dl>
+</div>
+<h1 class="class">Class 'monthListTix'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://tix.mne.com/" class="xref-dep">Tix</a></span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cvalueManager.html" class="class">valueManager</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#oonwrap" class="options">onwrap</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cmonthListTix.html#pmonthListTix_OnWrap" class="proc">OnWrap</a> <span class="arg-list">(direction)</span><br>
+<a href="cmonthListTix.html#pmonthListTix_SetupList" class="proc">SetupList</a> <span class="arg-list">()</span><br>
+<a href="cmonthListTix.html#pmonthListTix_TrackUserChanges" class="proc">TrackUserChanges</a> <span class="arg-list">(newvalue)</span><br>
+<a href="cmonthListTix.html#pmonthListTix_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span><br>
+<a href="cmonthListTix.html#pmonthListTix_down" class="proc">down</a> <span class="arg-list">()</span><br>
+<a href="cmonthListTix.html#pmonthListTix_monthListTix" class="proc">monthListTix</a> <span class="arg-list">()</span><br>
+<a href="cmonthListTix.html#pmonthListTix_setBindings" class="proc">setBindings</a> <span class="arg-list">()</span><br>
+<a href="cmonthListTix.html#pmonthListTix_setBindingsTo" class="proc">setBindingsTo</a> <span class="arg-list">(w)</span><br>
+<a href="cmonthListTix.html#pmonthListTix_up" class="proc">up</a> <span class="arg-list">()</span><br>
+<a href="cmonthListTix.html#pmonthListTix_updateDisplay" class="proc">updateDisplay</a> <span class="arg-list">()</span>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="oonwrap"></a>
+<dt><span class="option-name">-onwrap</span>
+<dd><span class="option-description">  Script to evaluate in the case of a wrap around, either at the  start or the end of the year. The evaluation takes place  before the execution of <span class="xref-oref"><a href="cvalueManager.html" class="class">valueManager</a>:<a href="cvalueManager.html#ocommand" class="xref-oref">command</a></span>. A single  argument is appended before the actual evaluation, it  specifies the direction of the wrap. Possible values are 'up'  (wrap 12 -&gt; 1) and 'down' (wrap 1-&gt;12). A possible use is the  modification of an associated yearBrowser.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pmonthListTix_OnWrap"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">OnWrap</span> <span class="arg-list">(direction)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">executes the script associated with wraparounds</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: direction
+</td>
+<td class="argument-description">
+direction of wraparound, one of 'up' and 'down'.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthListTix_SetupList"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">SetupList</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Initializes the internal combobox, adds the names of all months.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthListTix_TrackUserChanges"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackUserChanges</span> <span class="arg-list">(newvalue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Callback. Used by the internal tix combobox to forward external changes to the display to the internal datastructures.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: newvalue
+</td>
+<td class="argument-description">
+The new value displayed by the combobox.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthListTix_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cwidget.html#pwidget_createSubwidgets" class="proc">createSubwidgets</a><br>
+<span class="header-description-value">Generate the subwidgets and their layout.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthListTix_down"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">down</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Decrements the chosen month by one. Triggers a wraparound at the start of the year.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthListTix_monthListTix"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">monthListTix</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Initialize the value to the current month if not set already by the user.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthListTix_setBindings"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">setBindings</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cwidget.html#pwidget_setBindings" class="proc">setBindings</a><br>
+<span class="header-description-value">Associate bindings for this widget with its internal components.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthListTix_setBindingsTo"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">setBindingsTo</span> <span class="arg-list">(w)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds various keyboard accelerators to the given widget.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+The widget the accelerators are added to.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthListTix_up"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">up</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Increments the chosen month by one. Triggers a wraparound at the end of the year.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pmonthListTix_updateDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">updateDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cvalueManager.html#pvalueManager_updateDisplay" class="proc">updateDisplay</a><br>
+<span class="header-description-value">Method required by the superclass <span class="xref-classes"><a href="cvalueManager.html" class="class">valueManager</a></span> to propagate changes to the value into the display.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

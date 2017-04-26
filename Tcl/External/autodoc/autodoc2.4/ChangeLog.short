@@ -1,0 +1,140 @@
+Changes from 2.3 to 2.4
+
+*	File names and anchors are now derived from the name of the
+	original object and much less subject to change than before.
+
+*	Additional tags: @bug, @date, @version and @example (@ex)
+
+*	Support for [incr Tcl] (and [incr Tk]: components, options).
+
+*	Information about inheritance automatically grafted to
+	method descriptions.
+
+*	New index listing all used namespaces.
+
+*	Better support for superclasses defined outside of the
+	documented package.
+
+*	Added support for CSS. The styles.css file coming with the
+	distribution was written by Sebastien BARRE
+	<sebastien@barre.nom.fr>.
+
+*	Forward and backward links for the sections in a class
+	description.
+
+
+Changes from 2.2 to 2.3
+
+*	Added an option to exclude files from the processing based
+	upon their names (glob patterns).
+
+Changes from 2.1 to 2.2
+
+*	Squashed several bugs (with help from Laurent Duperval
+	<laurent.duperval@cgi.ca>).
+
+*	Minor enhancements ('sample', 'emph' formatting commands)
+
+Changes from 2.0 to 2.1
+
+*	Using a new feature in the object system of Pool, nested
+	objects (objects which are placed in the namespace of
+	another object). Advantages: Better encapsulation of private
+	information, less conflicts possible, simpler cleanup.
+
+	*NOTE*
+	Because of this, this distribution now depends on Pool
+	version 2.2
+
+*	Some bugfixes.
+
+Changes from 1.0 to 2.0
+
+*	Updated to the changes made in Pool (1.0 -> 2.0, OO kernel).
+
+*	Factored out the HTML generating part and inserted API allowing other
+	generators in the future (text, SGML, ...)
+
+*	Updated HTML generator to changes between cgi 0.4 and 0.7
+	(cgi_anchor_name semantics changed). Cannot be used with cgi 0.4
+	anymore, at least 0.7 is required.
+
+*	Simplified interface between autodoc and '.doc' and '.predoc' files.
+
+*	Changes in recognized commands:
+
+	<>	Replaced @member/@m with @var/@v.
+		Still recognizes the old forms and marks them as errors.
+
+*	Changes in cross referencing
+
+	<>	Added <x ..> as shortcut of <xref ..>.
+	<>	Added <v ..> and <var ..> to allow references to member
+		variables.
+	<>	Added <i ..> and <img ..> to allow references to images
+		(as defined in '.predoc' files).
+	<>	Enhanced method, option and variable references to allow
+		references without a classname. The class enclosing the
+		reference is automatically used.
+	<>	Changed the separator character used by method, option and
+		variable references from '/' to ':'. Still recognizes the
+		old forms and marks them as errors.
+	<>	Removed <e ..> and <ext>, recognizes <d ..> and <dep ..>
+		instead (external DEPendencies). Still recognizes the old
+		forms and marks them as errors.
+
+Changes from 0.5 to 1.0
+
+*	None, just a code freeze for Pool 1.0. The next version
+	will require Pool 2.0.
+
+Changes from 0.4 to 0.5
+
+*	Corrected logical error preventing the system to work
+	without a 'pkg.doc'
+
+*	'lib/pkg.doc' is now part of the distribution to allow
+	it to operate on itself.
+
+*	Fixed some 'string vs. list'-hacks which were able to
+	blow up the system under tcl 8.x in case of comments
+	containing unmatched braces.
+
+
+Changes from 0.3 to 0.4
+
+*	Generated pages now contain backreference to the generator
+	documentation. Idea from 'latex2html'.
+
+*	Now works with tcl 8.0 too (':' allowed in identifiers).
+
+*	Better generation of author references (mailto).
+
+*	Class members and options (parameters) can have documentation
+	now too.
+
+*	Fixed anchor-problems.
+
+
+Changes from 0.2 to 0.3
+
+*	Now tracking 'package require's.
+	Generated documentation may contain urls referencing required
+	packages (source, doc, ...).
+
+	Always contains a reverse index mapping from required packages
+	to the files using them.
+
+*	Missing documentation is highlighted now, and reachable via a
+	special summary page.
+
+*	Added alternative output format for procedure definitions.
+	Definition list and table (new) formatting available now.
+
+Changes from 0.1 to 0.2
+
+*	Unknown
+
+Changes from 0.0 to 0.1
+
+*	Unknown

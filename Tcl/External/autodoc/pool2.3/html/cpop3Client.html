@@ -1,0 +1,504 @@
+<html>
+<head>
+<title>File 'net/pop3/client.cls' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/pop3/client.cls' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Core of a POP3 client</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Pop3 client core built upon the base connection management</span>
+<dt><span class="header-title">See also</span>
+<dd><span class="header-value">general <a href="pop3.htm" class="xref-xref">POP3 background information</a>, or <a href="pop3c.htm" class="xref-xref">POP3 client core</a> for more specific info</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">POP3,  POP3 client</span>
+</dl>
+</div>
+<h1 class="class">Class 'pop3Client'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Full fledged POP3 client. The only parts not covered in this class are message classification and storage. These are delegated to external objects, see <span class="xref-oref"><a href="cpop3Client.html#oclassificator" class="xref-oref">classificator</a></span> and <span class="xref-oref"><a href="cpop3Client.html#ostorage" class="xref-oref">storage</a></span>. A state machine is built on top of the low level methods in <span class="xref-classes"><a href="cpop3Connection.html" class="class">pop3Connection</a></span>.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cpop3Connection.html" class="class">pop3Connection</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#oauth" class="options">auth</a><br>
+<a href="#ostorage" class="options">storage</a><br>
+<a href="#oclassificator" class="options">classificator</a><br>
+<a href="#oon-connect" class="options">on-connect</a><br>
+<a href="#oon-login" class="options">on-login</a><br>
+<a href="#odone" class="options">done</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cpop3Client.html#ppop3Client_ClearSocket" class="proc">ClearSocket</a> <span class="arg-list">()</span><br>
+<a href="cpop3Client.html#ppop3Client_CloseDone" class="proc">CloseDone</a> <span class="arg-list">(seq)</span><br>
+<a href="cpop3Client.html#ppop3Client_DeleDone" class="proc">DeleDone</a> <span class="arg-list">(seq)</span><br>
+<a href="cpop3Client.html#ppop3Client_Goto" class="proc">Goto</a> <span class="arg-list">(newstate)</span><br>
+<a href="cpop3Client.html#ppop3Client_Init" class="proc">Init</a> <span class="arg-list">()</span><br>
+<a href="cpop3Client.html#ppop3Client_InitScheduler" class="proc">InitScheduler</a> <span class="arg-list">(seq)</span><br>
+<a href="cpop3Client.html#ppop3Client_InitiateRecovery" class="proc">InitiateRecovery</a> <span class="arg-list">()</span><br>
+<a href="cpop3Client.html#ppop3Client_Logon" class="proc">Logon</a> <span class="arg-list">(seq)</span><br>
+<a href="cpop3Client.html#ppop3Client_Off" class="proc">Off</a> <span class="arg-list">(seq)</span><br>
+<a href="cpop3Client.html#ppop3Client_RetrDone" class="proc">RetrDone</a> <span class="arg-list">(seq)</span><br>
+<a href="cpop3Client.html#ppop3Client_Schedule" class="proc">Schedule</a> <span class="arg-list">()</span><br>
+<a href="cpop3Client.html#ppop3Client_Task" class="proc">Task</a> <span class="arg-list">(task)</span><br>
+<a href="cpop3Client.html#ppop3Client_TopDone" class="proc">TopDone</a> <span class="arg-list">(seq)</span><br>
+<a href="cpop3Client.html#ppop3Client_WakeScheduler" class="proc">WakeScheduler</a> <span class="arg-list">()</span><br>
+<a href="cpop3Client.html#ppop3Client_msgDelete" class="proc">msgDelete</a> <span class="arg-list">(msg)</span><br>
+<a href="cpop3Client.html#ppop3Client_msgIgnore" class="proc">msgIgnore</a> <span class="arg-list">(msg)</span><br>
+<a href="cpop3Client.html#ppop3Client_msgRetrieve" class="proc">msgRetrieve</a> <span class="arg-list">(msg)</span><br>
+<a href="cpop3Client.html#ppop3Client_run" class="proc">run</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vcState" class="members">cState</a><br>
+<a href="#vafter" class="members">after</a><br>
+<a href="#vqueue" class="members">queue</a><br>
+<a href="#vdeleted" class="members">deleted</a><br>
+<a href="#vretrieved" class="members">retrieved</a><br>
+<a href="#vpending" class="members">pending</a><br>
+<a href="#vskip" class="members">skip</a><br>
+<a href="#vlock" class="members">lock</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="oauth"></a>
+<dt><span class="option-name">-auth</span>
+<dd><span class="option-description">  Defines the mode to use during login into the pop3 server,  either 'apop' or 'user'. The latter uses USER/PASS to send the  password in the clear, and is therefore less secure than APOP,  which sends a hashvalue created from the timestamp used by the  server to greet us and the password itself. On the other hand,  every server has to support USER/PASS, APOP-support is optional.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">apop</span>
+<a name="ostorage"></a>
+<dt><span class="option-name">-storage</span>
+<dd><span class="option-description">  The name of the object handling the storing of incoming  mails. Has to support the interface defined by  <span class="xref-classes"><a href="cpopClientStorageBase.html" class="class">popClientStorageBase</a></span>, i.e. its class should be derived  from that class.</span>
+<a name="oclassificator"></a>
+<dt><span class="option-name">-classificator</span>
+<dd><span class="option-description">  The name of the object handling the classification of  incoming mails. Has to support the interface defined by  <span class="xref-classes"><a href="cpopClientMsgClassificatorBase.html" class="class">popClientMsgClassificatorBase</a></span>, i.e. its class  should be derived from that class.</span>
+<a name="oon-connect"></a>
+<dt><span class="option-name">-on-connect</span>
+<dd><span class="option-description">  The script evaluate after a succesful connect.</span>
+<a name="oon-login"></a>
+<dt><span class="option-name">-on-login</span>
+<dd><span class="option-description">    The script evaluate after a successful login.</span>
+<a name="odone"></a>
+<dt><span class="option-name">-done</span>
+<dd><span class="option-description">        The script evaluate after the connection was closed.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="ppop3Client_ClearSocket"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">ClearSocket</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cpop3Connection.html" class="class">pop3Connection</a>:<a href="cpop3Connection.html#ppop3Connection_ClearSocket" class="proc">ClearSocket</a><br>
+<span class="header-description-value">Closes the connection to the pop3 server described by this object.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_CloseDone"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">CloseDone</span> <span class="arg-list">(seq)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Callback of standard shutdown. May restart the client, to proceed in error recovery.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: seq
+</td>
+<td class="argument-description">
+Handle of the close sequencer created by <span class="xref-mref"><a href="cpop3Connection.html#ppop3Connection_Close" class="proc">Close</a></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_DeleDone"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">DeleDone</span> <span class="arg-list">(seq)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called after completion of a message deletion. Initiates emergency recovery in case of problems. Awakes the scheduler to start the next job.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: seq
+</td>
+<td class="argument-description">
+Handle of the delete sequencer created by <span class="xref-mref"><a href="cpop3Connection.html#ppop3Connection_Dele" class="proc">Dele</a></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_Goto"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Goto</span> <span class="arg-list">(newstate)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Jumps the client into the given state. Will behave like builtin 'return' in the calling procedure.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: newstate
+</td>
+<td class="argument-description">
+The state to jump to.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_Init"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Init</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">(Re)Initializes the state of the finite automaton.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_InitScheduler"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">InitScheduler</span> <span class="arg-list">(seq)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Callback of 'login' operation. Initializes the scheduler task queue with header retrieval operations, then starts the real work.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: seq
+</td>
+<td class="argument-description">
+Handle of the 'login' sequencer created by <span class="xref-mref"><a href="cpop3Connection.html#ppop3Connection_LoginUser" class="proc">LoginUser</a></span> (or <span class="xref-mref"><a href="cpop3Connection.html#ppop3Connection_LoginApop" class="proc">LoginApop</a></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_InitiateRecovery"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">InitiateRecovery</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Does everything required to recover from line or server problems. Things include: <br>
+ Execution of commit run to remove all messages which were already deleted and/or retrieved, but not committed by server. <br>
+ Skipping over messages making trouble multiple times.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_Logon"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Logon</span> <span class="arg-list">(seq)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Callback of 'open connection' operation. Initiates logon in case of sucess.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: seq
+</td>
+<td class="argument-description">
+Handle of the 'open' sequencer created by <span class="xref-mref"><a href="cpop3Connection.html#ppop3Connection_Open" class="proc">Open</a></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_Off"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Off</span> <span class="arg-list">(seq)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Callback of definite shutdown.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: seq
+</td>
+<td class="argument-description">
+Handle of the close sequencer created by <span class="xref-mref"><a href="cpop3Connection.html#ppop3Connection_Close" class="proc">Close</a></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_RetrDone"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">RetrDone</span> <span class="arg-list">(seq)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called after completion of message retrieval. Initiates emergency recovery in case of problems. Awakes the scheduler to start the next job. The received information is given to the storage facility.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: seq
+</td>
+<td class="argument-description">
+Handle of the delete sequencer created by <span class="xref-mref"><a href="cpop3Connection.html#ppop3Connection_Retr" class="proc">Retr</a></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_Schedule"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Schedule</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The scheduler. Executed semi-periodically to launch the tasks waiting in the internal queue. Automatically injects a connection shutdown in case of nothing more waiting to be done.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_Task"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Task</span> <span class="arg-list">(task)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds a new task to the scheduler queue, starts the scheduler, if necessary. Deletions are added to the front, to give them priority.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: task
+</td>
+<td class="argument-description">
+Text describing a task to be done by the client
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_TopDone"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TopDone</span> <span class="arg-list">(seq)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called after completion of a header retrieval. Initiates emergency recovery in case of problems. The received information is given to the classificator for determination of further action. Awakes the scheduler to start the next job.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: seq
+</td>
+<td class="argument-description">
+Handle of the top sequencer created by <span class="xref-mref"><a href="cpop3Connection.html#ppop3Connection_Top" class="proc">Top</a></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_WakeScheduler"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">WakeScheduler</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Starts the scheduler, if not already waiting for execution.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_msgDelete"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">msgDelete</span> <span class="arg-list">(msg)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Classificator callback. The specified message shall be deleted at the server, without retrieval.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: msg
+</td>
+<td class="argument-description">
+Id of the message to delete.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_msgIgnore"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">msgIgnore</span> <span class="arg-list">(msg)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Classificator callback. The specified message shall be neither deleted nor retrieved. It will sit in the server awaiting action of the user.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: msg
+</td>
+<td class="argument-description">
+Id of the message to ignore.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_msgRetrieve"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">msgRetrieve</span> <span class="arg-list">(msg)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Classificator callback. The specified message shall be retrieved from the server.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: msg
+</td>
+<td class="argument-description">
+Id of the message to retrieve.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Client_run"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">run</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Starts a retrieval cycle of the specified client.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vcState"></a>
+<dt><span class="variable-name">cState</span>
+<dd><span class="variable-description">     The state of the finite automaton. Could not use 'state'     as this is used by the base class to record the state of     the last low-level operation.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">waiting</span>
+<a name="vafter"></a>
+<dt><span class="variable-name">after</span>
+<dd><span class="variable-description">      The id of the idle-handler used to schedule and execute      the next task on the <span class="xref-vref"><a href="cpop3Client.html#vqueue" class="xref-vref">queue</a></span>.</span>
+<a name="vqueue"></a>
+<dt><span class="variable-name">queue</span>
+<dd><span class="variable-description">      A list of tasks to do, operated in a FIFO manner.</span>
+<a name="vdeleted"></a>
+<dt><span class="variable-name">deleted</span>
+<dd><span class="variable-description">    A list containing the index numbers of the sucessfully    deleted messages. Used during recovery to enforce the    state of the server at the time of the loss of the    connection.</span>
+<a name="vretrieved"></a>
+<dt><span class="variable-name">retrieved</span>
+<dd><span class="variable-description">  A list containing the index numbers of the sucessfully  state of the server at the time of the loss of the  connection.</span>
+<a name="vpending"></a>
+<dt><span class="variable-name">pending</span>
+<dd><span class="variable-description">    The number of messages sent to the classificator we have    no decision about (yet).</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">0</span>
+<a name="vskip"></a>
+<dt><span class="variable-name">skip</span>
+<dd><span class="variable-description">       The number of messages to skip during recovery.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">0</span>
+<a name="vlock"></a>
+<dt><span class="variable-name">lock</span>
+<dd><span class="variable-description">       Activity flag. As long as it is true the system will       ignore any attempt to start another session.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">0</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

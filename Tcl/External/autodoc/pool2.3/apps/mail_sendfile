@@ -1,0 +1,158 @@
+#!/usr/local/bin/tclsh
+# -*- tcl -*-
+#		Pool @mFullVersion@, as of @mDate@
+#
+# @comment generate index of tcl procedures suitable for autoloading by tcl
+# CVS : $Id: mail_sendfile,v 1.5 1998/06/02 20:05:01 aku Exp $
+#
+# -- transmit files as mail messages --
+#
+# options:	-from	(defaults to invoking user)
+#		-to	(list of recipients, no default)
+#		-talkto	(defaults to name of localhost)
+#               -string 0|1 (defaults to 0)
+#
+# -------------------------------------------------
+# future: interpret additional options as X-headers.
+#         recognize other options for regular headers
+#         like -cc, -bcc, -fcc, -message-id
+
+package require Pool_Base
+package require Pool_Net
+#lappend auto_path ../net
+
+proc bgerror {text} {
+    global errorInfo
+    ::pool::syslog::syslog error $text, $errorInfo
+    return
+}
+
+
+set from "[::pool::misc::currentUser] <[::pool::misc::currentAddress]>"
+
+::pool::array::def          opt
+::pool::getopt::defOption   opt from \
+	-default $from \
+	-type ::pool::getopt::nonempty
+
+::pool::getopt::defOption   opt talkto \
+	-default [info hostname] 	\
+	-type ::pool::getopt::nonempty
+
+::pool::getopt::defOption   opt to     -type ::pool::getopt::nonempty
+::pool::getopt::defOption   opt log    -default 0 -type ::pool::getopt::boolean
+::pool::getopt::defOption   opt string -default 0 -type ::pool::getopt::boolean
+::pool::getopt::defOption   opt port   -default ""
+
+::pool::getopt::defShortcuts opt
+
+set files [::pool::getopt::process opt $argv opState]
+unset opt
+unset from
+
+
+if {$opState(-port) != {}} {
+    proc ::pool::smtp::port {} "return [list $opState(-port)]"
+}
+
+
+if {$opState(-log)} {
+    proc log {level text} {
+	puts  stdout $text
+	flush stdout
+	return
+    }
+
+    ::pool::syslog::def log
+}
+
+
+proc progress {args} {
+    puts -nonewline stdout .
+    flush           stdout
+    return
+}
+
+
+proc do_exit  {args} {
+    exit 0
+}
+
+
+proc do {list dummy} {
+    # dummy = name of smtp connection object (= conn)
+
+    global opState argv0
+
+    # progress bar
+    puts stdout ""
+
+    if {"[conn state]" == "error"} {
+	puts stderr "ERROR: [conn errorInfo]"
+    }
+
+    if {$list == {}} {
+	conn close -command do_exit
+	return
+    }
+
+    # start with headers
+
+    if {$opState(-string)} {
+	set fname "'$list'"
+    } else {
+	set fname [::pool::list::shift list]
+    }
+
+    set    text "From:    $opState(-from)\n"
+    append text "To:      $opState(-to)\n"
+    append text "Subject: $argv0 -from $opState(-from) -to $opState(-to) $fname"
+    append text \n
+
+    if {$opState(-string)} {
+	append text  $list
+	set    list  ""
+    } else {
+	set f [open $fname r]
+	append text [read $f]
+	close $f
+    }
+
+    if {$opState(-log)} {
+	puts stdout "sending $fname"
+    } else {
+	puts -nonewline stdout "sending $fname "
+    }
+    flush stdout
+
+    conn put \
+	    -command  [list do $list]  \
+	    -from     $opState(-from)  \
+	    -to       $opState(-to)    \
+	    -message  $text        \
+	    -string   1
+    return
+}
+
+
+
+
+
+
+if {0} {
+    proc bgerror {args} {
+	regsub -all -- {\\t} $args "\t" args
+	regsub -all -- {\\n} $args "\n" args
+	regsub -all -- {\\} $args {} args
+	puts "BGERROR\n$args"
+	exit
+    }
+}
+
+smtpConnection conn                 \
+	-host     $opState(-talkto) \
+	-helo     [info hostname]]  \
+	-progress progress
+
+do $files conn
+vwait forever

@@ -1,0 +1,17 @@
+#!/usr/local/bin/wish
+# Trigger a folder scan in a running exmh
+# (Contact all if there is more than one)
+
+wm withdraw .
+
+proc busy {args} {
+    # dummy to catch the send to ourself!
+}
+
+foreach i [winfo interps] {
+    if {[string match exmh* $i]} {
+	send -async $i busy Flist_FindUnseen 1
+    }
+}
+
+exit

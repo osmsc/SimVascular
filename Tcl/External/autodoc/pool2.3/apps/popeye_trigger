@@ -1,0 +1,40 @@
+#!/usr/local/bin/tclsh
+# -*- tcl -*-
+# search for popeye and ask it to fetch mail
+# according to its current configuration
+
+package require Pool_Net
+package require Comm
+
+proc bgerror {text} {
+    global errorInfo
+    ::pool::syslog::syslog error $text, $errorInfo
+    return
+}
+
+set id ""
+set fail [catch {set id [::pool::nameserver::lookup popeye]} errmsg]
+
+if {$fail} {
+    puts stderr "Nameservice problem: $errmsg"
+    exit
+}
+
+if {$id == {}} {
+    # either no name service present, or no popeye.
+    # can't do a thing.
+
+    puts stderr "no popeye found"
+    puts stderr "full registration: [::pool::nameserver::lookup]"
+    exit
+}
+
+set id [lindex $id 1]
+
+if {[catch {comm send $id popeye_fetch} errmsg]} {
+    puts stderr "$errmsg"
+} else {
+    #    puts stdout "popeye triggered"
+}
+
+exit

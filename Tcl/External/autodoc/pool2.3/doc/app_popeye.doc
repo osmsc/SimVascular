@@ -1,0 +1,168 @@
+# -*- tcl -*-
+
+set pbreak [getString {parbreak}]
+
+newPage     popeye.htm  "The Popeye POP3 client"
+add2Sidebar popeye.htm "Popeye"
+
+par "Popeye ([fileRef apps/popeye]) started its life as a pure POP3 client
+built around the core in [classRef pop3Client]. It is now additionally capable
+to deliver mail for external addresses and sitting in a directory via SMTP.
+"
+
+hrule
+par [strong Synopis]
+par "popeye ?-user name? ?-password string? ?-host name?
+?-auth upass/apop? ?-to mailaddress? ?-port number? ?-use-top-for-retr 0/1?
+?-maxtries number? ?-retrydelay number? ?-junkdir path? ?-spooldir path?
+?-spoolfiles glob-pattern?
+"
+
+par "The meaning of the various options is explained below. All the values
+can be set in a configuration file ('~/.popeyerc') too, by using commands
+having the same name as the options (without the leading dash)."
+
+par "If values
+are set in different places a priority scheme is used to resolve conflicts.
+Hard coded defaults are of lowest priority, followed by the information
+contained in '~/.popeyerc' and at last the values provided via options.
+See [fileRef apps/dotpopeyerc] for an example configuration.
+"
+
+definitionList {
+    defterm -user "The user part of the account information used to log
+    into the POP server.
+    "
+    defterm -password "The password part of the account information used
+    to log into the POP server.
+    "
+    defterm -host "The name of the host running the POP server. The
+    hardcoded default is 'localhost'.
+    "
+    defterm -auth "Determines the method of authentication which is used
+    by client and server to check the legality of the combination of user
+    and password. The hardcoded default is 'upass', i.e. the usage of USER
+    and PASS commands.$pbreak
+    [strong Important:] 'apop' authentication requires the packages
+    [depRef Trf] and  [depRef Memchan].
+    "
+    defterm -to "Popeye delivers retrieved mail via SMTP to the local mail
+    demon for local delivery. This value specifies the local email address
+    to send the retrieved mail to.
+    "
+    defterm -port "The number of the TCP port the server is listening on.
+    The hardcoded default is 110 (pop3).
+    "
+    defterm -use-top-for-retr "Setting this option to 1 forces the system to
+    use 'TOP x 0' instead of 'RETR x'. It is in here because my provider had
+    a brain dead pop3 server for some time. It didn't accept RETR, but
+    delivered the whole mail if 0 was given as 2nd argument to TOP. I don't
+    know wether similar versions of this server are lurking out there, but
+    better be prepared. This option should be left alone under normal
+    circumstances.
+    "
+    defterm -maxtries "The number of tries the application shall do while
+    contacting the POP server. Defaults to 1.
+    "
+    defterm -retrydelay "The number of milliseconds to wait between tries.
+    Defaults to 10 seconds.
+    "
+    defterm -junkdir "The directory to place mail into if local delivery
+    via SMTP failed.
+    "
+    defterm -from "The email address to use by the spooler during delivery
+    of email to an external SMTP server.
+    "
+    defterm -spooldir "The path to the directory containing the emails to
+    deliver to the outside world.$pbreak$pbreak The system expects that
+    each mail resides in its own file and is in half-baked SMTP format.$pbreak
+    This means that the actual email is already surrounded by the main SMTP
+    commands used in delivery (RCPT TO, MAIL FROM and DATA). The spooler
+    currently assumes that each file contains only one RCPT TO command, it
+    additionally has to be the second command in the file. 'smail' is a
+    demon which is able to generate this format.
+    See [fileRef net/smtp/spooler.cls] if you are technically inclined.
+    "
+    defterm -spoolfiles "The glob-pattern to use to identify the mail files
+    in the spool directory. Defaults to 'q*'.
+    "
+}
+
+hrule
+par [strong {Control interfaces}]
+
+par "Popeye provides currently only one way to trigger the execution of a
+fetch cycle, through a remote control interface based upon [depRef Comm],
+a socket based 'send'.
+"
+
+par "See the [xRef popeye_interface] for an explanation of the
+available commands.
+"
+
+par "As the port popeye is listening on for commands changes from invocation
+to invocation it uses the mini nameserver provided by [fileRef apps/nserver]
+to register it. This means that this application has to run too.
+"
+
+par "Applications capable of controlling and/or monitoring popeye via the RC
+interface are [fileRef apps/popeyemon] and [fileRef apps/popeye_trigger].
+"
+
+hrule
+par [strong Customization]
+
+par "This currently requires editing the code of the application. This is not
+as difficult as it sounds. Especially as the code is basically just the
+creation of some objects which are then plugged to each other.
+"
+
+par "Here are some changes which might/could be commonly wanted:
+"
+
+itemize {
+    item "Disabling the code triggering a folder scan in EXMH.
+    This code is [strong {specific to my site}].$pbreak$pbreak
+
+    Search for the procedure 'tick' and either
+    remove its body or add a return command to it at its beginning.
+    $pbreak .
+    "
+
+    item "
+    Disabling the remote control interface. This is equivalent to
+    removing the dependence on the nameserver.$pbreak$pbreak
+
+    Go to the end of the file and comment the line
+    '::pool::nameserver::register popeye'.$pbreak .
+    "
+
+    item "Automatic triggering of a fetch-cycle whenever the application
+    is executed.$pbreak$pbreak
+
+    Go to the end of the file and add a delayed call to 'popeye_fetch'
+    just before 'vwait forever'.$pbreak .
+    "
+
+    item "Exit the application after a fetch-cycle.$pbreak$pbreak
+
+    Search for the procedure 'tick' and change its body to 'exit'.$pbreak .
+    "
+
+    item "
+    Disabling the spooler for outgoing mail. This reduces the
+    application to that of a pure POP3 client, i.e. mail
+    retrieval.$pbreak$pbreak
+
+    Search for the procedure 'popeye_start_spooler' and either
+    remove its body or add a return command to it at its beginning.$pbreak .
+    "
+
+    item "Change the delivery of retrieved mail.$pbreak$pbreak
+
+    Search for 'smtpStorage' and edit the code creating and linking
+    the various storage objects.$pbreak .
+    "
+}
+
+closePage

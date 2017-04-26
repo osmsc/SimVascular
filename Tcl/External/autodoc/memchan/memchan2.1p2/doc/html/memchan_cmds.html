@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>Memchan: Commands</title>
+<meta name="Author" content="Andreas Kupries">
+<meta name="sitemap" content="self:memchan_cmds">
+<meta name="sitemap" content="desc:Description of the provided commands">
+<meta name="sitemap" content="parent:memchan_home">
+</head>
+<body >
+<h1>Description of the provided commands</h1>
+<hr>
+<p align=center><font size=7><b>[</b></font> <img src="img/up.gif" alt="Up"><a href="index.html">Home</a> <font size=7><b>|</b></font>  <a href="sitemap.html">Sitemap</a> <font size=7><b>]</b></font> &#160;&#160;&#160;&#160;&#160; </p>
+<hr>
+<p>This extension provides two new commands and influences the
+	kernel command <tt>fconfigure</tt>.
+	</p>
+<table bgcolor=black border=0 cellspacing=0 cellpadding=2 width=100%>
+<tr>
+<td>
+<font color="white"><b>::</b></font>
+</td>
+</tr>
+<tr>
+<td>
+<table border=1 width=100% cellspacing=0 cellpadding=2>
+<tr valign=top>
+<td><font color="white"><b>Subcmd</b></font></td>
+<td><font color="white"><b>Description</b></font></td>
+</tr>
+<tr valign=top bgcolor=steelblue>
+<td><font color="white"><b>memchan</b></font></td>
+<td>
+<table bgcolor=black border=0 cellspacing=0 cellpadding=2 width=100% bgcolor=steelblue>
+<tr>
+<td>
+<font color="white"><b></b></font>
+</td>
+</tr>
+<tr>
+<td>
+<table border=0 width=100% cellspacing=0 cellpadding=2 bgcolor=#ffffcc>
+<tr>
+<td>
+<p>
+		Command to create a new memory channel. Returns the handle
+		of the created channel. Accepts a single option, '-initial-size'.
+		The argument to the option is a number, it specifies the number
+		of bytes to pre-allocate for the internal buffers.
+		</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr valign=top bgcolor=steelblue>
+<td><font color="white"><b>fifo</b></font></td>
+<td>
+<table bgcolor=black border=0 cellspacing=0 cellpadding=2 width=100% bgcolor=steelblue>
+<tr>
+<td>
+<font color="white"><b></b></font>
+</td>
+</tr>
+<tr>
+<td>
+<table border=0 width=100% cellspacing=0 cellpadding=2 bgcolor=#ffffcc>
+<tr>
+<td>
+<p>
+		Command to create a new memory channel with fifo
+		characteristics. No arguments, no options. Returns the
+		handle of the created channel.
+		</p>
+<p>The introduction already told us that these channels are
+		useful to transfer large amounts of data between procedures
+		or interpreters. The difference is this: <b>memchan</b>s are
+		block-oriented, <b>fifo</b>s on the other hand are
+		stream-oriented. With a <tt>memchan</tt> the producer fills the
+		memory channel with the relevant data and then transfers
+		control to the consumer. With a <tt>fifo</tt> producer and
+		consumer may work in parallel. This is currently only possible
+		for an event-driven application, but the moment additional
+		interfaces come up, allowing me to transfer a channel between
+		threads this concept may find its real use for inter-thread
+		communication of bulk information; whose transfer through the
+		currently implemented send-oriented interface (see
+		<tt>tclTestThread.c</tt>) is awkward. <tt>fifo</tt>s complement
+		this interface, they don't replace it.
+		</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr valign=top bgcolor=steelblue>
+<td><font color="white"><b>fconfigure</b></font></td>
+<td>
+<table bgcolor=black border=0 cellspacing=0 cellpadding=2 width=100% bgcolor=steelblue>
+<tr>
+<td>
+<font color="white"><b>... -length -allocated ...</b></font>
+</td>
+</tr>
+<tr>
+<td>
+<table border=0 width=100% cellspacing=0 cellpadding=2 bgcolor=#ffffcc>
+<tr>
+<td>
+<p>Memory and fifo channels support a two read-only options,
+		<tt>-length</tt> and <tt>-allocated</tt>. Reading the first via
+		<tt>fconfigure</tt> retrieves the number of bytes currently stored
+		in the channel. Reading the second retrieves the number of bytes
+		currently allocated by the internal buffers. This number is
+		usually greater than the one reported by <tt>-length</tt>, but
+		never smaller.
+		</p>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+</td>
+</tr>
+</table>
+
+<hr>
+<address><a href="memchan_ack.html">&#169;</a> <a href="mailto:a.kupries@westend.com">Andreas Kupries</a></address>
+<p>Last update at Wed Oct 04 20:37:32 MEST 2000</p>
+</body>
+</html>

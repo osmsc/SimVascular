@@ -1,0 +1,125 @@
+Changes from 2.2
+
+*	Some fixes from Sebastien BARRE <sbarre@claranet.fr> to make
+	it better behaved on Win* systems.
+
+*	Contributions to the date functionality by Ric Klaren
+	<klaren@cs.utwente.nl>.
+
+Changes from 2.1
+
+*	Will Duquettes new text about object commands got me thinking
+	about nested classes, objects in namespaces and whether my OO
+	system would be able to handle such. Found out that the answer
+	was *No*. Fixed the problems preventing it.
+
+	*INCOMPATIBILITY*
+	
+	The internal (compiled) form of classes changed. This means,
+	that all applications using my OO system and the feature of
+	precompiling classes have to recompile them. Applications using
+	the OO system without precompilation do not have to do anything.
+
+	An example for an application hit by the incompatibility is my
+	AutoDoc. A new version will be released together with this
+	version of Pool.
+
+Changes from 2.0
+
+*	Bug fixes in Pool_Base (OO) and Pool_Gui.
+
+*	Better installation procedure. Figures out location of
+	tclsh/wish by itself now, and fixes the #!-definitions
+	in all applications before installing them.
+
+
+Changes from 1.0
+
+*	All procedures placed into namespaces.
+
+*	New OO kernel making use of namespaces.
+
+*	All classes rewritten to take advantage of the new features
+	(Easy access to options, instance variables, methods, arrays
+	as instance variables).
+
+*	Moved OO kernel and log facility into Pool_Base.
+	Obsoleted Pool_OO and Pool_Log.
+
+*	NEW:	Regular expressions for recognition of ftp, file,
+		http, gopher, mailto, news, wais and prospero urls.
+
+
+Changes from 0.5
+
+*	Code freeze, start working on version completely using namespaces.
+
+*	Faster 'string_rep', new procedure 'string_uncap', more
+	namespace aware functionality (tcl 8.x):
+		descend8, array8, cgi8, getopt8, replace8.
+
+Changes from 0.4
+
+*	Fixed some undesirable properties of the mail system exposed by the
+	newsbot:
+
+	-	Alternative SMTP spooler with limited degree of
+		parallelism. POPeye changed to use it. No more trying to
+		send out hundreds of mail in parallel.
+
+	-	Prevent execution of SMTP spooler while another is still
+		running.
+
+*	Fixed another bug in the recovery part of the pop retriever. Caused
+	deletion of valid mail.
+
+*	Added some generic dialogs to Pool_GuiBase. They were written as
+	part of CSS and are now in the proper location.
+
+
+*	Started usage of namespaces. The relevant files all end in '8' as
+	their code is understood by tcl 8.x interpreters only.
+
+
+Changes from 0.3
+
+* Bugfixes.
+
+* Extended documentation (class members and options (parameters)).
+
+* More generic widget classes.
+
+* More string/file procedures, enabled dumping of data structures
+  (variables, procedures, namespaces) into evaluable strings.
+
+
+Changes from 0.2
+
+* Made 'popeye' more robust against problems in the storage subsystem,
+  fixed problem with recovery handling too.
+
+* Added smtp spooler to 'popeye'. This part will transfer all messages
+  waiting in a configured directory to the POP-host. After reconfiguration
+  of Smail, sendmail, ... to queue remote mail in this directory the
+  local mail system is completely decoupled from network access. Especially
+  handy in conjunction with 'diald' and periodic polling of the external
+  mailbox.
+
+
+Changes from 0.1
+
+* Fixed minor bugs in code and documentation of Base, GuiBase, Log, OO.
+
+* Added section 'net' (= package Pool_Net).
+
+	Contains procedures to handle network protocols.
+	Currently implemented:
+		SMTP client code, POP3 client and server core code,
+		mini (nano?) name service.
+
+* More applications
+
+	POP3 client, server, graphical based management of these.
+
+	The POP3 client (POPeye) is in use here at home to fetch my mail.
+	The server (POPsy) was written to debug it.

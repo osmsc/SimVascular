@@ -1,0 +1,263 @@
+<html>
+<head>
+<title>File 'gui/action.cls' (part of 'Pool_GuiBase')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'gui/action.cls' (part of '<a href="pkg_Pool_GuiBase.html" class="package">Pool_GuiBase</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">button rows</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">button rows</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">button rows,  widgets</span>
+</dl>
+</div>
+<h1 class="class">Class 'actionrow'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Maintains a row of buttons and associates commands.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cwidget.html" class="class">widget</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ofill" class="options">fill</a><br>
+<a href="#opadx" class="options">padx</a><br>
+<a href="#opady" class="options">pady</a><br>
+<a href="#oorientation" class="options">orientation</a><br>
+<a href="#odefault" class="options">default</a><br>
+<a href="#oescape" class="options">escape</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cactionrow.html#pactionrow_Repack" class="proc">Repack</a> <span class="arg-list">()</span><br>
+<a href="cactionrow.html#pactionrow_add" class="proc">add</a> <span class="arg-list">(name text command)</span><br>
+<a href="cactionrow.html#pactionrow_change" class="proc">change</a> <span class="arg-list">(name newtext)</span><br>
+<a href="cactionrow.html#pactionrow_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span><br>
+<a href="cactionrow.html#pactionrow_cvtOrientation" class="proc">cvtOrientation</a> <span class="arg-list">(o)</span><br>
+<a href="cactionrow.html#pactionrow_doForSub" class="proc">doForSub</a> <span class="arg-list">(cmd)</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vn" class="members">n</a><br>
+<a href="#vnames" class="members">names</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ofill"></a>
+<dt><span class="option-name">-fill</span>
+<dd><span class="option-description">         Fill flag to use to pack each button</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">none</span>
+<a name="opadx"></a>
+<dt><span class="option-name">-padx</span>
+<dd><span class="option-description">         Horizontal padding to use during packing of each button.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">0</span>
+<a name="opady"></a>
+<dt><span class="option-name">-pady</span>
+<dd><span class="option-description">         Vertical padding to use during packing of each button.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">0</span>
+<a name="oorientation"></a>
+<dt><span class="option-name">-orientation</span>
+<dd><span class="option-description">  Orientation of the button row.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">horizontal</span>
+<a name="odefault"></a>
+<dt><span class="option-name">-default</span>
+<dd><span class="option-description">      Index of the default button to invoke the complete action</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">-1</span>
+<a name="oescape"></a>
+<dt><span class="option-name">-escape</span>
+<dd><span class="option-description">       Index of the default button to cancel</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">-1</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pactionrow_Repack"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Repack</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called after changes to the value of some options. Executes a relayout of the widget.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pactionrow_add"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">add</span> <span class="arg-list">(name text command)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds a new button to the row, labels it with <span class="argument"><span class="proc">text</span></span> and performs the necessary setup so that <span class="argument"><span class="proc">command</span></span> is executed in case of its invocation.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+Symbolic name of the new button.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+text to use as label of the new button
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: command
+</td>
+<td class="argument-description">
+script to execute in case of an invocation of the new button.
+</td>
+</tr>
+</table>
+</p>
+<a name="pactionrow_change"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">change</span> <span class="arg-list">(name newtext)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Changes the text associated to the button with the symbolic <span class="argument"><span class="proc">name</span></span> to <span class="argument"><span class="proc">newtext</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+Symbolic name of the button to change.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: newtext
+</td>
+<td class="argument-description">
+text to place into the button.
+</td>
+</tr>
+</table>
+</p>
+<a name="pactionrow_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cwidget.html" class="class">widget</a>:<a href="cwidget.html#pwidget_createSubwidgets" class="proc">createSubwidgets</a><br>
+<span class="header-description-value">Generates subordinate widgets and their layout. Here only the master frame requires configuration. The buttons will be added later via <span class="xref-mref"><a href="cactionrow.html#pactionrow_add" class="proc">add</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Called automatically by the object framework.
+</td>
+</tr>
+</table>
+</p>
+<a name="pactionrow_cvtOrientation"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">cvtOrientation</span> <span class="arg-list">(o)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">converts row orientation <span class="argument"><span class="proc">o</span></span> into a value acceptable to 'pack -side'.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+orientation to convert.
+</td>
+</tr>
+</table>
+</p>
+<a name="pactionrow_doForSub"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">doForSub</span> <span class="arg-list">(cmd)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executes the <span class="argument"><span class="proc">cmd</span></span> for all buttons which are part of the widget.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+Script to be executed. Occurences of %b will be substituted with the path of the current button.
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vn"></a>
+<dt><span class="variable-name">n</span>
+<dd><span class="variable-description">  Counter, contains the number of buttons added so far.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">0</span>
+<a name="vnames"></a>
+<dt><span class="variable-name">names</span>
+<dd><span class="variable-description">  Map from symbolic names to button locations</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

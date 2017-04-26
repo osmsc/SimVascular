@@ -1,0 +1,23 @@
+#!/usr/local/bin/tclsh
+# remove the compiled class definitions
+
+package require Pool_Base
+
+if {"[lindex $argv 0]" == "-R"} {
+    set oldDir [pwd]
+
+    ::pool::file::descendFiles f [pwd] {
+	if {[file extension $f] == ".cls"} {
+	    lappend flist [file join [pwd] $f]
+	}
+    }
+
+    cd $oldDir
+} else {
+    set flist [eval glob -nocomplain *.cls]
+}
+
+
+foreach f $flist {
+    file delete [file rootname $f].tcl
+}

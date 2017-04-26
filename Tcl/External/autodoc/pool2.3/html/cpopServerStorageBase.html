@@ -1,0 +1,219 @@
+<html>
+<head>
+<title>File 'net/pop3/svrStorBase.cls' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/pop3/svrStorBase.cls' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Mailbox management, interface used by a POP3 server (see <span class="xref-classes"><a href="cpop3Server.html" class="class">pop3Server</a></span>).</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">File- and directorybased mailbox management. Currently ussed by the small scale pop3 server application (<span class="xref-files"><span class="file-header">apps/popsy</span></span>).</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">Mailbox management,  pop3 server</span>
+</dl>
+</div>
+<h1 class="class">Class 'popServerStorageBase'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">This class defines the interface used by instances of <span class="xref-classes"><a href="cpop3Server.html" class="class">pop3Server</a></span> to access the storage subsystem containing all mails retrievable by the users of the server.</span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cpopServerStorageBase.html#ppopServerStorageBase_dele" class="proc">dele</a> <span class="arg-list">(mbox msgList)</span><br>
+<a href="cpopServerStorageBase.html#ppopServerStorageBase_lock" class="proc">lock</a> <span class="arg-list">(mbox)</span><br>
+<a href="cpopServerStorageBase.html#ppopServerStorageBase_size" class="proc">size</a> <span class="arg-list">(mbox msgId)</span><br>
+<a href="cpopServerStorageBase.html#ppopServerStorageBase_stat" class="proc">stat</a> <span class="arg-list">(mbox)</span><br>
+<a href="cpopServerStorageBase.html#ppopServerStorageBase_transfer" class="proc">transfer</a> <span class="arg-list">(args)</span><br>
+<a href="cpopServerStorageBase.html#ppopServerStorageBase_unlock" class="proc">unlock</a> <span class="arg-list">(mbox)</span>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="ppopServerStorageBase_dele"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">dele</span> <span class="arg-list">(mbox msgList)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Abstract method, deletes the specified messages from the mailbox.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Handle of the mailbox to modify.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: msgList
+</td>
+<td class="argument-description">
+List of message ids.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppopServerStorageBase_lock"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">lock</span> <span class="arg-list">(mbox)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Abstract method, locks the specified mailbox for exclusive access by a single connection.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Handle of the mailbox to lock.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1 if the mailbox was locked sucessfully, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppopServerStorageBase_size"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">size</span> <span class="arg-list">(mbox msgId)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Abstract method, determines the size of the given mail in the specified mailbox, in bytes.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Handle of the mailbox to
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: msgId
+</td>
+<td class="argument-description">
+Numerical index of the message to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: size of the message in bytes.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppopServerStorageBase_stat"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">stat</span> <span class="arg-list">(mbox)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Abstract method, determines the number of mails in the specified mailbox.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Handle of the mailbox to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The number of messages in the mailbox
+</td>
+</tr>
+</table>
+</p>
+<a name="ppopServerStorageBase_transfer"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">transfer</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Abstract method, starts a (partial) transfer of the given message. Configured via a list of option/value-pairs, followed by the mailbox to look at, the numerical id of the message to transfer and the channel to sent the mail to, in this order.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+List of option/value-pairs, followed by 3 arguments (explained in the method description). Recognized options are '-done' and '-lines'.<br>
+ The value of -done is interpreted as a script to call after completion of the transfer. Its specification is required. <br>
+ On the other hand, specification of -lines is optional. It is interpreted as the number of lines to transfer, beyond the usual message header. The complete message is transfered if it is not specified.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppopServerStorageBase_unlock"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">unlock</span> <span class="arg-list">(mbox)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Abstract method, revokes the lock on the specified mailbox.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: mbox
+</td>
+<td class="argument-description">
+Handle of the mailbox to unlock
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

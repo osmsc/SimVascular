@@ -24,15 +24,21 @@ cxxdocs:
 tcldocs:
 	-rm -f htmldocs/tcl_all_html
 	-mkdir -p htmldocs/tcl_all_html
-	-tclsh /SV15/src/autodoc/autodoc -srcdir `pwd`/../../Tcl/SimVascular_2.0 -outputdir `pwd`/htmldocs/tcl_all_html
+	-tclsh `pwd`/../../Tcl/External/autodoc/autodoc -up-title SimVascular -srcdir `pwd`/../../Tcl/SimVascular_2.0 -outputdir `pwd`/htmldocs/tcl_all_html
 	-cp styles.css `pwd`/htmldocs/tcl_all_html
 	-rm -f htmldocs/tcl_common_and_core_html
 	-rm -f -R TclCode
 	-mkdir -p htmldocs/tcl_common_and_core_html
 	-mkdir -p TclCode
-	-svn export --force $(TOP)/../Tcl/Common TclCode/Common
-	-svn export --force $(TOP)/../Tcl/SimVascular_2.0/Core TclCode/Core
-	-tclsh /SV15/src/autodoc/autodoc -srcdir `pwd`/TclCode -outputdir `pwd`/htmldocs/tcl_common_and_core_html
+	-cp DESCRIPTION TclCode
+	-cp -R $(TOP)/../Tcl/Common TclCode/Common
+	-cp -R $(TOP)/../Tcl/SimVascular_2.0/Core TclCode/Core
+	-tclsh `pwd`/../../Tcl/External/autodoc/autodoc \
+               -up-title SimVascular \
+               -up-link www.simvascular.org \
+               -replyaddr nwilson@osmsc.com \
+               -srcdir `pwd`/TclCode \
+               -outputdir `pwd`/htmldocs/tcl_common_and_core_html
 	-cp styles.css `pwd`/htmldocs/tcl_common_and_core_html
 	-rm -f -R TclCode
 

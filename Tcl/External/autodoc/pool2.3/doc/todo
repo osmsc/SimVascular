@@ -1,0 +1,84 @@
+
+==> get username on win !!
+    package require registry
+    registry values HKEY_LOCAL_MACHINE\\Network\\Logon\\username
+
+
+classes -- init before or after namespace initialization !?
+        -- after required by classvar procedural special setup (getopt)
+
+
+busy Flist_FindUnseen 1 <== rufe dies auf nach einem pop fetch
+
+
+base/oo -- describe internal class variables externally.
+
+base
+	lists - flatten => see news
+		find duplicates in a list (complement to uniq)
+
+	namespace : distinguish info retrieval | info dump
+	=>	namespace browsers.
+
+
+----------------------
+
+
+-- for every package in the series, create (makedist!)
+
+	@p:mFullVersion@
+	p in {base, gui, net} !
+
+
+--	`graph` object, generator for diverse formats (vcg, daVinci, dot, ...)
+	(not graphing of functions)
+
+	=>	dependency graphs in documentation, via autodoc, makedist.
+
+	=>	widget inheritance, widget/class usage!
+
+Erste Ansaetze von Tcl-DOMO.
+
+
+
+	-- syslog level choice widget
+		- special tk_option_menu
+		- special listbox
+		- special combobox
+
+
+	-- http utilities	=> nein, web utils!!, nicht http spezifisch!
+
+!!!!!!!	job object das ausgaben in beliebig umleiten kann, mit callback nach beendigung
+
+
+
+
+	Net-bereich
+		Http, Ftp, Imap, Nntp	/missing/
+		Pop3, Smtp		/done/
+
+		Http	/base library part of tcl core distribution
+		Ftp	/stefan baumgaertner made such/...
+
+	ftp next
+	nntp next
+
+		examples plugins for interfaces.
+
+	-- (rule based classificators) --
+
+
+admin
+	crontab
+		package to manipulate crontab entries
+	passwd
+		see above
+	mail system alias file
+		see above
+	printcap
+
+
+
+List of things to do
+~~~~~~~~~~~~~~~~~~~~

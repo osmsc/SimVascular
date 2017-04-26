@@ -1,0 +1,344 @@
+<html>
+<head>
+<title>File 'base/file.tcl' (part of 'Pool_Base')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'base/file.tcl' (part of '<a href="pkg_Pool_Base.html" class="package">Pool_Base</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">file commands</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Useful file commands like link resolution, directory traversal, ...</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">script location, descend directories,  directory hierarchy,  directory scan, subdirectory list,  file scan, softlink resolution,  path stats</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_base_file.tcl.html#p_pool_file_descendDirs" class="proc">::pool::file::descendDirs</a> <span class="arg-list">(var path script)</span>
+<li class="proc-listing"><a href="f_base_file.tcl.html#p_pool_file_descendFiles" class="proc">::pool::file::descendFiles</a> <span class="arg-list">(var path script)</span>
+<li class="proc-listing"><a href="f_base_file.tcl.html#p_pool_file_followLink" class="proc">::pool::file::followLink</a> <span class="arg-list">(path)</span>
+<li class="proc-listing"><a href="f_base_file.tcl.html#p_pool_file_here" class="proc">::pool::file::here</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_file.tcl.html#p_pool_file_normalizePath" class="proc">::pool::file::normalizePath</a> <span class="arg-list">(path)</span>
+<li class="proc-listing"><a href="f_base_file.tcl.html#p_pool_file_normalizeUnixPath" class="proc">::pool::file::normalizeUnixPath</a> <span class="arg-list">(path)</span>
+<li class="proc-listing"><a href="f_base_file.tcl.html#p_pool_file_realname" class="proc">::pool::file::realname</a> <span class="arg-list">(path)</span>
+<li class="proc-listing"><a href="f_base_file.tcl.html#p_pool_file_resolveLinks" class="proc">::pool::file::resolveLinks</a> <span class="arg-list">(path)</span>
+<li class="proc-listing"><a href="f_base_file.tcl.html#p_pool_file_subdirs" class="proc">::pool::file::subdirs</a> <span class="arg-list">(dir)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_file_descendDirs"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::file::descendDirs</span> <span class="arg-list">(var path script)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executes <span class="argument"><span class="proc">script</span></span> for all directories found in the directory hierarchy beginning at <span class="argument"><span class="proc">path</span></span>. The <span class="argument"><span class="proc">script</span></span> has immediate access to the variable <span class="argument"><span class="proc">var</span></span>, which will be set to the current directory before each execution. The working directory, as delivered by `pwd`, will be set to the current directory too. The command takes great care to avoid looping (which might be caused by circular links)</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: var
+</td>
+<td class="argument-description">
+Variable used to transfer the current path into the <span class="argument"><span class="argument-description">script</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: path
+</td>
+<td class="argument-description">
+Start of the directory hierarchy to follow.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: script
+</td>
+<td class="argument-description">
+Tcl code executed upon each iteration.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_file_descendFiles"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::file::descendFiles</span> <span class="arg-list">(var path script)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executes <span class="argument"><span class="proc">script</span></span> for all files found in the directory hierarchy beginning at <span class="argument"><span class="proc">path</span></span>. The <span class="argument"><span class="proc">script</span></span> has immediate access to the variable <span class="argument"><span class="proc">var</span></span>, which will be set to the current file before each execution. The working directory, as delivered by `pwd`, will be set to the current directory too. Implemented in terms of <span class="xref-procs"><a href="f_base_file.tcl.html#p_pool_file_descendDirs" class="proc">::pool::file::descendDirs</a></span></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: var
+</td>
+<td class="argument-description">
+Variable used to transfer the current path into the <span class="argument"><span class="argument-description">script</span></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: path
+</td>
+<td class="argument-description">
+Start of the directory hierarchy to follow.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: script
+</td>
+<td class="argument-description">
+Tcl code executed upon each iteration.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_file_followLink"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::file::followLink</span> <span class="arg-list">(path)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Follows <span class="argument"><span class="proc">path</span></span> to its destination. Recursion is used to step through all intermediate softlinks. <span class="argument"><span class="proc">path</span></span> is returned unchanged if it is a regular file or directory.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Only the last component of <span class="argument"><span class="proc">path</span></span> is followed, any softlinks higher in the path are not handled.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: path
+</td>
+<td class="argument-description">
+The path to follow.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Final destination of <span class="argument"><span class="proc">path</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_file_here"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::file::here</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines the location of the script file currently active.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The path to the directory containing the active script
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_file_normalizePath"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::file::normalizePath</span> <span class="arg-list">(path)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">A <span class="argument"><span class="proc">path</span></span> containing '.' and/or '..' will be normalized, i.e. these components will be removed and the preceding path is modified accordingly. Empty path elements are handled like '.' To prevent mishandling of leading '..'s the current working directory will be prepended if <span class="argument"><span class="proc">path</span></span> is relative.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Dangers</span>: This code does *not* account for (soft)links. See <span class="xref-procs"><a href="f_base_file.tcl.html#p_pool_file_followLink" class="proc">::pool::file::followLink</a></span> and <span class="xref-procs"><a href="f_base_file.tcl.html#p_pool_file_resolveLinks" class="proc">::pool::file::resolveLinks</a></span> for that.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: path
+</td>
+<td class="argument-description">
+The path to normalize.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The normalized path.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_file_normalizeUnixPath"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::file::normalizeUnixPath</span> <span class="arg-list">(path)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Same as <span class="xref-procs"><a href="f_base_file.tcl.html#p_pool_file_normalizePath" class="proc">::pool::file::normalizePath</a></span>, but unconditionally uses '/' as path separator.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Dangers</span>: The code used here will mishandle leading ..'s
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This is not platform independent, but quite nice for handling of internet urls. Because of this the working directory is NOT tacked on to the front of the <span class="argument"><span class="proc">path</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: path
+</td>
+<td class="argument-description">
+The path to normalize.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The normalized path.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_file_realname"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::file::realname</span> <span class="arg-list">(path)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">by</span> <a href="mailto:diam@ensta.fr" class="proc">Maurice Diamantini</a>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Generates the canonical name of <span class="argument"><span class="proc">path</span></span> via resolution of all softlinks and elimination of relative directions.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: I rewrote Maurice code to use the procedures I already had in this file.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: path
+</td>
+<td class="argument-description">
+The path to follow.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Canonical name of <span class="argument"><span class="proc">path</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_file_resolveLinks"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::file::resolveLinks</span> <span class="arg-list">(path)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">by</span> <a href="mailto:diam@ensta.fr" class="proc">Maurice Diamantini</a>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Follows <span class="argument"><span class="proc">path</span></span> to its destination. Recursion is used to step through all intermediate softlinks. <span class="argument"><span class="proc">path</span></span> is returned unchanged if it is a regular file or directory. In contrast to <span class="xref-procs"><a href="f_base_file.tcl.html#p_pool_file_followLink" class="proc">::pool::file::followLink</a></span> all softlinks in the path are resolved.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: I rewrote Maurice code to use the procedures I already had in this file.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: path
+</td>
+<td class="argument-description">
+The path to follow.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Nearly canonical name of <span class="argument"><span class="proc">path</span></span>. Nearly, as it may contain '.' and '..'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_file_subdirs"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::file::subdirs</span> <span class="arg-list">(dir)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Find all subdirectories of <span class="argument"><span class="proc">dir</span></span>. Softlinks pointing to directories are part of the result too.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: dir
+</td>
+<td class="argument-description">
+The directory to search in.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: List containing all found subdirectories
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

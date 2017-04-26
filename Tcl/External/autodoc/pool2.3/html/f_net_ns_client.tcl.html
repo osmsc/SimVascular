@@ -1,0 +1,142 @@
+<html>
+<head>
+<title>File 'net/ns/client.tcl' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/ns/client.tcl' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Mini nameserver, application registry, client</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Clientside of mini nameserver / registry system. It is built on top of the Comm package by <a href="mailto:loverso@schooner.com" class="xref-xref">John R. LoVerso</a>.</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a>, <a href="http://www.schooner.com/~loverso/tcl-tk/#comm" class="xref-dep">Comm</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">nameserver,  registry,  application registry</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_net_ns_client.tcl.html#p_pool_nameserver_Clean" class="proc">::pool::nameserver::Clean</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_net_ns_client.tcl.html#p_pool_nameserver_lookup" class="proc">::pool::nameserver::lookup</a> <span class="arg-list">(pattern)</span>
+<li class="proc-listing"><a href="f_net_ns_client.tcl.html#p_pool_nameserver_register" class="proc">::pool::nameserver::register</a> <span class="arg-list">(as)</span>
+<li class="proc-listing"><a href="f_net_ns_client.tcl.html#p_pool_nameserver_revoke" class="proc">::pool::nameserver::revoke</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_net_ns_client.tcl.html#p_pool_nameserver_revokeOther" class="proc">::pool::nameserver::revokeOther</a> <span class="arg-list">(name)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_nameserver_Clean"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::nameserver::Clean</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">This procedure is hooked into 'exit' to perform automatic revokation upon exit. See <span class="xref-procs"><a href="f_base_atexit.tcl.html#p_pool_atexit_add" class="proc">::pool::atexit::add</a></span> too. It is not foolproof, as signals are not trapped.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_nameserver_lookup"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::nameserver::lookup</span> <span class="arg-list">(pattern)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Queries the name server for registered applications matching the <span class="argument"><span class="proc">pattern</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: pattern (= *)
+</td>
+<td class="argument-description">
+glob-style pattern to use during search.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A list usable by 'array set'. Application names are mapped to ids usable by 'comm'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_nameserver_register"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::nameserver::register</span> <span class="arg-list">(as)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Registers the running application at the name server under the name of <span class="argument"><span class="proc">as</span></span>. The name is remembered internally, for use by <span class="xref-procs"><a href="f_net_ns_client.tcl.html#p_pool_nameserver_revoke" class="proc">::pool::nameserver::revoke</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: as
+</td>
+<td class="argument-description">
+Name to use for registration.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_nameserver_revoke"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::nameserver::revoke</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes the application from the name server.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_nameserver_revokeOther"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::nameserver::revokeOther</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes the application from the name server.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the application to remove from the nameserver.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

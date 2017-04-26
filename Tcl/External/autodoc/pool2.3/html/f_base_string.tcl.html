@@ -1,0 +1,777 @@
+<html>
+<head>
+<title>File 'base/string.tcl' (part of 'Pool_Base')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'base/string.tcl' (part of '<a href="pkg_Pool_Base.html" class="package">Pool_Base</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Additional string operations.</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Additional string operations. Some procedures might be better placed below the standard string command, but I've decided to wait for ensembles before doing this.</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">string operation, script,  tcl code,  remove non-essential whitespace,  whitespace, replace,  file, remove,  empty lines,  remove,  continuation lines,  comments,  script, capitalize,  heading comments,  scripts, replication, uncapitalize, chopping, wrap,  word wrap, indent,  non-essential spacing,  spacing,  hanging,  generate blanks,  blank generation,  whitespace.,  prefix, tail</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_blank" class="proc">::pool::string::blank</a> <span class="arg-list">(n)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_cap" class="proc">::pool::string::cap</a> <span class="arg-list">(string)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_chop" class="proc">::pool::string::chop</a> <span class="arg-list">(string)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_fillPrefixes" class="proc">::pool::string::fillPrefixes</a> <span class="arg-list">(arrayVar)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_hangingIndent" class="proc">::pool::string::hangingIndent</a> <span class="arg-list">(text prefix)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_indent" class="proc">::pool::string::indent</a> <span class="arg-list">(text prefix)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_multipleReplaceInFile" class="proc">::pool::string::multipleReplaceInFile</a> <span class="arg-list">(file replacements)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_oneLine" class="proc">::pool::string::oneLine</a> <span class="arg-list">(text)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_prefixMap" class="proc">::pool::string::prefixMap</a> <span class="arg-list">(arrayVar)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_removeComments" class="proc">::pool::string::removeComments</a> <span class="arg-list">(text)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_removeContinuations" class="proc">::pool::string::removeContinuations</a> <span class="arg-list">(text)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_removeSpaces" class="proc">::pool::string::removeSpaces</a> <span class="arg-list">(text)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_removeWhitespace" class="proc">::pool::string::removeWhitespace</a> <span class="arg-list">(text)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_rep" class="proc">::pool::string::rep</a> <span class="arg-list">(n text)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_replace" class="proc">::pool::string::replace</a> <span class="arg-list">(string from to new)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_replaceInFile" class="proc">::pool::string::replaceInFile</a> <span class="arg-list">(file before after)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_rhc" class="proc">::pool::string::rhc</a> <span class="arg-list">(text)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_rhel" class="proc">::pool::string::rhel</a> <span class="arg-list">(text)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_stripPrefix" class="proc">::pool::string::stripPrefix</a> <span class="arg-list">(text prefix)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_tail" class="proc">::pool::string::tail</a> <span class="arg-list">(string)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_uncap" class="proc">::pool::string::uncap</a> <span class="arg-list">(string)</span>
+<li class="proc-listing"><a href="f_base_string.tcl.html#p_pool_string_wrap" class="proc">::pool::string::wrap</a> <span class="arg-list">(text len)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_string_blank"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::blank</span> <span class="arg-list">(n)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Generates a string consisting out of <span class="argument"><span class="proc">n</span></span> spaces. This is a convenient wrapper to <span class="xref-procs"><a href="f_base_string.tcl.html#p_pool_string_rep" class="proc">::pool::string::rep</a></span> for creation of an arbitrary number of spaces.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: n
+</td>
+<td class="argument-description">
+length of the string to generate.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A string consisting out of <span class="argument"><span class="proc">n</span></span> spaces.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_cap"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::cap</span> <span class="arg-list">(string)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Capitalizes first character of the given <span class="argument"><span class="proc">string</span></span>. Complementary procedure to <span class="xref-procs"><a href="f_base_string.tcl.html#p_pool_string_uncap" class="proc">::pool::string::uncap</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: string
+</td>
+<td class="argument-description">
+string to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The <span class="argument"><span class="proc">string</span></span> with its first character capitalized.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_chop"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::chop</span> <span class="arg-list">(string)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes the last character from the given <span class="argument"><span class="proc">string</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: string
+</td>
+<td class="argument-description">
+The string to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The <span class="argument"><span class="proc">string</span></span> without its last character.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_fillPrefixes"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::fillPrefixes</span> <span class="arg-list">(arrayVar)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Computes all unique prefixes of the values in <span class="argument"><span class="proc">arrayVar</span></span> and maps to their longforms. Can be used to compute all possible shortcuts for a set of (widget) options.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: arrayVar
+</td>
+<td class="argument-description">
+The name of the array containing the keys whose prefixes shall be computed here.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_hangingIndent"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::hangingIndent</span> <span class="arg-list">(text prefix)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The specified <span class="argument"><span class="proc">text</span></span>block is indented by <span class="argument"><span class="proc">prefix</span></span>ing each line <span class="proc">after</span> the first <span class="proc">!</span></span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This procedure is not checked by the testsuite.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The paragraph to indent.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: prefix
+</td>
+<td class="argument-description">
+The string to use as prefix for each line of <span class="argument"><span class="argument-description">text</span></span> with.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Basically <span class="argument"><span class="proc">text</span></span>, but indented a certain amount.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_indent"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::indent</span> <span class="arg-list">(text prefix)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The specified <span class="argument"><span class="proc">text</span></span>block is indented by <span class="argument"><span class="proc">prefix</span></span>ing each line.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This procedure is not checked by the testsuite.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The paragraph to indent.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: prefix
+</td>
+<td class="argument-description">
+The string to use as prefix for each line of <span class="argument"><span class="argument-description">text</span></span> with.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Basically <span class="argument"><span class="proc">text</span></span>, but indented a certain amount.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_multipleReplaceInFile"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::multipleReplaceInFile</span> <span class="arg-list">(file replacements)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Replaces all occurences of the strings named as keys of the array variable <span class="argument"><span class="proc">replacements</span></span> in the named <span class="argument"><span class="proc">file</span></span> with the associated values. The same functionality as provided by <span class="xref-procs"><a href="f_base_string.tcl.html#p_pool_string_replaceInFile" class="proc">::pool::string::replaceInFile</a></span>, but for a set of strings.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: There are no guarantees about the order of replacements. The file read completely into memory before processing it. The file must be readable and writable. This procedure is not checked by the testsuite.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: file
+</td>
+<td class="argument-description">
+name of the file to modify..
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: replacements
+</td>
+<td class="argument-description">
+name of an array variable containing strings and their corresponding substitutions.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_oneLine"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::oneLine</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Compresses the given <span class="argument"><span class="proc">text</span></span> into a single line. Convenience procedure.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to compress.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The compressed string
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_prefixMap"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::prefixMap</span> <span class="arg-list">(arrayVar)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Same as <span class="xref-procs"><a href="f_base_string.tcl.html#p_pool_string_fillPrefixes" class="proc">::pool::string::fillPrefixes</a></span>, but the original contents of <span class="argument"><span class="proc">arrayVar</span></span> will be removed.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: arrayVar
+</td>
+<td class="argument-description">
+The name of the array containing the keys whose prefixes shall be computed here.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_removeComments"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::removeComments</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes comments and continuation lines from tcl code stored in <span class="argument"><span class="proc">text</span></span> and returns the modified result. The process used here will leave regular expressions and strings intact whilst doing at least some compression.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This procedure is not checked by the testsuite.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+the string to compress.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The compressed string
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_removeContinuations"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::removeContinuations</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes continuation lines from the tcl code specified in <span class="argument"><span class="proc">text</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This procedure is not checked by the testsuite.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to compress.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The compressed string
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_removeSpaces"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::removeSpaces</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes all non-essential spacing from tcl-code stored in <span class="argument"><span class="proc">text</span></span> and returns the modified result. Only spaces, tabs and line-endings are considered as spacing.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This procedure is not checked by the testsuite.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to compress.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The compressed string
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_removeWhitespace"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::removeWhitespace</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes all non-essential whitespace from the tcl-code stored in <span class="argument"><span class="proc">text</span></span> and returns the modified result. Comments are considered as whitespace!</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This procedure is not checked by the testsuite.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to compress.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The compressed string
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_rep"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::rep</span> <span class="arg-list">(n text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Replicates <span class="argument"><span class="proc">n</span></span> times the string <span class="argument"><span class="proc">text</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This algorithm proved to be rather fast, even in the small range of n in {60..90}. An alternative definition using regsub and format with O(n) complexity, thus doing most things at C-level is beaten regularly for n &gt; 74!
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: n
+</td>
+<td class="argument-description">
+Number of replications. A value &lt; 0 is handled as 0
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+string to replicate.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The <span class="argument"><span class="proc">text</span></span>, replicated <span class="argument"><span class="proc">n</span></span> times.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_replace"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::replace</span> <span class="arg-list">(string from to new)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Replaces the part of the <span class="argument"><span class="proc">string</span></span> between indices <span class="argument"><span class="proc">from</span></span> and &lt;to&gt; with the text in <span class="argument"><span class="proc">new</span></span>. <span class="argument"><span class="proc">to</span></span> must not be smaller than <span class="argument"><span class="proc">from</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: string
+</td>
+<td class="argument-description">
+The string to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: from
+</td>
+<td class="argument-description">
+The index of the first character to cut out of <span class="argument"><span class="argument-description">string</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: to
+</td>
+<td class="argument-description">
+The index behind the last character to cut of <span class="argument"><span class="argument-description">string</span></span>. The special value 'new' denotes replacement to the end of the string.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: new (= {})
+</td>
+<td class="argument-description">
+The string replacing the information cut out of <span class="argument"><span class="argument-description">string</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The changed string.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_replaceInFile"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::replaceInFile</span> <span class="arg-list">(file before after)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Replaces all occurences of <span class="argument"><span class="proc">before</span></span> in the named <span class="argument"><span class="proc">file</span></span> with the string <span class="argument"><span class="proc">after</span></span>. <span class="argument"><span class="proc">before</span></span> can be any legal regexp pattern and <span class="argument"><span class="proc">after</span></span> may use \&lt;i&gt; syntax to denote parts of the matched expression.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: The file is read completely into memory before processing it. The file must be readable and writable. This procedure is not checked by the testsuite.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: file
+</td>
+<td class="argument-description">
+name of the file to modify..
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: before
+</td>
+<td class="argument-description">
+string to search for (and to replace by <span class="argument"><span class="argument-description">after</span></span>).
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: after
+</td>
+<td class="argument-description">
+string to insert in place of <span class="argument"><span class="argument-description">before</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_rhc"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::rhc</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes the heading comments from tcl code stored in <span class="argument"><span class="proc">text</span></span> and returns the modified result. Empty lines between comment lines are considered as part of the comment block and therefore removed.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The code block to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Basically <span class="argument"><span class="proc">text</span></span>, but without heading comments.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_rhel"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::rhel</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes the Heading Empty Lines of <span class="argument"><span class="proc">text</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The text block to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The <span class="argument"><span class="proc">text</span></span>, but without heading empty lines.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_stripPrefix"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::stripPrefix</span> <span class="arg-list">(text prefix)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Strips <span class="argument"><span class="proc">prefix</span></span> from <span class="argument"><span class="proc">text</span></span>, if found at its start.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to check for <span class="argument"><span class="argument-description">prefix</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: prefix
+</td>
+<td class="argument-description">
+The string to remove from <span class="argument"><span class="argument-description">text</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The <span class="argument"><span class="proc">text</span></span>, but without <span class="argument"><span class="proc">prefix</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_tail"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::tail</span> <span class="arg-list">(string)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes the first character from the given <span class="argument"><span class="proc">string</span></span>. Convenience procedure.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: string
+</td>
+<td class="argument-description">
+string to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The <span class="argument"><span class="proc">string</span></span> without its first character.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_uncap"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::uncap</span> <span class="arg-list">(string)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">unCapitalizes first character of the given <span class="argument"><span class="proc">string</span></span>. Complementary procedure to <span class="xref-procs"><a href="f_base_string.tcl.html#p_pool_string_cap" class="proc">::pool::string::cap</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: string
+</td>
+<td class="argument-description">
+string to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The <span class="argument"><span class="proc">string</span></span> with its first character uncapitalized.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_string_wrap"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::string::wrap</span> <span class="arg-list">(text len)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">by</span> <a href="mailto:jeff.hobbs@acm.org" class="proc">Jeffrey Hobbs</a>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Wraps the given <span class="argument"><span class="proc">text</span></span> into multiple lines not exceeding <span class="argument"><span class="proc">len</span></span> characters each. Lines shorter than <span class="argument"><span class="proc">len</span></span> characters might get filled up.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This procedure is not checked by the testsuite.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The string to operate on.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: len
+</td>
+<td class="argument-description">
+The maximum allowed length of a single line.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Basically <span class="argument"><span class="proc">text</span></span>, but with changed newlines to restrict the length of individual lines to at most <span class="argument"><span class="proc">len</span></span> characters.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

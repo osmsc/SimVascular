@@ -1,0 +1,178 @@
+# -*- tcl -*-
+newPage    pop3.htm "POP3 system"
+#add2Sidebar pop3.htm "net/POP3"
+
+proc head    {str} {table_head {write $str}}
+proc data    {str} {table_data {write $str}}
+
+par "
+The implementation of the pop3 protocol (client and server) for mail retrieval
+is spread over 16 files.
+"
+
+par "
+We have 2 shared files ([fileRef net/pop3/port.tcl] and
+[fileRef net/pop3/auth.tcl]), they contain the port definition and a type
+checker for the possible authentication modes (APOP vs USER/PASS).
+"
+
+par "
+After that there are 3 base classes defining the interface between the two
+cores (client, server) and their external supporters.
+"
+
+itemize {
+    item "
+    For the server we have [fileRef net/pop3/svrStorBase.cls], it defines the
+    interface between the pop server and the storage system the mails to be
+    tretrieved reside in.
+    "
+
+    item "
+    On the other hand, the client uses object whose classes are derived from
+    [fileRef net/pop3/classifyBase.cls] and [fileRef net/pop3/cltStorBase.cls]
+    to classify and store the incoming mails.
+    "
+}
+
+par "
+Seven files define the various sequencers actually executing the
+command/reply-chains the pop protocol is made of. With the exception of the
+ login sequencers every operation utilizes only a single command. Their
+implementation is built on top of the general [classRef sequencer] framework
+ and and POP specific baseclass in [fileRef net/pop3/seq.cls].
+"
+
+table border {
+    table_row {
+	head {File}
+	head {Operation}
+	head {POP3 command(s)}
+    }
+    table_row {
+	data [fileRef net/pop3/seq.cls]
+	data {Contains common functionality of all POP sequencers}
+	data {-}
+    }
+    # sequencers -------------------------
+    table_row {
+	data [fileRef net/pop3/open.cls]
+	data {Open connection to a server}
+	data {-}
+    }
+    table_row {
+	data [fileRef net/pop3/apop.cls]
+	data "
+	Login to server. This uses the packages [depRef Trf] and
+	[depRef Memchan] to generate the necessary hashvalue (and hex-encoded
+	MD5 hash)"
+	data {APOP, STAT}
+    }
+    table_row {
+	data [fileRef net/pop3/user.cls]
+	data {Login to server}
+	data {USER, PASS, STAT}
+    }
+    table_row {
+	data [fileRef net/pop3/top.cls]
+	data {Query for header of mail message}
+	data {TOP}
+    }
+    table_row {
+	data [fileRef net/pop3/retr.cls]
+	data {Retrieve complete mail message from server}
+	data {RETR (TOP)}
+    }
+    table_row {
+	data [fileRef net/pop3/dele.cls]
+	data {Delete message at server}
+	data {DELE}
+    }
+    table_row {
+	data [fileRef net/pop3/close.cls]
+	data {Close connection to server}
+	data {QUIT}
+    }
+}
+
+
+par "
+All sequencers understand the options [optionRef pop3Sequencer conn],
+[optionRef pop3Sequencer done] and [optionRef pop3Sequencer sock]. The value
+of the first refers back to the connection object which initiated the
+sequencer, the second names the method to call in that object after the
+sequencer has done its work. The last specifies the channel used to talk to
+the POP server. Of course, [optionRef sequencer timeout] is understood too.
+"
+
+
+par "
+To get a connection to the pop server the open sequencer has to know the host
+to connect to ([optionRef pop3OpenSeq host]), the maximum number of tries
+before giving up ([optionRef pop3OpenSeq maxtries]) and the delay between
+tries (optionRef pop3OpenSeq retrydelay]). The latter is given in milliseconds.
+"
+
+par "
+Both login sequencers ([fileRef net/pop3/apop.cls],
+[fileRef net/pop3/user.cls]) understand [optionRef pop3ApopSeq user] and
+[optionRef pop3ApopSeq secret] as the way to specify the name of the user
+trying to login to the server, and its password. The APOP sequencer
+additionally uses [optionRef pop3ApopSeq greeting] to get at the greeting sent
+by the server, and the timestamp buried in it, as it is essential in the
+generation of the hashvalue encoding the password.
+"
+
+par "
+All sequencers executing message specific operations
+([fileRef net/pop3/retr.cls], [fileRef net/pop3/top.cls] and
+[fileRef net/pop3/dele.cls]) additionally understand the option
+[optionRef pop3DeleteSeq msg] which specifies the numerical index of the
+message to operate on.
+"
+
+par "
+The retrieve sequencer ([fileRef net/pop3/retr.cls]) is special in that he
+understands one more option, [optionRef pop3RetrSeq use-top]. This is a
+boolean flag, with a default value of [strong false]. Setting it to
+[strong true] forces the sequencer to use the command 'TOP x 0' instead of
+'RETR x'. I added it because my provider had a brain dead pop3 server for some
+time. It did not accept RETR, but delivered the whole mail if 0 was given as
+second argument to TOP. I don't know wether similar versions of this server
+are lurking out there, but better be prepared. This option should be left
+alone under normal circumstances.
+"
+
+par "
+The close sequencer makes no use of additional options.
+"
+
+par "
+The remaining files implement the server core ([fileRef net/pop3/server.cls])
+and the client. The latter is split into two classes, a baseclass
+encapsulating the access to the various sequencers
+([fileRef net/pop3/pop3.cls]), thus managing a single POP connection, and
+based on that the core and its statemachine itself
+([fileRef net/pop3/client.cls]).
+"
+
+par "
+The phrase [strong core] means that the associated classes manage all aspects of running the pop protocol by themselves, but rely on external objects to handle the following tasks:
+"
+
+itemize {
+    item "management of a user database"
+    item "access to stored messages"
+    item "
+    classification of messages into the categories 'retrieve', 'delete'
+    and 'ignore'
+    "
+    item "storing retrieved messages in some manner"
+}
+
+par "
+[xRef pop3s], resp. [xRef pop3c] will be discussed in more detail at the
+refered pages.
+"
+
+closePage

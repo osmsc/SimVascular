@@ -1,0 +1,234 @@
+<html>
+<head>
+<title>File 'base/misc.tcl' (part of 'Pool_Base')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'base/misc.tcl' (part of '<a href="pkg_Pool_Base.html" class="package">Pool_Base</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Miscancellous procedures</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Miscancellous procedures</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">account search,  user id,  logname</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_base_misc.tcl.html#p_pool_misc_currentAddress" class="proc">::pool::misc::currentAddress</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_misc.tcl.html#p_pool_misc_currentUser" class="proc">::pool::misc::currentUser</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_misc.tcl.html#p_pool_misc_logName" class="proc">::pool::misc::logName</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_misc.tcl.html#p_pool_misc_realName" class="proc">::pool::misc::realName</a> <span class="arg-list">(account)</span>
+<li class="proc-listing"><a href="f_base_misc.tcl.html#p_pool_misc_setDifference" class="proc">::pool::misc::setDifference</a> <span class="arg-list">(a b)</span>
+<li class="proc-listing"><a href="f_base_misc.tcl.html#p_pool_misc_setIntersection" class="proc">::pool::misc::setIntersection</a> <span class="arg-list">(a b)</span>
+<li class="proc-listing"><a href="f_base_misc.tcl.html#p_pool_misc_setUnion" class="proc">::pool::misc::setUnion</a> <span class="arg-list">(a b)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_misc_currentAddress"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::misc::currentAddress</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Dangers</span>: Assumes a usual setup with login name equivalent to email name.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The email address of the user calling the procedure.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_misc_currentUser"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::misc::currentUser</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Shortcut to get at the real name of the user calling the procedure.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_misc_logName"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::misc::logName</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines the name of actual user. Several methods are tried before giving up.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The user (account) running the calling application.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_misc_realName"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::misc::realName</span> <span class="arg-list">(account)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines the realworld name of user <span class="argument"><span class="proc">account</span></span>, as stored in /etc/passwd.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: This procedure is specific to unix and derivations.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: account
+</td>
+<td class="argument-description">
+The name of the account to seach the real name for.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The real name associated to the <span class="argument"><span class="proc">account</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_misc_setDifference"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::misc::setDifference</span> <span class="arg-list">(a b)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Computes the difference A-B of the sets <span class="argument"><span class="proc">a</span></span> and <span class="argument"><span class="proc">b</span></span>. Duplicate elements are removed from the result. The arguments must contain lists.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: a
+</td>
+<td class="argument-description">
+List containing the base set.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: b
+</td>
+<td class="argument-description">
+List containing the set to subtract from the first.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The difference A-B of the given sets.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_misc_setIntersection"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::misc::setIntersection</span> <span class="arg-list">(a b)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Computes the intersection of the sets <span class="argument"><span class="proc">a</span></span> and <span class="argument"><span class="proc">b</span></span>. Duplicate elements are removed from the result. The arguments must contain lists.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: a
+</td>
+<td class="argument-description">
+List containing the first set to intersect.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: b
+</td>
+<td class="argument-description">
+List containing the second set to intersect.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The intersection of the given sets.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_misc_setUnion"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::misc::setUnion</span> <span class="arg-list">(a b)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Computes the union of the sets <span class="argument"><span class="proc">a</span></span> and <span class="argument"><span class="proc">b</span></span>. Duplicate elements are removed from the result. The arguments must contain lists.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: a
+</td>
+<td class="argument-description">
+List containing the first set to unify.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: b
+</td>
+<td class="argument-description">
+List containing the second set to unify.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The union of the given sets.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

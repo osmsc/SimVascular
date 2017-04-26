@@ -1,0 +1,57 @@
+<html><head><title>The Popeye POP3 client</title><link rel=stylesheet href="styles.css"
+type="text/css"></head><body ><h1>The Popeye POP3 client</h1><hr class="navbar"><p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a></p><hr class="navbar"><p>Popeye (<span class="class-header">apps/popeye</span>) started its life as a pure POP3 client
+built around the core in <a href="cpop3Client.html" class="class">pop3Client</a>. It is now additionally capable
+to deliver mail for external addresses and sitting in a directory via SMTP.</p><hr><p><b>Synopis</b></p><p>popeye ?-user name? ?-password string? ?-host name?
+?-auth upass/apop? ?-to mailaddress? ?-port number? ?-use-top-for-retr 0/1?
+?-maxtries number? ?-retrydelay number? ?-junkdir path? ?-spooldir path?
+?-spoolfiles glob-pattern?</p><p>The meaning of the various options is explained below. All the values
+can be set in a configuration file ('~/.popeyerc') too, by using commands
+having the same name as the options (without the leading dash).</p><p>If values
+are set in different places a priority scheme is used to resolve conflicts.
+Hard coded defaults are of lowest priority, followed by the information
+contained in '~/.popeyerc' and at last the values provided via options.
+See <b>apps/dotpopeyerc</b> for an example configuration.</p><dl><dt>-user <dd>The user part of the account information used to log
+into the POP server.<dt>-password <dd>The password part of the account information used
+to log into the POP server.<dt>-host <dd>The name of the host running the POP server. The
+hardcoded default is 'localhost'.<dt>-auth <dd>Determines the method of authentication which is used
+by client and server to check the legality of the combination of user
+and password. The hardcoded default is 'upass', i.e. the usage of USER
+and PASS commands.<br><b>Important:</b> 'apop' authentication requires the packages <a href="http://www.oche.de/~akupries/soft/trf/index.html" class="xref-dep">Trf</a> and <a href="http://www.oche.de/~akupries/tcltk.html" class="xref-dep">Memchan</a>.<dt>-to <dd>Popeye delivers retrieved mail via SMTP to the local mail
+demon for local delivery. This value specifies the local email address
+to send the retrieved mail to.<dt>-port <dd>The number of the TCP port the server is listening on.
+The hardcoded default is 110 (pop3).<dt>-use-top-for-retr <dd>Setting this option to 1 forces the system to
+use 'TOP x 0' instead of 'RETR x'. It is in here because my provider had
+a brain dead pop3 server for some time. It didn't accept RETR, but
+delivered the whole mail if 0 was given as 2nd argument to TOP. I don't
+know wether similar versions of this server are lurking out there, but
+better be prepared. This option should be left alone under normal
+circumstances.<dt>-maxtries <dd>The number of tries the application shall do while
+contacting the POP server. Defaults to 1.<dt>-retrydelay <dd>The number of milliseconds to wait between tries.
+Defaults to 10 seconds.<dt>-junkdir <dd>The directory to place mail into if local delivery
+via SMTP failed.<dt>-from <dd>The email address to use by the spooler during delivery
+of email to an external SMTP server.<dt>-spooldir <dd>The path to the directory containing the emails to
+deliver to the outside world.<br><br>The system expects that
+each mail resides in its own file and is in half-baked SMTP format.<br>This means that the actual email is already surrounded by the main SMTP
+commands used in delivery (RCPT TO, MAIL FROM and DATA). The spooler
+currently assumes that each file contains only one RCPT TO command, it
+additionally has to be the second command in the file. 'smail' is a
+demon which is able to generate this format.
+See <a href="csmtpSpooler.html" class="file">net/smtp/spooler.cls</a> if you are technically inclined.<dt>-spoolfiles <dd>The glob-pattern to use to identify the mail files
+in the spool directory. Defaults to 'q*'.</dl><hr><p><b>Control interfaces</b></p><p>Popeye provides currently only one way to trigger the execution of a
+fetch cycle, through a remote control interface based upon <a href="http://www.schooner.com/~loverso/tcl-tk/#comm" class="xref-dep">Comm</a>,
+a socket based 'send'.</p><p>See the <a href="popeyrc.htm" class="xref-xref">POPeye RC interface</a> for an explanation of the
+available commands.</p><p>As the port popeye is listening on for commands changes from invocation
+to invocation it uses the mini nameserver provided by <b>apps/nserver</b>to register it. This means that this application has to run too.</p><p>Applications capable of controlling and/or monitoring popeye via the RC
+interface are <b>apps/popeyemon</b> and <b>apps/popeye_trigger</b>.</p><hr><p><b>Customization</b></p><p>This currently requires editing the code of the application. This is not
+as difficult as it sounds. Especially as the code is basically just the
+creation of some objects which are then plugged to each other.</p><p>Here are some changes which might/could be commonly wanted:</p><ul><li>Disabling the code triggering a folder scan in EXMH.
+This code is <b>specific to my site</b>.<br><br>Search for the procedure 'tick' and either
+remove its body or add a return command to it at its beginning.<br>.<li>Disabling the remote control interface. This is equivalent to
+removing the dependence on the nameserver.<br><br>Go to the end of the file and comment the line
+'::pool::nameserver::register popeye'.<br>.<li>Automatic triggering of a fetch-cycle whenever the application
+is executed.<br><br>Go to the end of the file and add a delayed call to 'popeye_fetch'
+just before 'vwait forever'.<br>.<li>Exit the application after a fetch-cycle.<br><br>Search for the procedure 'tick' and change its body to 'exit'.<br>.<li>Disabling the spooler for outgoing mail. This reduces the
+application to that of a pure POP3 client, i.e. mail
+retrieval.<br><br>Search for the procedure 'popeye_start_spooler' and either
+remove its body or add a return command to it at its beginning.<br>.<li>Change the delivery of retrieved mail.<br><br>Search for 'smtpStorage' and edit the code creating and linking
+the various storage objects.<br>.</ul><hr><p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p></body></html>

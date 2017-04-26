@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>Package 'Pool_Net'</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>Package 'Pool_Net'</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<dl>
+<dt>Written by
+<dd><a href="mailto:a.kupries@westend.com">Andreas Kupries</a>
+<dt>Description
+<dd>Procedures to handle network protocols (currently implemented: smtp, pop3)
+<dt>Keywords
+<dd> APOP command,  Construction of servers,  DATA command,  DELE command,  Framework for servers,  HELO command,  Header manipulation,  MAIL FROM command,  Message transfer,  Open connection,  POP3,  POP3 client,  Popsy,  QUIT command,  RCPT TO command,  RETR command,  RFC 821,  RFC 822,  TOP command,  USER command,  application registry,  authentication database,  classificator,  extraction of urls from text,  mail server core,  management of POP3 connections,  management of SMTP connections,  name service,  passwords,  pop3 server,  port definition for POP3,  port definition for SMTP,  registry,  regular expressions (for urls),  sequencer base,  splitting an url into its constituents,  spooler,  storage facility,  synchronous operations,  user database, Mail manipulation, Mailbox management, POP3, SMTP, Server, Server on random port, URL related utilities, User authentication, close smtp connection, nameserver, open smtp connection, pop3 client, send mail, storage facility, type checker, url extraction, url splitting
+</dl>
+<hr>
+<dl>
+<dt>Depends on
+<dd><a href="http://www.schooner.com/~loverso/tcl-tk/#comm" class="xref-dep">Comm</a>, <a href="http://www.oche.de/~akupries/tcltk.html" class="xref-dep">Memchan</a>, <a href="http://www.scriptics.com/" class="xref-dep">Tcl</a>, <a href="http://www.oche.de/~akupries/soft/trf/index.html" class="xref-dep">Trf</a>, <a href="http://expect.nist.gov/cgi.tcl/" class="xref-dep">cgi</a>
+</dl>
+<dl>
+<dt><a href="caDB.html" class="file">net/adb.cls</a>
+<dd>User authentication database
+<dt><a href="f_net_mail_message.tcl.html" class="file">net/mail/message.tcl</a>
+<dd>Mail manipulation, defined in separate namespace, tcl 8.x only.
+<dt><a href="f_net_misc.tcl.html" class="file">net/misc.tcl</a>
+<dd>Miscancellous procedures
+<dt><a href="f_net_ns_client.tcl.html" class="file">net/ns/client.tcl</a>
+<dd>Mini nameserver, application registry, client
+<dt><a href="f_net_ns_port.tcl.html" class="file">net/ns/port.tcl</a>
+<dd>Mini nameserver, application registry, port spec
+<dt><a href="f_net_ns_server.tcl.html" class="file">net/ns/server.tcl</a>
+<dd>Mini nameserver, application registry, server
+<dt><a href="cacceptEverything.html" class="file">net/pop3/acceptEverything.cls</a>
+<dd>Message classificator accepting every incoming mail.
+<dt><a href="cpop3ApopSeq.html" class="file">net/pop3/apop.cls</a>
+<dd>Delete message on pop server (APOP)
+<dt><a href="f_net_pop3_auth.tcl.html" class="file">net/pop3/auth.tcl</a>
+<dd>POP3 type checker procedures
+<dt><a href="cpopClientMsgClassificatorBase.html" class="file">net/pop3/classifyBase.cls</a>
+<dd>Interface used by a POP3 client (see <span class="xref-classes"><a href="cpop3Client.html" class="class">pop3Client</a></span>) for message classification.
+<dt><a href="cpop3Client.html" class="file">net/pop3/client.cls</a>
+<dd>Core of a POP3 client
+<dt><a href="cpop3CloseSeq.html" class="file">net/pop3/close.cls</a>
+<dd>Close pop3 connection (QUIT)
+<dt><a href="cpopClientStorageBase.html" class="file">net/pop3/cltStorBase.cls</a>
+<dd>Interface used by a POP3 client (see <span class="xref-classes"><a href="cpop3Client.html" class="class">pop3Client</a></span>) for message storage.
+<dt><a href="cpop3DeleteSeq.html" class="file">net/pop3/dele.cls</a>
+<dd>Delete message on pop server (DELE)
+<dt><a href="cmbox.html" class="file">net/pop3/mbox.cls</a>
+<dd>Mailbox management based on files and directories
+<dt><a href="cpop3OpenSeq.html" class="file">net/pop3/open.cls</a>
+<dd>Open pop3 connection (HELO)
+<dt><a href="cpop3Connection.html" class="file">net/pop3/pop3.cls</a>
+<dd>Base management of POP3 connections
+<dt><a href="cpop3SynConnection.html" class="file">net/pop3/pop3s.cls</a>
+<dd>Base management of POP3 connections, synchronous operations
+<dt><a href="f_net_pop3_port.tcl.html" class="file">net/pop3/port.tcl</a>
+<dd>Definition of port to use by pop3 client and server cores.
+<dt><a href="cpop3RetrSeq.html" class="file">net/pop3/retr.cls</a>
+<dd>Delete message on pop server (RETR)
+<dt><a href="cpop3Sequencer.html" class="file">net/pop3/seq.cls</a>
+<dd>POP3 sequencer base
+<dt><a href="cpop3Server.html" class="file">net/pop3/server.cls</a>
+<dd>POP3 server core (Popsy)
+<dt><a href="cdirStorage.html" class="file">net/pop3/storage/dir.cls</a>
+<dd>Storage facility, delivers incoming mails into a directory.
+<dt><a href="cfileStorage.html" class="file">net/pop3/storage/file.cls</a>
+<dd>Storage facility, appends incoming mails to a file
+<dt><a href="cmemStorage.html" class="file">net/pop3/storage/mem.cls</a>
+<dd>Storage facility, holds incoming mails in memory
+<dt><a href="cmultiStorage.html" class="file">net/pop3/storage/multi.cls</a>
+<dd>Storage facility employing other storage systems
+<dt><a href="csmtpStorage.html" class="file">net/pop3/storage/smtp.cls</a>
+<dd>Storage facility built upon SMTP delivery
+<dt><a href="ctriggerStorage.html" class="file">net/pop3/storage/trig.cls</a>
+<dd>Storage facility, forwards incoming data to another facility
+<dt><a href="cpopServerStorageBase.html" class="file">net/pop3/svrStorBase.cls</a>
+<dd>Mailbox management, interface used by a POP3 server (see <span class="xref-classes"><a href="cpop3Server.html" class="class">pop3Server</a></span>).
+<dt><a href="cpop3TopSeq.html" class="file">net/pop3/top.cls</a>
+<dd>Delete message on pop server (TOP)
+<dt><a href="cpop3UserSeq.html" class="file">net/pop3/user.cls</a>
+<dd>Delete message on pop server (USER)
+<dt><a href="cserver.html" class="file">net/server.cls</a>
+<dd>Server construction kit.
+<dt><a href="f_net_serverUtil.tcl.html" class="file">net/serverUtil.tcl</a>
+<dd>Server construction kit, helper procedures.
+<dt><a href="csmtpCloseSeq.html" class="file">net/smtp/close.cls</a>
+<dd>Close smtp connection (QUIT)
+<dt><a href="csmtpDataSeq.html" class="file">net/smtp/data.cls</a>
+<dd>Transfer message to smtp demon (DATA)
+<dt><a href="csmtpOpenSeq.html" class="file">net/smtp/open.cls</a>
+<dd>Open smtp connection (HELO)
+<dt><a href="f_net_smtp_port.tcl.html" class="file">net/smtp/port.tcl</a>
+<dd>Definition of port to use by smtp client and server cores.
+<dt><a href="csmtpPrepareSeq.html" class="file">net/smtp/prepare.cls</a>
+<dd>Prepare transfer of mail message (MAIL FROM, RCPT TO)
+<dt><a href="csmtpSequencer.html" class="file">net/smtp/seq.cls</a>
+<dd>SMTP sequencer base
+<dt><a href="csmtpConnection.html" class="file">net/smtp/smtp.cls</a>
+<dd>SMTP conection management
+<dt><a href="csmtpSpooler.html" class="file">net/smtp/spooler.cls</a>
+<dd>SMTP based spooler.
+<dt><a href="cuserdbBase.html" class="file">net/udbBase.cls</a>
+<dd>User authentication database, interface definition
+<dt><a href="f_net_urls.tcl.html" class="file">net/urls.tcl</a>
+<dd>URL related utilities
+</dl>
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

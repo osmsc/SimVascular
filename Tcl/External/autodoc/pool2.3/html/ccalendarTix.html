@@ -1,0 +1,339 @@
+<html>
+<head>
+<title>File 'clock/calendarTix.cls' (part of 'Pool_Clock')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'clock/calendarTix.cls' (part of '<a href="pkg_Pool_Clock.html" class="package">Pool_Clock</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Calendar widget, tix</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Calendar widget to choose a date.</span>
+<dt><span class="header-title">See also</span>
+<dd><span class="header-value"><span class="xref-classes"><a href="cmonthListTix.html" class="class">monthListTix</a></span>, <span class="xref-classes"><a href="ccalendar.html" class="class">calendar</a></span></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">calendar,  choosing a date,  date choice,  tix</span>
+</dl>
+</div>
+<h1 class="class">Class 'calendarTix'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://tix.mne.com/" class="xref-dep">Tix</a></span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cvalueManager.html" class="class">valueManager</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#oorder" class="options">order</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="ccalendarTix.html#pcalendarTix_MaxDay" class="proc">MaxDay</a> <span class="arg-list">()</span><br>
+<a href="ccalendarTix.html#pcalendarTix_TrackDay" class="proc">TrackDay</a> <span class="arg-list">(d)</span><br>
+<a href="ccalendarTix.html#pcalendarTix_TrackMonth" class="proc">TrackMonth</a> <span class="arg-list">(m)</span><br>
+<a href="ccalendarTix.html#pcalendarTix_TrackOrder" class="proc">TrackOrder</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="ccalendarTix.html#pcalendarTix_TrackYear" class="proc">TrackYear</a> <span class="arg-list">(y)</span><br>
+<a href="ccalendarTix.html#pcalendarTix_WrapY" class="proc">WrapY</a> <span class="arg-list">(d)</span><br>
+<a href="ccalendarTix.html#pcalendarTix_calendarTix" class="proc">calendarTix</a> <span class="arg-list">()</span><br>
+<a href="ccalendarTix.html#pcalendarTix_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span><br>
+<a href="ccalendarTix.html#pcalendarTix_setBindings" class="proc">setBindings</a> <span class="arg-list">()</span><br>
+<a href="ccalendarTix.html#pcalendarTix_setBindingsTo" class="proc">setBindingsTo</a> <span class="arg-list">(w)</span><br>
+<a href="ccalendarTix.html#pcalendarTix_updateDisplay" class="proc">updateDisplay</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vyear" class="members">year</a><br>
+<a href="#vmonth" class="members">month</a><br>
+<a href="#vday" class="members">day</a><br>
+<a href="#vmonlen" class="members">monlen</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="oorder"></a>
+<dt><span class="option-name">-order</span>
+<dd><span class="option-description">  Selection and order of the subwidgets.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">ymd</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pcalendarTix_MaxDay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">MaxDay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines the value triggering an upward wraparound.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Lowest value above the length of the month considered as invalid for the day widget.
+</td>
+</tr>
+</table>
+</p>
+<a name="pcalendarTix_TrackDay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackDay</span> <span class="arg-list">(d)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Callback for subordinate day widget. Executed every time its value is set (not necessarily changed). Touching the lower or upper bound triggers a decrement/increment operation for month and year (ripple counter, wrap around).</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Does nothing, if no change took place (avoids infinite recursion).
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: d
+</td>
+<td class="argument-description">
+The (possibly) new value of the chosen day.
+</td>
+</tr>
+</table>
+</p>
+<a name="pcalendarTix_TrackMonth"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackMonth</span> <span class="arg-list">(m)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Callback for subordinate month widget. Executed every time its value is set (not necessarily changed).</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Does nothing, if no change took place (avoids infinite recursion).
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: m
+</td>
+<td class="argument-description">
+The (possibly) new value of the chosen month.
+</td>
+</tr>
+</table>
+</p>
+<a name="pcalendarTix_TrackOrder"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackOrder</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The widget defined allows arbitrary ordering of its components. The corresponding option is -order. This method is called everytime the option was set and executes the necessary relayout.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option, always '-order'.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The old value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="pcalendarTix_TrackYear"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackYear</span> <span class="arg-list">(y)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Callback for subordinate year widget. Executed every time its value is set (not necessarily changed).</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Does nothing, if no change took place (avoids infinite recursion).
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: y
+</td>
+<td class="argument-description">
+The (possibly) new value of the chosen year.
+</td>
+</tr>
+</table>
+</p>
+<a name="pcalendarTix_WrapY"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">WrapY</span> <span class="arg-list">(d)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Increment/decrement operator for subordinate year widget.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: d
+</td>
+<td class="argument-description">
+direction of wrap, must be one of 'up' or 'down'.
+</td>
+</tr>
+</table>
+</p>
+<a name="pcalendarTix_calendarTix"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">calendarTix</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Initializes the value to the current date if not set already by the user.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pcalendarTix_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cwidget.html#pwidget_createSubwidgets" class="proc">createSubwidgets</a><br>
+<span class="header-description-value">Called by the framework to generate the subwidgets and their layout.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pcalendarTix_setBindings"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">setBindings</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cwidget.html#pwidget_setBindings" class="proc">setBindings</a><br>
+<span class="header-description-value">Adds various keyboard accelerators to the calendar components.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pcalendarTix_setBindingsTo"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">setBindingsTo</span> <span class="arg-list">(w)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds various keyboard accelerators to the given widget.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+The widget the accelerators are added to.
+</td>
+</tr>
+</table>
+</p>
+<a name="pcalendarTix_updateDisplay"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">updateDisplay</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cvalueManager.html" class="class">valueManager</a>:<a href="cvalueManager.html#pvalueManager_updateDisplay" class="proc">updateDisplay</a><br>
+<span class="header-description-value">Method required by superclass <span class="xref-classes"><a href="cvalueManager.html" class="class">valueManager</a></span> to propagate changes to the value into the display.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vyear"></a>
+<dt><span class="variable-name">year</span>
+<dd><span class="variable-description">    Currently chosen year</span>
+<a name="vmonth"></a>
+<dt><span class="variable-name">month</span>
+<dd><span class="variable-description">   Currently chosen month</span>
+<a name="vday"></a>
+<dt><span class="variable-name">day</span>
+<dd><span class="variable-description">     Currently chosen day in the month</span>
+<a name="vmonlen"></a>
+<dt><span class="variable-name">monlen</span>
+<dd><span class="variable-description">  Length of the currently chosen date</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

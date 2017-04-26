@@ -1,0 +1,274 @@
+<html>
+<head>
+<title>File 'base/syslog.tcl' (part of 'Pool_Base')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'base/syslog.tcl' (part of '<a href="pkg_Pool_Base.html" class="package">Pool_Base</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">syslog-like logging facility.</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">General logging facility to avoid having lower libraries to know the actual log mechanism employed by a client application.</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">logging,  syslog,  message reporting,  error reporting,  message levels</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_base_syslog.tcl.html#p_pool_syslog_2color" class="proc">::pool::syslog::2color</a> <span class="arg-list">(level)</span>
+<li class="proc-listing"><a href="f_base_syslog.tcl.html#p_pool_syslog_Log2Stderr" class="proc">::pool::syslog::Log2Stderr</a> <span class="arg-list">(level text)</span>
+<li class="proc-listing"><a href="f_base_syslog.tcl.html#p_pool_syslog_def" class="proc">::pool::syslog::def</a> <span class="arg-list">(putsCmd)</span>
+<li class="proc-listing"><a href="f_base_syslog.tcl.html#p_pool_syslog_defLevel" class="proc">::pool::syslog::defLevel</a> <span class="arg-list">(level putsCmd)</span>
+<li class="proc-listing"><a href="f_base_syslog.tcl.html#p_pool_syslog_levelCmp" class="proc">::pool::syslog::levelCmp</a> <span class="arg-list">(lvA lvB)</span>
+<li class="proc-listing"><a href="f_base_syslog.tcl.html#p_pool_syslog_levels" class="proc">::pool::syslog::levels</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_syslog.tcl.html#p_pool_syslog_logLevel" class="proc">::pool::syslog::logLevel</a> <span class="arg-list">(o v)</span>
+<li class="proc-listing"><a href="f_base_syslog.tcl.html#p_pool_syslog_setStderr" class="proc">::pool::syslog::setStderr</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_syslog.tcl.html#p_pool_syslog_syslog" class="proc">::pool::syslog::syslog</a> <span class="arg-list">(level args)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_syslog_2color"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::syslog::2color</span> <span class="arg-list">(level)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: level
+</td>
+<td class="argument-description">
+The level to convert into a color.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The color associated to the given <span class="argument"><span class="proc">level</span></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_syslog_Log2Stderr"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::syslog::Log2Stderr</span> <span class="arg-list">(level text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Standard log procedure, writes incoming message to stderr.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: level
+</td>
+<td class="argument-description">
+Log level of message given.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+Message to log
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_syslog_def"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::syslog::def</span> <span class="arg-list">(putsCmd)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Defines a command which will be executed for every message given to the system.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: putsCmd
+</td>
+<td class="argument-description">
+The script evaluated by <span class="xref-procs"><a href="f_base_syslog.tcl.html#p_pool_syslog_syslog" class="proc">::pool::syslog::syslog</a></span> to log the incoming messages. Will be called with 2 arguments: The level and the text.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_syslog_defLevel"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::syslog::defLevel</span> <span class="arg-list">(level putsCmd)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Defines a command which will be executed for every message given to the system and having the specified level.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: level
+</td>
+<td class="argument-description">
+The level triggering the execution of <span class="argument"><span class="argument-description">putsCmd</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: putsCmd
+</td>
+<td class="argument-description">
+The script evaluated by <span class="xref-procs"><a href="f_base_syslog.tcl.html#p_pool_syslog_syslog" class="proc">::pool::syslog::syslog</a></span> to log the incoming messages. Will be called with 2 arguments: The level and the text.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_syslog_levelCmp"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::syslog::levelCmp</span> <span class="arg-list">(lvA lvB)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: lvA
+</td>
+<td class="argument-description">
+The first level to compare.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: lvB
+</td>
+<td class="argument-description">
+The second level to compare.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: One of -1, 0, or 1. 0 if <span class="argument"><span class="proc">lvA</span></span> and <span class="argument"><span class="proc">lvB</span></span> are equal, -1 if <span class="argument"><span class="proc">lvA</span></span> is less important than <span class="argument"><span class="proc">lvB</span></span> and 1 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_syslog_levels"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::syslog::levels</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Returns a list containing the names of all log-levels known to the system. The shortcuts are not returned.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_syslog_logLevel"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::syslog::logLevel</span> <span class="arg-list">(o v)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Type checker procedure for 'getopt'. Accepts all levels known to this module.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the option to check.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: v
+</td>
+<td class="argument-description">
+The value to check.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A boolean value. True if and only if <span class="argument"><span class="proc">v</span></span> is a level defined here.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_syslog_setStderr"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::syslog::setStderr</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Convenience procedure. Installs the standard log procedure (<span class="xref-procs"><a href="f_base_syslog.tcl.html#p_pool_syslog_Log2Stderr" class="proc">::pool::syslog::Log2Stderr</a></span>) for all levels.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_syslog_syslog"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::syslog::syslog</span> <span class="arg-list">(level args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Entrypoint to the logger facility, to be used by libraries. The actual log is done by a command defined via <span class="xref-procs"><a href="f_base_syslog.tcl.html#p_pool_syslog_def" class="proc">::pool::syslog::def</a></span> or <span class="xref-procs"><a href="f_base_syslog.tcl.html#p_pool_syslog_defLevel" class="proc">::pool::syslog::defLevel</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: level
+</td>
+<td class="argument-description">
+Relative importance of the logged message. Should be one of the strings returned by <span class="xref-procs"><a href="f_base_syslog.tcl.html#p_pool_syslog_levels" class="proc">::pool::syslog::levels</a></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+list containing the texts to log.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

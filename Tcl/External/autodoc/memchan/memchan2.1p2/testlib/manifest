@@ -1,0 +1,27 @@
+# -*- tcl -*-
+# ----------- MANIFEST of files contained in tg0.1 -----------
+file ./ANNOUNCE
+file ./CHANGES
+file ./ChangeLog
+file ./ChangeLog.short
+file ./DESCRIPTION
+file ./LSM
+file ./README
+file ./TODO
+file ./doc
+file ./doc/goal
+file ./doc/tests.spec
+file ./lib
+file ./lib/cmd.tcl
+file ./lib/if.tcl
+file ./lib/logo.tcl
+file ./lib/nlistbox.tcl
+file ./lib/pkgIndex.tcl
+file ./lib/pkgUtil.tcl
+file ./lib/run.tcl
+file ./lib/scan.tcl
+file ./lib/splash.tcl
+file ./lib/tclIndex
+file ./lib/test.tcl
+file ./lib/util.tcl
+file ./tester

@@ -1,0 +1,42 @@
+# -*- tcl -*-
+xrefDef	libes  "Don Libes"	     mailto:libes@nist.gov
+xrefDef	cgilib "cgi library"	     http://expect.nist.gov/cgi.tcl/
+xrefDef	Sam    "Sam Shen"	     mailto:slshen@lbl.gov
+xrefDef	jma    "Jean-Michel Augusto" mailto:Jean-Michel.Augusto@mail.dotcom.fr
+xrefDef tcldoc "tcldoc"              ftp://ftp.acri.fr/pub/tcl/jma/tcldoc/
+xrefDef iTcl   "\[incr Tcl\]"        http://www.tcltk.com/itcl/
+xrefDef iTk    "\[incr Tk\]"         http://www.tcltk.com/itcl/
+
+# references to external packages
+depDef	Pool		"http://www.oche.de/~akupries/soft/pool/index.htm"
+depDef	Pool_Base	"http://www.oche.de/~akupries/soft/pool/index.htm"
+depDef	Pool_Net	"http://www.oche.de/~akupries/soft/pool/index.htm"
+#depDef	Pool_OO		"http://www.oche.de/~akupries/soft/pool/packages.htm"
+#depDef	Pool_Clock	"http://www.oche.de/~akupries/soft/pool/packages.htm"
+#depDef	Pool_Log	"http://www.oche.de/~akupries/soft/pool/packages.htm"
+depDef	cgi		"http://expect.nist.gov/cgi.tcl/"
+depDef	Tcl		"http://www.scriptics.com/"
+depDef	Tix		"http://tix.mne.com/"
+
+
+xrefDef \
+	syslogConnection \
+	syslogConnection \
+	"http://www.oche.de/~akupries/soft/pool/classes.htm#s"
+
+imgConverter ps2gif {
+    exec pstogif -flip cw -density 100 -out %tmp% %in%
+    exec giftopnm %tmp% | ppmtogif -trans #ffffff > %out%
+}
+
+imgConverter transXpm2gif {
+    exec convert %in% %tmp%.gif
+    file copy %tmp%.gif %out%
+}
+
+
+imgDef org_overview \
+	"General organisation of the generated documentation" \
+	ps2gif gif doc/scheme.of.things.ps
+
+imgDef upArrow "" transXpm2gif gif doc/up.xpm

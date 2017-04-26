@@ -1,0 +1,165 @@
+# -*- tcl -*-
+# documentation of remote control interfaces for popsy/popeye
+
+proc head    {str} {table_head {write $str}}
+proc data    {str} {table_data {write $str}}
+
+# --------------------------------------------------------------
+
+newPage	popsyrc.htm	"POPsy remote control interface"
+
+par "
+POPsy currently ``exports'' 11 procedures, 8 of these are concerned
+with the user authentication database:
+"
+
+table border {
+    table_row {
+	head "Name"
+	head "Meaning"
+    }
+    table_row {
+	data "popsy_shutdown"
+	data "
+	No arguments. The process receiving this command will exit
+	immediately. Currently the only way to have a clean shutdown, with
+	unregistration of the process at the name service
+	"
+    }
+    table_row {
+	data "popsy_logto"
+	data "
+	One argument required, has to be either empty or a 2-element list. In
+	the first case remote logging will be switched off. Interpreted as
+	hostname and portnumber in the 2nd form, in this order. The receiving
+	process will send its log to the specified address from then on.
+	"
+    }
+    table_row {
+	data "popsy_configuration"
+	data "
+	No arguments. Returns the current configuration of the server as
+	4-element list. It contains, in this order: path to the base
+	mailfolder, path to the user authentiction database file, the port
+	used by the server and a 2-element list containing information about
+	remote logging. This list contains the host and the port number to log
+	to, in this order.
+	"
+    }
+    table_row {
+	data "popsy_add_user"
+	data "
+	Three arguments, the name of the new user, its password and the
+	spooldirectory to use. Adds the given information to the user
+	authentication database. Neither name nor spooldir must be used by
+	another entry. The spooldir is interpreted as a path relative to the
+	base mailfolder. In case of a missing or empty spooldir argument the
+	user name is used.
+	"
+    }
+    table_row {
+	data "popsy_remove_user"
+	data "
+	Deletes the information about the user whose name was given as first
+	and only argument. The spooldir is removed too, together with messages
+	residing in it.
+	"
+    }
+    table_row {
+	data "popsy_rename_user"
+	data "
+	Two arguments, the name of the user to be renamed, and its new
+	identity. The new name must not be used by another entry.
+	"
+    }
+    table_row {
+	data "popsy_cd_user"
+	data "
+	Changes the spooldirectory associated to the user. Two arguments, the
+	name of the user to operate on, and the new path. The new path must
+	not be used by another entry.
+	"
+    }
+    table_row {
+	data "popsy_cp_user"
+	data "
+	Changes the password of the given user. Two arguments, the name of the
+	user to operate on, and the new password.
+	"
+    }
+    table_row {
+	data "popsy_query_user"
+	data "
+	Requests the information stored in the user authentication database
+	about the user whose name was given as first and only argument.
+	Return value is a 2-element list containing password and
+	spooldirectory, in this order.
+	"
+    }
+    table_row {
+	data "popsy_users"
+	data "
+	No arguments. Returns a list containing the names of all users known
+	to the user authentication database.
+	"
+    }
+    table_row {
+	data "popsy_user_save"
+	data "
+	No arguments. Saves the in-memory user authentication database back
+	into the external file. Alternative description: Changes made to the
+	database are made persistent.
+	"
+    }
+}
+
+
+par "
+See [fileRef apps/popsymon], [fileRef apps/popsy_man]
+for examples of their usage.
+"
+
+closePage
+
+
+# --------------------------------------------------------------
+
+newPage	popeyrc.htm	"POPeye remote control interface"
+
+par "POPeye currently ``exports'' 3 procedures:"
+
+table border {
+    table_row {
+	head "Name"
+	head "Meaning"
+    }
+    table_row {
+	data "popeye_shutdown"
+	data "
+	No arguments. The process receiving this command will exit
+	immediately. Currently the only way to have a clean shutdown,
+	with unregistration of the process at the name service
+	"
+    }
+    table_row {
+	data "popeye_fetch"
+	data "
+	No arguments. Triggers a fetch cycle in the receiving process.
+	"
+    }
+    table_row {
+	data "popeye_logto"
+	data "
+	One argument required, has to be either empty or a 2-element list. In
+	the first case remote logging will be switched off. Interpreted as
+	hostname andportnumber in the 2nd form, in this order. The receiving
+	process will send its log to the specified address from then on.
+	"
+    }
+}
+
+par "See [fileRef apps/popeyemon] for an example of their usage."
+
+closePage
+
+# --------------------------------------------------------------

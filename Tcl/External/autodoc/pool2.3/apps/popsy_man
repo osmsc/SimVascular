@@ -1,0 +1,158 @@
+#!/usr/local/bin/tclsh
+# -*- tcl -*-
+#
+# commandline oriented management utility for POPsy
+
+package require Comm
+package require Pool_Base
+package require Pool_Net
+
+proc bgerror {text} {
+    global errorInfo
+    ::pool::syslog::syslog error $text, $errorInfo
+    return
+}
+
+
+# search for popsy
+set id ""
+
+if {$argv == {} || (($argv != {}) && ("$argv" != "?") && ("$argv" != "h"))} {
+    catch {set id [::pool::nameserver::lookup popsy]}
+
+    if {$id == {}} {
+	puts "popsy (or name service) not running"
+	exit
+    }
+
+    set id [lindex $id 1]
+}
+
+
+# -------------------------------------------------------
+# control commands
+
+proc ? {} {
+    puts "popsy manager, help page"
+    puts "------------------------"
+    puts "?, h: this page"
+    puts "+ name pwd ?dir?: add user <name>, with password and spooldirectory"
+    puts "- name:           remove user <name>"
+    puts "i name:           query info of user <name>"
+    puts "who ?-all?:       list all users, -all: and their information"
+    puts "kill:             kill server process"
+    puts "save:             save user definitions"
+    puts "cp name pwd:      change pwd of user <name>"
+    puts "cd name dir:      change dir of user <name>"
+    puts "config:           get server configuration"
+    puts ""
+    puts "For one-shot tasks just call popsy_man with the command and its"
+    puts "arguments on the command line. Example:"
+    puts ""
+    puts "\t'popsy_man + dagobert duck'"
+    puts ""
+    puts "will add the specified user to the database"
+}
+interp alias {} h {} ?
+
+
+proc + {name pwd {dir {}}} {
+    global     id
+
+    if {$dir == {}} {set dir $name}
+
+    comm send $id popsy_add_user [list $name] [list $pwd] [list $dir]
+}
+
+proc - {name} {
+    global     id
+    comm send $id popsy_remove_user [list $name]
+}
+
+proc i {name} {
+    global     id
+    puts "[comm send $id popsy_query_user [list $name]]"
+}
+
+proc config {} {
+    global     id
+    set cfg [comm send $id popsy_configuration]
+
+    puts "mailfolder [lindex $cfg 0]"
+    puts "userdb     [lindex $cfg 1]"
+    puts "port       [lindex $cfg 2]"
+    puts "log        [lindex $cfg 3]"
+}
+
+proc who {{what {}}} {
+    global     id
+
+    switch -- $what {
+	"" {puts "[comm send $id popsy_users]"}
+	-all {
+	    foreach n [comm send $id popsy_users] {
+		puts "$n\t[comm send $id popsy_query_user [list $n]]"
+	    }
+	}
+	default {puts "unknown option '$what'"}
+    }
+}
+
+
+proc kill {} {
+    global id
+    comm send -async $id popsy_shutdown
+    after 100 exit
+    vwait forever
+}
+
+
+proc save {} {
+    global     id
+    comm send $id popsy_user_save
+}
+
+
+proc cp {name pwd} {
+    global id
+    set info [comm send $id popsy_cp_user [list $name] [list $pwd]]
+}
+
+
+proc cd {name dir} {
+    global id
+    set info [comm send $id popsy_cd_user [list $name] [list $dir]]
+}
+
+
+#
+# -------------------------------------------------------
+# command loop
+
+proc prompt {} {
+    puts -nonewline "% "
+    flush stdout
+}
+
+proc bgerror {text} {
+    puts $text
+    log -
+    exit
+}
+
+proc action {} {
+    if {[eof  stdin]} {exit}
+    if {[gets stdin line] < 0} {return}
+    eval $line
+    prompt
+}
+
+
+if {$argv != {}} {
+    eval $argv
+    exit
+}
+
+fileevent stdin readable action
+prompt
+vwait forever

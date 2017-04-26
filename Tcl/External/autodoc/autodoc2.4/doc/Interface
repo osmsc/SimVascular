@@ -1,0 +1,200 @@
+This file describes the formatting commands available to writers of tcl code to
+place documentation into it.
+===============================================================================
+
+
+Generalities
+------------
+*	Only commands appearing inside of regular comments are recognized.
+
+*	Source files are described by commands appearing in the first contiguous
+	region of comments at the top of it.
+
+*	A procedure is described by all commands found inside its body
+
+*	A method of a class is described by all commands found inside its body
+
+*	A class is described by commands all appearing in the first contiguous
+	region of comments at the top of its description (aka body)
+
+
+Commands
+--------
+
+Available are:
+
+*	@comment
+	Everything behind upto the end of the line is seen as part of the
+	description of the (implicitly) refered entity (file, procesure, class,
+	...). All commands refering to the same entity are concatenated
+	together. Linebreaks and superflous whitespace will be eliminated. The
+	HTML-Browser is responsible for a nice presentation.
+
+*	@short
+	Everything behind upto the end of the line is seen as part of a short!
+	description of the (implicitly) refered entity (file, procesure, class,
+	...). All commands refering to the same entity are concatenated
+	together. Linebreaks and superflous whitespace will be eliminated. The
+	HTML-Browser is responsible for a nice presentation.
+
+*	@danger
+*	@note
+	Everything behind upto the end of the line is seen as comment about
+	restrictions, traps, pitfalls, ... the user of the described code has
+	to be aware of. They can be freely intermixed with the general
+	description. The extractor has to take care of them being placed into a
+	separate section. All commands refering to the same entity are
+	concatenated together. Linebreaks and superflous whitespace will be
+	eliminated. The HTML-Browser is responsible for a nice presentation. 
+
+*	@index
+	Everything behind upto the end of the line is seen as comma-separated
+	list of phrases to be used in indexing the refered entity. All commands
+	refering to the same entity are concatenated together.
+
+	A system of upward propagation isd employed, i.e:
+
+	<>	A file will be indexed under all phrases given to its
+		components (classes and procedures).
+	<>	A package is indexed with all phrases given to the files it is
+		made out of.
+
+*	@result
+	This command makes sense only for procedures and methods. It describes
+	the result returned by the procedure/method.
+
+*	@argument <name>:
+	As with @result this command should be used only inside procedures and
+	methods. It describes the argument <name> given to the procedure.
+
+*	@author
+	Describes the author of the refered entity. Downward propagation is
+	employed, i.e: A smaller entity automatically refers the author of the
+	surrounding entity, if not noted otherwise.
+
+	Distribution -> Package -> File -> Procedure, (Class -> Method)
+
+*	@see
+	Cross references to related material (classes, procedures, ...).
+
+
+Shortcuts are:
+
+	Command		Shortcut
+	------------------------
+	@comment	@c
+	@short		@s
+	@danger		@d
+	@note		@n
+	@result		@r
+	@argument	@a
+	@index		@i
+	@author		-- none --
+	@see		-- none --
+	------------------------
+
+
+Cross references
+----------------
+
+The texts used to describe the found entities may contain cross references of
+the following form. The extractor should convert such into hyperlinks, if possible.
+
+*	<arg a>
+	refers to the argument named 'a', of the procedure described.
+	(no hyperlink!)
+
+*	<proc p>
+	refers to the procedure named 'p'.
+
+*	<class c>
+	refers to the class named 'c'.
+
+*	<method c/m>
+	refers to the method named 'm', of the class with name 'c'.
+
+*	<option c/o>
+	refers to the option 'o' of the class with name 'c'.
+
+*	<file f>
+	refers to the file named 'f'.
+
+*	<pkg p>
+	refers to the package named 'p'.
+
+*	<xref code>
+	refers to externally defined hyperlink accessible via 'code'.
+	Must/Should/Could have been defined by '.predoc' file.
+
+
+Shortcuts are
+	<arg >		<a >
+	<proc >		<p >
+	<class >	<c >
+	<method >	<m >
+	<option >	<o >
+	<file >		<f >
+	<pkg >		-- none --
+
+Formatting inside the text
+--------------------------
+
+Another set of commands allows introduction of formatting into the
+documentation text:
+
+	&p	=	paragraph break
+
+
+
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+---------------------------------------------------------------------
+
+Additional pages
+~~~~~~~~~~~~~~~~
+autodoc recognizes files with extensions '.doc' and '.predoc'.
+They are assumed to contain to tcl code generating additionally
+documentation pages.
+
+The distribution object searches for such files after scanning
+for packages, but before everything else.
+
+
+
+.predoc
+-------
+These are executed immediately when they are found.
+A separate SAFE interpreter is used, the distribution object
+is visible under the name 'dist'. A restricted functionality is
+available only.
+
+Currently only 'xref_def' is available, to define additional
+hyperlinks, which are then accessible to the embedded
+documentation (via <xref ...>).
+
+.doc
+----
+These are executed after all pages were generated, with the
+exception of the homepage, wich will be generatec afterward.
+
+A separate SAFE interpreter is used, the distribution object
+is visible under the name 'dist'. A restricted functionality is
+available only:
+
+*	Commands to generate packages (new_page, close_page)
+*	Crossreference resolver (xref, procref, classref,
+	methodref, optionref, fileref, pkgref)
+
+The system will record the names of the generated pages (rejecting
+the ones already defined, to prevent their replacement) and
+generate a modified home page afterward, making the additional
+pages available as sidebar. Only names without path are permitted,
+the code must neither leave the html-directory, nor create subdirectories.
+
+*	A special command is provided to give the executed code the
+	ability to associate its own text with the page references.
+	Without doing this the name of the generated file is used.
+
+*	Another special command allows the direct integration of
+	referenced files (pictures, sound, etc). These are copied
+	into the html-directory.

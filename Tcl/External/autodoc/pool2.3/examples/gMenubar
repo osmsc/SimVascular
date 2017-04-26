@@ -1,0 +1,16 @@
+#!/usr/local/bin/wish
+#-!/usr/local/bin/tclsh
+# -*- tcl -*-
+
+package require Pool_GuiBase
+
+
+genericMenubar .m -command Exec
+
+.m addMenu gMenubar -1 {exit <Exit>}
+
+
+proc Exec {who cmd} {
+    puts "$who -> cmd = $cmd"
+    exit
+}

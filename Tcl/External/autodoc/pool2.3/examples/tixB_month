@@ -1,0 +1,36 @@
+#!/usr/local/bin/wish
+# -*- tcl -*-
+
+# present month chooser
+# ------------------------------------------------------
+
+puts "demonstration of the 'tix_month_chooser_b'-widget"
+puts "\tuse +/- to change the month"
+puts "\talternatively click around"
+puts "\tnote the wrap-arounds at beginning/end of a year"
+puts "\t'Q' will exit the program"
+
+# ------------------------------------------------------
+#package require Pool_GuiBase
+package require Pool_Clock
+
+
+# ------------------------------------------------------
+wm title . "Month"
+
+# ------------------------------------------------------
+monthBrowserTixB .m            \
+	-fg yellow             \
+	-bg seagreen4          \
+	-order   ym            \
+	-command {puts stdout}
+
+pack .m -side top -fill both -expand 1
+
+# enable keyboard accelerators
+# m_list_setkeys    .m.ml
+
+.m setBindingsTo .
+
+bind . <Key-Q>    exit
+bind . <Key-q>    exit

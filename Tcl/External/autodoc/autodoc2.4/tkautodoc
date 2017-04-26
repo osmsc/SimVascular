@@ -1,0 +1,220 @@
+#!/usr/bin/wish
+# -*- tcl -*-
+# extract documentation from tcl sources, convert into html.
+# Use tcl/tk 8.0 !
+wm withdraw .
+
+# save this from redefinition by 'cgilib'.
+# See distribution.cls, line 39ff too.
+catch {parray}
+
+# enforce usage of original bgerror procedure, not the one in Pool.
+catch {bgerror}
+
+# Change of original tkautodoc
+# TixOut - FNL/99/07/07
+# Tix package not necessary any more since
+# tixButtonBox replaced by tcl/tk commands 
+
+# package require Tix
+package require Pool_Base
+package require Pool_GuiBase
+package require AutoDOC
+
+#test phase
+#lappend auto_path [file join [::pool::file::here] lib]
+
+# define options (hardwired defaults, user defaults, commandline)
+::pool::array::def        oDef
+::pool::getopt::defOption oDef srcdir           -d [pwd]
+::pool::getopt::defOption oDef outputdir        -d [file join [pwd] output]
+::pool::getopt::defOption oDef replyaddr        -d [::pool::misc::currentAddress]
+::pool::getopt::defOption oDef tables           -d 1 -t ::pool::getopt::boolean
+::pool::getopt::defOption oDef psort            -d 1 -t ::pool::getopt::boolean
+::pool::getopt::defOption oDef ptable           -d 1 -t ::pool::getopt::boolean
+::pool::getopt::defOption oDef v                -d 0 -t ::pool::getopt::boolean
+::pool::getopt::defOption oDef up-title         -d ""
+::pool::getopt::defOption oDef up-link          -d ""
+::pool::getopt::defOption oDef up-image         -d ""
+::pool::getopt::defOption oDef up-imglink       -d 0 -t ::pool::getopt::boolean
+::pool::getopt::defOption oDef exclude          -d ""
+::pool::getopt::defOption oDef clisttype        -d par
+::pool::getopt::defOption oDef no-problems      -d 0
+::pool::getopt::defOption oDef css              -d 1
+::pool::getopt::defOption oDef fsort-fullpath   -d 1
+::pool::getopt::defOption oDef file-prefix      -d {}
+::pool::getopt::defOption oDef class-prefix     -d {}
+::pool::getopt::defOption oDef proc-prefix      -d {}
+::pool::getopt::defOption oDef namespace-prefix -d {}
+::pool::getopt::defOption oDef itk-opt-alias    -d {}
+
+foreach opt {
+    replyaddr tables psort ptable up-title up-link up-image up-imglink exclude
+    clisttype no-problems css fsort-fullpath file-prefix class-prefix
+    proc-prefix outputdir namespace-prefix itk-opt-alias output-dir
+} {
+    proc $opt {v} "global oDef; ::pool::getopt::changeDefault oDef $opt \$v"
+}
+
+# user dependent configuration
+catch {source [file join $env(HOME) .autodocrc]}
+
+# caller configuration
+::pool::array::def                    optAD
+::pool::getopt::initValues oDef       optAD
+::pool::getopt::processOpt oDef $argv optAD
+
+# generate engine, set it up with default option values
+distribution dist                                \
+	-srcdir           $optAD(-srcdir)         \
+	-outputdir        $optAD(-outputdir)      \
+	-replyaddr        $optAD(-replyaddr)      \
+	-tables           $optAD(-tables)         \
+	-psort            $optAD(-psort)          \
+	-ptable           $optAD(-ptable)         \
+	-up-title         $optAD(-up-title)       \
+	-up-image         $optAD(-up-image)       \
+	-up-link          $optAD(-up-link)        \
+	-up-imglink       $optAD(-up-imglink)     \
+	-exclude          $optAD(-exclude)        \
+	-clisttype        $optAD(-clisttype)      \
+	-no-problems      $optAD(-no-problems)    \
+	-css              $optAD(-css)            \
+	-fsort-fullpath   $optAD(-fsort-fullpath) \
+	-file-prefix      $optAD(-file-prefix)    \
+	-class-prefix     $optAD(-class-prefix)   \
+	-proc-prefix      $optAD(-proc-prefix)     \
+	-namespace-prefix $optAD(-namespace-prefix) \
+	-itk-opt-alias    $optAD(-itk-opt-alias)    \
+	-adlocation {http://www.purl.org/NET/akupries/soft/autodoc/index.htm}
+
+# generate HTML
+# -W- future: make that switchable by an option.
+dist configure -formatter [htmlFormatter distHtmlOut]
+
+# -- interface utilities --
+
+proc do_scan {} {
+    # callback to 'Scan' button.
+
+    global src html tables dist reply psort ptable
+
+    dist configure             \
+	    -srcdir    $src    \
+	    -outputdir $html   \
+	    -tables    $tables \
+	    -replyaddr $reply  \
+	    -psort     $psort  \
+	    -ptable    $ptable
+
+    # -W- exclude patterns ?
+
+    .t clear
+
+# TixOut - FNL/99/07/07
+#    .a subwidget exit configure -state disabled
+    .a.bExit config -state disabled
+    update
+    dist scan
+
+# TixOut - FNL/99/07/07
+#    .a subwidget exit configure -state normal
+    .a.bExit config -state normal
+    update
+    return
+}
+
+
+proc log_do {level message} {
+    # logger callback, route information into text widget.
+
+    #update idletasks
+    #update
+
+    .t log $level $message
+    return
+}
+
+::pool::syslog::def log_do
+
+
+proc Exit {} {
+    dist delete
+    exit
+}
+
+# -- interface --
+# ---- main panels, input, logger area, actions ----
+frame     .input  -bd 1 -relief raised
+frame     .log    -bd 1 -relief raised
+
+# tixButtonBox .a -orient horizontal -relief raised -bd 1
+# tix button replacement
+frame .a -borderwidth 10
+button .a.bExit -text "Exit" -command Exit
+button .a.bScan -text "Scan" -command do_scan
+
+#tixButtonBox .a -orient horizontal -relief raised -bd 1
+#.a add exit -text Exit -command Exit
+#.a add scan -text Scan -command do_scan
+
+pack  .input -side top -fill both -expand 0
+pack  .log   -side top -fill both -expand 1
+pack  .a     -side top -fill both -expand 0
+
+pack .a.bExit -side left -fill both -padx 2m -pady 1m
+pack .a.bScan -side left -fill both -padx 2m -pady 1m
+
+
+# ---- populate input area ----
+
+frame .src
+frame .htm
+frame .addr
+
+label .src.l  -text Source:       -anchor w
+label .htm.l  -text Target:       -anchor w
+label .addr.l -text Replyaddress: -anchor w
+
+entry       .src.dir -relief sunken -bd 2 -textvariable src   -width 80
+entry       .htm.dir -relief sunken -bd 2 -textvariable html  -width 80
+entry       .addr.e  -relief sunken -bd 2 -textvariable reply -width 80
+checkbutton .tables -text Tables -anchor w -variable tables
+checkbutton .psort  -text "Sort procedures by name"    \
+	-anchor w -variable psort
+checkbutton .ptable -text "Format procedures as table" \
+	-anchor w -variable ptable
+
+
+pack .src.l   -side left  -fill both -expand 1
+pack .src.dir -side right -fill both -expand 0
+
+pack .htm.l   -side left  -fill both -expand 1
+pack .htm.dir -side right -fill both -expand 0
+
+pack .addr.l -side left  -fill both -expand 1
+pack .addr.e -side right -fill both -expand 0
+
+pack .src    -side top -fill both -expand 0 -in .input
+pack .htm    -side top -fill both -expand 0 -in .input
+pack .addr   -side top -fill both -expand 0 -in .input
+pack .tables -side top -fill both -expand 0 -in .input
+pack .psort  -side top -fill both -expand 0 -in .input
+pack .ptable -side top -fill both -expand 0 -in .input
+
+set src    [dist cget -srcdir]
+set html   [dist cget -outputdir]
+set tables [dist cget -tables]
+set reply  [dist cget -replyaddr]
+set psort  [dist cget -psort]
+set ptable [dist cget -ptable]
+
+# ---- setup log ----
+
+logger .t -slow 1 ;#-width 80
+pack   .t -side left -expand 1 -fill both -in .log
+
+# make interface visible, allow interaction.
+wm deiconify .
+
+

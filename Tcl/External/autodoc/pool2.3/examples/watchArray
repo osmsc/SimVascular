@@ -1,0 +1,16 @@
+#!/usr/local/bin/wish
+#-!/usr/local/bin/tclsh
+# -*- tcl -*-
+
+package require Pool_GuiBase
+
+#wm withdraw .
+
+array set stat [array get tcl_platform]
+
+watchArray .x -variable stat
+pack       .x -expand 1 -fill both -side top
+
+after  2000 {file stat testbed stat}
+after 10000 {exit}
+

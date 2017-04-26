@@ -1,0 +1,146 @@
+<html>
+<head>
+<title>File 'lib/depIndex.cls' (part of 'AutoDOC')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'lib/depIndex.cls' (part of '<a href="pkg_AutoDOC.html" class="package">AutoDOC</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Dependency indices.</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Management of dependency indices.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">dependencies,  dependency index,  indices</span>
+</dl>
+</div>
+<h1 class="class">Class 'depIndex'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Management of a dependency index. Entries are external packages used by the documented code. The associated descriptions refer to the entities requiring the different packages.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cindexBase.html" class="class">indexBase</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cdepIndex.html#pdepIndex_addItem" class="proc">addItem</a> <span class="arg-list">(pkg object)</span><br>
+<a href="cdepIndex.html#pdepIndex_clear" class="proc">clear</a> <span class="arg-list">()</span><br>
+<a href="cdepIndex.html#pdepIndex_depIndex" class="proc">depIndex</a> <span class="arg-list">()</span><br>
+<a href="cdepIndex.html#pdepIndex_writeIndexBody" class="proc">writeIndexBody</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vpkgUsers" class="members">pkgUsers</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pdepIndex_addItem"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">addItem</span> <span class="arg-list">(pkg object)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cindexBase.html" class="class">indexBase</a>:<a href="cindexBase.html#pindexBase_addItem" class="proc">addItem</a><br>
+<span class="header-description-value">Adds the external package <span class="argument"><span class="proc">pkg</span></span> to the index. The additionally specified <span class="argument"><span class="proc">object</span></span> depends on this package.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: pkg
+</td>
+<td class="argument-description">
+Thee name of the package added to the index.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: object
+</td>
+<td class="argument-description">
+The handle of the object which is dependent on the package.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdepIndex_clear"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">clear</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cindexBase.html" class="class">indexBase</a>:<a href="cindexBase.html#pindexBase_clear" class="proc">clear</a><br>
+<span class="header-description-value">Resets state information.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdepIndex_depIndex"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">depIndex</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Constructor, parameterizes the base class</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdepIndex_writeIndexBody"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">writeIndexBody</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cindexBase.html" class="class">indexBase</a>:<a href="cindexBase.html#pindexBase_writeIndexBody" class="proc">writeIndexBody</a><br>
+<span class="header-description-value">Overrides base class definition (<span class="xref-mref"><a href="cindexBase.html" class="class">indexBase</a>:<a href="cindexBase.html#pindexBase_writeIndexBody" class="proc">writeIndexBody</a></span>) to deal with our special index information. Generates the required formatting for this index.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vpkgUsers"></a>
+<dt><span class="variable-name">pkgUsers</span>
+<dd><span class="variable-description">  The index maintained by this class. Most member variables of  the baseclass are of no relevance here. Maps from package  names to the objects requiring them.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/07/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

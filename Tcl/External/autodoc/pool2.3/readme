@@ -1,0 +1,23 @@
+
+	Collection of tcl procedures, classes and widgets ([Script]Pool)
+		(Version 2.3 / September 14, 2000)
+
+		Andreas Kupries	(a.kupries@westend.com)
+
+This directory contains a collection of hopefully useful tcl procedures,
+classes and widgets. They are split into 4 Packages, to have at least a
+little organization.
+
+For a simple install just unpack into a directory of your choice, make it your
+working directory, then type 'make install'. This will install the applications
+under 'apps' into /usr/local/bin, the packages will go into subdirectories of
+/usr/local/lib. You must be root to do the last step, of course.
+
+For a nonstandard installation you have to edit the Makefile, just point
+$exec_dir to a directory of your choice (Tcl should search it for
+packages). Alternatively change $BIN_DIR and $LIB_DIR.
+
+
+Enjoy,
+	Andreas
+

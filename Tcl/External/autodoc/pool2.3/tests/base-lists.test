@@ -1,0 +1,169 @@
+# -*- tcl -*-
+# Commands covered:	::pool::list::*
+#
+# This file contains a collection of tests for one or more of the commands
+# the Pool package. Sourcing this file into Tcl runs the tests and generates
+# output for errors.  No output means no errors were found.
+#
+# Copyright (c) 1998 Andreas Kupries (a.kupries@westend.com)
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+# $Id: base-lists.test,v 1.1 1998/06/01 19:57:06 aku Exp $
+
+if {[string compare test [info procs test]] == 1} then {source defs}
+
+
+test base-lists-1.0 {head} {
+    ::pool::list::head {}
+} {}
+
+test base-lists-1.1 {head} {
+    ::pool::list::head {a b}
+} {a}
+
+test base-lists-1.2 {tail} {
+    ::pool::list::tail {}
+} {}
+
+test base-lists-1.3 {tail} {
+    ::pool::list::tail {a b}
+} {b}
+
+test base-lists-1.4 {tail} {
+    ::pool::list::tail {a b c}
+} {b c}
+
+test base-lists-1.5 {last} {
+    ::pool::list::last {}
+} {}
+
+test base-lists-1.6 {last} {
+    ::pool::list::last {a b}
+} {b}
+
+test base-lists-1.7 {last} {
+    ::pool::list::last {a b c}
+} {c}
+
+test base-lists-1.8 {prev} {
+    ::pool::list::prev {}
+} {}
+
+test base-lists-1.9 {prev} {
+    ::pool::list::prev {a b}
+} {a}
+
+test base-lists-1.10 {prev} {
+    ::pool::list::prev {a b c}
+} {a b}
+
+
+
+
+test base-lists-2.0 {shift} {
+    set lv {}
+    set result [list [::pool::list::shift lv] $lv]
+} {{} {}}
+
+test base-lists-2.1 {shift} {
+    set lv {a}
+    set result [list [::pool::list::shift lv] $lv]
+} {a {}}
+
+test base-lists-2.2 {shift} {
+    set lv {a b c}
+    set result [list [::pool::list::shift lv] $lv]
+} {a {b c}}
+
+test base-lists-2.3 {shift} {
+    set lv {{} a b c}
+    set result [list [::pool::list::shift lv] $lv]
+} {{} {a b c}}
+
+test base-lists-2.4 {unshift} {
+    set lv {}
+    set result [list [::pool::list::unshift lv a] $lv]
+} {a a}
+
+test base-lists-2.5 {unshift} {
+    set lv {a}
+    set result [list [::pool::list::unshift lv b] $lv]
+} {b {b a}}
+
+test base-lists-2.6 {unshift} {
+    set lv {a b c}
+    set result [list [::pool::list::unshift lv c] $lv]
+} {c {c a b c}}
+
+test base-lists-2.7 {unshift} {
+    set lv {{} a b c}
+    set result [list [::pool::list::unshift lv d] $lv]
+} {d {d {} a b c}}
+
+test base-lists-2.8 {pop} {
+    set lv {}
+    set result [list [::pool::list::pop lv] $lv]
+} {{} {}}
+
+test base-lists-2.9 {pop} {
+    set lv {a}
+    set result [list [::pool::list::pop lv] $lv]
+} {a {}}
+
+test base-lists-2.10 {pop} {
+    set lv {a b c}
+    set result [list [::pool::list::pop lv] $lv]
+} {c {a b}}
+
+test base-lists-2.11 {pop} {
+    set lv {{} a b c}
+    set result [list [::pool::list::pop lv] $lv]
+} {c {{} a b}}
+
+
+
+
+test base-lists-3.0 {reverse} {
+    ::pool::list::reverse {a b c d e {f g} h i}
+} {i h {f g} e d c b a}
+
+test base-lists-3.1 {uniq} {
+    ::pool::list::uniq {a e a c a b c a d e {f g g} h c i}
+} {a e c b d {f g g} h i}
+
+test base-lists-3.2 {assign} {
+    ::pool::list::assign {a b c d} {x y z w}
+    list $d $a $b $c
+} {w x y z}
+
+test base-lists-3.3 {delete} {
+    set lv {a b c}
+    set result [list [::pool::list::delete lv b] $lv]
+} {1 {a c}}
+
+test base-lists-3.4 {delete} {
+    set lv {a b c}
+    set result [list [::pool::list::delete lv d] $lv]
+} {0 {a b c}}
+
+test base-lists-3.5 {filter} {
+    ::pool::list::filter {a x b y c z d w} {a b c d}
+} {x y z w}
+
+test base-lists-3.6 {match} {
+    ::pool::list::match {a x b y c z d w a} {a b c d}
+} {a b c d a}
+
+test base-lists-3.7 {lole} {
+    ::pool::list::lengthOfLongestEntry {{a x b y c z d w} {a b c d}}
+} {15}
+
+test base-lists-3.8 {projection} {
+    ::pool::list::projection {{a x b y c z d w} {a b c d}} 1
+} {x b}
+
+test base-lists-3.9 {projection} {
+    ::pool::list::projection {{a x b y c z d w} {a b c d}} 5
+} {z {}}

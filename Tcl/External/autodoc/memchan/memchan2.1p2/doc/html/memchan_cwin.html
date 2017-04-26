@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>Memchan: Compilation on Windows</title>
+<meta name="Author" content="Andreas Kupries">
+<meta name="sitemap" content="self:memchan_cwin">
+<meta name="sitemap" content="desc:Compilation on &lt;tt&gt;Windows&amp;#174;&lt;/tt&gt;">
+<meta name="sitemap" content="parent:memchan_compile">
+</head>
+<body >
+<h1>Compilation on <tt>Windows&#174;</tt></h1>
+<hr>
+<p align=center><font size=7><b>[</b></font> <img src="img/up.gif" alt="Up"><a href="memchan_compile.html">Compilation</a> <font size=7><b>|</b></font>  <a href="sitemap.html">Sitemap</a> <font size=7><b>]</b></font> &#160;&#160;&#160;&#160;&#160; </p>
+<hr>
+<p>
+	A single file <tt>makefile.vc</tt> is provided. It is designed to
+	work with <tt>MSVC++ 4.2</tt>. Just rename it to <tt>makefile</tt>,
+	adapt the paths at the top of it as required by your setup (aka
+	directory structure), then type (inside a <tt>DOS</tt> box):</p>
+<ul>
+<li>nmake
+<li>nmake install
+</ul>
+<p>
+	The available variables are described in the makefile.</p>
+<p>
+	The installation conforms to the rules set by the package loader
+	mechanism of the tcl-core.</p>
+<p>
+	Use <tt>nmake test</tt> to execute a self test of the generated
+	library.</p>
+
+<hr>
+<address><a href="memchan_ack.html">&#169;</a> <a href="mailto:a.kupries@westend.com">Andreas Kupries</a></address>
+<p>Last update at Wed Oct 04 20:37:32 MEST 2000</p>
+</body>
+</html>

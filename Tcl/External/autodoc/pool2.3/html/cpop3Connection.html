@@ -1,0 +1,460 @@
+<html>
+<head>
+<title>File 'net/pop3/pop3.cls' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/pop3/pop3.cls' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Base management of POP3 connections</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Base management of POP3 connections</span>
+<dt><span class="header-title">See also</span>
+<dd><span class="header-value"><a href="pop3.htm" class="xref-xref">POP3 background information</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">POP3,  management of POP3 connections</span>
+</dl>
+</div>
+<h1 class="class">Class 'pop3Connection'</h1>
+<div class="class-header">
+<dl>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#omaxtries" class="options">maxtries</a><br>
+<a href="#oretrydelay" class="options">retrydelay</a><br>
+<a href="#ohost" class="options">host</a><br>
+<a href="#otimeout" class="options">timeout</a><br>
+<a href="#oprogress" class="options">progress</a><br>
+<a href="#oblocksize" class="options">blocksize</a><br>
+<a href="#ouser" class="options">user</a><br>
+<a href="#osecret" class="options">secret</a><br>
+<a href="#ouse-top-for-retr" class="options">use-top-for-retr</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cpop3Connection.html#ppop3Connection_ClearSocket" class="proc">ClearSocket</a> <span class="arg-list">()</span><br>
+<a href="cpop3Connection.html#ppop3Connection_Close" class="proc">Close</a> <span class="arg-list">(completionMethod)</span><br>
+<a href="cpop3Connection.html#ppop3Connection_Dele" class="proc">Dele</a> <span class="arg-list">(msgId completionMethod)</span><br>
+<a href="cpop3Connection.html#ppop3Connection_LoginApop" class="proc">LoginApop</a> <span class="arg-list">(completionMethod)</span><br>
+<a href="cpop3Connection.html#ppop3Connection_LoginUser" class="proc">LoginUser</a> <span class="arg-list">(completionMethod)</span><br>
+<a href="cpop3Connection.html#ppop3Connection_Open" class="proc">Open</a> <span class="arg-list">(completionMethod)</span><br>
+<a href="cpop3Connection.html#ppop3Connection_Retr" class="proc">Retr</a> <span class="arg-list">(msgId completionMethod)</span><br>
+<a href="cpop3Connection.html#ppop3Connection_SetGreeting" class="proc">SetGreeting</a> <span class="arg-list">(g)</span><br>
+<a href="cpop3Connection.html#ppop3Connection_SetN" class="proc">SetN</a> <span class="arg-list">(num)</span><br>
+<a href="cpop3Connection.html#ppop3Connection_SetSock" class="proc">SetSock</a> <span class="arg-list">(s)</span><br>
+<a href="cpop3Connection.html#ppop3Connection_Top" class="proc">Top</a> <span class="arg-list">(msgId completionMethod)</span><br>
+<a href="cpop3Connection.html#ppop3Connection_errorInfo" class="proc">errorInfo</a> <span class="arg-list">()</span><br>
+<a href="cpop3Connection.html#ppop3Connection_pop3Connection" class="proc">pop3Connection</a> <span class="arg-list">()</span><br>
+<a href="cpop3Connection.html#ppop3Connection_state" class="proc">state</a> <span class="arg-list">()</span><br>
+<a href="cpop3Connection.html#ppop3Connection_~pop3Connection" class="proc">~pop3Connection</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vsock" class="members">sock</a><br>
+<a href="#vstate" class="members">state</a><br>
+<a href="#verror" class="members">error</a><br>
+<a href="#vgreeting" class="members">greeting</a><br>
+<a href="#vn" class="members">n</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="omaxtries"></a>
+<dt><span class="option-name">-maxtries</span>
+<dd><span class="option-description">    Specifies the maximum allowed number of trials to connect.    Defaults to 1.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">1</span>
+<a name="oretrydelay"></a>
+<dt><span class="option-name">-retrydelay</span>
+<dd><span class="option-description">  Specifies the time to wait (in milliseconds) after a  failure before doing the next try. Defaults to 10 seconds.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">10000</span>
+<a name="ohost"></a>
+<dt><span class="option-name">-host</span>
+<dd><span class="option-description">        Specifies the host the demon to connect to resides on.        Defaults to 'localhost'.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">localhost</span>
+<a name="otimeout"></a>
+<dt><span class="option-name">-timeout</span>
+<dd><span class="option-description">     defines the number of milliseconds to wait before     aborting a smtp command without having a response.</span>
+<a name="oprogress"></a>
+<dt><span class="option-name">-progress</span>
+<dd><span class="option-description">    If not empty, a command to evaluate with current    connection and number of bytes transfered so far as    arguments.</span>
+<a name="oblocksize"></a>
+<dt><span class="option-name">-blocksize</span>
+<dd><span class="option-description">   Companion option to <span class="xref-oref"><a href="cpop3Connection.html#oprogress" class="xref-oref">progress</a></span>, optional. Defines the   size of the blocks to transfer between invocations of   <span class="xref-oref"><a href="cpop3Connection.html#oprogress" class="xref-oref">progress</a></span>. Ignored if <span class="xref-oref"><a href="cpop3Connection.html#oprogress" class="xref-oref">progress</a></span> is empty.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">1024</span>
+<a name="ouser"></a>
+<dt><span class="option-name">-user</span>
+<dd><span class="option-description">      The name of the user trying to login.</span>
+<a name="osecret"></a>
+<dt><span class="option-name">-secret</span>
+<dd><span class="option-description">    The password of the user trying to login.</span>
+<a name="ouse-top-for-retr"></a>
+<dt><span class="option-name">-use-top-for-retr</span>
+<dd><span class="option-description">  A boolean flag. Setting it to TRUE causes the  sequencer to use the command 'TOP x 0' instead of  'RETR x' to retrieve the message. The first pop  server of my provider didn't recognize RETR, but  this special command. Maybe some other people have  to deal with such a weird beast too.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">0</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="ppop3Connection_ClearSocket"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">ClearSocket</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Closes the connection to the pop3 server described by this object.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_Close"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Close</span> <span class="arg-list">(completionMethod)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Close connection to the pop3 demon described by this object.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: completionMethod
+</td>
+<td class="argument-description">
+The method to call after completion of the low-level sequencer.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_Dele"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Dele</span> <span class="arg-list">(msgId completionMethod)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Delete the specified message.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: msgId
+</td>
+<td class="argument-description">
+The numerical index of the message to delete.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: completionMethod
+</td>
+<td class="argument-description">
+The method to call after completion of the low-level sequencer.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_LoginApop"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">LoginApop</span> <span class="arg-list">(completionMethod)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Logs into the pop3 server described by this object using given username and password. The password is not transfered to the server. A hashcode constructed from it and the server greeting (the timestamp in it) is used instead.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: completionMethod
+</td>
+<td class="argument-description">
+The method to call after completion of the low-level sequencer.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_LoginUser"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">LoginUser</span> <span class="arg-list">(completionMethod)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Logs into the pop3 server described by this object using given username and password. The password is send in the clear.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: completionMethod
+</td>
+<td class="argument-description">
+The method to call after completion of the low-level sequencer.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_Open"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Open</span> <span class="arg-list">(completionMethod)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Opens a connection to the pop3 demon described by this object.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: completionMethod
+</td>
+<td class="argument-description">
+The method to call after completion of the low-level sequencer.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_Retr"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Retr</span> <span class="arg-list">(msgId completionMethod)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Retrieve the specified message.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: msgId
+</td>
+<td class="argument-description">
+The numerical index of the requested message.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: completionMethod
+</td>
+<td class="argument-description">
+The method to call after completion of the low-level sequencer.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_SetGreeting"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">SetGreeting</span> <span class="arg-list">(g)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Accessor method, used by the <span class="xref-classes"><a href="cpop3ApopSeq.html" class="class">pop3ApopSeq</a></span> / <span class="xref-classes"><a href="cpop3UserSeq.html" class="class">pop3UserSeq</a></span> sequencer to transfer the received greeting into the connection manager (this object).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: g
+</td>
+<td class="argument-description">
+The text of the received greeting.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_SetN"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">SetN</span> <span class="arg-list">(num)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Accessor method, used by the <span class="xref-classes"><a href="cpop3ApopSeq.html" class="class">pop3ApopSeq</a></span> / <span class="xref-classes"><a href="cpop3UserSeq.html" class="class">pop3UserSeq</a></span> to transfer the number of found messages into the connection manager.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: num
+</td>
+<td class="argument-description">
+The number of found messages (as given by STAT).
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_SetSock"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">SetSock</span> <span class="arg-list">(s)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Accessor method, used by the <span class="xref-classes"><a href="cpop3OpenSeq.html" class="class">pop3OpenSeq</a></span> sequencer to transfer information about the channel representing the connection to the pop server.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: s
+</td>
+<td class="argument-description">
+The handle of the channel representing the connection to the pop server.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_Top"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Top</span> <span class="arg-list">(msgId completionMethod)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Read header information of the specified message.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: msgId
+</td>
+<td class="argument-description">
+The numerical index of the message whose
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: completionMethod
+</td>
+<td class="argument-description">
+The method to call after completion of the low-level sequencer.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_errorInfo"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">errorInfo</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Retrieves error information of this object. Valid only in case of state = error.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_pop3Connection"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">pop3Connection</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Constructor. Just logs the event.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_state"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">state</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Retrieves state of this object.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3Connection_~pop3Connection"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">~pop3Connection</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Destructor. Closes an active socket and logs the event.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vsock"></a>
+<dt><span class="variable-name">sock</span>
+<dd><span class="variable-description">      The handle of the channel controlled by this object</span>
+<a name="vstate"></a>
+<dt><span class="variable-name">state</span>
+<dd><span class="variable-description">     The state of the last executed command.</span>
+<a name="verror"></a>
+<dt><span class="variable-name">error</span>
+<dd><span class="variable-description">     The error message of the last executed, failed command.</span>
+<a name="vgreeting"></a>
+<dt><span class="variable-name">greeting</span>
+<dd><span class="variable-description">  The greeting sent by the pop3 server during the  initialization of the connection (<span class="xref-mref"><a href="cpop3Connection.html#ppop3Connection_Open" class="proc">Open</a></span>).</span>
+<a name="vn"></a>
+<dt><span class="variable-name">n</span>
+<dd><span class="variable-description">         The number of messages in the mailbox we are connected to,         as given by STAT (see <span class="xref-mref"><a href="cpop3Connection.html#ppop3Connection_SetN" class="proc">SetN</a></span>).</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

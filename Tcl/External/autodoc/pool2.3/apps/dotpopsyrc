@@ -1,0 +1,6 @@
+# -*- tcl -*-
+# resources for popsy
+
+mailfolder	~/.popsy
+user_db		~/.popsy/adb
+# set opt(-port)	23001

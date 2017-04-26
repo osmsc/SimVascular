@@ -1,0 +1,35 @@
+<html><head><title>Sequencer framework</title><link rel=stylesheet href="styles.css"
+type="text/css"></head><body ><h1>Sequencer framework</h1><hr class="navbar"><p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a></p><hr class="navbar"><p>The framework in <a href="csequencer.html" class="file">base/sequencer.cls</a> was written to ease the
+generation of command/response chains usually required during implementation of
+a client for various internet protocols (smtp, pop3, ...). It cuts down the
+size of redundantly written code too.</p><p>To use the framework one has to derive a class from <a href="csequencer.html" class="class">sequencer</a> and
+overide some methods.</p><p>Examples of its usage can be found in the <b>net/pop3</b> and <b>net/smtp</b> directories. More concrete: <a href="cpop3Sequencer.html" class="class">pop3Sequencer</a> and <a href="cpop3RetrSeq.html" class="class">pop3RetrSeq</a>.</p><hr><p>The framework knows the events 'done', 'eof', 'error', 'line', 'next' and
+'timeout'. They can be raised from the outside or the sequencer itself,
+through calling <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_event" class="proc">event</a>. An important thing to remember,
+in the calling context <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_event" class="proc">event</a> will act like a 'return'
+statement.</p><p>Of these six events only two, 'error' and 'line', accept a single argument,
+which will be interpreted as the error message, resp. the incoming line to
+handle.</p><p>The actions executed upon receiving an event are as follows.</p><table border><caption>Events and sequencer actions</caption><tr><th>Event</th><th>Action</th></tr><tr><td><b>Common</b> (to all)</td><td>The raised event is stored in the membervariable <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#vstate" class="xref-vref">state</a>.</td></tr><tr><td>done</td><td>Calls the abstract method <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_OnDone" class="proc">OnDone</a> first, then
+destroys the sequencer object. The derived class has to overide this
+method to do something useful, like notifying the environment about
+the impeding destruction. As event (and possibly an error message) are
+stored in the object before doing this the derived is able to act
+differently, based on the exact cause of the desctruction.</td></tr><tr><td>eof</td><td>The same as for 'done'.</td><td></td></tr><tr><td>error</td><td>The same as for 'done', with one exception. The first argument after
+the event is interpreted as the error message and stuffed into the
+membervariable <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#verror" class="xref-vref">error</a>.</td></tr><tr><td>line</td><td>Calls the method <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_OnLine" class="proc">OnLine</a>. The first argument
+behind the event is forwarded to the method. Errors during its
+execution are handled by raising an 'error' event. The implementation
+provided in this class uses the member variable <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#vlineMethod" class="xref-vref">lineMethod</a> to dynamically call a method of the
+derived class. The 'line' argument is forwarded to the invoked method.
+The method <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_wait" class="proc">wait</a> should be used to define its
+contents. Derived classes are allowed to overide <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_OnLine" class="proc">OnLine</a>. <br><a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_wait" class="proc">wait</a> actually does more than simply setting up <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#vlineMethod" class="xref-vref">lineMethod</a>. It additionally places a read fileevent
+handler on the channel given to it and start a timer which will time
+out after <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#otimeout" class="xref-oref">timeout</a> milliseconds, causing a
+'timeout' to be raised. On the other hand, activity on the channel
+causes a line to be read and then send to ourselves through a 'line'
+event. If the channel was closed 'eof' is raised. Whatever happened,
+the timer is cancelled. The callback methods are <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_Timeout" class="proc">Timeout</a> and <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_Receive" class="proc">Receive</a>.</td></tr><tr><td>next</td><td>Calls the method <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_OnNext" class="proc">OnNext</a>. Errors during its
+execution are handled by raising an 'error' event. The implementation
+provided in this class uses the member variable <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#vnextMethod" class="xref-vref">nextMethod</a> to dynamically call a method of the
+derived class. The method <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_next" class="proc">next</a> should be used to
+define its contents. Derived classes are allowed to overide <a href="csequencer.html" class="class">sequencer</a>:<a href="csequencer.html#psequencer_OnNext" class="proc">OnNext</a>.</td></tr><tr><td>timeout</td><td>The same as for 'done'.</td></tr></table><hr><p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p></body></html>

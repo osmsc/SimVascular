@@ -1,0 +1,865 @@
+#!/usr/local/bin/wish
+# -*- tcl -*-
+#
+# graphical management/monitor utility to POPsy.
+#
+# -------------------------------------------------------
+# problems not dealt with:
+#
+# * Removal of users with messages in their mailbox lying around.
+#   The current implementation silently removes them too.
+#
+# * Removal of user currently accessing its maildrop
+# * Changes to spooldir of user currently accessing its maildrop
+#
+#   In the current implementation the generated errors
+#   will cause a shutdown of the affected connection, but the
+#   server as a whole stays functional. As a pop client should
+#   be able to deal with such unexpected situations (popeye does!)
+#   I currently feel no need to work on this.
+# -------------------------------------------------------
+
+package require Pool_Base
+package require Pool_GuiBase
+package require Pool_Net
+package require Comm
+package require Tktable
+
+
+# -------------------------------------------------------
+# global information
+set    id ""	;# <Comm handle to talk to popsy>
+set    rows 1	;# initially set to number of lines reserved for special purposes
+set    free_rows {2 3 4 5 6 7 8}
+set    udb_menu ""
+set    udb_mb   ""
+
+::pool::array::def statistics	; # server information display variable
+set       statistics(0,0) 0	; # #'current connections'
+set       statistics(0,1) 0	; # #'open connections since popsymon started
+#                                 #   monitoring'
+
+set    statistics(1,0) Conn
+set    statistics(1,1) State
+set    statistics(1,2) RHost
+set    statistics(1,3) RPort
+set    statistics(1,4) Who
+set    statistics(1,5) Mailbox
+set    statistics(1,6) #Msg
+
+::pool::array::def conn_map	; # map from connection identifiers to the
+#                                 # row containing more info.
+
+# -------------------------------------------------------
+# global information, user database
+
+::pool::array::def udb			; # the user database
+set       udb_problems 0	; # number of problems with current data
+
+
+# -------------------------------------------------------
+# build interface
+
+proc main_interface {} {
+    global statistics rows
+
+    create_main_menu
+
+    frame  .led    -bg red -width 4m -height 4m
+    logger .lproto -theight 10 -twidth 90 -level info
+    logger .linfo  -theight 10 -twidth 90 -level notice
+    table  .stat   \
+	    -flashmode 1                \
+	    -flashtime 1                \
+	    -titlerows [expr {1+$rows}] \
+	    -titlecols 1                \
+	    -state     disabled         \
+	    -colstretchmode all         \
+	    -variable  statistics       \
+	    -cols      7                \
+	    -rows      10
+
+    .stat tag configure flash   -bg coral
+    .stat tag configure title   -relief raised
+    .linfo levelcolor notice {}
+
+    pack .led    -side top   -expand 0 -fill y -anchor w
+    pack .stat   -side top   -expand 0 -fill both
+    pack .lproto -side top   -expand 1 -fill both
+    pack .linfo  -side top   -expand 1 -fill both
+
+    wm title . {POPsy monitor}
+
+    # make it visible
+    update
+    update idletasks
+}
+
+
+
+proc create_main_menu {} {
+    global udb_menu udb_mb
+
+    menu .mb -type menubar -tearoff 0
+
+    .mb add cascade -label POPsyMON   -underline 0 -menu .mb.popsymon
+    .mb add cascade -label Management -underline 0 -menu .mb.management
+
+    menu .mb.popsymon   -type normal -tearoff 1
+    menu .mb.management -type normal -tearoff 1
+
+    .mb.popsymon add command      \
+	    -label       Exit     \
+	    -underline   0        \
+	    -command     popsymon_exit
+
+    set udb_mb   .mb.management
+    set udb_menu 1
+    
+    .mb.management add command    \
+	    -label       User     \
+	    -underline   0        \
+	    -state       disabled \
+	    -command     popsymon_udb_editor
+
+    .mb.management add command         \
+	    -label       "Kill server" \
+	    -underline   0        \
+	    -state       disabled \
+	    -command     popsymon_kill
+
+    . configure -menu .mb
+}
+
+
+proc popsymon_exit {} {
+    global id
+
+    if {$id != {}} {
+	# remove redirection of log
+	catch {comm send $id popsy_logto [list {}]}
+    }
+
+    exit
+}
+
+
+proc popsymon_kill {} {
+    global id udb_mb
+    comm send -async $id popsy_shutdown
+    set id ""
+
+    .led configure -bg red
+
+    $udb_mb entryconfigure 1 -state disabled
+    $udb_mb entryconfigure 2 -state disabled
+
+    if {[winfo exist .udb]} {udb_quit}
+
+    # wait for next incarnation of server
+    after 500 search_popsy
+}
+
+
+proc popsymon_udb_editor {} {
+    # create editor operating on the user database
+    global udb id udb_problems
+
+    if {[winfo exist .udb]} {
+	raise .udb
+	return
+    }
+
+    toplevel .udb
+    wm title .udb {User management}
+
+    frame .udb.b -bd 0 -relief raised
+
+    table .udb.ed                \
+	    -flashmode 1         \
+	    -flashtime 1         \
+	    -titlerows 1         \
+	    -colstretchmode all  \
+	    -variable  udb       \
+	    -cols      3         \
+	    -height    15
+
+    .udb.ed tag configure active  -bg lightsteelblue
+    .udb.ed tag configure flash   -bg coral
+    .udb.ed tag configure title   -relief raised
+    .udb.ed tag configure problem -bg red
+
+    # query server for database information
+    set udb(0,0) User
+    set udb(0,1) Password
+    set udb(0,2) Mailbox
+    set rows [udb_read]
+
+    # add custom validation system, set row information
+    trace variable udb u udb_preserve
+    .udb.ed configure -rows $rows -browsecommand {udb_check %s}
+
+    # rest of interface
+    button    .udb.add  -text "New user"       -command udb_add
+    button    .udb.save -text "Save to server" -command udb_save
+    button    .udb.quit -text "Dismiss"        -command udb_quit
+    scrollbar .udb.sb
+
+    ::pool::ui::multiScroll .udb.sb v .udb.ed
+
+    pack .udb.b    -side top   -expand 0 -fill both
+    pack .udb.quit -side right -expand 0 -fill y -in .udb.b
+    pack .udb.save -side right -expand 0 -fill y -in .udb.b
+    pack .udb.add  -side right -expand 0 -fill y -in .udb.b
+
+    pack .udb.sb   -side left -expand 0 -fill both
+    pack .udb.ed   -side top  -expand 1 -fill both
+
+    # make it visible
+    update
+    update idletasks
+
+    trace variable udb_problems w udb_check_save
+}
+
+
+proc udb_quit {} {
+    global udb udb_problems
+    trace variable udb_problems w udb_check_save
+
+    destroy    .udb
+    ::pool::array::clear udb
+}
+
+
+proc udb_check_save {var idx op} {
+    global udb_problems
+    if {$udb_problems > 0} {
+	.udb.save configure -state disabled
+    } else {
+	.udb.save configure -state normal
+    }
+}
+
+
+proc udb_save {} {
+    global id udb
+
+    .udb.ed configure -state disabled
+
+    set n [.udb.ed cget -rows]
+
+    # i. a row is deleted if standard columns are empty, but orig0 not.
+    #    BEWARE: new rows, or edited ones may refer to the original
+    #    user name. its a change then!
+
+    # puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+
+    for {set i 1} {$i < $n} {incr i} {udb_check_fake_delete $i}
+
+    # (1)
+    # sequence of renamings, in wrong order.
+    # resolvable via catch and iteration until no errors remain.
+    #
+    # in
+    # -----------------------
+    #          0    1   2
+    #    orig0 name pwd dir
+    # -----------------------
+    # A     XX YY   {}  {}
+    # B     YY ZZ   ?   ?
+    # B     ZZ AA   ?   ?
+    # -----------------------
+
+    # (2)
+    # cyclic dependency on rename. not solvable with algorithm above
+    # have to remember #errors between iterations. break out of loop
+    # upon equality. break cycle by artifical renaming to unused name,
+    # record with real name to establish correct name later. might be
+    # necessary several times because of more than one cycle.
+    #
+    # in
+    # -----------------------
+    #          0    1   2
+    #    orig0 name pwd dir
+    # -----------------------
+    # A     XX YY   {}  {}
+    # B     YY ZZ   ?   ?
+    # B     ZZ XX   ?   ?
+    # -----------------------
+
+    set  lasterr $n
+    incr lasterr -2
+    set corrections ""
+
+    while {1} {
+	set err [udb_save_run $n]
+
+	# puts "\t -- $lasterr\t$err"
+
+	if {$err == 0} {break}
+
+	if {$err < $lasterr} {
+	    set lasterr $err
+	    continue
+	}
+
+	# oops, cycle(s) detected.
+	set r [udb_find_first $n]
+
+	lappend corrections [list $udb($r,0) [udb_break_cycle $r]]
+    }
+
+    if {$corrections != {}} {
+	# close cycles
+	foreach e $corrections {
+	    # puts "rename [lindex $e 1] -> [lindex $e 0]"
+	    comm send $id popsy_rename_user [list [lindex $e 1]] [list [lindex $e 0]]
+	}
+    }
+
+    #    puts "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+
+    comm send $id popsy_user_save
+
+    udb_reread
+    .udb.ed configure -state normal
+}
+
+
+proc udb_find_first {n} {
+    global udb
+    for {set i 1} {$i < $n} {incr i} {
+	if {($udb($i,orig0) == {}) || ($udb($i,0) == {})} {continue}
+	return $i
+    }
+    error "cycle, yet not cycle"
+}
+
+
+proc udb_break_cycle {r} {
+    global udb
+
+    # change name in the given row to something unique
+
+    set n [::pool::list::lengthOfLongestEntry [array get udb *,0]]
+    set newname "$udb($r,0)[::pool::string::rep $n ~]"
+
+    set udb($r,0) $newname
+}
+
+
+
+proc udb_save_run {n} {
+    set err 0
+    for {set i 1} {$i < $n} {incr i} {
+	incr err [catch {udb_save_row $i} errmsg]
+	#	 puts "$errmsg"
+    }
+    return $err
+}
+
+
+proc udb_check_fake_delete {r} {
+    global udb
+
+    if {![udb_emptyrow $r]} {return}
+    if {$udb($r,orig0) != {}} {return}
+
+    # possible deletion, search for name in other row
+
+    set name $udb($r,orig0)
+
+    set data [array get udb *,0]
+    set pos  [lsearch -exact $data $name]
+
+    if {$pos < 0} {return}
+
+    # no deletion, but a change
+    set udb($r,orig0) ""	; # force row to be ignored
+
+    incr pos -1
+    set r [lindex [split [lindex $data $pos] ,] 0]
+
+    if {$udb($r,orig0) != {}} {return}
+    # orig-name was empty in new row, so force handling as change
+    set udb($r,orig0) $name
+
+    # situations
+
+    # (1)
+    # in                           out
+    # -----------------------    # -----------------------
+    #          0    1   2        #          0    1   2
+    #    orig0 name pwd dir      #    orig0 name pwd dir
+    # -----------------------    # -----------------------
+    # A     XX {}   {}  {}       # A     {} {}   {}  {}
+    # B     {} XX   ?   ?        # B     XX XX   ?   ?
+    # -----------------------    # -----------------------
+
+    # (2)
+    # in                           out
+    # -----------------------    # -----------------------
+    #          0    1   2        #          0    1   2
+    #    orig0 name pwd dir      #    orig0 name pwd dir
+    # -----------------------    # -----------------------
+    # A     XX {}   {}  {}       # A     {} {}   {}  {}
+    # B     YY XX   ?   ?        # B     YY XX   ?   ?
+    # -----------------------    # -----------------------
+}
+
+
+
+proc udb_save_row {r} {
+    global udb id
+
+    if {[udb_emptyrow $r]} {
+	# row added and never edited ?
+	if {$udb($r,orig0) == {}} {return}
+
+	# puts "deletion:  [array get udb $r,*]"
+
+	# user in row is deleted.
+	comm send $id popsy_remove_user [list $udb($r,orig0)]
+    } else {
+	# row not empty. change or insert.
+
+	# add default spooldir, if necessary
+	if {$udb($r,2) == {}} {set udb($r,2) $udb($r,0)}
+
+	if {$udb($r,orig0) == {}} {
+	    # insertion
+	    # puts "insertion: [array get udb $r,*]"
+
+	    comm send $id popsy_add_user [list $udb($r,0)] [list $udb($r,1)] [list $udb($r,2)]
+	} else {
+	    # change. determine changed information and issue the appropriate commands
+
+	    # puts "change:    [array get udb $r,*]"
+
+	    if {"$udb($r,orig0)" != "$udb($r,0)"} {
+		# puts "\t - user"
+		comm send $id popsy_rename_user [list $udb($r,orig0)] [list $udb($r,0)]
+	    }
+
+	    if {"$udb($r,orig1)" != "$udb($r,1)"} {
+		# puts "\t - pwd"
+		comm send $id popsy_cp_user [list $udb($r,0)] [list $udb($r,1)]
+	    }
+
+	    if {"$udb($r,orig2)" != "$udb($r,2)"} {
+		# puts "\t - dir"
+		comm send $id popsy_cd_user [list $udb($r,0)] [list $udb($r,2)]
+	    }
+	}
+    }
+
+    # clear written information, to prevent reusage
+    # in further calls to resolve rename sequences, cycles
+    ::pool::array::clear udb $r,*
+}
+
+
+proc udb_reread {} {
+    # clear current table, then read user authentication
+    # information back from server. collapses empty rows!
+    global udb
+
+    trace vdelete udb u udb_preserve
+
+    #    eval .udb.ed tag cell {} [.udb.ed tag cell problem]
+    .udb.ed configure -rows 0
+
+    ::pool::array::clear udb
+
+    set udb(0,0) User
+    set udb(0,1) Password
+    set udb(0,2) Mailbox
+
+    set rows [udb_read]
+
+    trace variable udb u udb_preserve
+    .udb.ed configure -rows $rows
+}
+
+
+proc udb_read {} {
+    # query server for user authentication information
+
+    global udb id
+
+    set row 1
+    foreach user [lsort [comm send $id popsy_users]] {
+	set info [comm send $id popsy_query_user [list $user]]
+
+	set udb($row,0) $user
+	set udb($row,1) [lindex $info 0]
+	set udb($row,2) [lindex $info 1]
+
+	# store original username separate to allow changes
+	# without losing the connection to the current data
+	# in the server (name is unique index at the server).
+	set udb($row,orig0)     $user
+	set udb($row,orig1)     [lindex $info 0]
+	set udb($row,orig2)     [lindex $info 1]
+	set udb($row,conflict0) {}
+	set udb($row,conflict2) {}
+
+	incr row
+    }
+
+    # number of rows read
+    return $row
+}
+
+
+proc udb_add {} {
+    global udb
+
+    set  rows [.udb.ed cget -rows]
+
+    set udb($rows,orig0)     ""
+    set udb($rows,orig1)     ""
+    set udb($rows,orig2)     ""
+    set udb($rows,conflict0) ""
+    set udb($rows,conflict2) ""
+
+    set udb($rows,0) ""
+    set udb($rows,1) ""
+    set udb($rows,2) ""
+
+    incr rows
+    .udb.ed configure -rows $rows
+}
+
+
+proc udb_preserve {var idx op} {
+    # table unset's cells set to the empty string.
+    # this will trip our validation system, so undo this operation
+
+    global udb
+    set    udb($idx) ""
+}
+
+
+proc udb_check {idx} {
+    # checks validation rules, which are:
+    #
+    # <> column 'user'     (0):	names must be unique, empty strings are not allowed
+    # <> column 'password' (1):	Arbitrary values allowed, but must not be empty.
+    # <> column 'mailbox'  (2):	names must be unique. empty strings are allowed
+    #				Use value of 'user' in that case.
+    #
+    # <> completely empty rows are allowed (and ignored)
+    #
+    # errorneous cells are marked with tag 'problem'.
+    # as long as there are problems the table cannot be saved back into the server
+    #
+    # called with index of cell losing focus
+
+    global udb udb_problems
+
+    if {$idx == {}} {return}
+
+
+    #    puts "--check <$idx>"
+
+    set idx_ [split  $idx  ,]
+    set r    [lindex $idx_ 0]
+    set c    [lindex $idx_ 1]
+
+
+    #    puts "\t-- <$r : $c>"
+    #    puts "\t\t-- r = [array get udb $r,*]"
+    #    puts "\t\t-- c = [array get udb *,$c]"
+
+    # first unset all problem tags in affected row
+    # assume that a change removed the problems here.
+
+    .udb.ed tag cell {} $r,0
+    .udb.ed tag cell {} $r,1
+    .udb.ed tag cell {} $r,2
+
+
+    # check for problems with uniqueness of values
+    set unset_ra [update_conflicts $idx $r 0]
+    set unset_rb [update_conflicts $idx $r 2 0]
+
+    # at last check row integrity
+    if {![udb_emptyrow $r]} {
+	if {$udb($r,0) == {}} {.udb.ed tag cell problem $r,0}
+	if {$udb($r,1) == {}} {.udb.ed tag cell problem $r,1}
+    }
+    if {$unset_ra != {}} {
+	set r $unset_ra
+	if {![udb_emptyrow $r]} {
+	    if {$udb($r,0) == {}} {.udb.ed tag cell problem $r,0}
+	    if {$udb($r,1) == {}} {.udb.ed tag cell problem $r,1}
+	}
+    }
+    if {$unset_rb != {}} {
+	set r $unset_rb
+	if {![udb_emptyrow $r]} {
+	    if {$udb($r,0) == {}} {.udb.ed tag cell problem $r,0}
+	    if {$udb($r,1) == {}} {.udb.ed tag cell problem $r,1}
+	}
+    }
+
+    # count the remaining problems.
+    # this will affect the action buttons accordingly, via trace
+    set udb_problems [llength [.udb.ed tag cell problem]]
+}
+
+
+proc udb_emptyrow {r} {
+    global udb
+
+    foreach c {0 1 2} {if {$udb($r,$c) != {}} {return 0}}
+    return 1
+}
+
+
+proc update_conflicts {idx r c {default {}}} {
+    # returns {} or row with problem tag removed from cells
+    # this one must be checked against row rule violations.
+
+    global udb
+
+    if {$udb($r,conflict$c) == {}} {
+	# no old conflicts in this column, check for possible new ones
+	handle_conflicts $r $c $default
+	return ""
+    }
+
+    # check old conflicts, maybe they went away.
+    set conf $udb($r,conflict$c)
+    set rx   [lindex $conf 0]
+
+    if {"[udb_get $r $c $default]" == "[udb_get $rx $c $default]"} {
+	# still in conflict.
+	# regenerate the tag in this row!
+	# no need to check for new conflicts
+
+	.udb.ed tag cell problem $r,$c
+	return ""
+    }
+
+    # changes in cell r/c removed currently recorded conflict.
+    # update the references and the tags in the other rows.
+    # check for a newly generated conflict afterward
+    set affected ""
+
+    # 2 cases: single conflict, multiple conflicts
+    if {[llength $conf] == 1} {
+	set udb($r,conflict$c) ""
+	set udb($rx,conflict$c) ""
+
+	.udb.ed tag cell {} $rx,$c
+	lappend affected $rx
+    } else {
+	# remove this cell from other conflicts, but these stay problematic
+
+	set udb($r,conflict$c) ""
+	foreach _ $conf {ldelete udb($_,conflict$c) $r}
+    }
+
+    handle_conflicts $r $c $default
+    return $affected
+}
+
+
+proc udb_get {r c {default {}}} {
+    # retrieves value at row/column, with possible redirection to default column
+
+    global udb
+
+    if {($udb($r,$c) == {}) && ($default != {})} {return $udb($r,$default)}
+    return $udb($r,$c)
+}
+
+
+proc handle_conflicts {r c {default {}}} {
+    # check for conflicts in the given column, incremental
+    # only the value of the given row is searched for.
+    # may set problem tags in rows different from 'r'.
+
+    global udb
+
+    set v [udb_get $r $c $default]
+
+    # empty strings are not unique, but not in conflict!
+    if {$v == {}} {return}
+
+    set conf ""
+    foreach idx [array names udb *,$c] {
+	set rx [lindex [split $idx ,] 0]
+	if {$rx == $r} {continue}
+	if {"$v" == "[udb_get $rx $c $default]"} {lappend conf $rx}
+    }
+
+    if {$conf == {}} {return}
+
+
+    # conflicts found, set references, problem tags
+    set udb($r,conflict$c) $conf
+    .udb.ed tag cell problem $r,$c
+
+    # the other cells are in conflict too!
+    foreach _ $conf {
+	.udb.ed tag cell problem $_,$c
+
+	set __ $conf
+	ldelete __ $_
+	lappend __ $r
+
+	set udb($_,conflict$c) $__
+    }
+
+    # done
+}
+
+
+# -------------------------------------------------------
+# poll for running pop server
+proc search_popsy {} {
+    global statistics udb_menu udb_mb id log_port
+
+    set id ""
+    catch {set id [::pool::nameserver::lookup popsy]}
+    ;# protect against missing name service
+
+    if {$id == {}} {
+	after 1000 search_popsy
+	return
+    }
+
+    set id [lindex $id 1]
+
+    # get initial numbers of connections
+
+
+    comm send $id popsy_logto [list [list [info hostname] $log_port]]
+    .led configure -bg green
+
+    $udb_mb entryconfigure 1 -state normal
+    $udb_mb entryconfigure 2 -state normal
+}
+
+
+# -------------------------------------------------------
+# log dispatcher linked into the server
+
+set log_port [::pool::misc::rdServer setup_log]
+
+proc setup_log {sock host port} {
+    fconfigure $sock -buffering line -translation crlf -blocking 0
+    fileevent  $sock readable [list popsymon_log $sock]
+}
+
+proc popsymon_log {sock} {
+
+    if {[eof $sock]} {
+	close $sock
+	return
+    }
+
+    if {[gets $sock text] < 0} {return}
+
+    regsub -all {"} $text {} text ; #"-fake out emacs hilighting
+    set level [::pool::list::shift text]
+    ::pool::list::shift text
+
+    after 1 .linfo log $level [list $text]
+
+    if {"$level" == "info"}   {after 1 .lproto log $level [list $text]}
+    if {"$level" != "notice"} {return}
+
+    after 1 stat [list $text]
+}
+
+proc stat {text} {
+    global statistics rows free_rows conn_map
+
+    #puts "\t\tX-- $text"
+
+    # if {[catch {set r $conn_map($conn)}]} {return}
+    # this is used to ignore all data of any connection
+    # opened before popsymon started monitoring.
+
+    set conn  [lindex $text 0]
+    switch -- [lindex $text 1] {
+	opened {
+	    # maintain current number of open connections, and running total.
+	    incr statistics(0,0)
+	    incr statistics(0,1)
+
+	    # map connection id to row number, extend table, if required
+	    if {$free_rows == {}} {
+		incr rows
+		.stat configure -rows [expr {1+$rows}]
+		set r $rows
+	    } else {
+		set r [::pool::list::shift free_rows]
+	    }
+
+	    set conn_map($conn) $r
+	    #   statistics(1,0) Conn
+	    #   statistics(1,2) RHost
+	    #   statistics(1,3) RPort
+	    set statistics($r,0) $conn
+	    set statistics($r,2) [lindex $text 2]
+	    set statistics($r,3) [lindex $text 3]
+	}
+	login {
+	    if {[catch {set r $conn_map($conn)}]} {return}
+
+	    #   statistics(1,4) Who
+	    #   statistics(1,5) Mailbox
+	    #   statistics(1,6) #Msg
+	    set statistics($r,4) [lindex $text 2]
+	    set statistics($r,5) [lindex $text 3]
+	    set statistics($r,6) [lindex $text 4]
+	}
+	state {
+	    if {[catch {set r $conn_map($conn)}]} {return}
+
+	    #   statistics(1,1) State
+	    set statistics($r,1) [lindex $text 2]
+	}
+	closed {
+	    if {[catch {set r $conn_map($conn)}]} {return}
+
+	    incr statistics(0,0) -1
+
+	    # remove connection from table, mark row as free for new connection
+
+	    set statistics($r,0) ""
+	    set statistics($r,1) ""
+	    set statistics($r,2) ""
+	    set statistics($r,3) ""
+	    set statistics($r,4) ""
+	    set statistics($r,5) ""
+	    set statistics($r,6) ""
+
+	    lappend free_rows $r
+	    set     free_rows [lsort -integer $free_rows]
+	    unset conn_map($conn)
+	}
+	default {
+	    # ignore unknown keywords
+	}
+    }
+}
+
+
+
+# MAIN
+# -------------------------------------------------------
+wm withdraw .
+
+::pool::nameserver::register popsymon
+
+main_interface
+after 1000 search_popsy
+
+wm deiconify .

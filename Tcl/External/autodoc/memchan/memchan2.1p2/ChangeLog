@@ -1,0 +1,296 @@
+Wed Oct  4 20:00:25 2000  Andreas Kupries  <a.kupries@westend.com>
+
+	* Fixed problem with use of version information in
+ 	  unix/pkgIndex.tcl.in. Can't use the patchlevel here, would choke
+ 	  the package ifneeded/require commands.
+
+Sat Jan 15 00:28:52 2000  Andreas Kupries  <a.kupries@westend.com>
+
+	* tea/Makefile.in (install-lib-binaries): Fixed error in this
+	  target. Mailed problem and fix to TEA mailing list.
+
+Sat Sep 18 15:06:07 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* generic/fifo.c (GetOption): See below, '-allocated'.
+
+	* generic/memchan.c (MemchanCmd): Added option '-initial-size',
+	  proposed by <Petteri.Kettunen@picker.fi>. If specified the
+	  channel will preallocate some buffer space, making the first
+	  write accesses a bit faster.
+	  (GetOption): Added '-allocated' to query the size of the
+	  allocated buffers, not the used number of bytes.
+
+Tue Sep 14 00:42:11 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* generic/memchan.c, fifo.c, counter.c: Changed to use LTOA
+	  instead of 'sprintf'.
+
+	* generic/memchanInt.h (LTOA): Added definition of LTOA macro,
+	  its contents are dependent on the presence of 'ltoa'. The system
+	  uses 'sprintf' as its fallback.
+
+	* win/makefile.vc(5),.gnu, unix/configure/in, tea/configure.in:
+	  Added check for 'ltoa', Windows assumes that the function is
+	  present.
+
+	* generic/memchanInt.h: Added a fix sent by Jan to enable use with
+	  gcc-2.95 on Windows.
+
+	* BUILD_memchan changed to BUILD_Memchan, adapted the header and
+	  the other build directories. Have to use ./ to load the library
+	  for testing. This obsoletes LD_LIBRARY_PATH and consorts.
+
+	* Added 'tea' build directory the day before yesterday and asked
+	  for problem reports (Jan, Larry). These came in yesterday.
+
+Sun Aug  1 16:15:23 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* Added binary distribution for Windows, from Jan, excluded old
+ 	  binary distributions (for 1.9) and added a reference to the old
+ 	  site for this version instead.
+
+Tue Jul 27 22:57:56 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* doc/nodes/home.node, compile.node, win.node, mac.node,
+	  unix.node: Moved doc/INSTALL to HTML. Added reference to version
+	  1.9 site for people interested in usability with Tcl 7.6.
+
+	* generic/memchan.c, counter.c, init.c, fifo.c, memchanInt.h:
+	  Removed all #ifdefs relating to Tcl 7.6, support for that
+	  version is no dropped.
+
+Mon Jun 28 23:17:35 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* unix/configure.in, Makefile.in: Matt Newman <matt@novadigm.com>
+	  sent in some changes to built the extension on HPUX (Basically
+	  check for .sl extension too).
+
+Sat Jun 12 23:12:26 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* win/makefile.vc5 (MCOBJS): See below.
+
+	* win/makefile.vc (MCOBJS): Added 'dllEntry.obj' to the
+	  definition. 
+
+	* generic/memchanInt.h: 'DllEntryPoint' removed. See below.
+
+	* generic/init.c: 'DllEntryPoint' removed. See below.
+
+	* win/dllEntry.c: New file, again from Jan, to simplify DLL
+	  generation for Windows. The information in it can be removed
+	  from the generic parts.
+
+Fri Jun 11 22:40:02 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* win/Makefile.gnu: Got from Jan <nijtmans@wxs.nl> a binary
+ 	  distribution for memchan, compiled with Cygwin B20.1
+ 	  (-mno-cygwin), and the Makefile used to do that. Assorted
+	  little changes to 'mc.rc' too.
+
+Wed May 26 00:17:18 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* tests/fifo.test: Added test suite for 'fifo's.
+
+	* unix/pkgIndex.tcl: Added new command to the index.
+
+	* doc/nodes/cmds.node: Added documentation for 'fifo'.
+
+	* generic/fifo.c: New file, new channel type. Like memchan in
+	  memory, but access is done fifo-like (first in/first
+	  out). Seeking is not possible. Like a socket or a pipe, but in
+	  memory.
+
+Tue May 25 18:35:24 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* generic/memchanInt.h: Made the header usable for C++ compilers.
+
+	* unix/Makefile.in: See below.
+
+	* win/makefile.vc(5): Added rules for new object files.
+
+	* generic/counter.c: Moved handle generation into separate
+	  file. Added usage of mutexes for thread enabled tcl to make
+	  handle generation safe.
+
+	* generic/memchan.c: Moved declarations and initialization code
+	  into separate files (memchanInt.h, init.c).
+
+	* doc/nodes/cmds.node: Added description of the provided command.
+
+Tue May 11 22:29:18 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* ---------------- Ready to release 1.8 --------------------
+	
+	* unix/Makefile.in, PREPARE, tests: Added testsuite to memchan.
+
+Mon Apr 12 17:27:08 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* generic/memchan.c: Fixed error in definition of EXPORT, as
+	  reported by <Petteri.Kettunen@picker.fi>.
+
+	* win/makefile.vc(5): Fixed some errors in the win makefiles, as
+	  reported by <Petteri.Kettunen@picker.fi>.
+
+Thu Mar 25 12:30:40 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* ---------------- Ready to release 1.7 --------------------
+
+Wed Mar 24 13:15:36 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* win/pkgIndex.tcl: Separate package index, no way to use one DLL
+	  for all versions of tcl. Stubs no help ?
+
+	* unix/configure.in, unix/Makefile.in: Added all necessary code to
+	  detect and use stubs appropriately.
+
+	* unix/pkgIndex.tcl.in: Added code to check package dependency on
+	  tcl version, which is dependent on the usage of stubs too.
+
+Mon Mar 22 09:57:05 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* memchan.c: Started to work on the changes required by 8.1 and
+	  the new stub-mechanism.
+
+	* configure.in (TCL_LIB/INCLUDE_DIR): Added 8.0.4 and 8.0.5 to the
+	  list of paths to search.
+
+Sun Dec 20 19:54:08 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* memchan.c: Changed definition of panic to allow co-existence
+	  with tcl8.0.4+. Got information about problems from a
+	  beta-tester of the new plus-patches.
+
+Wed Sep 30 15:43:42 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* configure.in (TCL_LIB/INCLUDE_DIR): Added some additional
+	  intelligence: Setting one of the variables, but not the other
+	  causes automatic definition of the missing part with a value
+	  derived from the defined directory. Suggested by Larry Virden.
+	  Added 8.0.3 to the paths to search. Added $exec_prefix/lib to
+	  the paths to search for the tcl-library.
+
+Fri Jun 19 22:59:18 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* configure.in: Fixed a bug noted by David Herron
+	  <davidh@crl.com>. From its mail:
+
+	> In the section that checks for the TCL library there
+	> is a loop looking for different library extensions.
+	> In my case it needs to match the ".so.*" case of
+	> the loop, but it doesn't.
+	> 
+	> Changing the test to read as follows fixes the problem.
+	> 
+	>    if test -f $dir/libtcl$version$libsuff; then
+	>        memchan_cv_lib_TCL_LIB="-L$dir -ltcl$version"
+	>        TCL_LIB_DIR="$dir"
+	>    fi
+	> 
+	> The difference is removal of the quote marks around
+	> the file name.  This allows the "*" to be evaluated
+	> by the shell & find the file name.
+	> 
+	> Another change that would be convenient is, in
+	> the 'for version in ...' part, to add "80" to
+	> the list of choices.  With (at least) tcl8.0pl2
+	> on FreeBSD the library is "libtcl80.so.1.0" and 
+	> since the configure script only looks for "libtcl8.0"
+	> it is not found again because of that.
+
+Sat Jun 13 14:27:10 1998  Andreas Kupries  <a.kupries@westend.com>
+
+	* memchan.c (channelType): Updated to reflect structure change
+	  from Tcl 8.0 to Tcl 8.1.
+
+Sun Jul  6 14:29:51 1997  Andreas Kupries  <a.kupries@westend.com>
+
+	* -------------------- 1.4 released --------
+	
+	* memchan.c: Updated code to reflect changes in Set/GetOption API
+	  of channel drivers made by 8.0b2.
+
+Thu May 29 11:25:56 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* -------------------- 1.3 released --------
+	
+	* memchan.c: Bag of changes to adapt this code to the new
+	  notifier system of 8.0b1. Will now run either with 7.6 or
+	  8.0b1. The decision is made at compile time.
+
+	* PREPARE: adapted to new 'makedist' and interface.
+
+Thu Feb 27 21:49:48 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* memchan.c (Mem_safeInit): renamed to 'Memchan_SafeInit'. First
+	  bug in this 1.2 Release.
+
+	* -------------------- 1.2 released --------
+	
+Tue Feb 18 18:35:59 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* -------------------- 1.2 ready for release --------
+
+Mon Feb 17 17:47:22 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* memchan.c: added prototypes missed by MSVC++.
+
+Sat Feb 15 20:09:58 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* memchan.c: integrated changes required to compile cleanly on
+	  windows. 
+
+	* INSTALL: updated to contain info for compilation on Windows as
+	  well. 
+
+	* Added 'makefile.vc' for compilation on Windows. The required
+	  'pkgIndex.win' is generated by 'PREPARE' from 'pkgIndex.tcl.in'.
+
+	* Rewrote generation of distribution (PREPARE, make-tape).
+	  'DESCRIPTION' now central point for version information. The
+	  data obtained from it is placed into all relevant files at
+	  distribution time (README, LSM, ...),
+
+	  Note: 'PREPARE' is an file internal to the package. It contains
+	  tcl-code preparing the package for distribution (removing
+	  unofficial and/or internal files, manpage generation, ...). It
+	  is not part of the distribution however.
+
+Mon Jan 13 22:21:48 1997  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* INSTALL: updated to reflect new search order and versions.
+
+	* Makefile.in: Removed now superfluous variables.
+
+	* configure.in: don't use -lsocket, -lm. Why there they included
+	  anyway ?
+
+	* configure.in (line 259): don't bother with -ltclX.Y if not
+	  running under AIX.
+
+	* configure.in: lowest possible tcl version is 7.6, not 7.5. Added
+	  recognition of 8.0 versions.
+
+	* configure.in: changed search order: sibling directories before
+	  <prefix> paths. But commandline options overide all.
+
+Thu Dec  5 19:02:06 1996  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* PREPARE: updated to exclude the new directories (see below) from
+	  distribution.
+
+	* added internal directories 'patches' and 'mails'.
+
+	* configure.in (AC_OUTPUT): adapted to last change, done by patch,
+	  see below.
+
+	* pkgIndex.tcl.in: former pkgIndex.in, renamed by patch, see below.
+
+	* Makefile.in (LIB_RUNTIME_DIR): added by patch, see below.
+
+	* got a patch from Jan Nijtmans <nijtmans@nici.kun.nl>.
+
+Fri Nov 15 22:45:04 1996  Andreas Kupries  <aku@bluepeak.westend.com>
+
+	* Extracted memory channel code from trans-patch and made it a
+	  separate library.
+

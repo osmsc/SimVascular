@@ -1,0 +1,36 @@
+Namespace hierarchy used by the Pool packages
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+::pool	-	registered at NICS
+	----------------------------------------
+	array								BASE
+	atexit
+	cgi
+	date
+	dump
+	file
+	getopt
+	list
+	math
+	misc					(used by NET too)
+	oo
+		class
+			<class definitions>
+	serial
+	string
+	syslog								BASE
+	----------------------------------------
+	ui								GUI
+	----------------------------------------
+	urls								NET
+		basic
+		ftp
+		file
+		http
+		gopher
+		mailto
+		news
+		wais
+		prospero
+	smtp
+	pop3								NET
+	----------------------------------------

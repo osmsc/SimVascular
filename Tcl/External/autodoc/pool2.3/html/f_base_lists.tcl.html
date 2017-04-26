@@ -1,0 +1,720 @@
+<html>
+<head>
+<title>File 'base/lists.tcl' (part of 'Pool_Base')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'base/lists.tcl' (part of '<a href="pkg_Pool_Base.html" class="package">Pool_Base</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">list operations</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Collection of useful list operations</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a></span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">list operations</span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_apply" class="proc">::pool::list::apply</a> <span class="arg-list">(cmd list)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_assign" class="proc">::pool::list::assign</a> <span class="arg-list">(varList list)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_delete" class="proc">::pool::list::delete</a> <span class="arg-list">(listVar value)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_exchange" class="proc">::pool::list::exchange</a> <span class="arg-list">(listVar position newItem)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_filter" class="proc">::pool::list::filter</a> <span class="arg-list">(list pattern)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_head" class="proc">::pool::list::head</a> <span class="arg-list">(list)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_last" class="proc">::pool::list::last</a> <span class="arg-list">(list)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_lengthOfLongestEntry" class="proc">::pool::list::lengthOfLongestEntry</a> <span class="arg-list">(list)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_match" class="proc">::pool::list::match</a> <span class="arg-list">(list pattern)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_pop" class="proc">::pool::list::pop</a> <span class="arg-list">(listVar)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_prepend" class="proc">::pool::list::prepend</a> <span class="arg-list">(listVar newElement)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_prev" class="proc">::pool::list::prev</a> <span class="arg-list">(list)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_projection" class="proc">::pool::list::projection</a> <span class="arg-list">(list column)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_push" class="proc">::pool::list::push</a> <span class="arg-list">(listvar args)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_remove" class="proc">::pool::list::remove</a> <span class="arg-list">(listVar position)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_reverse" class="proc">::pool::list::reverse</a> <span class="arg-list">(list)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_select" class="proc">::pool::list::select</a> <span class="arg-list">(list indices)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_shift" class="proc">::pool::list::shift</a> <span class="arg-list">(listVar)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_tail" class="proc">::pool::list::tail</a> <span class="arg-list">(list)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_uniq" class="proc">::pool::list::uniq</a> <span class="arg-list">(list)</span>
+<li class="proc-listing"><a href="f_base_lists.tcl.html#p_pool_list_unshift" class="proc">::pool::list::unshift</a> <span class="arg-list">(listVar newElement)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_list_apply"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::apply</span> <span class="arg-list">(cmd list)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Applies <span class="argument"><span class="proc">cmd</span></span> to all entries of <span class="argument"><span class="proc">list</span></span> and concatenates the individual results into a single list. The <span class="argument"><span class="proc">cmd</span></span> must accept exactly one argument.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+The command executed for each entry.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+The list to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A list containing all results of the application of <span class="argument"><span class="proc">cmd</span></span> to the <span class="argument"><span class="proc">list</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_assign"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::assign</span> <span class="arg-list">(varList list)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">by</span> <a href="mailto:welch@ajubasolutions.com" class="proc">Brent Welch</a>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Assign a set of variables from a list of values. If there are more values than variables, they are ignored. If there are fewer values than variables, the variables get the empty string.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: varList
+</td>
+<td class="argument-description">
+List of variables to assign the values to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+The list to assign to the variables.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_delete"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::delete</span> <span class="arg-list">(listVar value)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">by</span> <a href="mailto:welch@ajubasolutions.com" class="proc">Brent Welch</a>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Delete an item from the list stored in <span class="argument"><span class="proc">listVar</span></span>, by <span class="argument"><span class="proc">value</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: listVar
+</td>
+<td class="argument-description">
+The name of the variable containing the list to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: value
+</td>
+<td class="argument-description">
+The value searched (and deleted from the list).
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: 1 if the item was present, else 0.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_exchange"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::exchange</span> <span class="arg-list">(listVar position newItem)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes the item at <span class="argument"><span class="proc">position</span></span> from the list stored in variable <span class="argument"><span class="proc">listVar</span></span> and inserts <span class="argument"><span class="proc">newItem</span></span> in its place.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: listVar
+</td>
+<td class="argument-description">
+Name of variable containing the list to be manipulated.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: position
+</td>
+<td class="argument-description">
+Index of the element to remove.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: newItem
+</td>
+<td class="argument-description">
+The element to insert into the place of the removed one.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The changed list.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_filter"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::filter</span> <span class="arg-list">(list pattern)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">All words contained in the list <span class="argument"><span class="proc">pattern</span></span> are removed from <span class="argument"><span class="proc">list</span></span>. In set-notation: result = list - pattern</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+The list to filter
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: pattern
+</td>
+<td class="argument-description">
+The list of words to remove from <span class="argument"><span class="argument-description">list</span></span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Setdifference of <span class="argument"><span class="proc">list</span></span> and <span class="argument"><span class="proc">pattern</span></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_head"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::head</span> <span class="arg-list">(list)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+The list to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The first element of <span class="argument"><span class="proc">list</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_last"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::last</span> <span class="arg-list">(list)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+The list to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The last element of <span class="argument"><span class="proc">list</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_lengthOfLongestEntry"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::lengthOfLongestEntry</span> <span class="arg-list">(list)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines the length of the longest entry contained in the <span class="argument"><span class="proc">list</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+The list to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The length of the longest entry.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_match"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::match</span> <span class="arg-list">(list pattern)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">All words not contained in list <span class="argument"><span class="proc">pattern</span></span> are removed from <span class="argument"><span class="proc">list</span></span>. In set-notation: result = intersect (list, pattern). This is not completely true, duplicate entries in 'list' remain in the result, given that they appear at all.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+The list to filter
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: pattern
+</td>
+<td class="argument-description">
+The list of words to accept in <span class="argument"><span class="argument-description">list</span></span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Nearly the intersection of <span class="argument"><span class="proc">list</span></span> and <span class="argument"><span class="proc">pattern</span></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_pop"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::pop</span> <span class="arg-list">(listVar)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes the last element of the list contained in variable <span class="argument"><span class="proc">listVar</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: listVar
+</td>
+<td class="argument-description">
+name of variable containing the list to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The last element of the list, or {} in case of an empty list.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_prepend"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::prepend</span> <span class="arg-list">(listVar newElement)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The list stored in the variable <span class="argument"><span class="proc">listVar</span></span> is shifted up by one. <span class="argument"><span class="proc">newElement</span></span> is inserted afterward into the now open head position.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: The same as <span class="xref-procs"><a href="f_base_lists.tcl.html#p_pool_list_unshift" class="proc">::pool::list::unshift</a></span>, just under a different name.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: listVar
+</td>
+<td class="argument-description">
+The name of the variable containing the list to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: newElement
+</td>
+<td class="argument-description">
+Data to insert before the head of the list.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: <span class="argument"><span class="proc">newElement</span></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_prev"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::prev</span> <span class="arg-list">(list)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+The list to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Everything before the last element of <span class="argument"><span class="proc">list</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_projection"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::projection</span> <span class="arg-list">(list column)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Treats <span class="argument"><span class="proc">list</span></span> as list of lists and extracts the <span class="argument"><span class="proc">column</span></span>'th element of each list item. If <span class="argument"><span class="proc">list</span></span> is seen as matrix, then the procedure returns the data of the specified <span class="argument"><span class="proc">column</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+The list to search through.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: column
+</td>
+<td class="argument-description">
+Index of the column to extract from <span class="argument"><span class="argument-description">list</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A list containing the extracted items.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_push"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::push</span> <span class="arg-list">(listvar args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The same as 'lappend', provided for symmetry only.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: listvar
+</td>
+<td class="argument-description">
+The name of the variable containing the list to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+List of objects to append to the list.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: As of 'lappend'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_remove"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::remove</span> <span class="arg-list">(listVar position)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes the item at <span class="argument"><span class="proc">position</span></span> from the list stored in variable <span class="argument"><span class="proc">listVar</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: listVar
+</td>
+<td class="argument-description">
+The name of variable containing the list to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: position
+</td>
+<td class="argument-description">
+index of the element to remove.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The changed list.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_reverse"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::reverse</span> <span class="arg-list">(list)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+the list to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Returns the reversed <span class="argument"><span class="proc">list</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_select"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::select</span> <span class="arg-list">(list indices)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">General permutation / selection of list elements. Takes the elements of <span class="argument"><span class="proc">list</span></span> whose <span class="argument"><span class="proc">indices</span></span> were given to the command and returns a new list containing them, in the specified order.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+The list to select from, the list to permute.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: indices
+</td>
+<td class="argument-description">
+A list containing the indices of the elements to select.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: is a list containing the selected elementes, in the order specified by <span class="argument"><span class="proc">indices</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_shift"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::shift</span> <span class="arg-list">(listVar)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The list stored in the variable <span class="argument"><span class="proc">listVar</span></span> is shifted down by one.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: listVar
+</td>
+<td class="argument-description">
+name of the variable containing the list to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The first element of the list stored in <span class="argument"><span class="proc">listVar</span></span>, or {} for an empty list. The latter is not a sure signal, as the list may contain empty elements.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_tail"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::tail</span> <span class="arg-list">(list)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+The list to look at.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Everything behind the first element of <span class="argument"><span class="proc">list</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_uniq"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::uniq</span> <span class="arg-list">(list)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes duplicate entries from <span class="argument"><span class="proc">list</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: list
+</td>
+<td class="argument-description">
+The list to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The modified list.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_list_unshift"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::list::unshift</span> <span class="arg-list">(listVar newElement)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The list stored in the variable <span class="argument"><span class="proc">listVar</span></span> is shifted up by one. <span class="argument"><span class="proc">newElement</span></span> is inserted afterward into the now open head position.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: The same as <span class="xref-procs"><a href="f_base_lists.tcl.html#p_pool_list_prepend" class="proc">::pool::list::prepend</a></span>, just under a different name.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: listVar
+</td>
+<td class="argument-description">
+The name of the variable containing the list to manipulate.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: newElement
+</td>
+<td class="argument-description">
+Data to insert before the head of the list.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: <span class="argument"><span class="proc">newElement</span></span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

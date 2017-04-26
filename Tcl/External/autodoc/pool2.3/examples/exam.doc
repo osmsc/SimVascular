@@ -1,0 +1,31 @@
+# -*- tcl -*-
+newPage     exam.htm "Example applications"
+add2Sidebar exam.htm "Examples"
+
+par "
+The applications in the directory [strong example] demonstrate
+the widgets provided by the Packages [pkgRef Pool_GuiBase] and
+[pkgRef Pool_Clock]. They assume that the distribution is already
+installed.
+"
+
+definitionList {
+    defterm calendar     "[classRef calendar]"
+    defterm month        "[classRef monthBrowser]"
+    defterm nyi          "[procRef ::pool::ui::nyi]"
+    defterm progbar      "[classRef progressbar]"
+    defterm tixA_month   "[classRef monthBrowserTixA]"
+    defterm tixB_month   "[classRef monthBrowserTixB]"
+    defterm tix_calendar "[classRef calendarTix]"
+    defterm tix_nyi      "[procRef ::pool::ui::nyiTix]"
+    defterm watchArray   "[classRef watchArray]"
+    defterm watchScalar  "[classRef watchScalar]"
+    defterm trackScalar  "[classRef trackScalar]"
+    defterm ocDialog     "[classRef okCancelDialog]"
+    defterm gMenubar     "[classRef genericMenubar]"
+    defterm gPop         "[classRef genericPopupMenu]"
+    defterm iDialog      "[classRef infoDialog]"
+    defterm logger       "[classRef logger]"
+}
+
+closePage

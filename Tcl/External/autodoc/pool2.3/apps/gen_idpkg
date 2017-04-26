@@ -1,0 +1,68 @@
+#!/usr/local/bin/tclsh
+# -*- tcl -*-
+# A small tcl script to convert a 'pkgIndex.tcl' file
+# into a batch file usable by NICS
+# Writes generated data to stdout
+
+# owner information will be found in the first file
+
+set owner  ""
+set oemail ""
+set opass  ""
+
+proc OwnerName     {args} {global owner;  set owner  [string trim $args]}
+proc OwnerEmail    {args} {global oemail; set oemail [string trim $args]}
+proc OwnerPassword {args} {global opass;  set opass  [string trim $args]}
+source [lindex $argv 0]
+
+puts "OwnerName $owner"
+puts "OwnerEmail $oemail"
+puts "OwnerPassword $opass"
+
+
+# scan all given index files
+
+set argv [lrange $argv 1 end]
+
+foreach f $argv {
+    interp create -safe ~
+    ~ eval set dir {{}}
+    ~ expose source
+    ~ eval {
+	proc package {sub pkg version script} {
+	    # sub == ifneeded
+	    global p
+
+	    set p($pkg) [lindex $script 4]	;# assumes tclPkgSetup
+	}
+    }
+
+    catch {~ eval source [list $f]} msg
+
+    foreach pkg [~ eval array names p] {
+	set flist [~ eval set [list p($pkg)]]
+	foreach item $flist {
+	    set cmdlist [lindex $item 2]
+	    
+	    foreach c $cmdlist {
+		puts ""
+		puts ""
+		puts "Command IdAdd"
+		puts "DomainName Tcl commands"
+		puts "IdName $c"
+		puts "IdBrief << EOF"
+		puts "EOF"
+		puts "IdRef << EOF"
+		puts "@ref@"
+		puts "EOF"
+		puts "IdUsage In use"
+		puts "IdStandard Experimental"
+		puts "IdOther << EOF"
+		puts "This command is defined by package $pkg."
+		puts "EOF"
+	    }
+	}
+    }
+
+    interp delete ~
+}

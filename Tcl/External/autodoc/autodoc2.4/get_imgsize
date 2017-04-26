@@ -1,0 +1,30 @@
+#!/usr/local/bin/wish
+# -*- tcl -*-
+# load an image and determine its geometry.
+
+wm withdraw .
+catch {package require Img}
+set imgfile [lindex $argv 0]
+
+set fail [catch {image create bitmap -file $imgfile} imgName]
+
+if {$fail} {
+    #puts stderr $imgName
+
+    set fail [catch {image create photo -file $imgfile} imgName]
+}
+
+if {$fail} {
+    #puts stderr $imgName
+
+    puts stdout {}
+    exit
+}
+
+set w [image width  $imgName]
+set h [image height $imgName]
+
+image delete $imgName
+
+puts stdout [list $w $h]
+exit

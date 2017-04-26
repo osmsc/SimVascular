@@ -1,0 +1,333 @@
+<html>
+<head>
+<title>File 'gui/gPopupMenu.cls' (part of 'Pool_GuiBase')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'gui/gPopupMenu.cls' (part of '<a href="pkg_Pool_GuiBase.html" class="package">Pool_GuiBase</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Generic popup menu widget</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Generic popup menu widget</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">popup,  generic popup menu</span>
+</dl>
+</div>
+<h1 class="class">Class 'genericPopupMenu'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Instances of this class maintains a popup menu</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cwidget.html" class="class">widget</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ocommand" class="options">command</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cgenericPopupMenu.html#pgenericPopupMenu_InvokeEntry" class="proc">InvokeEntry</a> <span class="arg-list">(command)</span><br>
+<a href="cgenericPopupMenu.html#pgenericPopupMenu_addEntries" class="proc">addEntries</a> <span class="arg-list">(spec)</span><br>
+<a href="cgenericPopupMenu.html#pgenericPopupMenu_addEntry" class="proc">addEntry</a> <span class="arg-list">(command underline name)</span><br>
+<a href="cgenericPopupMenu.html#pgenericPopupMenu_associate" class="proc">associate</a> <span class="arg-list">(w cmd)</span><br>
+<a href="cgenericPopupMenu.html#pgenericPopupMenu_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span><br>
+<a href="cgenericPopupMenu.html#pgenericPopupMenu_entryconfigure" class="proc">entryconfigure</a> <span class="arg-list">(command args)</span><br>
+<a href="cgenericPopupMenu.html#pgenericPopupMenu_show" class="proc">show</a> <span class="arg-list">(x y)</span><br>
+<a href="cgenericPopupMenu.html#pgenericPopupMenu_showRelative" class="proc">showRelative</a> <span class="arg-list">(w x y)</span><br>
+<a href="cgenericPopupMenu.html#pgenericPopupMenu_width" class="proc">width</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#ventries" class="members">entries</a><br>
+<a href="#ventry" class="members">entry</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ocommand"></a>
+<dt><span class="option-name">-command</span>
+<dd><span class="option-description">  Script to execute upon invocation of a menu entry</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pgenericPopupMenu_InvokeEntry"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">InvokeEntry</span> <span class="arg-list">(command)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal method, called upon invocation of a menu entry.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: command
+</td>
+<td class="argument-description">
+Symbolic name of the invoked entry.
+</td>
+</tr>
+</table>
+</p>
+<a name="pgenericPopupMenu_addEntries"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">addEntries</span> <span class="arg-list">(spec)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds a bunch of entries to the popup menu.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: spec
+</td>
+<td class="argument-description">
+A list suitable for usage with 'array set'. The first item of each pair is the command code to give to the external script (<span class="xref-oref"><a href="cgenericPopupMenu.html#ocommand" class="xref-oref">command</a></span>) upon invocation of the entry. It serves as symbolic name of the entry too. The 2nd item in each pair is the string to display in the entry. A command of '-' indicates a separator line. The display string is ignored in this case, but has to be present nevertheless. A command name has to be unique over all menubuttons added to a menubar.
+</td>
+</tr>
+</table>
+</p>
+<a name="pgenericPopupMenu_addEntry"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">addEntry</span> <span class="arg-list">(command underline name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds a new menu entry to the popup menu.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: command
+</td>
+<td class="argument-description">
+Symbolic name of command associated to the entry
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: underline (= -1)
+</td>
+<td class="argument-description">
+Index of the character in <span class="argument"><span class="argument-description">name</span></span> to underline.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name (= {})
+</td>
+<td class="argument-description">
+String to display in the new entry. The special value '-' forces generation of a separator line.
+</td>
+</tr>
+</table>
+</p>
+<a name="pgenericPopupMenu_associate"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">associate</span> <span class="arg-list">(w cmd)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Associate the popup menu with widget <span class="argument"><span class="proc">w</span></span>, evaluate <span class="argument"><span class="proc">cmd</span></span> upon invokation of a menu entry. The association takes the form of a binding of mouse button 2 causing the display of the menu relative to <span class="argument"><span class="proc">w</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+Path to the widget to add the menu to.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: cmd
+</td>
+<td class="argument-description">
+Script to invoke upon activation of a menu entry. Changes <span class="xref-oref"><a href="cgenericPopupMenu.html#ocommand" class="xref-oref">command</a></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="pgenericPopupMenu_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cwidget.html" class="class">widget</a>:<a href="cwidget.html#pwidget_createSubwidgets" class="proc">createSubwidgets</a><br>
+<span class="header-description-value">Generate the internal widget. No placement yet, this is done later and explicitly (see <span class="xref-mref"><a href="cgenericPopupMenu.html#pgenericPopupMenu_show" class="proc">show</a></span> and <span class="xref-mref"><a href="cgenericPopupMenu.html#pgenericPopupMenu_showRelative" class="proc">showRelative</a></span>)</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pgenericPopupMenu_entryconfigure"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">entryconfigure</span> <span class="arg-list">(command args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Accessor method allowing the reconfiguration of all entries in the menubar. Access is given based upon the symbolic name of the entry. The mapping to the menu widget of the entry and its index in that is done here.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: command
+</td>
+<td class="argument-description">
+Symbolic name of the command to operate on.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+List of option, value pairs.
+</td>
+</tr>
+</table>
+</p>
+<a name="pgenericPopupMenu_show"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">show</span> <span class="arg-list">(x y)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Show the popup menu and wait for selection or cancellation.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: x
+</td>
+<td class="argument-description">
+Place to show the menu at, relative to the rootwindow of the display.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: y
+</td>
+<td class="argument-description">
+Place to show the menu at, relative to the rootwindow of the display.
+</td>
+</tr>
+</table>
+</p>
+<a name="pgenericPopupMenu_showRelative"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">showRelative</span> <span class="arg-list">(w x y)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Show the popup menu and wait for selection or cancellation.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: w
+</td>
+<td class="argument-description">
+Path to widget used as root of the coordinates.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: x
+</td>
+<td class="argument-description">
+Place to show the menu at, relative to widget <span class="argument"><span class="argument-description">w</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: y
+</td>
+<td class="argument-description">
+Place to show the menu at, relative to widget <span class="argument"><span class="argument-description">w</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="pgenericPopupMenu_width"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">width</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: Retrieve the width of the menu.
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="ventries"></a>
+<dt><span class="variable-name">entries</span>
+<dd><span class="variable-description">  Number of entries added so far.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">0</span>
+<a name="ventry"></a>
+<dt><span class="variable-name">entry</span>
+<dd><span class="variable-description">  Mapping from symbolic names to menu entries</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

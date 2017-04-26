@@ -1,0 +1,124 @@
+# -*- tcl -*-
+
+set pbreak [getString {parbreak}]
+
+newPage    seq.htm "Sequencer framework"
+
+proc head    {str} {table_head {write $str}}
+proc data    {str} {table_data {write $str}}
+
+par "
+The framework in [fileRef base/sequencer.cls] was written to ease the
+generation of command/response chains usually required during implementation of
+a client for various internet protocols (smtp, pop3, ...). It cuts down the
+size of redundantly written code too.
+"
+
+par "
+To use the framework one has to derive a class from [classRef sequencer] and
+overide some methods."
+
+par "
+Examples of its usage can be found in the [strong net/pop3] and
+[strong net/smtp] directories. More concrete: [classRef pop3Sequencer] and
+[classRef pop3RetrSeq].
+"
+
+hrule
+
+par "
+The framework knows the events  'done', 'eof', 'error', 'line', 'next' and
+'timeout'. They can be raised from the outside or the sequencer itself,
+through calling [methodRef sequencer event]. An important thing to remember,
+in the calling context [methodRef sequencer event] will act like a 'return'
+statement."
+
+par "
+Of these six events only two, 'error' and 'line', accept a single argument,
+which will be interpreted as the error message, resp. the incoming line to
+handle.
+"
+
+par "The actions executed upon receiving an event are as follows."
+
+table border {
+    caption {write "Events and sequencer actions"}
+    table_row {
+	head {Event}
+	head {Action}
+    }
+    table_row {
+	data "[strong Common] (to all)"
+	data "
+	The raised event is stored in the membervariable
+	[varRef sequencer state].
+	"
+    }
+    table_row {
+	data {done}
+	data "
+	Calls the abstract method [methodRef sequencer OnDone] first, then
+	destroys the sequencer object. The derived class has to overide this
+	method to do something useful, like notifying the environment about
+	the impeding destruction. As event (and possibly an error message) are
+	stored in the object before doing this the derived is able to act
+	differently, based on the exact cause of the desctruction.
+	"
+    }
+    table_row {
+	data {eof}
+	data {The same as for 'done'.}
+	data "
+	"
+    }
+    table_row {
+	data {error}
+	data "
+	The same as for 'done', with one exception. The first argument after
+	the event is interpreted as the error message and stuffed into the
+	membervariable [varRef sequencer error].
+	"
+    }
+    table_row {
+	data {line}
+	data "
+	Calls the method [methodRef sequencer OnLine]. The first argument
+	behind the event is forwarded to the method. Errors during its
+	execution are handled by raising an 'error' event. The implementation
+	provided in this class uses the member variable
+	[varRef sequencer lineMethod] to dynamically call a method of the
+	derived class. The 'line' argument is forwarded to the invoked method.
+	The method [methodRef sequencer wait] should be used to define its
+	contents. Derived classes are allowed to overide
+	[methodRef sequencer OnLine]. $pbreak
+	[methodRef sequencer wait] actually does more than simply setting up
+	[varRef sequencer lineMethod]. It additionally places a read fileevent
+	handler on the channel given to it and start a timer which will time
+	out after [optionRef sequencer timeout] milliseconds, causing a
+	'timeout' to be raised. On the other hand, activity on the channel
+	causes a line to be read and then send to ourselves through a 'line'
+	event. If the channel was closed 'eof' is raised. Whatever happened,
+	the timer is cancelled. The callback methods are
+	[methodRef sequencer Timeout] and [methodRef sequencer Receive].
+	"
+    }
+    table_row {
+	data {next}
+	data "
+	Calls the method [methodRef sequencer OnNext]. Errors during its
+	execution are handled by raising an 'error' event. The implementation
+	provided in this class uses the member variable
+	[varRef sequencer nextMethod] to dynamically call a method of the
+	derived class. The method [methodRef sequencer next] should be used to
+	define its contents. Derived classes are allowed to overide
+	[methodRef sequencer OnNext].
+	"
+    }
+    table_row {
+	data {timeout}
+	data {The same as for 'done'.}
+    }
+}
+
+
+closePage

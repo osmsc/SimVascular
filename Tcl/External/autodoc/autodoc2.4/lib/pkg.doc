@@ -1,0 +1,11 @@
+# -*- tcl -*-
+# package description
+
+package_describe AutoDOC {
+    short   {AutoDOC engine}
+    desc    {
+	The AutoDOC engine. Placed into a package to ease installation
+	and, more important, allow usage from other applications as well.
+    }
+    version 2.0.1
+}

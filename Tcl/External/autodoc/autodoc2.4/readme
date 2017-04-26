@@ -1,0 +1,26 @@
+
+Extraction of documentation embedded into tcl code and its conversion to HTML.
+
+		(AutoDOC Version 2.4 / September 07, 2000)
+		Andreas Kupries	(a.kupries@westend.com)
+
+This directory contains an application to convert specially formatted documentation
+embedded into tcl code into a cross-referenced set of HTML pages describing the code.
+
+
+For a simple install just unpack into a directory of your choice, make it your
+working directory, then type 'make install'. This will install the application
+into /usr/local/bin, its package  will go into a subdirectory of /usr/local/lib.
+You must be root to do the last step, of course.
+
+
+For a nonstandard installation you have to edit the Makefile, just point
+$exec_dir to a directory of your choice (Tcl should search it for
+packages). Alternatively change $BIN_DIR and $LIB_DIR.
+
+--
+Enjoy,
+	Andreas Kupries <a.kupries@westend.com>
+			<http://www.westend.com/~kupries/>
+-------------------------------------------------------------------------------
+

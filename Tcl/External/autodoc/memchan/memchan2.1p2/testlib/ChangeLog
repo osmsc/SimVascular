@@ -1,0 +1,23 @@
+Tue Sep 14 21:31:06 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* lib/cmd.tcl: Added 'cc:' to mail report, addressee is the
+	  logname of the person sending it.
+
+	* lib/if.tcl: Fixed spelling (send -> sent) in 'ifMailSend'. Noted
+	  by Larry Virden <lvirden@cas.org>.
+
+Thu Feb  4 20:00:40 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* lib/nlistbox.tcl: Fixed an error in 'nlistbox:scan:dragto',
+ 	  forgot a 'global nlistbox_state'. Changed the factor from 10 to
+ 	  0.1 too. Error reported by Bryan Oakley <oakley@channelpoint.com>.
+
+Wed Feb  3 17:32:25 1999  Andreas Kupries  <a.kupries@westend.com>
+
+	* lib/cmd.tcl (mimeStart): Found out what prevented ExMH from
+	  accepting the generated mail as MIME multipart. The actual
+	  separator has to be "--$boundary", not "$boundary".
+
+	* Log started.
+
+

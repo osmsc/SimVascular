@@ -1,0 +1,116 @@
+#!/usr/local/bin/tclsh
+# -*- tcl -*-
+# extract documentation from tcl sources, convert into html.
+# 7.6 used, due to crashes of 8.0a1/2, 8.0b1 works again
+
+# save this from redefinition by 'cgilib'.
+# See distribution.cls, line 39ff too.
+catch {parray}
+
+package require Pool_Base
+package require AutoDOC
+
+
+# define options and read them (hardwired defaults, user defaults, commandline)
+
+::pool::array::def        oDef
+::pool::getopt::defOption oDef srcdir           -d [pwd]
+::pool::getopt::defOption oDef outputdir        -d [file join [pwd] output]
+::pool::getopt::defOption oDef replyaddr        -d [::pool::misc::currentAddress]
+::pool::getopt::defOption oDef tables           -d 1 -t ::pool::getopt::boolean
+::pool::getopt::defOption oDef psort            -d 1 -t ::pool::getopt::boolean
+::pool::getopt::defOption oDef ptable           -d 1 -t ::pool::getopt::boolean
+::pool::getopt::defOption oDef v                -d 0 -t ::pool::getopt::boolean
+::pool::getopt::defOption oDef up-title         -d ""
+::pool::getopt::defOption oDef up-link          -d ""
+::pool::getopt::defOption oDef up-image         -d ""
+::pool::getopt::defOption oDef up-imglink       -d 0 -t ::pool::getopt::boolean
+::pool::getopt::defOption oDef exclude          -d ""
+::pool::getopt::defOption oDef clisttype        -d par
+::pool::getopt::defOption oDef no-problems      -d 0
+::pool::getopt::defOption oDef css              -d 1
+::pool::getopt::defOption oDef fsort-fullpath   -d 1
+::pool::getopt::defOption oDef file-prefix      -d {}
+::pool::getopt::defOption oDef class-prefix     -d {}
+::pool::getopt::defOption oDef proc-prefix      -d {}
+::pool::getopt::defOption oDef namespace-prefix -d {}
+::pool::getopt::defOption oDef itk-opt-alias    -d {}
+
+foreach opt {
+    replyaddr tables psort ptable up-title up-link up-image up-imglink exclude
+    clisttype no-problems css fsort-fullpath file-prefix class-prefix
+    proc-prefix outputdir namespace-prefix itk-opt-alias
+} {
+    proc $opt {v} "global oDef; ::pool::getopt::changeDefault oDef $opt \$v"
+}
+
+# user dependent configuration
+catch {source [file join $env(HOME) .autodocrc]}
+
+# caller configuration
+::pool::array::def                    opt
+::pool::getopt::initValues oDef       opt
+::pool::getopt::processOpt oDef $argv opt
+
+if {$opt(-v)} {
+    puts stdout "\t-srcdir           = $opt(-srcdir)"
+    puts stdout "\t-outputdir        = $opt(-outputdir)"
+    puts stdout "\t-replyaddr        = $opt(-replyaddr)"
+    puts stdout "\t-tables           = $opt(-tables)"
+    puts stdout "\t-psort            = $opt(-psort)"
+    puts stdout "\t-ptable           = $opt(-ptable)"
+    puts stdout "\t-up-title         = $opt(-up-title)"
+    puts stdout "\t-up-image         = $opt(-up-image)"
+    puts stdout "\t-up-link          = $opt(-up-link)"
+    puts stdout "\t-up-imglink       = $opt(-up-imglink)"
+    puts stdout "\t-exclude          = $opt(-exclude)"
+    puts stdout "\t-clisttype        = $opt(-clisttype)"
+    puts stdout "\t-no-problems      = $opt(-no-problems)"
+    puts stdout "\t-css              = $opt(-css)"
+    puts stdout "\t-fsort-fullpath   = $opt(-fsort-fullpath)"
+    puts stdout "\t-file-prefix      = $opt(-file-prefix)"
+    puts stdout "\t-class-prefix     = $opt(-class-prefix)"
+    puts stdout "\t-proc-prefix      = $opt(-proc-prefix)"
+    puts stdout "\t-namespace-prefix = $opt(-namespace-prefix)"
+    puts stdout "\t-itk-opt-alias    = $opt(-itk-opt-alias)"
+    puts stdout ""
+}
+
+
+proc log_do {level message} {
+    puts stdout "$level\t$message"
+    return
+}
+
+::pool::syslog::def log_do
+
+
+# -- do it
+distribution dist                           \
+	-srcdir           $opt(-srcdir)      \
+	-outputdir        $opt(-outputdir)    \
+	-replyaddr        $opt(-replyaddr)     \
+	-tables           $opt(-tables)         \
+	-psort            $opt(-psort)          \
+	-ptable           $opt(-ptable)         \
+	-up-title         $opt(-up-title)       \
+	-up-image         $opt(-up-image)       \
+	-up-link          $opt(-up-link)        \
+	-up-imglink       $opt(-up-imglink)     \
+	-exclude          $opt(-exclude)        \
+	-clisttype        $opt(-clisttype)      \
+	-no-problems      $opt(-no-problems)    \
+	-css              $opt(-css)            \
+	-fsort-fullpath   $opt(-fsort-fullpath) \
+	-file-prefix      $opt(-file-prefix)    \
+	-class-prefix     $opt(-class-prefix)   \
+	-proc-prefix      $opt(-proc-prefix)     \
+	-namespace-prefix $opt(-namespace-prefix) \
+	-itk-opt-alias    $opt(-itk-opt-alias)    \
+	-adlocation {http://www.purl.org/NET/akupries/soft/autodoc/index.htm}
+
+dist configure -formatter [htmlFormatter distHtmlOut]
+dist scan
+dist delete
+
+exit 0

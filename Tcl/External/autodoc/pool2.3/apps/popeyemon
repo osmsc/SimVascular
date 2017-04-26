@@ -1,0 +1,274 @@
+#!/usr/local/bin/wish
+# -*- tcl -*-
+# graphical management/monitor utility to popeye, a pop3 client
+
+package require Pool_Base
+package require Pool_GuiBase
+package require Pool_Net
+package require Comm
+package require Tktable
+
+
+# -------------------------------------------------------
+# global information
+set    id ""	;# <Comm handle to talk to popeye>
+
+#---------------------------------------------------------------------------
+# layout of display, other interface information
+#
+# +--------+-------------------+--------------+------------+------------+
+# | start  | <issued commands> | Retrieved    | Deleted    | Ignored    |
+# | button +-------------------+--------------+------------+------------+
+# |        | <#messages found> | <#retrieved> | <#deleted> | <#ignored> |
+# +--------+-------------------+--------------+------------+------------+
+#
+# color of 'issued command' cell indicates state: std      - sent, no response
+#                                                 seagreen - ok
+#                                                 red      - failure
+#
+# 'startbutton' active only if client in waiting
+#               inactive while client fetches mail
+#---------------------------------------------------------------------------
+#
+# decision:  use grid and labels, not tktable.
+#
+# reasoning: In contrast to the server the client might be used more widely,
+#            and should therefore be less dependent on extensions. And while
+#	     the database manipulation part of the server monitor was
+#            definitely eased by tkTable the client monitor does not require
+#            such a big thing.
+#
+#---------------------------------------------------------------------------
+#
+# popeye interfaces required/used here:
+#
+# * popeye_logto {}, popeye_logto {host port}
+# * popeye_fetch
+#
+#---------------------------------------------------------------------------
+
+
+
+# -------------------------------------------------------
+# build interface
+
+proc main_interface {} {
+    global bgcolor
+
+    button .fetch  -text "Fetch" -bd 2 -relief raised \
+	    -command pm_fetch -state disabled
+    button .kill   -text "Kill"  -bd 2 -relief raised \
+	    -command pm_kill  -state disabled
+    label  .issued -text "----"  -bd 2 -relief raised
+    label  .lr     -text "Retr"  -bd 2 -relief raised
+    label  .ld     -text "Del"   -bd 2 -relief raised
+    label  .li     -text "Ign"   -bd 2 -relief raised
+    label  .nmsg   -text ""      -bd 2 -relief raised
+    label  .retr   -text ""      -bd 2 -relief raised
+    label  .dele   -text ""      -bd 2 -relief raised
+    label  .ign    -text ""      -bd 2 -relief raised
+
+    set bgcolor [.fetch cget -bg]
+    .fetch configure -bg red
+
+
+    grid .fetch  -row 0 -column 0 -sticky swen -rowspan 2
+    #
+    grid .issued -row 0 -column 1 -sticky swen
+    grid .lr     -row 0 -column 2 -sticky swen
+    grid .ld     -row 0 -column 3 -sticky swen
+    grid .li     -row 0 -column 4 -sticky swen
+    #
+    grid .nmsg   -row 1 -column 1 -sticky swen
+    grid .retr   -row 1 -column 2 -sticky swen
+    grid .dele   -row 1 -column 3 -sticky swen
+    grid .ign    -row 1 -column 4 -sticky swen
+    #
+    grid .kill   -row 0 -column 5 -sticky swen -rowspan 2
+
+
+    # make it visible
+    wm title . {POPeye monitor}
+
+    update
+    update idletasks
+}
+
+
+
+proc pm_fetch {} {
+    # start fetch cycle in popeye
+
+    global id
+    if {[catch {comm send $id popeye_fetch}]} {
+	.fetch configure -state disabled
+    }
+}
+
+
+proc pm_exit {} {
+    # quit monitor
+
+    global id
+
+    if {$id != {}} {
+	# remove redirection of log
+	catch {comm send $id popeye_logto [list {}]}
+    }
+
+    exit
+}
+
+
+proc pm_kill {} {
+    # kill popeye
+
+    global id
+    comm send -async $id popeye_shutdown
+    set id ""
+
+    .fetch configure -bg red -state disabled
+    .kill  configure         -state disabled
+
+    # wait for next incarnation of client
+    after 500 search_popeye
+}
+
+
+
+# -------------------------------------------------------
+# poll for a running pop client
+proc search_popeye {} {
+    global id log_port bgcolor
+
+    set id ""
+    catch {set id [::pool::nameserver::lookup popeye]}
+    # protect against missing name service
+
+    if {$id == {}} {
+	after 1000 search_popeye
+	return
+    }
+
+    set id [lindex $id 1]
+
+    comm send $id popeye_logto [list [list [::info hostname] $log_port]]
+
+    .fetch configure -bg $bgcolor -state normal
+    .kill  configure              -state normal
+}
+
+
+# -------------------------------------------------------
+# log dispatcher linked into the client
+
+set log_port [::pool::misc::rdServer setup_log]
+
+proc setup_log {sock host port} {
+    fconfigure $sock -buffering line -translation crlf -blocking 0
+    fileevent  $sock readable [list pm_log $sock]
+}
+
+
+proc pm_log {sock} {
+    # reader/dispatcher of log messages sent by popeye
+    # extracts the relevant information and uses it to drive the display
+
+    global bgcolor
+
+    if {[eof $sock]} {
+	close $sock
+	return
+    }
+
+    if {[gets $sock text] < 0} {return}
+
+    regsub -all {"} $text {} text ; #"-fake out emacs hilighting
+
+    set level [::pool::list::shift text]
+    set src   [::pool::list::shift text]
+
+    # ignore message from smtp delivery.
+    if {[string match smtp* $src]} {return}
+
+    switch -- $level {
+	notice {
+	    # general activity and state information
+
+	    switch -- [lindex $text 0] {
+		start {
+		    # popeye started fetch cycle
+		    .fetch configure -state disabled
+		    .nmsg  configure -text ""
+		    .retr  configure -text "0"
+		    .dele  configure -text "0"
+		    .ign   configure -text "0"
+		}
+		goto {
+		    # state change information
+		    switch -- [lindex $text 1] {
+			waiting {
+			    # fetch cycle done
+			    .fetch  configure -state normal
+			    .issued configure -text "----"
+			}
+			default {}
+		    }
+		}
+		messages {
+		    # number of messages waiting
+		    .nmsg configure -text [lindex $text 1]
+		}
+		done {
+		    # operation done by popeye during fetch
+
+		    set w ""
+		    switch -- [lindex $text 1] {
+			retrieve {set w .retr}
+			delete   {set w .dele}
+			ignore   {set w .ign}
+			default  {}
+		    }
+		    if {$w != {}} {
+			$w configure -text [expr {1+[$w cget -text]}]
+		    }
+		}
+		default {}
+	    }
+	}
+	info {
+	    # pop3 protocol log on this level
+
+	    switch -- [lindex $text 0] {
+		> {
+		    # record issued commands
+		    .issued configure -text [lindex $text 1] -bg $bgcolor
+		}
+		< {
+		    # and responses (color coded)
+		    if {"[lindex $text 1]" == "-ERR"} {
+			.issued configure -bg red
+		    } else {
+			.issued configure -bg seagreen
+		    }
+		}
+		default {}
+	    }
+	}
+	default {}
+    }
+}
+
+
+# MAIN
+# -------------------------------------------------------
+#wm withdraw .
+
+wm withdraw .
+
+::pool::nameserver::register popeyemon
+
+main_interface
+after 1000 search_popeye
+
+wm deiconify .

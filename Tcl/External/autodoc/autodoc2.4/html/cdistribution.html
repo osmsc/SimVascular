@@ -1,0 +1,1962 @@
+<html>
+<head>
+<title>File 'lib/distribution.cls' (part of 'AutoDOC')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'lib/distribution.cls' (part of '<a href="pkg_AutoDOC.html" class="package">AutoDOC</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">External interface, toplevel class.</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Toplevel class of documentation extractor. Defines external interface to extractor engine, as used by autodoc application. Manages everything for a single distribution of files, hence the name.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">interface,  toplevel,  distribution</span>
+</dl>
+</div>
+<h1 class="class">Class 'distribution'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.oche.de/~akupries/soft/pool/index.htm" class="xref-dep">Pool_Base</a><br>
+<a href="http://www.oche.de/~akupries/soft/pool/index.htm" class="xref-dep">Pool_Net</a></span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cformatterInterface.html" class="class">formatterInterface</a><br>
+<a href="cproblems.html" class="class">problems</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#oitk-opt-alias" class="options">itk-opt-alias</a><br>
+<a href="#ocss" class="options">css</a><br>
+<a href="#oclisttype" class="options">clisttype</a><br>
+<a href="#ofsort-fullpath" class="options">fsort-fullpath</a><br>
+<a href="#ofile-prefix" class="options">file-prefix</a><br>
+<a href="#oclass-prefix" class="options">class-prefix</a><br>
+<a href="#oproc-prefix" class="options">proc-prefix</a><br>
+<a href="#onamespace-prefix" class="options">namespace-prefix</a><br>
+<a href="#ono-problems" class="options">no-problems</a><br>
+<a href="#osrcdir" class="options">srcdir</a><br>
+<a href="#ooutputdir" class="options">outputdir</a><br>
+<a href="#oreplyaddr" class="options">replyaddr</a><br>
+<a href="#otables" class="options">tables</a><br>
+<a href="#opsort" class="options">psort</a><br>
+<a href="#optable" class="options">ptable</a><br>
+<a href="#oadlocation" class="options">adlocation</a><br>
+<a href="#oup-title" class="options">up-title</a><br>
+<a href="#oup-link" class="options">up-link</a><br>
+<a href="#oup-image" class="options">up-image</a><br>
+<a href="#oup-imglink" class="options">up-imglink</a><br>
+<a href="#oexclude" class="options">exclude</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cdistribution.html#pdistribution_Author" class="proc">Author</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_CleanImages" class="proc">CleanImages</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_CompleteDatabase" class="proc">CompleteDatabase</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_CompleteDependencies" class="proc">CompleteDependencies</a> <span class="arg-list">(internalPkgs)</span><br>
+<a href="cdistribution.html#pdistribution_CopyMoreFiles" class="proc">CopyMoreFiles</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_CurrentClass" class="proc">CurrentClass</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_Excluded" class="proc">Excluded</a> <span class="arg-list">(filename)</span><br>
+<a href="cdistribution.html#pdistribution_GatherStatistics" class="proc">GatherStatistics</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_GenerateImage" class="proc">GenerateImage</a> <span class="arg-list">(converter in out)</span><br>
+<a href="cdistribution.html#pdistribution_HandleDocFiles" class="proc">HandleDocFiles</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_HandleFiles" class="proc">HandleFiles</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_HandlePackages" class="proc">HandlePackages</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_HandlePredocFiles" class="proc">HandlePredocFiles</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_InitPatterns" class="proc">InitPatterns</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_Maintainer" class="proc">Maintainer</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_NewPage" class="proc">NewPage</a> <span class="arg-list">(file title firstheading)</span><br>
+<a href="cdistribution.html#pdistribution_PrepareCRefIp" class="proc">PrepareCRefIp</a> <span class="arg-list">(ipName)</span><br>
+<a href="cdistribution.html#pdistribution_PrepareDocIp" class="proc">PrepareDocIp</a> <span class="arg-list">(ipName)</span><br>
+<a href="cdistribution.html#pdistribution_ReadDescription" class="proc">ReadDescription</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_ReportNumber" class="proc">ReportNumber</a> <span class="arg-list">(n singular plural)</span><br>
+<a href="cdistribution.html#pdistribution_SearchDocFiles" class="proc">SearchDocFiles</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_SearchForFiles" class="proc">SearchForFiles</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_SearchPackages" class="proc">SearchPackages</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_SidebarLink" class="proc">SidebarLink</a> <span class="arg-list">(p)</span><br>
+<a href="cdistribution.html#pdistribution_StatText" class="proc">StatText</a> <span class="arg-list">(statvar idx)</span><br>
+<a href="cdistribution.html#pdistribution_TrackAd" class="proc">TrackAd</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cdistribution.html#pdistribution_TrackFormatter" class="proc">TrackFormatter</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cdistribution.html#pdistribution_TrackOut" class="proc">TrackOut</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cdistribution.html#pdistribution_TrackReply" class="proc">TrackReply</a> <span class="arg-list">(o oldValue)</span><br>
+<a href="cdistribution.html#pdistribution_Write" class="proc">Write</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_WriteDescription" class="proc">WriteDescription</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_WriteHomepage" class="proc">WriteHomepage</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_WriteSidebar" class="proc">WriteSidebar</a> <span class="arg-list">(inTable)</span><br>
+<a href="cdistribution.html#pdistribution_WriteStatistics" class="proc">WriteStatistics</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_Xpar" class="proc">Xpar</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_XrOld" class="proc">XrOld</a> <span class="arg-list">(what args)</span><br>
+<a href="cdistribution.html#pdistribution_Xra" class="proc">Xra</a> <span class="arg-list">(name)</span><br>
+<a href="cdistribution.html#pdistribution_Xrc" class="proc">Xrc</a> <span class="arg-list">(partref class name)</span><br>
+<a href="cdistribution.html#pdistribution_Xrcs" class="proc">Xrcs</a> <span class="arg-list">(partref name)</span><br>
+<a href="cdistribution.html#pdistribution_Xri" class="proc">Xri</a> <span class="arg-list">(idx name)</span><br>
+<a href="cdistribution.html#pdistribution_add2Sidebar" class="proc">add2Sidebar</a> <span class="arg-list">(aPage text)</span><br>
+<a href="cdistribution.html#pdistribution_classRef" class="proc">classRef</a> <span class="arg-list">(name)</span><br>
+<a href="cdistribution.html#pdistribution_clear" class="proc">clear</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_crResolve" class="proc">crResolve</a> <span class="arg-list">(text)</span><br>
+<a href="cdistribution.html#pdistribution_depDef" class="proc">depDef</a> <span class="arg-list">(name url)</span><br>
+<a href="cdistribution.html#pdistribution_depRef" class="proc">depRef</a> <span class="arg-list">(name)</span><br>
+<a href="cdistribution.html#pdistribution_distribution" class="proc">distribution</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_docfile" class="proc">docfile</a> <span class="arg-list">(path)</span><br>
+<a href="cdistribution.html#pdistribution_fileRef" class="proc">fileRef</a> <span class="arg-list">(name)</span><br>
+<a href="cdistribution.html#pdistribution_getIndex" class="proc">getIndex</a> <span class="arg-list">(idxName)</span><br>
+<a href="cdistribution.html#pdistribution_imgConverter" class="proc">imgConverter</a> <span class="arg-list">(code script)</span><br>
+<a href="cdistribution.html#pdistribution_imgDef" class="proc">imgDef</a> <span class="arg-list">(code text converter ext basefile)</span><br>
+<a href="cdistribution.html#pdistribution_imgRef" class="proc">imgRef</a> <span class="arg-list">(code)</span><br>
+<a href="cdistribution.html#pdistribution_log" class="proc">log</a> <span class="arg-list">(level text)</span><br>
+<a href="cdistribution.html#pdistribution_methodRef" class="proc">methodRef</a> <span class="arg-list">(class name)</span><br>
+<a href="cdistribution.html#pdistribution_nsContaining" class="proc">nsContaining</a> <span class="arg-list">(name)</span><br>
+<a href="cdistribution.html#pdistribution_nsRef" class="proc">nsRef</a> <span class="arg-list">(name)</span><br>
+<a href="cdistribution.html#pdistribution_optionRef" class="proc">optionRef</a> <span class="arg-list">(class name)</span><br>
+<a href="cdistribution.html#pdistribution_page" class="proc">page</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_pkgRef" class="proc">pkgRef</a> <span class="arg-list">(name)</span><br>
+<a href="cdistribution.html#pdistribution_popContext" class="proc">popContext</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_procRef" class="proc">procRef</a> <span class="arg-list">(name)</span><br>
+<a href="cdistribution.html#pdistribution_pushContext" class="proc">pushContext</a> <span class="arg-list">(object)</span><br>
+<a href="cdistribution.html#pdistribution_scan" class="proc">scan</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_theContext" class="proc">theContext</a> <span class="arg-list">()</span><br>
+<a href="cdistribution.html#pdistribution_varRef" class="proc">varRef</a> <span class="arg-list">(class name)</span><br>
+<a href="cdistribution.html#pdistribution_writeJumpbar" class="proc">writeJumpbar</a> <span class="arg-list">(caller)</span><br>
+<a href="cdistribution.html#pdistribution_xRef" class="proc">xRef</a> <span class="arg-list">(code)</span><br>
+<a href="cdistribution.html#pdistribution_xrefDef" class="proc">xrefDef</a> <span class="arg-list">(code text url)</span><br>
+<a href="cdistribution.html#pdistribution_~distribution" class="proc">~distribution</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vhasPackages" class="members">hasPackages</a><br>
+<a href="#vhasFiles" class="members">hasFiles</a><br>
+<a href="#vdocFileList" class="members">docFileList</a><br>
+<a href="#vinDocFile" class="members">inDocFile</a><br>
+<a href="#vmoreFiles" class="members">moreFiles</a><br>
+<a href="#vmorePages" class="members">morePages</a><br>
+<a href="#vlog" class="members">log</a><br>
+<a href="#vattributeValue" class="members">attributeValue</a><br>
+<a href="#vattributeName" class="members">attributeName</a><br>
+<a href="#vattrs" class="members">attrs</a><br>
+<a href="#vindex" class="members">index</a><br>
+<a href="#vsidebarText" class="members">sidebarText</a><br>
+<a href="#vjumpbar" class="members">jumpbar</a><br>
+<a href="#vimgC" class="members">imgC</a><br>
+<a href="#vimgS" class="members">imgS</a><br>
+<a href="#vcontext" class="members">context</a><br>
+<a href="#vclassContext" class="members">classContext</a><br>
+<a href="#vxrefPat" class="members">xrefPat</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="oitk-opt-alias"></a>
+<dt><span class="option-name">-itk-opt-alias</span>
+<dd><span class="option-description">  The name of a custom command found in the  code to scan and equivalent to itk_options.</span>
+<a name="ocss"></a>
+<dt><span class="option-name">-css</span>
+<dd><span class="option-description">  Boolean option to control support for cascading style  sheets (CSS). Support is enabled by default.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">1</span>
+<a name="oclisttype"></a>
+<dt><span class="option-name">-clisttype</span>
+<dd><span class="option-description">  Either one of <span class="options">comma</span> or <span class="options">par</span>.  Defines the appearance of the lists used in classes to  reference superclasses, options, methods and member  variables.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">par</span>
+<a name="ofsort-fullpath"></a>
+<dt><span class="option-name">-fsort-fullpath</span>
+<dd><span class="option-description">  Boolean option. If set the listing of files  in their index is sorted by their full  path. Else the first letter of the real  filename (directories stripped).</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">1</span>
+<a name="ofile-prefix"></a>
+<dt><span class="option-name">-file-prefix</span>
+<dd><span class="option-description">  In effect only if &lt;o fsort-fullpath&gt; is set.  Defines a prefix to remove from the path before  taking the first letter.</span>
+<a name="oclass-prefix"></a>
+<dt><span class="option-name">-class-prefix</span>
+<dd><span class="option-description">  Defines a prefix to remove from the namespace  of a class before taking the first letter.</span>
+<a name="oproc-prefix"></a>
+<dt><span class="option-name">-proc-prefix</span>
+<dd><span class="option-description">  Defines a prefix to remove from the namespace  of a procedure before taking the first letter.</span>
+<a name="onamespace-prefix"></a>
+<dt><span class="option-name">-namespace-prefix</span>
+<dd><span class="option-description">  Defines a prefix to remove from the namespace  of a namespace before taking the first letter.</span>
+<a name="ono-problems"></a>
+<dt><span class="option-name">-no-problems</span>
+<dd><span class="option-description">  Boolean option. If set the system will not write  the accumulated problem reports / pages. It will  still write that there are problems and how  many, if any. Default is 0 == no supression.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">0</span>
+<a name="osrcdir"></a>
+<dt><span class="option-name">-srcdir</span>
+<dd><span class="option-description">      Path to directory containing the tcl #sources to document.</span>
+<a name="ooutputdir"></a>
+<dt><span class="option-name">-outputdir</span>
+<dd><span class="option-description">     Path to directory to store the generated files into.</span>
+<a name="oreplyaddr"></a>
+<dt><span class="option-name">-replyaddr</span>
+<dd><span class="option-description">   Address of person to reply to in case of problems with   the documented distribution.</span>
+<a name="otables"></a>
+<dt><span class="option-name">-tables</span>
+<dd><span class="option-description">      Boolean flag. If set the root page is written with tables.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">0</span>
+<a name="opsort"></a>
+<dt><span class="option-name">-psort</span>
+<dd><span class="option-description">       Boolean flag. If set procedure documentation is sorted        alphabetically.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">1</span>
+<a name="optable"></a>
+<dt><span class="option-name">-ptable</span>
+<dd><span class="option-description">      Boolean flag. If set procedure documentation is written as      table.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">0</span>
+<a name="oadlocation"></a>
+<dt><span class="option-name">-adlocation</span>
+<dd><span class="option-description">  Location of the documentation of AutoDOC.  Required for generation of backreferences for any  generated page.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">http://www.oche.de/~akupries/soft/autodoc/index.htm</span>
+<a name="oup-title"></a>
+<dt><span class="option-name">-up-title</span>
+<dd><span class="option-description">  The string to use in the uplink to the site containing the  generated documentation.</span>
+<a name="oup-link"></a>
+<dt><span class="option-name">-up-link</span>
+<dd><span class="option-description">   The url to use as target in the uplink to the site   containing the generated documentation. Ignored if   neither &lt;o up-title&gt; nor &lt;o up-image&gt; is set.</span>
+<a name="oup-image"></a>
+<dt><span class="option-name">-up-image</span>
+<dd><span class="option-description">  The symbolic name of the image to use in the uplink to the  site containing the generated documentation, as defined with  a call <span class="xref-mref"><a href="cdistribution.html#pdistribution_imgDef" class="proc">imgDef</a></span>.</span>
+<a name="oup-imglink"></a>
+<dt><span class="option-name">-up-imglink</span>
+<dd><span class="option-description">  A boolean flag. Determines wether the image is made a part  of the generated uplink or not. Ignored if no text was  given, the image has to be the link in such a case.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">0</span>
+<a name="oexclude"></a>
+<dt><span class="option-name">-exclude</span>
+<dd><span class="option-description">  A list of glob patterns. All files with names matching at least  one of the patterns will be excluded from the scan and  documentation processing. This option takes effect while the  system is searching for files to document and while searching for  additional .doc and .predoc files.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pdistribution_Author"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Author</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines author of distribution.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_CleanImages"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">CleanImages</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes all defined, yet unreferenced pictures from the output directory.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_CompleteDatabase"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">CompleteDatabase</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Completes database (author information, keyword index, dependencies).</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_CompleteDependencies"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">CompleteDependencies</span> <span class="arg-list">(internalPkgs)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Takes the list of packages required by the scanned distribution and removes all packages defined by it. This is required to avoid false dependencies.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: internalPkgs
+</td>
+<td class="argument-description">
+List containing the names of all packages defined by the scanned distribution.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_CopyMoreFiles"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">CopyMoreFiles</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Files marked as required (by '.doc'-files) are copied into the html target directory.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_CurrentClass"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">CurrentClass</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: the handle of the class currently writing its documentation. Different from <span class="xref-mref"><a href="cdistribution.html#pdistribution_theContext" class="proc">theContext</a></span> as the current object can be one of its methods.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_Excluded"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Excluded</span> <span class="arg-list">(filename)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Checks the specified <span class="argument"><span class="proc">filename</span></span> for exclusion by matching it against the patterns stored in <span class="xref-oref"><a href="cdistribution.html#oexclude" class="xref-oref">exclude</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: filename
+</td>
+<td class="argument-description">
+The name of the file to check for exclusion.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a boolean value. True signals that the file has to be excluded.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_GatherStatistics"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">GatherStatistics</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Checks the main indices for problems and causes the generation of their problem reports if they do have such. Records the number of problems for inclusion into the main statistics. The generation of their problem reports can be suppressed by setting the option &lt;o no-problems&gt;.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_GenerateImage"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">GenerateImage</span> <span class="arg-list">(converter in out)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Transfers the image file <span class="argument"><span class="proc">in</span></span> to <span class="argument"><span class="proc">out</span></span> and converts it along the way, using the <span class="argument"><span class="proc">converter</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: converter
+</td>
+<td class="argument-description">
+Handle of the converter to use.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: in
+</td>
+<td class="argument-description">
+The name of the #source image file
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: out
+</td>
+<td class="argument-description">
+Name of the target file.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: <span class="argument"><span class="proc">out</span></span>, extended by the path of the output directory.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_HandleDocFiles"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">HandleDocFiles</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executes the remebered '.doc'-files in a safe(?) environment.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_HandleFiles"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">HandleFiles</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Tell the found files to scan themselves.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Is done only if no packages were found.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_HandlePackages"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">HandlePackages</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Tell the found packages to scan themselves.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_HandlePredocFiles"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">HandlePredocFiles</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Searches for files ending in '.predoc' and executes them in a safe(?) environment.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_InitPatterns"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">InitPatterns</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Initialize the regular expression pattern used to detect and resolve embedded crossreferences.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Dangers</span>: Order is important here! Longer matching patterns must be applied before shorter ones as they may consume the same input, but with an improperly split into constituents. To achieve this the internal pattern identifiers are sorted before processing them (<span class="xref-mref"><a href="cdistribution.html#pdistribution_crResolve" class="proc">crResolve</a></span>), so we have just to ensure that longer patterns get identifiers alphabetically sorted before the shorter patterns.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_Maintainer"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Maintainer</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines maintainer of distribution.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_NewPage"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">NewPage</span> <span class="arg-list">(file title firstheading)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Calls are forwarded to <span class="xref-mref"><a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_newPage" class="proc">newPage</a></span>. Additionally the standard jumpbar is generated too.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: file
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_newPage" class="proc">newPage</a></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: title
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_newPage" class="proc">newPage</a></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: firstheading (= {})
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_newPage" class="proc">newPage</a></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_PrepareCRefIp"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">PrepareCRefIp</span> <span class="arg-list">(ipName)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Prepare the specified interpreter for evaluation of texts containing cross references. A separate interpreter is used to allow usage of various formatting commands without polluting the global namespace, or this class.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: ipName
+</td>
+<td class="argument-description">
+The name of the interpreter to prepare.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_PrepareDocIp"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">PrepareDocIp</span> <span class="arg-list">(ipName)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Prepare the specified interpreter for evaluation of the .doc files found in the distribution.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: ipName
+</td>
+<td class="argument-description">
+The name of the interpreter to prepare.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_ReadDescription"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">ReadDescription</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Reads the description file for the entire distribution.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Assumes to be in the module directory
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_ReportNumber"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">ReportNumber</span> <span class="arg-list">(n singular plural)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Report the number of found entities to the log.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: n
+</td>
+<td class="argument-description">
+The number of found items.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: singular
+</td>
+<td class="argument-description">
+The singular form of the found entities.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: plural
+</td>
+<td class="argument-description">
+The plural form of the found entities.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_SearchDocFiles"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">SearchDocFiles</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Searches for files ending in '.doc' and remembers them for later usage. 'pkg.doc's are excluded, as they have a special meaning as package description files.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_SearchForFiles"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">SearchForFiles</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Searches for files containing tcl-code.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Is done only if no packages were found.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_SearchPackages"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">SearchPackages</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Searches for packages in the distribution. Detects them by the presence of 'pkg.doc' in a directory.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Assumes to be in the module directory.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_SidebarLink"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">SidebarLink</span> <span class="arg-list">(p)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: p
+</td>
+<td class="argument-description">
+The code of the page whose link shall be retrieved.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a hyperlink pointing to the specified additional documentation page <span class="argument"><span class="proc">p</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_StatText"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">StatText</span> <span class="arg-list">(statvar idx)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal helper used by the method generating the main statistics. Merges the problem information recorded by <span class="xref-mref"><a href="cdistribution.html#pdistribution_GatherStatistics" class="proc">GatherStatistics</a></span> into the string containing the number of scanned entities. If option &lt;o no-problem&gt; is not set the merged information will contain a link to the appropriate high level problem report for the index refered to (<span class="argument"><span class="proc">idx</span></span>). Else it will just be the number of problems.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: statvar
+</td>
+<td class="argument-description">
+The name of the variable containing the statistics.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: idx
+</td>
+<td class="argument-description">
+The name of the index whose information is requested.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a string containing the number of entities found, and the number of problematic ones.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_TrackAd"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackAd</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal method. Called by the generic option tracking mechanism for any change made to <span class="xref-oref"><a href="cdistribution.html#oadlocation" class="xref-oref">adlocation</a></span>. Propagates the new value to the internal shadow and causes the configuration of the specified object.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option, here always <span class="argument-description">-adlocation</span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The value of the option before the change. Ignored here.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_TrackFormatter"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackFormatter</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cformatterInterface.html" class="class">formatterInterface</a>:<a href="cformatterInterface.html#pformatterInterface_TrackFormatter" class="proc">TrackFormatter</a>, <a href="cproblems.html" class="class">problems</a>:<a href="cformatterInterface.html#pformatterInterface_TrackFormatter" class="proc">TrackFormatter</a><br>
+<span class="header-description-value">Internal method. Called by the generic option tracking mechanism for any change made to <span class="xref-oref"><a href="cformatterInterface.html#oformatter" class="xref-oref">formatter</a></span>. Propagates the new value to the internal shadow and causes the configuration of the specified object.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option, here always <span class="argument-description">-formatter</span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The value of the option before the change. Ignored here.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_TrackOut"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackOut</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal method. Called by the generic option tracking mechanism for any change made to <span class="xref-oref"><a href="cdistribution.html#ooutputdir" class="xref-oref">outputdir</a></span>. Propagates the new value to the internal shadow and causes the configuration of the specified object.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option, here always <span class="argument-description">-outputdir</span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The value of the option before the change. Ignored here.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_TrackReply"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">TrackReply</span> <span class="arg-list">(o oldValue)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal method. Called by the generic option tracking mechanism for any change made to <span class="xref-oref"><a href="cdistribution.html#oreplyaddr" class="xref-oref">replyaddr</a></span>. Propagates the new value to the internal shadow and causes the configuration of the specified object.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+The name of the changed option, here always <span class="argument-description">-replyaddr</span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oldValue
+</td>
+<td class="argument-description">
+The value of the option before the change. Ignored here.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_Write"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Write</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Writes out the documentation of the entire distribution.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_WriteDescription"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">WriteDescription</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Writes out the distribution description.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_WriteHomepage"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">WriteHomepage</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Internal method. Generates the main page of the distribution, the entry point for all documentation users.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_WriteSidebar"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">WriteSidebar</span> <span class="arg-list">(inTable)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Writes the text containing the references to additional files, as registered via '.doc'-files.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: inTable
+</td>
+<td class="argument-description">
+flag, 1 if code shall be placed in a table, 0 else.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_WriteStatistics"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">WriteStatistics</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Generates a summary page containing statistics about the scanned distribution. Additionally refers to pages with listings of problematic files, classes and procedures, if any. If option &lt;o no-problems&gt; is set this procedure will not write the list of general problems after the statistics.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_Xpar"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Xpar</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Resolves &amp; p into paragraph breaks. Used by <span class="xref-mref"><a href="cdistribution.html#pdistribution_crResolve" class="proc">crResolve</a></span>.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_XrOld"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">XrOld</span> <span class="arg-list">(what args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Crossreference using old syntax, just report as problem.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: what
+</td>
+<td class="argument-description">
+Type of reference
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+The name of the referenced entity.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_Xra"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Xra</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Resolve crossreference to a procedure argument.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the referenced argument.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: the <span class="argument"><span class="proc">name</span></span>, but specially formatted.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_Xrc"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Xrc</span> <span class="arg-list">(partref class name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Resolve crossreference to a part of a class.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: partref
+</td>
+<td class="argument-description">
+The method to call at the class index.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+The name of the class to search the part in.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the referenced part.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a hyperlink to the definition of the entity.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_Xrcs"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Xrcs</span> <span class="arg-list">(partref name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Resolve a short crossreference to a part of a class.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: partref
+</td>
+<td class="argument-description">
+The method to call at the class index.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the referenced part.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a hyperlink to the definition of the entity.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_Xri"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Xri</span> <span class="arg-list">(idx name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Resolve crossreference based on one of the main indices.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: idx
+</td>
+<td class="argument-description">
+The name of the index to question.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the referenced entity.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a hyperlink to the definition of the entity.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_add2Sidebar"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">add2Sidebar</span> <span class="arg-list">(aPage text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds the <span class="argument"><span class="proc">aPage</span></span> to the sidebar referencing additional documentation pages.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: aPage
+</td>
+<td class="argument-description">
+Name of the page to add, generated earlier by <span class="xref-mref"><a href="cgenericFormatter.html" class="class">genericFormatter</a>:<a href="cgenericFormatter.html#pgenericFormatter_newPage" class="proc">newPage</a></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text (= {})
+</td>
+<td class="argument-description">
+Text to use in the hyperlink. Defaults to the basename of <span class="argument"><span class="argument-description">aPage</span></span>, without extension.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_classRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">classRef</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">See <span class="xref-mref"><a href="cclassIndex.html" class="class">classIndex</a>:<a href="cindexBase.html#pindexBase_ref" class="proc">ref</a></span></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cclassIndex.html" class="class">classIndex</a>:<a href="cindexBase.html#pindexBase_ref" class="proc">ref</a></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_clear"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">clear</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cproblems.html" class="class">problems</a>:<a href="cproblems.html#pproblems_clear" class="proc">clear</a><br>
+<span class="header-description-value">Resets state information of scan to initial values, to allow future reconfiguration and scanning.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_crResolve"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">crResolve</span> <span class="arg-list">(text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Resolves crossreferences found in the <span class="argument"><span class="proc">text</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The text to reformat.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The <span class="argument"><span class="proc">text</span></span>, but crossreferences resolved into hyperlinks.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_depDef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">depDef</span> <span class="arg-list">(name url)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Defines additional information for a 'required' package, to allow conversion of usage in descriptions into hyperlinks.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the package
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: url
+</td>
+<td class="argument-description">
+Page to refer to for information about the package.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_depRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">depRef</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Converts the <span class="argument"><span class="proc">name</span></span> of an external package into a hyperlink. The argument is returned unchanged, if that is not possible.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+Name of package to link to.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a string containing a hyperlink to <span class="argument"><span class="proc">name</span></span>, if possible.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_distribution"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">distribution</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Constructor. Creates and initializes all subordinate indices. These objects are nested into the namespace of this one, reducing the possibility of conflicts with command outside.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_docfile"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">docfile</span> <span class="arg-list">(path)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Marks file <span class="argument"><span class="proc">path</span></span> as required by the documentation. It will be copied into the output directory later.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: path
+</td>
+<td class="argument-description">
+The path of the required file, relative to the #source directory of the distribution.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_fileRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">fileRef</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">See <span class="xref-mref"><a href="cfileIndex.html" class="class">fileIndex</a>:<a href="cindexBase.html#pindexBase_ref" class="proc">ref</a></span></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cfileIndex.html" class="class">fileIndex</a>:<a href="cindexBase.html#pindexBase_ref" class="proc">ref</a></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_getIndex"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">getIndex</span> <span class="arg-list">(idxName)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: idxName
+</td>
+<td class="argument-description">
+The internal name of the requested index.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: the object managing the specified index.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_imgConverter"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">imgConverter</span> <span class="arg-list">(code script)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Register a <span class="argument"><span class="proc">script</span></span> to transfer an image #source into the html tree, doing format conversion if necessary. The script may contain the special strings <span class="proc">%in%</span>, <span class="proc">%out%</span> and <span class="proc">%tmp%</span>. They refer to the input file, output file and a temporary file. The latter is generated only if the string is present in the <span class="argument"><span class="proc">script</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: code
+</td>
+<td class="argument-description">
+The internal code used to refer to the new converter.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: script
+</td>
+<td class="argument-description">
+The script to evaluate for transfer and conversion.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_imgDef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">imgDef</span> <span class="arg-list">(code text converter ext basefile)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Defines a new image. The given #source is transfered into the output directory, and converted along the way. If the picture is never referenced it will be removed later.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: code
+</td>
+<td class="argument-description">
+Internal symbolic name of the new picture.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+Alternative text describing the contents of the picture.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: converter
+</td>
+<td class="argument-description">
+Handle of the converter to use.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: ext
+</td>
+<td class="argument-description">
+Extension to give to the target file.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: basefile
+</td>
+<td class="argument-description">
+Source of the picture.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_imgRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">imgRef</span> <span class="arg-list">(code)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Return hyperlink to image <span class="argument"><span class="proc">code</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: code
+</td>
+<td class="argument-description">
+Internal symbolic name of the requested image
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_log"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">log</span> <span class="arg-list">(level text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Accessor for the log maintained by this object.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: level
+</td>
+<td class="argument-description">
+The importance level of the message.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+Text to log.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_methodRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">methodRef</span> <span class="arg-list">(class name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">See <span class="xref-mref"><a href="cclassIndex.html" class="class">classIndex</a>:<a href="cclassIndex.html#pclassIndex_mref" class="proc">mref</a></span></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cclassIndex.html" class="class">classIndex</a>:<a href="cclassIndex.html#pclassIndex_mref" class="proc">mref</a></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cclassIndex.html" class="class">classIndex</a>:<a href="cclassIndex.html#pclassIndex_mref" class="proc">mref</a></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_nsContaining"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">nsContaining</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Returns the namespace object describing the namespace containing the object with the specified <span class="argument"><span class="proc">name</span></span>. Will generate the necessary namespace object if not already existing.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the object whose containing namespace the caller is looking for.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_nsRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">nsRef</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">See <span class="xref-mref"><a href="cnamespaceIndex.html" class="class">namespaceIndex</a>:<a href="cindexBase.html#pindexBase_ref" class="proc">ref</a></span></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cnamespaceIndex.html" class="class">namespaceIndex</a>:<a href="cindexBase.html#pindexBase_ref" class="proc">ref</a></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_optionRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">optionRef</span> <span class="arg-list">(class name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">See <span class="xref-mref"><a href="cclassIndex.html" class="class">classIndex</a>:<a href="cclassIndex.html#pclassIndex_oref" class="proc">oref</a></span></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cclassIndex.html" class="class">classIndex</a>:<a href="cclassIndex.html#pclassIndex_oref" class="proc">oref</a></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cclassIndex.html" class="class">classIndex</a>:<a href="cclassIndex.html#pclassIndex_oref" class="proc">oref</a></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_page"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">page</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cproblems.html" class="class">problems</a>:<a href="cindexBaseEntry.html#pindexBaseEntry_page" class="proc">page</a><br>
+
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: The codes assumes that no more than one such page exists.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The filename of the distribution page.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_pkgRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">pkgRef</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">See <span class="xref-mref"><a href="cpackageIndex.html" class="class">packageIndex</a>:<a href="cindexBase.html#pindexBase_ref" class="proc">ref</a></span></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cpackageIndex.html" class="class">packageIndex</a>:<a href="cindexBase.html#pindexBase_ref" class="proc">ref</a></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_popContext"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">popContext</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes the topmost object from the stack of object writing their documentation.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_procRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">procRef</span> <span class="arg-list">(name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">See <span class="xref-mref"><a href="cprocIndex.html" class="class">procIndex</a>:<a href="cindexBase.html#pindexBase_ref" class="proc">ref</a></span></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cprocIndex.html" class="class">procIndex</a>:<a href="cindexBase.html#pindexBase_ref" class="proc">ref</a></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_pushContext"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">pushContext</span> <span class="arg-list">(object)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds the specified <span class="argument"><span class="proc">object</span></span> to the top of the stack of objects writing their documentation.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: object
+</td>
+<td class="argument-description">
+The handle of the object now writing its documentation.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_scan"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">scan</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Reads DESCRIPTION residing in #source directory, scans subdirectories for packages/files, evaluates these then too.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_theContext"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">theContext</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: the handle of the object currently writing its output. If there is no such this one is given to the caller.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_varRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">varRef</span> <span class="arg-list">(class name)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">See <span class="xref-mref"><a href="cclassIndex.html" class="class">classIndex</a>:<a href="cclassIndex.html#pclassIndex_vref" class="proc">vref</a></span></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cclassIndex.html" class="class">classIndex</a>:<a href="cclassIndex.html#pclassIndex_vref" class="proc">vref</a></span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+See <span class="xref-mref"><a href="cclassIndex.html" class="class">classIndex</a>:<a href="cclassIndex.html#pclassIndex_vref" class="proc">vref</a></span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_writeJumpbar"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">writeJumpbar</span> <span class="arg-list">(caller)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Writes the formatted text of a jumpbar for placement at the top of every page, or whereever the caller likes.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: caller (= {})
+</td>
+<td class="argument-description">
+contains the name of a calling special page (home, indices) or else an empty list. Used to deactivate the corresponding entry in the jumpbar.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_xRef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">xRef</span> <span class="arg-list">(code)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Return hyperlink to external page <span class="argument"><span class="proc">code</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: code
+</td>
+<td class="argument-description">
+Internal symbolic name of external reference.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_xrefDef"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">xrefDef</span> <span class="arg-list">(code text url)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Defines an external reference.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: code
+</td>
+<td class="argument-description">
+The internal symbolic name to reach this hyperlink
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+Text to use in the link.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: url
+</td>
+<td class="argument-description">
+Page refered by the link.
+</td>
+</tr>
+</table>
+</p>
+<a name="pdistribution_~distribution"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">~distribution</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Removes all traces of the distribution from memory</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: There is no need to delete the subordinate objects explicitly. They are nested into this namespace and therefore automatically removed. It would still be necessary if they were using outside re#sources, like channels, but they don't.
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vhasPackages"></a>
+<dt><span class="variable-name">hasPackages</span>
+<dd><span class="variable-description">  Boolean flag. Set if some packages were found</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">0</span>
+<a name="vhasFiles"></a>
+<dt><span class="variable-name">hasFiles</span>
+<dd><span class="variable-description">     Boolean flag. Set if some files were found.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">0</span>
+<a name="vdocFileList"></a>
+<dt><span class="variable-name">docFileList</span>
+<dd><span class="variable-description">  List of files with extension '.doc'.</span>
+<a name="vinDocFile"></a>
+<dt><span class="variable-name">inDocFile</span>
+<dd><span class="variable-description">    Boolean flag. Set during evaluation of '.doc'-files.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">0</span>
+<a name="vmoreFiles"></a>
+<dt><span class="variable-name">moreFiles</span>
+<dd><span class="variable-description">    List of files marked as required by '.doc'-files.</span>
+<a name="vmorePages"></a>
+<dt><span class="variable-name">morePages</span>
+<dd><span class="variable-description">    List of additional files generated by the    '.doc'-files.</span>
+<a name="vlog"></a>
+<dt><span class="variable-name">log</span>
+<dd><span class="variable-description">          Handle of the <a href="http://www.oche.de/~akupries/soft/pool/classes.htm#s" class="xref-xref">syslogConnection</a> object used for          logging.</span>
+<a name="vattributeValue"></a>
+<dt><span class="variable-name">attributeValue</span>
+<dd><span class="variable-description">  Maps from the attribute names used in  <span class="members">DESCRIPTION</span> files to their respective values.</span>
+<a name="vattributeName"></a>
+<dt><span class="variable-name">attributeName</span>
+<dd><span class="variable-description">  Maps from the attribute names used in  <span class="members">DESCRIPTION</span> files to the texts used in the  generated documentation.</span><br>
+<span class="variable-default">initial value:</span> <span class="variable-default-value">
+	version			Version
+	copying-policy		{Copying policy}
+	date			Date
+	name			Name
+	comments		Comments
+	description		Description
+	development-platform	{Development platform}
+	platforms		Platforms 
+	dependencies		Dependencies
+	primary-urls		{Primary urls}
+	secondary-urls		{Secondary urls}
+	tertiary-urls		{Tertiary urls}
+    </span>
+<a name="vattrs"></a>
+<dt><span class="variable-name">attrs</span>
+<dd><span class="variable-description">  List of attributes defined by the distribution description  file.</span>
+<a name="vindex"></a>
+<dt><span class="variable-name">index</span>
+<dd><span class="variable-description">  Maps from a logical index name to the object managing it.</span>
+<a name="vsidebarText"></a>
+<dt><span class="variable-name">sidebarText</span>
+<dd><span class="variable-description">  Used by <span class="xref-mref"><a href="cdistribution.html#pdistribution_add2Sidebar" class="proc">add2Sidebar</a></span> to record the texts for the  hyperlinks pointing to the additional pages.</span>
+<a name="vjumpbar"></a>
+<dt><span class="variable-name">jumpbar</span>
+<dd><span class="variable-description">  A cache holding the formatted jumpbar texts for the various  callers of <span class="xref-mref"><a href="cdistribution.html#pdistribution_writeJumpbar" class="proc">writeJumpbar</a></span>.</span>
+<a name="vimgC"></a>
+<dt><span class="variable-name">imgC</span>
+<dd><span class="variable-description">  Table of scripts for the conversion of an image file into the  format required by the browser. The following special strings  are recognized by the system: <span class="members">%in%</span>, <span class="members">%tmp%</span> and  <span class="members">%out%</span>. See &lt;x ...&gt; for their meaning.</span>
+<a name="vimgS"></a>
+<dt><span class="variable-name">imgS</span>
+<dd><span class="variable-description">  State of images (requested or not)</span>
+<a name="vcontext"></a>
+<dt><span class="variable-name">context</span>
+<dd><span class="variable-description">  The stack of objects currently writing their documentation.</span>
+<a name="vclassContext"></a>
+<dt><span class="variable-name">classContext</span>
+<dd><span class="variable-description">  The class currently writing its documentation.</span>
+<a name="vxrefPat"></a>
+<dt><span class="variable-name">xrefPat</span>
+<dd><span class="variable-description">  Contains all patterns used to detect crossreferences and the  code to replace any found instance of the pattern.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/07/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

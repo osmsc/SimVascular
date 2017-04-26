@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>File 'net/pop3/apop.cls' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/pop3/apop.cls' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Delete message on pop server (APOP)</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Sequencer for login into a pop server via APOP.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">POP3,  APOP command</span>
+</dl>
+</div>
+<h1 class="class">Class 'pop3ApopSeq'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.oche.de/~akupries/soft/trf/index.html" class="xref-dep">Trf</a></span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cpop3Sequencer.html" class="class">pop3Sequencer</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ouser" class="options">user</a><br>
+<a href="#osecret" class="options">secret</a><br>
+<a href="#ogreeting" class="options">greeting</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cpop3ApopSeq.html#ppop3ApopSeq_ApopTry" class="proc">ApopTry</a> <span class="arg-list">()</span><br>
+<a href="cpop3ApopSeq.html#ppop3ApopSeq_GotApopResponse" class="proc">GotApopResponse</a> <span class="arg-list">(line)</span><br>
+<a href="cpop3ApopSeq.html#ppop3ApopSeq_GotStatResponse" class="proc">GotStatResponse</a> <span class="arg-list">(line)</span><br>
+<a href="cpop3ApopSeq.html#ppop3ApopSeq_pop3ApopSeq" class="proc">pop3ApopSeq</a> <span class="arg-list">()</span>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ouser"></a>
+<dt><span class="option-name">-user</span>
+<dd><span class="option-description">      The name of the user trying to login.</span>
+<a name="osecret"></a>
+<dt><span class="option-name">-secret</span>
+<dd><span class="option-description">    The password of the user trying to login.</span>
+<a name="ogreeting"></a>
+<dt><span class="option-name">-greeting</span>
+<dd><span class="option-description">  The text of the greeting which was sent by the server in the  initialization phase of the connection.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="ppop3ApopSeq_ApopTry"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">ApopTry</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The first action taken after the construction of the sequencer completes. Extracts the timestamp from the greeting, uses this and the password to generate the response to our challenge, then writes out the login command to the pop3 server, at last waits for its response.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3ApopSeq_GotApopResponse"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">GotApopResponse</span> <span class="arg-list">(line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called after pop3 demon responded to the APOP command. Depending on the result of the login the sequencer stops its operation now (error), or writes out the command to retrieve the number of messages storeed in the mailbox (successful login).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+Text of response
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3ApopSeq_GotStatResponse"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">GotStatResponse</span> <span class="arg-list">(line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called after pop3 demon responded to the STAT command.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+Text of response
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3ApopSeq_pop3ApopSeq"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">pop3ApopSeq</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Constructor.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

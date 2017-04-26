@@ -1,0 +1,1087 @@
+<html>
+<head>
+<title>File 'base/oo.tcl' (part of 'Pool_Base')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'base/oo.tcl' (part of '<a href="pkg_Pool_Base.html" class="package">Pool_Base</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">This OO system is rooted in <a href="mailto:slshen@lbl.gov" class="xref-xref">Sam Shen</a> work (SNTL, tkinspect) and was modified and enhanced by myself. The version here is a complete rewrite, taking advantage of the namespace features in tcl 8.x. No code of Sams work remained, all bugs found will be mine.</span>
+<dt><span class="header-title">Depends on</span>
+<dd><span class="header-value"><a href="http://www.scriptics.com/" class="xref-dep">Tcl</a></span>
+</dl>
+</div>
+<hr class="file">
+<ul class="proc-listing">
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_AfterCons" class="proc">::pool::oo::support::AfterCons</a> <span class="arg-list">(script)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_BuildSuperclassChain" class="proc">::pool::oo::support::BuildSuperclassChain</a> <span class="arg-list">(class)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_Check" class="proc">::pool::oo::support::Check</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_Compile" class="proc">::pool::oo::support::Compile</a> <span class="arg-list">(name args)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_Dump" class="proc">::pool::oo::support::Dump</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_DumpAutoload" class="proc">::pool::oo::support::DumpAutoload</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_DumpHeader" class="proc">::pool::oo::support::DumpHeader</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_DumpInit" class="proc">::pool::oo::support::DumpInit</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_DumpMethods" class="proc">::pool::oo::support::DumpMethods</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_DumpNamespaceDefinition" class="proc">::pool::oo::support::DumpNamespaceDefinition</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_DumpRuntimeIntegration" class="proc">::pool::oo::support::DumpRuntimeIntegration</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_FixMethods" class="proc">::pool::oo::support::FixMethods</a> <span class="arg-list">(class)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_FixOptions" class="proc">::pool::oo::support::FixOptions</a> <span class="arg-list">(class)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_FixReferences" class="proc">::pool::oo::support::FixReferences</a> <span class="arg-list">(class)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_GetObject" class="proc">::pool::oo::support::GetObject</a> <span class="arg-list">(n)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_ImportOptionAliases" class="proc">::pool::oo::support::ImportOptionAliases</a> <span class="arg-list">(class)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_ImportOptions" class="proc">::pool::oo::support::ImportOptions</a> <span class="arg-list">(class)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_ImportVariables" class="proc">::pool::oo::support::ImportVariables</a> <span class="arg-list">(class)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_New" class="proc">::pool::oo::support::New</a> <span class="arg-list">(class object args)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_Puts" class="proc">::pool::oo::support::Puts</a> <span class="arg-list">(args)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_PutsArray" class="proc">::pool::oo::support::PutsArray</a> <span class="arg-list">(varName data)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_ResetCompiler" class="proc">::pool::oo::support::ResetCompiler</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_SetupOptions" class="proc">::pool::oo::support::SetupOptions</a> <span class="arg-list">(oSpace object optDef optInfo legalopts arglist)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_SetupVars" class="proc">::pool::oo::support::SetupVars</a> <span class="arg-list">(class)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_alias" class="proc">::pool::oo::support::alias</a> <span class="arg-list">(alias option)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_cget" class="proc">::pool::oo::support::cget</a> <span class="arg-list">(option)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_chain" class="proc">::pool::oo::support::chain</a> <span class="arg-list">(method args)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_chainToDerived" class="proc">::pool::oo::support::chainToDerived</a> <span class="arg-list">(method args)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_chainToSuper" class="proc">::pool::oo::support::chainToSuper</a> <span class="arg-list">(method args)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_class" class="proc">::pool::oo::support::class</a> <span class="arg-list">(name args)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_classvar" class="proc">::pool::oo::support::classvar</a> <span class="arg-list">(args)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_config" class="proc">::pool::oo::support::config</a> <span class="arg-list">(args)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_configure" class="proc">::pool::oo::support::configure</a> <span class="arg-list">(args)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_constructor" class="proc">::pool::oo::support::constructor</a> <span class="arg-list">(body)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_delete" class="proc">::pool::oo::support::delete</a> <span class="arg-list">()</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_destructor" class="proc">::pool::oo::support::destructor</a> <span class="arg-list">(body)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_init" class="proc">::pool::oo::support::init</a> <span class="arg-list">(code)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_method" class="proc">::pool::oo::support::method</a> <span class="arg-list">(name arguments body)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_oinfo" class="proc">::pool::oo::support::oinfo</a> <span class="arg-list">(what args)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_option" class="proc">::pool::oo::support::option</a> <span class="arg-list">(name args)</span>
+<li class="proc-listing"><a href="f_base_oo.tcl.html#p_pool_oo_support_var" class="proc">::pool::oo::support::var</a> <span class="arg-list">(args)</span>
+</ul>
+<hr class="file">
+<a name="p_pool_oo_support_AfterCons"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::AfterCons</span> <span class="arg-list">(script)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Special procedure. Allows constructors the registration of code which will be executed after completion of object initialization. This allows f.e. the redefinition of a value in an instance variable by a derived class and yet have the superclass react to the changed value. The megawidget base class (<span class="xref-classes"><a href="cwidget.html" class="class">widget</a></span>) uses this feature.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: script
+</td>
+<td class="argument-description">
+The tcl code to execute after object initialization.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_BuildSuperclassChain"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::BuildSuperclassChain</span> <span class="arg-list">(class)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Part of <span class="xref-procs"><a href="f_base_oo.tcl.html#p_pool_oo_support_FixReferences" class="proc">::pool::oo::support::FixReferences</a></span>. Computes the order used for calling the constructors of the given class. This information will be used by the chaining methods too.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+The name of the class to complete.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_Check"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::Check</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Checks the specification just read in.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_Compile"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::Compile</span> <span class="arg-list">(name args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The class compiler. Transforms the class definition into a tcl script.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the class to define.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+The definition of the class. The last argument is always interpreted as script containing member-, option- and method- definitions. Before this a list of superclasses can be specified. This list must start with a colon (:).
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: A tcl script whose evaluation will install the class in the system.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_Dump"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::Dump</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Write the read specification into a string.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_DumpAutoload"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::DumpAutoload</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Write the information enabling this class to get access to its superclasses by autoloading, and making it available for its own autoloading too.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_DumpHeader"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::DumpHeader</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Write an explanatory header into the string containing the translated class.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_DumpInit"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::DumpInit</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Write the specified global initialization code into the result string, without changes.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_DumpMethods"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::DumpMethods</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Writes the declared methods into the translation. Modifies them to call the runtime support to get access to instance and class variables.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_DumpNamespaceDefinition"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::DumpNamespaceDefinition</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Write the definition of the namespace describing the read class.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_DumpRuntimeIntegration"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::DumpRuntimeIntegration</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Write out the commands linking a #sourced class to its superclasses, allowing creation of instances, etc.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_FixMethods"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::FixMethods</span> <span class="arg-list">(class)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Part of <span class="xref-procs"><a href="f_base_oo.tcl.html#p_pool_oo_support_FixReferences" class="proc">::pool::oo::support::FixReferences</a></span>. Imports all methods in all superclasses (immediate and! indirect) into this class. Methods already known to this class are imported nevertheless, but prefixed with the name of the defining class.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+The name of the class to complete.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_FixOptions"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::FixOptions</span> <span class="arg-list">(class)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Part of <span class="xref-procs"><a href="f_base_oo.tcl.html#p_pool_oo_support_FixReferences" class="proc">::pool::oo::support::FixReferences</a></span>. Assumes that the option and alias definitions are complete. Converts them into an array usable by the 'getopt' subsystem. Information used during construction and 'configure' is stored in an easier accessible way too.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+The name of the class to complete.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_FixReferences"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::FixReferences</span> <span class="arg-list">(class)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">This procedure is called after setting up the namespace of a class and the loading of all superclasses. It imports superclass definitions (instance variables, options, option aliases) into the new class, thus completing its installation. Additional operations:<br>
+ Determine order of constructor/destructor sequences. This information will be used by the chaining methods too (see <span class="xref-procs"><a href="f_base_oo.tcl.html#p_pool_oo_support_chainToDerived" class="proc">::pool::oo::support::chainToDerived</a></span> and <span class="xref-procs"><a href="f_base_oo.tcl.html#p_pool_oo_support_chainToSuper" class="proc">::pool::oo::support::chainToSuper</a></span>).<br>
+ Import superclass methods into the class, add the class names as prefix if necessary.<br>
+ Convert the completed option information into a definition array usable by the <span class="xref-files"><a href="f_base_getopt.tcl.html" class="file">base/getopt.tcl</a></span> subsystem.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+The name of the class to complete.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_GetObject"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::GetObject</span> <span class="arg-list">(n)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Determines the name of the object calling a particular method. 'namespace current' is of no help here as all methods are imported into the object namespace. They execute in their defining namespace, and not the object. Because of this we are forced to look at the call stack ('info level') and the method names used there.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: n
+</td>
+<td class="argument-description">
+The relative stack level to start with (must be negative). Usually -1 (for the standard methods), -1 in special cases (SetupVars).
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_ImportOptionAliases"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::ImportOptionAliases</span> <span class="arg-list">(class)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Part of <span class="xref-procs"><a href="f_base_oo.tcl.html#p_pool_oo_support_FixReferences" class="proc">::pool::oo::support::FixReferences</a></span>. Imports all option aliases defined by all immediate superclasses into the given class. Reports collisions as errors.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+The name of the class to complete.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_ImportOptions"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::ImportOptions</span> <span class="arg-list">(class)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Part of <span class="xref-procs"><a href="f_base_oo.tcl.html#p_pool_oo_support_FixReferences" class="proc">::pool::oo::support::FixReferences</a></span>. Imports all options defined by all immediate superclasses into the given class. Reports collisions as errors.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+The name of the class to complete.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_ImportVariables"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::ImportVariables</span> <span class="arg-list">(class)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Part of <span class="xref-procs"><a href="f_base_oo.tcl.html#p_pool_oo_support_FixReferences" class="proc">::pool::oo::support::FixReferences</a></span>. Imports all instance variables defined by all immediate superclasses into the given class. Reports collisions as errors.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+The name of the class to complete.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_New"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::New</span> <span class="arg-list">(class object args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Runtime support for creating instances of a class. The system will create an alias x for each class x resolving into 'New x'.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+The name of the class the instance shall be created for. Automatically supplied to the procedure by the instance constructor alias.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: object
+</td>
+<td class="argument-description">
+The name of the new object.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+Initial object configuration, as &lt;option,value&gt;-pairs.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The name of the object, = <span class="argument"><span class="proc">object</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_Puts"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::Puts</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The procedure used by all dump-procedures to write something into the translation. Has the same interface as the builtin 'puts', but writes into an internal string.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+Specification of the things to write, see the description of the builtin 'puts' for more.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_PutsArray"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::PutsArray</span> <span class="arg-list">(varName data)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Convenience procedure to write the contents of an array (even an empty one) into the translation. Built upon <span class="xref-procs"><a href="f_base_oo.tcl.html#p_pool_oo_support_Puts" class="proc">::pool::oo::support::Puts</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: varName
+</td>
+<td class="argument-description">
+The name of the variable to create
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: data
+</td>
+<td class="argument-description">
+The contents of the array to write, usable for 'array set'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_ResetCompiler"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::ResetCompiler</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Clears out the internal state of the compiler</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_SetupOptions"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::SetupOptions</span> <span class="arg-list">(oSpace object optDef optInfo legalopts arglist)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called during object construction to initialize the options of the new object. Does it in three steps: The initial configuration is processed first, then the re#source database queried for the missing parts (only if Tk present), then the defaults given in the class specification for anything yet missing.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: oSpace
+</td>
+<td class="argument-description">
+The namespace representing the new object.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: object
+</td>
+<td class="argument-description">
+The name of the new object.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optDef
+</td>
+<td class="argument-description">
+The name of the array containing the option definitions usable by the 'getopt'-system.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: optInfo
+</td>
+<td class="argument-description">
+The name of the array containing information to use during access to the re#source database.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: legalopts
+</td>
+<td class="argument-description">
+A list containing the names of all options defined fro the class.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: arglist
+</td>
+<td class="argument-description">
+A list of &lt;option,value&gt;-pairs. Contains the initial configuration given by the object creator.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_SetupVars"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::SetupVars</span> <span class="arg-list">(class)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">This procedure is called by *all* methods of class as their first command to get immediate access to the instance and class variables of the class.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: class
+</td>
+<td class="argument-description">
+The name of the class the method was defined by. Only its instance and class variables are made accessible to the method. Because of this a superclass method has no immediate access to the instance variables of its derived classes.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_alias"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::alias</span> <span class="arg-list">(alias option)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Declares an alias of an option of the current class. This procedure is immediately accessible to the class specification, without the namespace prefix.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: alias
+</td>
+<td class="argument-description">
+The name of the new alias, without starting '-'.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: option
+</td>
+<td class="argument-description">
+The name of the referenced option, without starting '-'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_cget"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::cget</span> <span class="arg-list">(option)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Standard method of all objects. Retrieves the current value of the specified <span class="argument"><span class="proc">option</span></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: option
+</td>
+<td class="argument-description">
+The name of the option to retrieve.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: The current value of the option.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_chain"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::chain</span> <span class="arg-list">(method args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Standard method of all objects. Calls the nearest definition of <span class="argument"><span class="proc">method</span></span> in one of the superclasses of the object. The search follows the same order used to call destructors (the class, then the superclasses).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: method
+</td>
+<td class="argument-description">
+The name of the method to call.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+The arguments to give to the method in the calls.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_chainToDerived"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::chainToDerived</span> <span class="arg-list">(method args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Standard method of all objects. Calls not only the specified <span class="argument"><span class="proc">method</span></span>, but all its definitions in superclasses as well. Follows the same order used to call constructors (the superclasses, then the class).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: method
+</td>
+<td class="argument-description">
+The name of the method to call.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+The arguments to give to the method in all calls.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_chainToSuper"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::chainToSuper</span> <span class="arg-list">(method args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Standard method of all objects. Calls not only the specified <span class="argument"><span class="proc">method</span></span>, but all its definitions in superclasses as well. Follows the same order used to call destructors (the class, then the superclasses).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: method
+</td>
+<td class="argument-description">
+The name of the method to call.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+The arguments to give to the method in all calls.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_class"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::class</span> <span class="arg-list">(name args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Main entrypoint of the OO system. Compiles the given class definition into tcl code and interprets it afterward, thus installing the class in the running interpreter. The 'gen_cls' application redefines this procedure into a pure compiler and dumps its result into a file. This precompilation should save time on startup.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the class to define.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+The definition of the class. The last argument is always interpreted as script containing member-, option- and method- definitions. Before this a list of superclasses can be specified. This list must start with a colon (:).
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_classvar"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::classvar</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Declare a class variable of the current class. This procedure is immediately accessible to the class specification, without the namespace prefix.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Class variables and their values are stored as part of the namespace describing the class. To avoid clashes with the internal variables required by the runtime system the latter will start with an underscore ('_') and userdefined variables are disallowed to do so. <br>
+ Methods of the class get immediate access to the defined class variables (via upvar).
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+The variable specification. May start with '-array' to signal that we are talking about an array. This is followed by the name of the variable. At last an initial value can be given. In case of an array this value has to be in a form understood by 'array set'.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_config"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::config</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">A shorthand for <span class="xref-procs"><a href="f_base_oo.tcl.html#p_pool_oo_support_config" class="proc">::pool::oo::support::config</a></span>.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+See <span class="xref-procs"><a href="f_base_oo.tcl.html#p_pool_oo_support_config" class="proc">::pool::oo::support::config</a></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_configure"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::configure</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Standard method of all objects. Used to retrieve and manipulate the values of the options associated to the object. Three forms of calling this method are allowed.<br>
+ Without arguments the system will retrieve the values of *all* options and return them in a list suitable for 'array set', with the option names as keys.<br>
+ A single argument will be interpreted as the name of an option and its value will be retrieved. In this mode the functionality is equal to <span class="xref-procs"><a href="f_base_oo.tcl.html#p_pool_oo_support_cget" class="proc">::pool::oo::support::cget</a></span>.<br>
+ The last mode is invoked by calling the method with an even number of argument, these will be interpreted as pairs of options and their values. The system will reconfigure the object according to the really changed options and their associated action methos, but only if all specified values are legal.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+See desscription.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: See description.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_constructor"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::constructor</span> <span class="arg-list">(body)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Declares the constructor of the current class.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: body
+</td>
+<td class="argument-description">
+The body of the constructor procedure.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_delete"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::delete</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Standard method of all objects. Destroys the object invoking it.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_destructor"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::destructor</span> <span class="arg-list">(body)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Declares the destructor of the current class.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: body
+</td>
+<td class="argument-description">
+The body of the destructor procedure.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_init"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::init</span> <span class="arg-list">(code)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Declares global initialization code which will be copied verbatim into the generated script. This procedure is immediately accessible to the class specification, without the namespace prefix.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: code
+</td>
+<td class="argument-description">
+The tcl code to copy into the translation.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_method"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::method</span> <span class="arg-list">(name arguments body)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Declares a method of the current class. This procedure is immediately accessible to the class specification, without the namespace prefix. It has the same arguments as the builtin 'proc'.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the new method.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: arguments
+</td>
+<td class="argument-description">
+List of formal arguments
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: body
+</td>
+<td class="argument-description">
+The script to execute upon calling the method.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_oinfo"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::oinfo</span> <span class="arg-list">(what args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Standard method of all objects. Allows retrieval of various meta information about the object and its class.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: what
+</td>
+<td class="argument-description">
+The name of the subcommand to execute. Specifies the information requested by the user.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+Information dependent additional selector data.
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: a string containing the requested information.
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_option"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::option</span> <span class="arg-list">(name args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Declares an option of the current class. This procedure is immediately accessible to the class specification, without the namespace prefix.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: name
+</td>
+<td class="argument-description">
+The name of the new option, without starting '-'.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+The description of the option, in the form of &lt;option,value&gt;-pairs. Known parameters are -class, -action, -default and -type.<br>
+ '-class' defaults to the name of the option, with the first character capitalized. The value is used as class specification during access to the re#source database via 'option get'.<br>
+ '-action' is optional. If specified it is interpreted as the name of the method to call after the option was changed via the standard method 'configure'.<br>
+ '-default' is optional, it defines the default value to use if the option value was not specified during construction.<br>
+ '-type' defaults to <span class="xref-procs"><a href="f_base_getopt.tcl.html#p_pool_getopt_notype" class="proc">::pool::getopt::notype</a></span>, it is interpreted as the name of a procedure checking the legality of a value given to the option. Please note, I said 'procedure', *not* 'method'!
+</td>
+</tr>
+</table>
+</p>
+<a name="p_pool_oo_support_var"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">::pool::oo::support::var</span> <span class="arg-list">(args)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Declare a member variable of the current class. This procedure is immediately accessible to the class specification, without the namespace prefix.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Notes</span>: Methods of the class get immediate access to the defined member variables (via upvar). In case of a class having options the array variable 'opt' will be specified automatically by the system. It will always contain the values associated to them.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: args
+</td>
+<td class="argument-description">
+The variable specification. May start with '-array' to signal that we are talking about an array. This is followed by the name of the variable. At last an initial value can be given. In case of an array this value has to be in a form understood by 'array set'.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

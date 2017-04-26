@@ -1,0 +1,264 @@
+<html>
+<head>
+<title>File 'net/pop3/storage/multi.cls' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/pop3/storage/multi.cls' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Storage facility employing other storage systems</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Storage facility employing other storage systems</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">storage facility</span>
+</dl>
+</div>
+<h1 class="class">Class 'multiStorage'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Storage system usable by the pop client in <span class="xref-classes"><a href="cpop3Client.html" class="class">pop3Client</a></span>. Refers to several external storage systems, as configured by the user, via <span class="xref-mref"><a href="cmultiStorage.html#pmultiStorage_add" class="proc">add</a></span>. Scans through all of them for every incoming mail until a success is reported. The scan process is event controlled, more than one can be in progress.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cpopClientStorageBase.html" class="class">popClientStorageBase</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ocommand" class="options">command</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cmultiStorage.html#pmultiStorage_Done" class="proc">Done</a> <span class="arg-list">(command fail msg)</span><br>
+<a href="cmultiStorage.html#pmultiStorage_Execute" class="proc">Execute</a> <span class="arg-list">(handle)</span><br>
+<a href="cmultiStorage.html#pmultiStorage_Store" class="proc">Store</a> <span class="arg-list">(handle)</span><br>
+<a href="cmultiStorage.html#pmultiStorage_SubDone" class="proc">SubDone</a> <span class="arg-list">(handle state msg)</span><br>
+<a href="cmultiStorage.html#pmultiStorage_add" class="proc">add</a> <span class="arg-list">(o)</span><br>
+<a href="cmultiStorage.html#pmultiStorage_storeMessage" class="proc">storeMessage</a> <span class="arg-list">(command message)</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vfacilities" class="members">facilities</a><br>
+<a href="#vthread" class="members">thread</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ocommand"></a>
+<dt><span class="option-name">-command</span>
+<dd><span class="option-description">  The command to evaluate after a scan completed. First  argument is either 'done' or 'error'. In the latter case the  accompanying error message is appended as the 2nd argument.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pmultiStorage_Done"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Done</span> <span class="arg-list">(command fail msg)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cpopClientStorageBase.html" class="class">popClientStorageBase</a>:<a href="cpopClientStorageBase.html#ppopClientStorageBase_Done" class="proc">Done</a><br>
+<span class="header-description-value">Overides base class functionality to allow the notification of someone outside about the completion of the scan. The standard functionality just notifies the caller.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: command
+</td>
+<td class="argument-description">
+The script evaluate. Allowed to be empty, nothing is done in that case. Gets either 'error' or 'done' as first argument. In case of an 'error' <span class="argument"><span class="argument-description">msg</span></span> is given to as well.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: fail
+</td>
+<td class="argument-description">
+Boolean value. True signal unsucessful completion of the storing process.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: msg (= {})
+</td>
+<td class="argument-description">
+The error text to add as 2nd argument to <span class="argument"><span class="argument-description">command</span></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmultiStorage_Execute"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Execute</span> <span class="arg-list">(handle)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Invokes the chosen storage facility for the given scan.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: handle
+</td>
+<td class="argument-description">
+Internal handle of this storage transaction. Used to remember the transaction state.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmultiStorage_Store"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">Store</span> <span class="arg-list">(handle)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Stores the message in the given scan state (<span class="argument"><span class="proc">handle</span></span>) using the facility next on the list in the same state.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: handle
+</td>
+<td class="argument-description">
+Internal handle of this storage transaction. Used to remember the transaction state.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmultiStorage_SubDone"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">SubDone</span> <span class="arg-list">(handle state msg)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Callback used by the invoked facility to notify this object about its success (or failure).</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: handle
+</td>
+<td class="argument-description">
+Internal handle of this storage transaction. Used to remember the transaction state.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: state
+</td>
+<td class="argument-description">
+Completion state of the invoked facility.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: msg (= {})
+</td>
+<td class="argument-description">
+Error message in case of failure.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmultiStorage_add"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">add</span> <span class="arg-list">(o)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Adds the storage facility <span class="argument"><span class="proc">o</span></span> to this object.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: o
+</td>
+<td class="argument-description">
+Handle of the storage object to add. Must be derived from <span class="xref-classes"><a href="cpopClientStorageBase.html" class="class">popClientStorageBase</a></span>.
+</td>
+</tr>
+</table>
+</p>
+<a name="pmultiStorage_storeMessage"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">storeMessage</span> <span class="arg-list">(command message)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cpopClientStorageBase.html" class="class">popClientStorageBase</a>:<a href="cpopClientStorageBase.html#ppopClientStorageBase_storeMessage" class="proc">storeMessage</a><br>
+<span class="header-description-value">Stores the given <span class="argument"><span class="proc">message</span></span>, tries all facilities known to the object.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: command
+</td>
+<td class="argument-description">
+The script evaluate after completion of the process (use <span class="xref-mref"><a href="cmultiStorage.html#pmultiStorage_Done" class="proc">Done</a></span> to accomplish this). Allowed to be empty, nothing is done in that case. Gets either 'error' or 'done' as first argument.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: message
+</td>
+<td class="argument-description">
+The text of the message to store.
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vfacilities"></a>
+<dt><span class="variable-name">facilities</span>
+<dd><span class="variable-description">  A list containing the object handles of all storage  system to query during a scan.</span>
+<a name="vthread"></a>
+<dt><span class="variable-name">thread</span>
+<dd><span class="variable-description">  State information for every active scan.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

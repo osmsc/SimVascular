@@ -1,0 +1,179 @@
+<html>
+<head>
+<title>File 'net/pop3/retr.cls' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/pop3/retr.cls' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Delete message on pop server (RETR)</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Sequencer for retrieval of messages.</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">POP3,  RETR command</span>
+</dl>
+</div>
+<h1 class="class">Class 'pop3RetrSeq'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cpop3Sequencer.html" class="class">pop3Sequencer</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#omsg" class="options">msg</a><br>
+<a href="#ouse-top" class="options">use-top</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cpop3RetrSeq.html#ppop3RetrSeq_GetMessage" class="proc">GetMessage</a> <span class="arg-list">()</span><br>
+<a href="cpop3RetrSeq.html#ppop3RetrSeq_GotRetrData" class="proc">GotRetrData</a> <span class="arg-list">(line)</span><br>
+<a href="cpop3RetrSeq.html#ppop3RetrSeq_GotRetrResponse" class="proc">GotRetrResponse</a> <span class="arg-list">(line)</span><br>
+<a href="cpop3RetrSeq.html#ppop3RetrSeq_RetrTry" class="proc">RetrTry</a> <span class="arg-list">()</span><br>
+<a href="cpop3RetrSeq.html#ppop3RetrSeq_pop3RetrSeq" class="proc">pop3RetrSeq</a> <span class="arg-list">()</span>
+</dl>
+
+<a name="MembersUp"></a>
+<dt><a href="#Members" class="members">Membervariables</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="#vmessage" class="members">message</a>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="omsg"></a>
+<dt><span class="option-name">-msg</span>
+<dd><span class="option-description">      The numerical index of the message to delete at the server.</span>
+<a name="ouse-top"></a>
+<dt><span class="option-name">-use-top</span>
+<dd><span class="option-description">  A boolean flag. Setting it to TRUE causes the sequencer to  use the command 'TOP x 0' instead of 'RETR x' to retrieve  the message. The first pop server of my provider didn't  recognize RETR, but this special command. Maybe some other  people have to deal with such a weird beast too.</span><br>
+<span class="option-default">default value:</span> <span class="option-default-value">0</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="ppop3RetrSeq_GetMessage"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">GetMessage</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Accessor method.</span>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="proc">Returns</span>: is the text of the received message.
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3RetrSeq_GotRetrData"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">GotRetrData</span> <span class="arg-list">(line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called for each line of the incoming mail. Stops the sequencer upon detection of the end-of-message marker (single dot on a line by itself), or appends the <span class="argument"><span class="proc">line</span></span> to its internal store.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+Text of response
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3RetrSeq_GotRetrResponse"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">GotRetrResponse</span> <span class="arg-list">(line)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Called after pop3 demon responded to the RETR command. An error aborts the operation, else we start reading the incoming message, which followed the server response immediately.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: line
+</td>
+<td class="argument-description">
+Text of response
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3RetrSeq_RetrTry"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">RetrTry</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">The first action taken after the construction of the sequencer completes. Writes out the retrieval command to the pop3 server, then waits for its response.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="ppop3RetrSeq_pop3RetrSeq"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">pop3RetrSeq</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Constructor.</span>
+</td>
+</tr>
+</table>
+</p>
+<hr class="class">
+<a name="Members"></a>
+<h2 class="members"><a href="#MembersUp" class="members">Membervariables</a></h2>
+<div class="members">
+<dl>
+<a name="vmessage"></a>
+<dt><span class="variable-name">message</span>
+<dd><span class="variable-description">  Used as transient storage for the incoming message.</span>
+</dl>
+</div>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

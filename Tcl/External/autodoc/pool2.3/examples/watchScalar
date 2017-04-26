@@ -1,0 +1,30 @@
+#!/usr/local/bin/wish
+#-!/usr/local/bin/tclsh
+# -*- tcl -*-
+
+package require Pool_GuiBase
+
+#wm withdraw .
+
+array set stat [array get tcl_platform]
+
+watchScalar .x -variable x
+pack       .x -expand 1 -fill both -side top
+
+
+after 1000 anim [array get tcl_platform]
+
+proc anim {args} {
+    global x
+
+    set k [::pool::list::shift args]
+    set v [::pool::list::shift args]
+
+    set x "$k = $v"
+
+    if {$args != {}} {
+	after 1000 anim $args
+    } else {
+	after 5000 {exit}
+    }
+}

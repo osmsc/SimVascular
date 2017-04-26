@@ -1,0 +1,8 @@
+# PERSONAL ENTRIES
+# ~~~~~~~~~~~~~~~~
+# mail retrieval
+# standard during a week:       every 2 hours, in the evening only
+# weekend:                      low volume, every 4 hours only
+
+05 18,20,22,00		* * mon-fri	/usr/local/bin/popeye_trigger
+05 9,13,17,21,01	* * sat,sun	/usr/local/bin/popeye_trigger

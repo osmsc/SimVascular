@@ -1,0 +1,165 @@
+<html>
+<head>
+<title>File 'net/pop3/storage/smtp.cls' (part of 'Pool_Net')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'net/pop3/storage/smtp.cls' (part of '<a href="pkg_Pool_Net.html" class="package">Pool_Net</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">Storage facility built upon SMTP delivery</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">Storage facility built upon SMTP delivery</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">SMTP,  storage facility</span>
+</dl>
+</div>
+<h1 class="class">Class 'smtpStorage'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">Storage system usable by the pop client in <span class="xref-classes"><a href="cpop3Client.html" class="class">pop3Client</a></span>. Incoming mails are send to a smtp demon for local delivery and storage. Uses a <span class="xref-classes"><a href="csmtpConnection.html" class="class">smtpConnection</a></span> to do the main work.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cpopClientStorageBase.html" class="class">popClientStorageBase</a></span>
+<a name="OptionsUp"></a>
+<dt><span class="header-title"><a href="#Options" class="options">Options</a></span>
+<dd><span class="header-value"><a href="#ohelo" class="options">helo</a><br>
+<a href="#ofrom" class="options">from</a><br>
+<a href="#oto" class="options">to</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="csmtpStorage.html#psmtpStorage_AllDone" class="proc">AllDone</a> <span class="arg-list">(command conn)</span><br>
+<a href="csmtpStorage.html#psmtpStorage_IsDone" class="proc">IsDone</a> <span class="arg-list">(command conn)</span><br>
+<a href="csmtpStorage.html#psmtpStorage_storeMessage" class="proc">storeMessage</a> <span class="arg-list">(command message)</span>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Options"></a>
+<h2 class="options"><a href="#OptionsUp" class="options">Options</a></h2>
+<div class="options">
+<dl>
+<a name="ohelo"></a>
+<dt><span class="option-name">-helo</span>
+<dd><span class="option-description">  The string to send to the smtp demon after connection and its  greeting.</span>
+<a name="ofrom"></a>
+<dt><span class="option-name">-from</span>
+<dd><span class="option-description">  The email address of the pseudo sender of all incoming mails</span>
+<a name="oto"></a>
+<dt><span class="option-name">-to</span>
+<dd><span class="option-description">    The address to sent all incoming mails to.</span>
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="psmtpStorage_AllDone"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">AllDone</span> <span class="arg-list">(command conn)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executed after the SMTP connection was completely closed.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: command
+</td>
+<td class="argument-description">
+The command to execute now that the storing is complete.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+The handle of the <span class="xref-classes"><a href="csmtpConnection.html" class="class">smtpConnection</a></span> object shutting down.
+</td>
+</tr>
+</table>
+</p>
+<a name="psmtpStorage_IsDone"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">IsDone</span> <span class="arg-list">(command conn)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Executed after SMTP storage is finished.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: command
+</td>
+<td class="argument-description">
+The command to execute after closing the connection represented by <span class="argument"><span class="argument-description">conn</span></span>.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: conn
+</td>
+<td class="argument-description">
+The handle of the <span class="xref-classes"><a href="csmtpConnection.html" class="class">smtpConnection</a></span> object reporting back.
+</td>
+</tr>
+</table>
+</p>
+<a name="psmtpStorage_storeMessage"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">storeMessage</span> <span class="arg-list">(command message)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cpopClientStorageBase.html" class="class">popClientStorageBase</a>:<a href="cpopClientStorageBase.html#ppopClientStorageBase_storeMessage" class="proc">storeMessage</a><br>
+<span class="header-description-value">Store the given message via SMTP and the local mail demon.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: command
+</td>
+<td class="argument-description">
+The script evaluate after completion of the process (use <span class="xref-mref"><a href="cpopClientStorageBase.html#ppopClientStorageBase_Done" class="proc">Done</a></span> to accomplish this). Allowed to be empty, nothing is done in that case. Gets either 'error' or 'done' as first argument.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: message
+</td>
+<td class="argument-description">
+The text of the message to store.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>

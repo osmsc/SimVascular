@@ -1,0 +1,117 @@
+# -*- tcl -*-
+# Commands covered:	::pool::array::(def, clear)
+#
+# This file contains a collection of tests for one or more of the commands
+# the Pool package. Sourcing this file into Tcl runs the tests and generates
+# output for errors.  No output means no errors were found.
+#
+# Copyright (c) 1998 Andreas Kupries (a.kupries@westend.com)
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+# $Id: base-array.test,v 1.1 1998/06/01 19:57:06 aku Exp $
+
+if {[string compare test [info procs test]] == 1} then {source defs}
+
+
+proc as2sub {list} {
+    set result {}
+    foreach {k v} $list {
+	lappend result [list $k $v]
+    }
+    return $result
+}
+
+
+test base-array-1.0 {array::def, unknown variable} {
+
+    set     result [list [info globals x]]
+
+    ::pool::array::def x
+
+    lappend result [list [info globals x]]
+    lappend result [list [array exists x]]
+
+    unset x
+    set result
+
+} {{} x 1}
+
+
+
+test base-array-1.1 {array::def, existing scalar variable} {
+
+    set x 1
+
+    set     result [list [info globals x]]
+    lappend result [list [array exists x]]
+
+    ::pool::array::def x
+
+    lappend result [list [info globals x]]
+    lappend result [list [array exists x]]
+
+    unset x
+    set result
+
+} {x 0 x 1}
+
+
+
+test base-array-1.2 {array::def, existing array variable} {
+
+    array set x {_ _}
+
+    set     result [list [info globals x]]
+    lappend result [list [array exists x]]
+
+    ::pool::array::def x
+
+    lappend result [list [info globals x]]
+    lappend result [list [array exists x]]
+
+    unset x
+    set result
+
+} {x 1 x 1}
+
+
+
+test base-array-2.0 {array::clear, all entries} {
+
+    array set x {_ _ _a .}
+
+    set result [list [lsort -index 0 [as2sub [array get x]]]]
+
+    ::pool::array::clear x
+
+    lappend result [list [array get x]]
+
+    unset x
+    set result
+
+} {{{_ _} {_a .}} {{}}}
+
+
+
+test base-array-2.1 {array::clear, partial} {
+
+    array set x {_ _ _a . .a _}
+
+    set result [list [lsort -index 0 [as2sub [array get x]]]]
+
+    ::pool::array::clear x _*
+
+    lappend result [list [array get x]]
+
+    unset x
+    set result
+
+} {{{.a _} {_ _} {_a .}} {{.a _}}}
+
+
+
+rename as2sub {}
+catch {unset result}
+catch {unset x}

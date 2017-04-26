@@ -1,0 +1,97 @@
+# -*- tcl -*-
+newPage    server.htm "Server framework"
+
+proc head    {str} {table_head {write $str}}
+proc data    {str} {table_data {write $str}}
+
+par "
+The framework in [fileRef net/server.cls] was written to
+ease the implementation of various internet protocol servers
+(smtp, pop3, ...).
+"
+par "
+Servers for specific a protocol have to derive from the baseclass
+[classRef server]. The latter is then configured by [getString {
+    itemize {
+	item "setting the member variables [varRef server port]
+	and [varRef server cmdMap]"
+
+	item "and overiding the 3 methods
+	[methodRef server InitializeNewConnection],
+	[methodRef server GreetPeer] and [methodRef server CloseConnection].
+	Another method, [methodRef server HandleUnknownCmd], has an
+	implementation which should be sufficient for most cases"
+    }  
+}]"
+
+table border {
+    table_row {
+	head {What}
+	head {Required}
+	head {Meaning}
+    }
+    table_row {
+	data [varRef server port]
+	data {+}
+	data {
+	    Symbolic or numeric specification of the tcp port
+	    the server shall listen on for new connections.
+	    Examples: '1234', 'pop3'.
+	}
+    }
+    table_row {
+	data [varRef server cmdMap]
+	data {+}
+	data "
+	    Defines the mapping between commands and the methods handling
+	    them. Upper and lower case will not be distinguished in command
+	    names. The methods will be called with 3 arguments: connection
+	    id, command to handle and the complete line as sent by the client.
+	    Use [methodRef server SetCmdMap] to define it in a convenient way.
+	"
+    }
+    table_row {
+	data [methodRef server GreetPeer]
+	data {-}
+	data {
+	    Called after initialization of a new connection. Is
+	    responsible for sending a server and connection specific
+	    greeting message to the new client.
+	}
+    }
+    table_row {
+	data [methodRef server HandleUnknownCmd]
+	data {-}
+	data "
+	    Called if the received command was not found in the
+	    [varRef server cmdMap]. Gets the same arguments as a
+	    normal handler method. Should send a server specific
+	    error message to the client. The standard implementation
+	    just does a shutdown of the connection.
+	"
+    }
+    table_row {
+	data [methodRef server InitializeNewConnection]
+	data {-}
+	data {
+	    Defaults to an empty method. Is called to perform server
+	    specific initialization of a new connection. The general
+	    initialization is already done. One argument, the connection id.
+	}
+    }
+    table_row {
+	data [methodRef server CloseConnection]
+	data {-}
+	data {
+	    Defaults to an empty method. Is called to perform server specific
+	    cleanup of a connection. The general cleanup is already done.
+	    One argument, the connection id.
+	}
+    }
+}
+
+par "
+An example of its usage can be found in [fileRef net/pop3/server.cls]
+"
+
+closePage

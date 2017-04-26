@@ -1,0 +1,166 @@
+# -*- tcl -*-
+# Commands covered:	::pool::getopt::*
+#
+# This file contains a collection of tests for one or more of the commands
+# the Pool package. Sourcing this file into Tcl runs the tests and generates
+# output for errors.  No output means no errors were found.
+#
+# Copyright (c) 1998 Andreas Kupries (a.kupries@westend.com)
+#
+# See the file "license.terms" for information on usage and redistribution
+# of this file, and for a DISCLAIMER OF ALL WARRANTIES.
+#
+# $Id: base-getopt.test,v 1.1 1998/06/01 19:57:06 aku Exp $
+
+if {[string compare test [info procs test]] == 1} then {source defs}
+
+
+proc as2sub {list} {
+    set result {}
+    foreach {k v} $list {
+	lappend result [list $k $v]
+    }
+    return $result
+}
+
+
+test base-getopt-1.0 {type checkers, notype} {
+
+    set result [::pool::getopt::notype kldjfkds 20248902]
+} {1}
+
+
+test base-getopt-1.1 {type checkers, nonempty} {
+
+    set result [::pool::getopt::nonempty kldjfkds 20248902]
+} {1}
+
+
+test base-getopt-1.2 {type checkers, nonempty} {
+
+    set result [::pool::getopt::nonempty kldjfkds {}]
+} {0}
+
+
+test base-getopt-1.3 {type checkers, integer} {
+
+    set result [::pool::getopt::integer kldjfkds 20248902]
+} {1}
+
+
+test base-getopt-1.4 {type checkers, integer} {
+
+    set result [::pool::getopt::integer kldjfkds 20248902.3]
+} {0}
+
+
+test base-getopt-1.5 {type checkers, integer} {
+
+    set result [::pool::getopt::integer kldjfkds klcgj43]
+} {0}
+
+
+test base-getopt-1.6 {type checkers, number} {
+
+    set result [::pool::getopt::number kldjfkds 20248902]
+} {1}
+
+
+test base-getopt-1.7 {type checkers, number} {
+
+    set result [::pool::getopt::number kldjfkds 20248902.3e-10]
+} {1}
+
+
+test base-getopt-1.8 {type checkers, number} {
+
+    set result [::pool::getopt::number kldjfkds 20248902e0935ddd]
+} {0}
+
+
+test base-getopt-1.9 {type checkers, boolean} {
+
+    set result [::pool::getopt::boolean kldjfkds 0]
+} {1}
+
+
+test base-getopt-1.10 {type checkers, boolean} {
+
+    set result [::pool::getopt::boolean kldjfkds 1]
+} {1}
+
+
+test base-getopt-1.11 {type checkers, boolean} {
+
+    set result [::pool::getopt::boolean kldjfkds 00]
+} {1}
+
+
+test base-getopt-1.12 {type checkers, boolean} {
+
+    set result [::pool::getopt::boolean kldjfkds 0a]
+} {0}
+
+
+test base-getopt-1.13 {type checkers, boolean} {
+
+    set result [::pool::getopt::boolean kldjfkds on]
+} {1}
+
+
+
+
+test base-getopt-2.0 {initialization} {
+
+    ::pool::array::def result
+
+    ::pool::getopt::initValues ::pool::getopt::setupDef result
+    array get result
+
+} {-default {} -type ::pool::getopt::notype}
+
+
+unset result
+
+::pool::array::def    o
+::pool::array::def v
+::pool::getopt::defOption o a
+::pool::getopt::defOption o b
+::pool::getopt::defOption o c
+::pool::getopt::defOption o d
+
+
+test base-getopt-2.1 {parser} {
+    set result     [::pool::getopt::process o {-a 1 -b 2 -c 3 a} v]
+    lappend result [array get v]
+} {a {-c 3 -d {} -a 1 -b 2}}
+
+
+
+test base-getopt-2.2 {parser} {
+    set result     [::pool::getopt::process o {-a 1 -b 2 -- -c 3 a} v]
+    lappend result [array get v]
+} {-c 3 a {-c {} -d {} -a 1 -b 2}}
+
+
+unset o v result
+
+
+
+test base-getopt-3.0 {defShortcuts} {
+
+    ::pool::getopt::defOption    o dir
+    ::pool::getopt::defAlias     o dab dir
+    ::pool::getopt::defShortcuts o
+    unset o(-dir)
+
+    # dir => di
+    # dab => da
+    # d not unique
+
+    lsort -index 0 [as2sub [array get o]]
+} {{a,-da -dir} {a,-dab -dir} {a,-di -dir}}
+
+
+
+rename as2sub {}

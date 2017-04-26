@@ -1,0 +1,40 @@
+# -*- tcl -*-
+extension tg {
+    description {
+	A generic interface to test suites. Interactive execution of tests,
+	visual highlighting of failed and/or problematic tests. Allows
+	filing of bug reports to the package maintainer.
+    }
+
+    keywords {
+	tcl, test suite, visual interface, package management
+    }
+
+    author       {Andreas Kupries <a.kupries@westend.com>}
+    maintenance  {Andreas Kupries <a.kupries@westend.com>}
+
+    version	   0.1
+    patchlevel     0.1
+    copying-policy {BSD, see 'tcl'-license}
+    date           {October 04, 2000}
+
+    primary-urls {
+	http://www.oche.de/%7Eakupries/soft/tg/download/tg0.1.README
+	http://www.oche.de/%7Eakupries/soft/tg/download/tg0.1.tar.gz
+	http://www.oche.de/%7Eakupries/soft/tg/index.htm
+    }
+
+    development-platform {hopefully irrelevant, pure tcl sources}
+    platforms            {all running tcl 8.x}
+
+    dependencies {
+	Tcl
+    }
+
+    comments {
+	Complement by command line tool, test suite editor, define
+	environment and package interfaces.
+    }
+}
+
+

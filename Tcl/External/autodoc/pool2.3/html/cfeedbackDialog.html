@@ -1,0 +1,121 @@
+<html>
+<head>
+<title>File 'gui/fbDialog.cls' (part of 'Pool_GuiBase')</title>
+<link rel=stylesheet href="styles.css"
+ type="text/css">
+</head>
+<body >
+<h1>File 'gui/fbDialog.cls' (part of '<a href="pkg_Pool_GuiBase.html" class="package">Pool_GuiBase</a>')</h1>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<div class="file-header">
+<dl>
+<dt><span class="header-title">Description (short)</span>
+<dd><span class="header-description-value">base of dialogs with stateline for feedback</span>
+<dt><span class="header-title">Written by</span>
+<dd><span class="header-author-value"><a href="mailto:a.kupries@westend.com" class="file-header">Andreas Kupries</a></span>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-title">base class of all megadialogs containing a stateline for feedback</span>
+<dt><span class="header-title">Keywords</span>
+<dd><span class="header-value">dialog with feedback,  feedback,  stateline</span>
+</dl>
+</div>
+<h1 class="class">Class 'feedbackDialog'</h1>
+<div class="class-header">
+<dl>
+<dt><span class="header-title">Description</span>
+<dd><span class="header-description-value">This is the base class of all dialogs with a stateline at the bottom. Additionally employs the notion of a child site to allow for easy customization by derived classes and other users.<br>
+ The user visible components are 'childsite' and 'stateline'.</span>
+<dt><span class="header-title">Superclasses</span>
+<dd><span class="header-value"><a href="cdialog.html" class="class">dialog</a></span>
+<a name="MethodsUp"></a>
+<dt><a href="#Methods" class="methods">Methods</a>
+<dd><dl>
+<dt><span class="visibility">public</span>
+<dd><a href="cfeedbackDialog.html#pfeedbackDialog_createSubwidgets" class="proc">createSubwidgets</a> <span class="arg-list">()</span><br>
+<a href="cfeedbackDialog.html#pfeedbackDialog_hideFeedback" class="proc">hideFeedback</a> <span class="arg-list">(hide)</span><br>
+<a href="cfeedbackDialog.html#pfeedbackDialog_setText" class="proc">setText</a> <span class="arg-list">(handle text)</span>
+</dl>
+
+</dl>
+</div>
+<hr class="class">
+<a name="Methods"></a>
+<h2 class="methods"><a href="#MethodsUp" class="methods">Methods</a></h2>
+<a name="pfeedbackDialog_createSubwidgets"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">createSubwidgets</span> <span class="arg-list">()</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="override">Overrides</span> <a href="cdialog.html" class="class">dialog</a>:<a href="cdialog.html#pdialog_createSubwidgets" class="proc">createSubwidgets</a><br>
+<span class="header-description-value">Create and place child site and stateline. Both are user visible components. The stateline is placed at the bottom, the child site above that. Only the child site reacts to changes in the size of the dialog.</span>
+</td>
+</tr>
+</table>
+</p>
+<a name="pfeedbackDialog_hideFeedback"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">hideFeedback</span> <span class="arg-list">(hide)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Allows users to hide and display the stateline.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: hide (= 1)
+</td>
+<td class="argument-description">
+Boolean flag. A value of true (default) signals the widget to hide the statteline. It will show it for <span class="argument"><span class="argument-description">hide</span></span> == false.
+</td>
+</tr>
+</table>
+</p>
+<a name="pfeedbackDialog_setText"></a>
+<p class="proc"><table border width=100% class="proc">
+<tr class="proc">
+<td colspan=2 class="proc">
+<h2 class="proc"><span class="proc-name">setText</span> <span class="arg-list">(handle text)</span></h2>
+</td>
+</tr>
+<tr class="proc">
+<td colspan=2 class="proc">
+<span class="header-description-value">Allows users to set text into the stateline without resorting to 'x subwidget stateline setText ...'. Offers additional functionality besides that simple forwarding by enforcing the visibility of the stateline.</span>
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: handle
+</td>
+<td class="argument-description">
+The symbolic name associated to the message. Can be used between messages from several different #sources.
+</td>
+</tr>
+<tr class="proc">
+<td class="argument-name">
+<span class="argument-name">Argument</span>: text
+</td>
+<td class="argument-description">
+The text to show in the stateline.
+</td>
+</tr>
+</table>
+</p>
+<hr class="navbar">
+<p class="navbar"><a href="index.htm" class="navbar">Home</a> | <a href="packages.html" class="index-package">Packages</a> | <a href="files.html" class="index-file">Files</a> | <a href="procs.html" class="index-procedure">Procedures</a> | <a href="classes.html" class="index-class">Classes</a> | <a href="namespaces.html" class="index-namespace">Namespaces</a> | <a href="keywords.html" class="index-keyword">Keywords</a> | <a href="deps.html" class="index-dependency">External packages</a> </p>
+<hr class="navbar">
+
+<hr>
+<p class="generated-by">Generated by <a href="http://www.oche.de/~akupries/soft/autodoc/index.htm" class="generated-by">AutoDoc 2.4</a> at 09/14/2000, invoked by <a href="mailto:a.kupries@westend.com" class="generated-by">Andreas Kupries</a></p>
+</body>
+</html>
