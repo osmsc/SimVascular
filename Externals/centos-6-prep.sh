@@ -4,7 +4,9 @@ sudo yum -y update
 # add need Developer Toolset since gcc 4.4 is too old for Qt
 sudo yum -y install centos-release-scl
 sudo yum -y install devtoolset-4
+sudo yum -y install rh-git29
 scl enable devtoolset-4 bash
+scl enable rh-git29 bash
 
 # for swig-3.0.12
 sudo yum install pcre-devel
