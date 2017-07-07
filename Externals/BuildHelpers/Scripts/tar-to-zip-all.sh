@@ -30,6 +30,30 @@ mkdir -p zip_output_tmp
 # numpy
 # NOTE: numpy is contained in the python zip
 
+# swig
+if [[ $SV_SUPER_OPTIONS == *ZIP_SWIG* ]]; then
+  echo "ZIP_SWIG"
+  REPLACEME_TAR -C zip_output_tmp/ -xvzf tar_output/REPLACEME_SV_PLATFORM.REPLACEME_SV_COMPILER_BIN_DIR.REPLACEME_SV_ARCH_DIR.REPLACEME_SV_SWIG_DIR-BUILD${BUILDDATE}.tar.gz
+  pushd zip_output_tmp
+  REPLACEME_ZIP -r ../zip_output/REPLACEME_SV_PLATFORM.REPLACEME_SV_COMPILER_BIN_DIR.REPLACEME_SV_ARCH_DIR.REPLACEME_SV_SWIG_DIR-BUILD${BUILDDATE}.zip REPLACEME_SV_SWIG_DIR
+  popd
+fi
+
+rm -Rf zip_output_tmp
+mkdir -p zip_output_tmp
+
+# qt
+if [[ $SV_SUPER_OPTIONS == *ZIP_QT* ]]; then
+  echo "ZIP_QT"
+  REPLACEME_TAR -C zip_output_tmp/ -xvzf tar_output/REPLACEME_SV_PLATFORM.REPLACEME_SV_COMPILER_BIN_DIR.REPLACEME_SV_ARCH_DIR.REPLACEME_SV_QT_DIR-BUILD${BUILDDATE}.tar.gz
+  pushd zip_output_tmp
+  REPLACEME_ZIP -r ../zip_output/REPLACEME_SV_PLATFORM.REPLACEME_SV_COMPILER_BIN_DIR.REPLACEME_SV_ARCH_DIR.REPLACEME_SV_QT_DIR-BUILD${BUILDDATE}.zip REPLACEME_SV_QT_DIR
+  popd
+fi
+
+rm -Rf zip_output_tmp
+mkdir -p zip_output_tmp
+
 # freetype
 if [[ $SV_SUPER_OPTIONS == *ZIP_FREETYPE* ]]; then
   echo "ZIP_FREETYPE"
@@ -122,6 +146,8 @@ if [[ $SV_SUPER_OPTIONS == *ZIP_EVERYTHING* ]]; then
   REPLACEME_ZIP -r ../zip_output/REPLACEME_SV_PLATFORM.REPLACEME_SV_COMPILER_BIN_DIR.REPLACEME_SV_ARCH_DIR.everything-BUILD${BUILDDATE}.zip \
     REPLACEME_SV_TCLTK_DIR \
     REPLACEME_SV_PYTHON_DIR \
+    REPLACEME_SV_SWIG_DIR \
+    REPLACEME_SV_QT_DIR \
     REPLACEME_SV_FREETYPE_DIR \
     REPLACEME_SV_GDCM_DIR \
     REPLACEME_SV_VTK_DIR \
