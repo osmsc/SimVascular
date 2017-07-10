@@ -1,31 +1,46 @@
 # generic
 sudo yum -y update
 
-# add need Developer Toolset since gcc 4.4 is too old for Qt
+# need Developer Toolset since gcc 4.4 is too old for Qt
 sudo yum -y install centos-release-scl
 sudo yum -y install devtoolset-4
 sudo yum -y install rh-git29
+
+# needed for some makefile stuff
+sudo yum -y install tcl
+
+# for qt
+sudo yum -y install rh-ruby23
+sudo yum -y install gperf
+sudo yum -y install icu
+sudo yum -y install libicu-devel
+sudo yum -y install libxcb
+sudo yum -y install libxcb-devel
+sudo yum -y install xcb-util
+sudo yum -y install xcb-util-devel
+
+# for mitk
+sudo yum -y install tcp_wrappers-devel
+sudo yum -y install tcp_wrappers-libs
+sudo yum -y install libtiff-devel
+
 scl enable devtoolset-4 bash
 scl enable rh-git29 bash
+scl enable rh-ruby23 bash
 
 # for swig-3.0.12
-sudo yum install pcre-devel
+sudo yum -y install pcre-devel
 
 #some helpers
 sudo yum -y install git
 sudo yum -y install emacs
 sudo yum -y install dos2unix
 
-### compilers
-sudo yum -y install g++
-sudo yum -y install gfortran
-
 ### used by some of the SV cmake code
 sudo yum -y install lsb-core
 
 ### cmake tools  (note: we need newer version of cmake installed below!)
 #sudo yum -y install cmake
-#sudo yum -y install cmake-qt-gui
 
 ### for flowsolver
 sudo yum -y install libmpich2-dev
@@ -41,8 +56,6 @@ sudo yum -y install libxi-dev
 ### mitk
 sudo yum -y install libXmu-dev
 sudo yum -y install libXi-dev
-sudo yum -y install libtiff4-dev
-sudo yum -y install libwrap0-dev
 
 ### python
 sudo yum -y install libssl-dev
@@ -52,11 +65,6 @@ sudo yum -y install swig3.0
 
 # optional: mitk
 sudo yum -y install doxygen
-
-### install Qt
-wget http://simvascular.stanford.edu/downloads/public/open_source/linux/qt/5.4/qt-opensource-linux-x64-5.4.2.run
-chmod a+rx ./qt-opensource-linux-x64-5.4.2.run
-sudo ./qt-opensource-linux-x64-5.4.2.run --script ./ubuntu-qt-installer-noninteractive.qs
 
 ### install latest version of CMake
 wget http://simvascular.stanford.edu/downloads/public/open_source/linux/cmake/cmake-3.6.1-Linux-x86_64.sh

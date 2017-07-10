@@ -51,10 +51,7 @@ endif
       $(LIBFLAG)Qt5Gui$(LIBLINKEXT) \
       $(LIBFLAG)Qt5Concurrent$(LIBLINKEXT) \
       $(LIBFLAG)Qt5Core$(LIBLINKEXT) \
-      $(LIBFLAG)Qt5Quick$(LIBLINKEXT) \
-      $(QT_LIBDIRS)/libicuuc.so.53 \
-      $(QT_LIBDIRS)/libicui18n.so.53 \
-      $(QT_LIBDIRS)/libicudata.so.53
+      $(LIBFLAG)Qt5Quick$(LIBLINKEXT)
     QT_SO_PATH=$(QT_TOP_DIR)/lib
     QT_PLUGIN_PATH=$(QT_TOP_DIR)/plugins
 endif

@@ -156,81 +156,82 @@ fi
 #  tcl/tk 8.6
 if [[ $SV_SUPER_OPTIONS == *BUILD_TCL* ]]; then
   echo "BUILD_TCL"
-  ./tmp/compile.make.tcl.gcc.sh >& ./tmp/stdout.tcl.txt
+  time ./tmp/compile.make.tcl.gcc.sh >& ./tmp/stdout.tcl.txt
 fi
 
 # python 2.7
 if [[ $SV_SUPER_OPTIONS == *BUILD_PYTHON* ]]; then
   echo "BUILD_PYTHON"
-  ./tmp/compile.cmake.python.gcc.sh >& ./tmp/stdout.python.gcc.txt
+  time ./tmp/compile.cmake.python.gcc.sh >& ./tmp/stdout.python.gcc.txt
 fi
 
 #  swig
 if [[ $SV_SUPER_OPTIONS == *BUILD_SWIG* ]]; then
   echo "BUILD_SWIG"
-  ./tmp/compile.make.swig.gcc.sh >& ./tmp/stdout.swig.txt
+  time ./tmp/compile.make.swig.gcc.sh >& ./tmp/stdout.swig.txt
 fi
 
 # numpy
 if [[ $SV_SUPER_OPTIONS == *BUILD_NUMPY* ]]; then
   echo "BUILD_NUMPY"
-  ./tmp/compile.python.numpy-linux.sh >& ./tmp/stdout.numpy.python.txt
+  time ./tmp/compile.python.numpy-linux.sh >& ./tmp/stdout.numpy.python.txt
 fi
 
 #  qt
 if [[ $SV_SUPER_OPTIONS == *BUILD_QT* ]]; then
   echo "BUILD_QT"
-  ./tmp/compile.make.qt.gcc.sh >& ./tmp/stdout.qt.txt
+  time ./tmp/compile.make.qt.gcc.sh >& ./tmp/stdout.qt.txt
 fi
 
 # freetype
 if [[ $SV_SUPER_OPTIONS == *BUILD_FREETYPE* ]]; then
   echo "BUILD_FREETYPE"
-  ./tmp/compile.cmake.freetype.gcc.sh >& ./tmp/stdout.freetype.gcc.txt
+  time ./tmp/compile.cmake.freetype.gcc.sh >& ./tmp/stdout.freetype.gcc.txt
 fi
 
 # gdcm
 if [[ $SV_SUPER_OPTIONS == *BUILD_GDCM* ]]; then
   echo "BUILD_GDCM"
-  ./tmp/compile.cmake.gdcm.gcc.sh >& ./tmp/stdout.gdcm.gcc.txt
+  time ./tmp/compile.cmake.gdcm.gcc.sh >& ./tmp/stdout.gdcm.gcc.txt
 fi
 
 # vtk
 if [[ $SV_SUPER_OPTIONS == *BUILD_VTK* ]]; then
   echo "BUILD_VTK"
-  ./tmp/compile.cmake.vtk.gcc.sh >& ./tmp/stdout.vtk.gcc.txt
+  time ./tmp/compile.cmake.vtk.gcc.sh >& ./tmp/stdout.vtk.gcc.txt
 fi
 
 # itk
 if [[ $SV_SUPER_OPTIONS == *BUILD_ITK* ]]; then
   echo "BUILD_ITK"
-  ./tmp/compile.cmake.itk.gcc.sh >& ./tmp/stdout.itk.gcc.txt
+  time ./tmp/compile.cmake.itk.gcc.sh >& ./tmp/stdout.itk.gcc.txt
 fi
 
 # opencascade
 if [[ $SV_SUPER_OPTIONS == *BUILD_OPENCASCADE* ]]; then
   echo "BUILD_OPENCASCADE"
-  ./tmp/compile.cmake.opencascade.gcc.sh >& ./tmp/stdout.opencascade.gcc.txt
+  time ./tmp/compile.cmake.opencascade.gcc.sh >& ./tmp/stdout.opencascade.gcc.txt
 fi
 
 # mmg
 if [[ $SV_SUPER_OPTIONS == *BUILD_MMG* ]]; then
   echo "BUILD_MMG"
-  ./tmp/compile.cmake.mmg.gcc.sh >& ./tmp/stdout.mmg.gcc.txt
+  time ./tmp/compile.cmake.mmg.gcc.sh >& ./tmp/stdout.mmg.gcc.txt
 fi
 
 # mitk
 if [[ $SV_SUPER_OPTIONS == *BUILD_MITK* ]]; then
   echo "BUILD_MITK"
-  ./tmp/compile.cmake.mitk.gcc.sh >& ./tmp/stdout.mitk.gcc.txt
-  ./tmp/post-install-mitk-linux.sh >& ./tmp/stdout.post-install-mitk-linux.txt
+  time ./tmp/compile.cmake.mitk.gcc.sh >& ./tmp/stdout.mitk.gcc.txt
+  echo "POST_INSTALL_MITK"
+  time ./tmp/post-install-mitk-linux.sh >& ./tmp/stdout.post-install-mitk-linux.txt
 fi
 
 #
 # create tar files for distrution
 #
 
-source ./tmp/create-archives-all.gcc.sh >& ./tmp/stdout.create-archives-all.gcc.txt
+time source ./tmp/create-archives-all.gcc.sh >& ./tmp/stdout.create-archives-all.gcc.txt
 
-source ./tmp/tar-to-zip-all.gcc.sh >& ./tmp/stdout.tar-to-zip-all.gcc.txt
+time source ./tmp/tar-to-zip-all.gcc.sh >& ./tmp/stdout.tar-to-zip-all.gcc.txt
 
