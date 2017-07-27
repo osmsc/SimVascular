@@ -149,10 +149,10 @@ MITK_LIBS += \
            $(LIBFLAG)MitkSurfaceInterpolation$(LIBLINKEXT) \
            $(LIBFLAG)PythonQt$(LIBLINKEXT) \
            $(LIBFLAG)tinyxml$(LIBLINKEXT) \
-           $(LIBFLAG)PocoFoundation$(LIBLINKEXT) \
-           $(LIBFLAG)PocoJSON$(LIBLINKEXT) \
-           $(LIBFLAG)PocoNet$(LIBLINKEXT) \
-           $(LIBFLAG)PocoXML$(LIBLINKEXT) \
-           $(LIBFLAG)PocoZip$(LIBLINKEXT) \
-           $(LIBFLAG)PocoUtil$(LIBLINKEXT) \
+           $(LIBFLAG)PocoFoundationd$(LIBLINKEXT) \
+           $(LIBFLAG)PocoJSONd$(LIBLINKEXT) \
+           $(LIBFLAG)PocoNetd$(LIBLINKEXT) \
+           $(LIBFLAG)PocoXMLd$(LIBLINKEXT) \
+           $(LIBFLAG)PocoZipd$(LIBLINKEXT) \
+           $(LIBFLAG)PocoUtild$(LIBLINKEXT) \
            $(LIBFLAG)CppMicroServices$(LIBLINKEXT)

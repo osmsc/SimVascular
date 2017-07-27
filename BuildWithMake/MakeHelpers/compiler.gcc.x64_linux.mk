@@ -8,7 +8,7 @@ ifeq ($(CLUSTER), x64_linux)
 ifeq ($(MAKE_FULLY_OPTIMIZED),1)
     OPT_FLAGS       = -O3 -fPIC
     DEBUG_FLAGS     =
-    LINK_EXE        = $(CXX) -o
+    LINK_EXE        = $(CXX) -Wl,--as-needed -o
 else
   ifeq ($(MAKE_OPTIMIZED),1)
     DEBUG_FLAGS     =

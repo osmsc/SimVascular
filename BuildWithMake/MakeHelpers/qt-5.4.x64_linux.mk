@@ -38,7 +38,6 @@ endif
     QT_LIBS =    $(LIBPATH_COMPILER_FLAG)$(QT_LIBDIRS) \
       $(LIBFLAG)Qt5Sql$(LIBLINKEXT) \
       $(LIBFLAG)Qt5WebKitWidgets$(LIBLINKEXT) \
-      $(LIBFLAG)Qt5WebView$(LIBLINKEXT) \
       $(LIBFLAG)Qt5Network$(LIBLINKEXT) \
       $(LIBFLAG)Qt5Gui$(LIBLINKEXT) \
       $(LIBFLAG)Qt5Qml$(LIBLINKEXT) \
@@ -51,7 +50,10 @@ endif
       $(LIBFLAG)Qt5Gui$(LIBLINKEXT) \
       $(LIBFLAG)Qt5Concurrent$(LIBLINKEXT) \
       $(LIBFLAG)Qt5Core$(LIBLINKEXT) \
-      $(LIBFLAG)Qt5Quick$(LIBLINKEXT)
+      $(LIBFLAG)Qt5Quick$(LIBLINKEXT) \
+      $(LIBFLAG)icui18n$(LIBLINKEXT) \
+      $(LIBFLAG)icuuc$(LIBLINKEXT) \
+      $(LIBFLAG)icudata$(LIBLINKEXT)
     QT_SO_PATH=$(QT_TOP_DIR)/lib
     QT_PLUGIN_PATH=$(QT_TOP_DIR)/plugins
 endif

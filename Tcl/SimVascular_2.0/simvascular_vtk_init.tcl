@@ -43,7 +43,19 @@ if {($SV_RELEASE_BUILD != 0) && ($tcl_platform(platform) == "windows")} {
   } elseif {[llength $not_loaded] > 0 && [llength $loaded] == 0} {
     puts [format "  %-12s %s" "TclVtk:" Shared Libs]
     set auto_path "$auto_path $env(TCLLIBPATH)"
-    package require vtk
+    set not_loaded {}
+    set loaded {}
+    #package require vtk
+    foreach kit $all_vtk_kits {
+      #set myfn [file join $simvascular_home vtk${kit}TCL-6.2.dll]
+      if [catch {load libvtk${kit}TCL-6.2.so vtk${kit}TCL} msg] {
+        puts "msg ($kit): $msg"
+        lappend not_loaded vtk${kit}TCL
+      } else {
+        lappend loaded vtk${kit}TCL
+      }
+    }
+    puts [format "  %-12s %s" "TclVtk:" "Dynamic Libs (not_loaded: [llength $not_loaded])"]
   } else {
     puts [format "  %-12s %s" "TclVtk:" Static Libs]
   }

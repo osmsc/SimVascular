@@ -55,6 +55,11 @@ ifneq ($(CLUSTER),x64_cygwin)
   endif
 endif
 
+ifeq ($(SV_USE_MITK),1)
+    HDRS    += simvascularMitkApp.h
+    CXXSRCS += simvascularMitkApp.cxx
+endif
+
 ifeq ($(SV_STATIC_BUILD),1)  
 
   COPIED_CXXSRCS += ../Common/Geometry/cv_geom_init.cxx \
@@ -201,7 +206,7 @@ endif
 
 LFLAGS += $(SVLIBFLAG)$(SV_LIB_MESH_NAME)$(LIBLINKEXT)
 
-ifeq ($(SV_USE_QT_GUI),1)
+ifeq ($(SV_USE_QT_GUI_SKIP),1)
 LFLAGS +=  \
           $(SVLIBFLAG)$(SV_LIB_MODULE_COMMON_NAME)$(LIBLINKEXT) \
           $(SVLIBFLAG)$(SV_LIB_MODULE_MODEL_NAME)$(LIBLINKEXT) \
@@ -213,20 +218,16 @@ LFLAGS +=  \
           $(SVLIBFLAG)$(SV_PLUGIN_PATHPLANNING_NAME)$(LIBLINKEXT) \
           $(SVLIBFLAG)$(SV_PLUGIN_PROJECTDATANODES_NAME)$(LIBLINKEXT) \
           $(SVLIBFLAG)$(SV_PLUGIN_PROJECTMANAGER_NAME)$(LIBLINKEXT) \
-          $(SVLIBFLAG)$(SV_PLUGIN_SEGMENTATION_NAME)$(LIBLINKEXT) \
+          $(SVLIBFLAG)$(SV_PLUGIN_SEGMENTATION_NAME)$(LIBLINKEXT)
+endif
+
+LFLAGS +=  \
           $(SVLIBFLAG)$(SV_LIB_ITK_LSET_NAME)$(LIBLINKEXT) \
           $(SVLIBFLAG)$(SV_LIB_REPOSITORY_NAME)$(LIBLINKEXT) \
           $(SVLIBFLAG)$(SV_LIB_GEOM_NAME)$(LIBLINKEXT) \
           $(SVLIBFLAG)$(SV_LIB_UTILS_NAME)$(LIBLINKEXT) \
+          $(SVLIBFLAG)$(SV_LIB_SOLID_NAME)$(LIBLINKEXT) \
           $(SVLIBFLAG)$(SV_LIB_GLOBALS_NAME)$(LIBLINKEXT)
-#  ifneq ($(SV_USE_SHARED),1)
-#    LFLAGS += $(SVLIBFLAG)_simvascular_qtcode$(LIBLINKEXT)
-#  endif
-
-# if we want to modify apputil, uncomment here!
-#LFLAGS += $(SVLIBFLAG)_simvascular_qtgui_module_apputil$(LIBLINKEXT) \
-
-endif
 
 LFLAGS +=  $(SVLIBFLAG)$(SV_LIB_VTKSVCOMMON_NAME)$(LIBLINKEXT) \
            $(SVLIBFLAG)$(SV_LIB_VTKSVFILTERS_NAME)$(LIBLINKEXT) \
@@ -236,34 +237,13 @@ LFLAGS +=  $(SVLIBFLAG)$(SV_LIB_VTKSVCOMMON_NAME)$(LIBLINKEXT) \
            $(SVLIBFLAG)$(SV_LIB_VTKSVPARAMETERIZATION_NAME)$(LIBLINKEXT)
 
 # need to explicitly add in globals for executable
-ifeq ($(SV_USE_GLOBALS_SHARED),1)
-  LFLAGS += $(SVLIBFLAG)$(SV_LIB_GLOBALS_NAME)$(LIBLINKEXT)
-else
-  LFLAGS += $(SVLIBFLAG)$(SV_LIB_GLOBALS_NAME)$(LIBLINKEXT)
-endif
+LFLAGS += $(SVLIBFLAG)$(SV_LIB_GLOBALS_NAME)$(LIBLINKEXT)
 
 SRCS	= $(CXXSRCS) $(foreach name,$(COPIED_CXXSRCS),$(lastword $(subst /, ,$(name))))
 
 DEPS	= $(SRCS:.cxx=.d)
 
 OBJS    = $(addprefix $(BUILD_DIR)/,$(SRCS:.cxx=.$(OBJECTEXT)))
-
-### nate: why did I include this, for static libs maybe?
-#ifeq ($(SV_USE_MITK),1)
-#OBJS    += \
-#../Modules/Common/$(BUILD_DIR)/us_init.$(OBJECTEXT) \
-#../Modules/Model/$(BUILD_DIR)/us_init.$(OBJECTEXT) \
-#../Modules/Path/$(BUILD_DIR)/us_init.$(OBJECTEXT) \
-#../Modules/ProjectManagement/$(BUILD_DIR)/us_init.$(OBJECTEXT) \
-#../Modules/QtAppBase/$(BUILD_DIR)/us_init.$(OBJECTEXT) \
-#../Modules/QtWidgets/$(BUILD_DIR)/us_init.$(OBJECTEXT) \
-#../Modules/Segmentation/$(BUILD_DIR)/us_init.$(OBJECTEXT)
-#endif
-
-# only for static case?
-#ifeq ($(SV_USE_MITK),1)
-#   OBJS += $(BUILD_DIR)/sv-cpp-resources.$(OBJECTEXT)
-#endif
 
 TARGET_EXE_FULL = $(TOP)/Bin/simvascular-$(CXX_COMPILER_VERSION)-$(FORTRAN_COMPILER_VERSION).exe
 TARGET_EXE = $(TOP)/Bin/simvascular.exe
@@ -275,31 +255,6 @@ static: pre directories $(TARGET_EXE_FULL)
 moc:
 	$(foreach name,$(HDRS),$(shell $(QT_MOC_PARSER) $(QT_DEFS) $(QT_MOC_INCDIRS) $(EXTRA_MOC_INCDIRS) $(name) -o moc_$(basename $(notdir $(name))).cxx))
 
-# only for static case
-$(BUILD_DIR)/sv-cpp-resources.$(OBJECTEXT):
-	-rm -Rf ./static_cpp_resources
-	-mkdir -p ./static_cpp_resources
-	-cp -Rf ../Modules/Model/resource ./static_cpp_resources/svModel
-	-cp -Rf ../Modules/Path/resource ./static_cpp_resources/svPath
-	-cp -Rf ../Modules/Segmentation/resource ./static_cpp_resources/svSegmentation
-	-cd ./static_cpp_resources;zip -r res_0.zip svModel/ svPath/ svSegmentation/
-ifeq ($(CLUSTER), x64_cygwin)
-	-echo "#define US_RESOURCE      200" >> ./static_cpp_resources/sv-cpp-resources.rc
-	-echo "#define IDR_US_RESOURCE  101" >> ./static_cpp_resources/sv-cpp-resources.rc
-	-echo "IDR_US_RESOURCE US_RESOURCE res_0.zip" >> ./static_cpp_resources/sv-cpp-resources.rc
-	-cd ./static_cpp_resources;rc /fo sv-cpp-resources.res sv-cpp-resources.rc
-	-cd ./static_cpp_resources;cvtres /MACHINE:X64 /OUT:../$(BUILD_DIR)/sv-cpp-resources.obj sv-cpp-resources.res
-endif
-ifeq ($(CLUSTER), x64_linux)
-	-cd ./static_cpp_resources;ld -o ../$(BUILD_DIR)/sv-cpp-resources.o -r -b binary res_0.zip
-	-cd ./static_cpp_resources;objcopy --rename-section .data=.rodata,alloc,load,readonly,data,contents ../$(BUILD_DIR)/sv-cpp-resources.o ../$(BUILD_DIR)/sv-cpp-resources.o
-endif
-ifeq ($(CLUSTER), x64_macosx)
-	-cp usCMakeResourceDependencies.cxx ./static_cpp_resources
-	-cd ./static_cpp_resources;${CXX} ${GLOBAL_CXXFLAGS} -c usCMakeResourceDependencies.cxx -o stub.o
-	-cd ./static_cpp_resources;ld -r -sectcreate __TEXT us_resources res_0.zip stub.o -o ../$(BUILD_DIR)/sv-cpp-resources.o
-endif
-
 directories:
 	-mkdir -p $(BUILD_DIR)
 
@@ -308,9 +263,9 @@ $(TARGET_EXE_FULL): $(OBJS)
 	for fn in $(basename $(TARGET_EXE)).pdb; do /bin/rm -f $$fn; done
 	for fn in $(TARGET_EXE_FULL); do /bin/rm -f $$fn; done
 	for fn in $(basename $(TARGET_EXE_FULL)).pdb; do /bin/rm -f $$fn; done
-	$(LINK_EXE)$(TARGET_EXE_FULL) $(LFLAGS) $(OBJS) \
+	$(LINK_EXE)$(TARGET_EXE_FULL) -Wl,--warn-unresolved-symbols $(LFLAGS) $(OBJS) \
         $(LFLAGS) \
-        $(VMTK_LIBS) $(VTK_LIBS) $(ITK_LIBS) $(MITK_LIBS) $(PARASOLID_LIBS) $(MESHSIM_LIBS) $(TETGEN_LIBS) $(ITK_LIBS) \
+        $(VMTK_LIBS) $(VTK_LIBS) $(MITK_LIBS) $(ITK_LIBS) $(PARASOLID_LIBS) $(MESHSIM_LIBS) $(TETGEN_LIBS) $(ITK_LIBS) \
         $(ZLIB_LIBS) $(MPICH_LIBS) $(OPENCASCADE_LIBS) $(TCLTK_LIBS) $(CXX_LIBS) \
         $(PYTHON_LIB) $(SV_GDCM_LIBS) $(QT_LIBS) $(SV_FREETYPE_LIBS) $(SV_MMG_LIBS)
 	for fn in $(TOP)/Bin/$(TARGET_EXE)*; do /bin/rm -f $$fn; done

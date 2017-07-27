@@ -5,8 +5,8 @@ EXTERNALS_BUILD_TOP=$EXTERNALS_TOP/build
 #  must have write permissions to dirs!
 #
 
-sudo mkdir -p /usr/local/sv
-sudo chmod a+rwx /usr/local/sv
+#sudo mkdir -p /usr/local/sv
+#sudo chmod a+rwx /usr/local/sv
 
 #
 # initial setup

@@ -265,9 +265,9 @@ VTK_LIBS +=     $(LIBPATH_COMPILER_FLAG)$(VTK_LIBDIRS) \
 		$(LIBFLAG)vtkverdict-6.2$(LIBLINKEXT) \
 		$(LIBFLAG)vtkzlib-6.2$(LIBLINKEXT) \
 
-ifneq ($(SV_USE_FREETYPE),1)
+#ifneq ($(SV_USE_FREETYPE),1)
   VTK_LIBS +=   $(LIBFLAG)vtkfreetype-6.2$(LIBLINKEXT)
-endif
+#endif
 
 #
 #  libraries for svPre, svPost, svSolver

@@ -35,6 +35,7 @@ sudo yum -y install pcre-devel
 sudo yum -y install git
 sudo yum -y install emacs
 sudo yum -y install dos2unix
+sudo yum -y install xterm
 
 ### used by some of the SV cmake code
 sudo yum -y install lsb-core

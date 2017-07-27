@@ -11,6 +11,10 @@ if(SV_USE_QT)
   set(CXXSRCS ${CXXSRCS} ${qt_tcl_hdr_moc})
 endif()
 
+if(SV_USE_MITK)
+  set(CXXSRCS ${CXXSRCS} simvascularMitkApp.cxx)
+endif()
+
 unset(OPTLIBS)
 
 if(NOT ${USE_SYSTEM_TCL})

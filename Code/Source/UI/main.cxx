@@ -31,14 +31,18 @@
 
 #include "SimVascular.h"
 
-#ifdef SV_USE_QT_GUI
+#ifdef SV_USE_QT
   #include <QApplication>
   #include <QDir>
   #include <QVariant>
-#include <QDebug>
+  #include <QDebug>
+  #include "qttclnotifier.h"
+#endif
+
+#ifdef SV_USE_MITK
   #include "mitkBaseApplication.h"
   #include "ctkPluginFrameworkLauncher.h"
-  #include "qttclnotifier.h"
+  #include "simvascularMitkApp.h"
 #endif
 
 #include "cvIOstream.h"
@@ -108,7 +112,7 @@ errno_t cv_getenv_s(
 
 #include "SimVascular_Init.h"
 
-#ifdef SV_USE_QT_GUI
+#ifdef SV_USE_QT
 typedef void Tcl_MainLoopProc(void);
 void SimVascularTcl_MainLoop(void) {
     QApplication::exec();
@@ -121,184 +125,9 @@ svCatchDebugger() {
     while (!debuggerPresent ); // assign debuggerPresent=1
 }
 
-#ifdef SV_USE_QT_GUI
-class simvascularApp : public mitk::BaseApplication {
-
-  public:
-
-  simvascularApp(int argc, char** argv);
-  ~simvascularApp();
-
-  protected:
-  void initializeLibraryPaths();
-
-};
-
-simvascularApp::simvascularApp(int argc, char* argv[]) : BaseApplication(argc, argv)
-{
-}
-
-simvascularApp::~simvascularApp()
-{
-}
-
-void simvascularApp::initializeLibraryPaths() {
-
-  std::cout << "\n\n *** simvascularApp: initializeLibraryPaths! *** \n\n" << std::endl << std::flush;
-
-  bool found_sv_plugin_path = false;
-
-  //
-  //  This is SV code to start using env variables and registry
-  //  to specify library paths.
-  //
-
-  // read environment variables for plugin paths
-#ifdef WIN32
-  char plugin_env[_MAX_ENV];
-  size_t requiredSize;
-  plugin_env[0]='\0';
-  requiredSize = 0;
-  getenv_s( &requiredSize, NULL, 0, "SV_PLUGIN_PATH");
-
-  if (requiredSize == 0) {
-    std::cerr << "Warning:  SV_PLUGIN_PATH doesn't exist!\n" << std::endl << std::flush;
-  } else if (requiredSize >= _MAX_ENV) {
-    std::cerr << "FATAL ERROR:  SV_PLUGIN_PATH to long!\n" << std::endl << std::flush;
-    exit(-1);
-  } else {
-    found_sv_plugin_path = true;
-    getenv_s( &requiredSize, plugin_env, requiredSize, "SV_PLUGIN_PATH" );
-    char seps[] = ";";
-    char *token;
-    token = strtok( plugin_env, seps );
-    while( token != NULL ) {
-      // While there are tokens in "string"
-      printf( " %s\n", token );
-      QString pluginPath = token;
-      ctkPluginFrameworkLauncher::addSearchPath(pluginPath);
-      std::cout << "   Adding to plugin search path (" << pluginPath.toStdString() << ")" << std::endl << std::flush;
-      // Get next token
-      token = strtok( NULL, seps );
-    }
-  }
-#else
-  char *plugin_env = getenv("SV_PLUGIN_PATH");
-  if (plugin_env == NULL) {
-    std::cerr << "Warning:  SV_PLUGIN_PATH doesn't exist!\n" << std::endl << std::flush;
-  } else {
-    found_sv_plugin_path = true;
-    char seps[] = ":";
-    char *token;
-    token = strtok( plugin_env, seps );
-    while( token != NULL ) {
-      // While there are tokens in "string"
-      printf( " %s\n", token );
-      QString pluginPath = token;
-      ctkPluginFrameworkLauncher::addSearchPath(pluginPath);
-      std::cout << "   Adding to plugin search path (" << pluginPath.toStdString() << ")" << std::endl << std::flush;
-      // Get next token
-      token = strtok( NULL, seps );
-    }
-  }
-#endif
-
-  //
-  // This is the default behavior in AppUtil for MITK.
-  //
-
-  if (!found_sv_plugin_path) {
-    QStringList suffixes;
-    QDir appDir;
-
-    suffixes << "plugins";
-#ifdef WIN32
-    suffixes << "bin/plugins";
-#ifdef CMAKE_INTDIR
-    suffixes << "bin/" CMAKE_INTDIR "/plugins";
-#endif
-#else
-    suffixes << "lib/plugins";
-#ifdef CMAKE_INTDIR
-    suffixes << "lib/" CMAKE_INTDIR "/plugins";
-#endif
-#endif
-
-#ifdef __APPLE__
-    suffixes << "../../plugins";
-#endif
-
-    // we add a couple of standard library search paths for plug-ins
-    appDir = QCoreApplication::applicationDirPath();
-
-    // walk one directory up and add bin and lib sub-dirs; this
-    // might be redundant
-    appDir.cdUp();
-
-    foreach(QString suffix, suffixes)
-    {
-      ctkPluginFrameworkLauncher::addSearchPath(appDir.absoluteFilePath(suffix));
-    }
-
-    suffixes << "plugins";
-    suffixes << "bin/plugins";
-    suffixes << "lib/plugins";
-
-    // we add a couple of standard library search paths for plug-ins
-    appDir = QCoreApplication::applicationDirPath();
-
-    foreach(QString suffix, suffixes)
-    {
-      ctkPluginFrameworkLauncher::addSearchPath(appDir.absoluteFilePath(suffix));
-      std::cout << "Adding to plugin search path (" << appDir.absoluteFilePath(suffix).toStdString() <<  ")" << std::endl << std::flush;
-    }
-
-  }
-
-  //
-  //  This code is a debugging check to make sure that all of the dll's
-  //  can be found in the search path.
-  //
-
-  QVariant pluginsToStartVariant = this->getProperty(ctkPluginFrameworkLauncher::PROP_PLUGINS);
-  QStringList pluginsToStart = pluginsToStartVariant.toStringList();
-
-  for (QStringList::iterator it =  pluginsToStart.begin();
-       it !=  pluginsToStart.end(); ++it) {
-     QString current = *it;
-     QString MypluginPath = ctkPluginFrameworkLauncher::getPluginPath(current);
-     std::cout << "  plugin (" << current.toStdString() << ")" << std::endl << std::flush;
-     std::cout << "    resolves to [" << MypluginPath.toStdString() << "]" << std::endl << std::flush;
-  }
-
-  return;
-}
-
-#endif
-
-// ----
-// main
-// ----
-
-//  Note: Static Modules don't seem to work for MITK plugins.
-//        This code should return an error for now.
-
-#ifdef SV_USE_QT_GUI
-  #ifdef QT_STATICPLUGIN
-    //Q_IMPORT_PLUGIN(...)
-  #endif
-  //#include <usModuleImport.h>
-  // seems to be missing from mitk's cppservices
-  //US_IMPORT_MODULE_RESOURCES(...)
-  #ifdef US_STATIC_MODULE
-    //US_INITIALIZE_STATIC_MODULE(...)
-    //US_INITIALIZE_IMPORT_STATIC_MODULE_RESOURCES(...)
-  #endif
-#endif
-
- FILE *simvascularstdout;
- FILE *simvascularstderr;
- bool use_qt_tcl_interp;
+FILE *simvascularstdout;
+FILE *simvascularstderr;
+bool use_qt_tcl_interp;
 
 inline bool file_exists (char* name) {
     if (FILE *file = fopen(name, "r")) {
@@ -309,7 +138,11 @@ inline bool file_exists (char* name) {
     }
 }
 
- int main( int argc, char *argv[] )
+// ----
+// main
+// ----
+
+int main( int argc, char *argv[] )
  {
 
   // default to tcl gui
@@ -742,7 +575,11 @@ RegCloseKey(hKey2);
     }
   }
 
-#ifdef SV_USE_QT_GUI
+#ifdef SV_USE_MITK
+
+  fprintf(stdout,"\n\n\ndo I get here????\n\n\n");
+  fflush(stdout);
+  exit(-1);
 
   if(use_qt_gui) {
 
