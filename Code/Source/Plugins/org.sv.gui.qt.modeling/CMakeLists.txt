@@ -5,7 +5,7 @@ set(lib org_sv_gui_qt_modeling)
 if(SV_USE_MITK_CONFIG)
   mitk_create_plugin(
     EXPORT_DIRECTIVE SV_QT_MODELING
-    EXPORTED_INCLUDE_SUFFIXES src
+    EXPORTED_INCLUDE_SUFFIXES src ../org.sv.gui.qt.segmentation/src/internal
     MODULE_DEPENDS org_sv_gui_qt_segmentation MitkQtWidgets ${OpenCASCADE_LIBRARIES} ${SV_LIB_MODULE_PATH_NAME} ${SV_LIB_MODULE_SEGMENTATION_NAME} ${SV_LIB_MODULE_MODEL_NAME} ${SV_LIB_MODULE_MESH_NAME} ${SV_LIB_MODULE_PROJECTMANAGEMENT_NAME}
   )
 else()

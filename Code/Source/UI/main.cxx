@@ -45,6 +45,8 @@
   #include "simvascularMitkApp.h"
 #endif
 
+#include "simvascularMitkApp.h"
+
 #include "cvIOstream.h"
 #include <time.h>
 #include <stdlib.h>
@@ -576,10 +578,6 @@ RegCloseKey(hKey2);
   }
 
 #ifdef SV_USE_MITK
-
-  fprintf(stdout,"\n\n\ndo I get here????\n\n\n");
-  fflush(stdout);
-  exit(-1);
 
   if(use_qt_gui) {
 

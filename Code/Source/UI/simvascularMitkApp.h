@@ -42,13 +42,8 @@
   #include "qttclnotifier.h"
 #endif
 
-#ifdef SV_USE_MITK
-  #include "mitkBaseApplication.h"
-  #include "ctkPluginFrameworkLauncher.h"
-  #include "simvascularMitkApp.h"
-#endif
-
-#ifdef SV_USE_MITK
+#include "mitkBaseApplication.h"
+#include "ctkPluginFrameworkLauncher.h"
 
 class simvascularApp : public mitk::BaseApplication {
 
@@ -61,7 +56,5 @@ class simvascularApp : public mitk::BaseApplication {
   void initializeLibraryPaths();
 
 };
-
-#endif
 
 #endif

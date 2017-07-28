@@ -29,8 +29,6 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#ifdef SV_USE_MITK
-
 #include "simvascularMitkApp.h"
 
 #include <iostream>
@@ -42,9 +40,6 @@ simvascularApp::simvascularApp(int argc, char* argv[]) : BaseApplication(argc, a
 simvascularApp::~simvascularApp()
 {
 }
-#endif
-
-#ifdef SV_USE_MITK
 
 void simvascularApp::initializeLibraryPaths() {
 
@@ -177,5 +172,3 @@ void simvascularApp::initializeLibraryPaths() {
 
   return;
 }
-
-#endif
