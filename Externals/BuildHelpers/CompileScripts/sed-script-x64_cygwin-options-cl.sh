@@ -71,14 +71,14 @@ s+REPLACEME_CC+CL+g
 s/REPLACEME_CXX/CL/g
 s/REPLACEME_TAR/tar/g
 s/REPLACEME_ZIP/zip/g
-s+REPLACEME_SV_SPECIAL_COMPILER_SCRIPT+source CygwinHelpers/msvc_2013_x64;export PATH=/cygdrive/c/Program\\ Files/doxygen/bin:/cygdrive/c/Program\\ Files/CMake/bin:$PATH+g
+s+REPLACEME_SV_SPECIAL_COMPILER_SCRIPT+export PATH=/cygdrive/c/Program\\ Files/doxygen/bin:/cygdrive/c/Program\\ Files/CMake/bin:$PATH+g
 s+REPLACEME_SV_PLATFORM+windows+g
 s+REPLACEME_SV_LIB_FILE_PREFIX++g
 s+REPLACEME_SV_LIB_FILE_EXTENSION+lib+g
 s+REPLACEME_SV_SO_FILE_EXTENSION+dll+g
 
 # note: must use devenv for mitk
-s+REPLACEME_SV_CMAKE_GENERATOR+"Visual Studio 12 2013 Win64"+g
+s+REPLACEME_SV_CMAKE_GENERATOR+"Visual Studio 14 2015 Win64"+g
 s+REPLACEME_SV_MAKE_CMD+devenv.exe+g
 s+REPLACEME_SV_MAKE_BUILD_PARAMETERS+/build REPLACEME_SV_CMAKE_BUILD_TYPE /project ALL_BUILD /projectconfig REPLACEME_SV_CMAKE_BUILD_TYPE /out ./stdout.devenv.build.txt+g
 s+REPLACEME_SV_MAKE_INSTALL_PARAMETERS+/build REPLACEME_SV_CMAKE_BUILD_TYPE /project INSTALL /projectconfig REPLACEME_SV_CMAKE_BUILD_TYPE /out ./stdout.devenv.install.txt +g
@@ -88,7 +88,7 @@ s+REPLACEME_SV_CMAKE_CMD+/cygdrive/c/Program\\ Files/CMake/bin/cmake.exe+g
 s+REPLACEME_SV_CMAKE_OBJECT_PATH_MAX+128+g
 
 s+REPLACEME_SV_OS_DIR+win+g
-s+REPLACEME_SV_COMPILER_BIN_DIR+msvc-12.5+g
+s+REPLACEME_SV_COMPILER_BIN_DIR+msvc-19.3+g
 s+REPLACEME_SV_ARCH_DIR+x64+g
 
 # swig
@@ -105,8 +105,10 @@ s+REPLACEME_SV_GDCM_MAKE_FILENAME+GDCM.sln+g
 
 # openssl (needed for python)
 
-s+REPLACEME_SV_OPENSSL_INC_DIR+C:/OpenSource/OpenSSL-Win64/include+g
-s+REPLACEME_SV_OPENSSL_LIBRARIES+"C:/OpenSource/OpenSSL-Win64/lib/VC/static/ssleay32MD.lib;C:/OpenSource/OpenSSL-Win64/lib/VC/static/libeay32MD.lib"+g
+#s+REPLACEME_SV_OPENSSL_INC_DIR+C:/cygwin64/home/nwilson/code/openssl/openssl-1.0.2l-vs2015/include64+g
+#s+REPLACEME_SV_OPENSSL_LIBRARIES+"C:/cygwin64/home/nwilson/code/openssl/openssl-1.0.2l-vs2015/lib64/libsslMD.lib;C:/cygwin64/home/nwilson/code/openssl/openssl-1.0.2l-vs2015/lib64/libcryptoMD.lib"+g
+s+REPLACEME_SV_OPENSSL_INC_DIR+C:/cygwin64/home/nwilson/code/openssl/openssl-1.0.2l-vs2015/include64+g
+s+REPLACEME_SV_OPENSSL_LIBRARIES+"C:/cygwin64/home/nwilson/code/openssl/openssl-1.0.2l-vs2015/lib64/ssleay32MD.lib;C:/cygwin64/home/nwilson/code/openssl/openssl-1.0.2l-vs2015/lib64/libeay32MD.lib"+g
 
 # python
 

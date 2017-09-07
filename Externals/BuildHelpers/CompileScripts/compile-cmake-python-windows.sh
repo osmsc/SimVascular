@@ -16,8 +16,8 @@ mkdir -p REPLACEME_SV_TOP_BLD_DIR_PYTHON
 pushd REPLACEME_SV_TOP_BLD_DIR_PYTHON
 
 REPLACEME_SV_CMAKE_CMD -G REPLACEME_SV_CMAKE_GENERATOR \
-   -DCMAKE_ASM_COMPILER:FILEPATH="C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/bin/amd64/cl.exe" \
-   -DCMAKE_ASM_MASM_COMPILER:FILEPATH="C:/Program Files (x86)/Microsoft Visual Studio 12.0/VC/bin/amd64/ml64.exe" \
+   -DCMAKE_ASM_COMPILER:FILEPATH="C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64/cl.exe" \
+   -DCMAKE_ASM_MASM_COMPILER:FILEPATH="C:/Program Files (x86)/Microsoft Visual Studio 14.0/VC/bin/amd64/ml64.exe" \
    -DCMAKE_ASM_MASM_COMPILE_OBJECT="<CMAKE_ASM_MASM_COMPILER> <FLAGS> /c /Fo <OBJECT> <SOURCE>" \
    -DBUILD_TESTING=OFF \
    -DBUILD_LIBPYTHON_SHARED=ON \

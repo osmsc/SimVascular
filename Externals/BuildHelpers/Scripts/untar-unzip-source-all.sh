@@ -43,6 +43,9 @@ if [[ $SV_SUPER_OPTIONS == *UNTAR_PYTHON* ]]; then
   mv python-2.7.11-cmakebuild ../python-2.7.11
   tar xvf Originals/python/Python-2.7.11.tgz
   mv Python-2.7.11 ../python-2.7.11
+
+  source Patches/patch-source-python-2.7.11.sh
+  
 fi
 
 # numpy
