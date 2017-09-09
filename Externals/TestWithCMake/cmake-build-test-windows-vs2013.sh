@@ -9,7 +9,9 @@ export REPLACEME_SV_CMAKE_BUILD_TYPE="RelWithDebInfo"
 export REPLACEME_SV_CMAKE_GENERATOR="Visual Studio 12 2013 Win64"
 export REPLACEME_SV_TOP_SRC_DIR_SV=`pwd`/../../Code
 export REPLACEME_SV_TOP_SRC_DIR_SV=`cygpath -m $REPLACEME_SV_TOP_SRC_DIR_SV`
-export REPLACEME_SV_EXTERN_OPEN_BIN_DIR=`cygpath -m ../../BuildWithMake/ext/bin`
+#export REPLACEME_SV_EXTERN_OPEN_BIN_DIR=`cygpath -m ../../BuildWithMake/ext/bin`
+export REPLACEME_SV_EXTERN_OPEN_BIN_DIR=C:/cygwin64/home/nwilson/gitwork/simvascular/branches/2017-08-24-cmake_config_setup/BuildWithMake/ext/bin
+
 #export REPLACEME_SV_EXTERN_OPEN_BIN_DIR=C:/cygwin64/usr/local/sv/ext/bin/msvc-12.5/x64
 
 pushd /cygdrive/c/svtest
