@@ -47,19 +47,12 @@ endforeach()
 #-----------------------------------------------------------------------------
 # Export all targets
 export(TARGETS ${SV_TARGETS} FILE "${CMAKE_BINARY_DIR}/SimVascularTargets.cmake")
-
 export(PACKAGE SimVascular)
-#-----------------------------------------------------------------------------
-
-#-----------------------------------------------------------------------------
-# Set relative path from camke dir to include dir
-file(RELATIVE_PATH SV_REL_INCLUDE_DIR "${CMAKE_INSTALL_PREFIX}/${SV_INSTALL_CMAKE_DIR}" "${CMAKE_INSTALL_PREFIX}/${SV_INSTALL_INCLUDE_DIR}")
 #-----------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------
 # BUILD TREE
 # SimVascular Configure file
-# TODO NEED TO IMPROVE INCLUDE DIRS!!!
 set(SV_CONF_INCLUDE_DIRS "${SV_INCLUDE_DIRS}")
 foreach(dir ${SV_CORE_LIBRARY_DIRS})
   list(APPEND SV_CONF_INCLUDE_DIRS ${dir})
@@ -70,6 +63,8 @@ endforeach()
 foreach(dir ${SV_PLUGIN_DIRS})
   list(APPEND SV_CONF_INCLUDE_DIRS ${dir})
 endforeach()
+set(SV_CONF_SOURCE_DIR "${SV_SOURCE_DIR}")
+set(SV_CONF_BINARY_DIR "${SV_BINARY_DIR}")
 configure_file("${SV_SOURCE_DIR}/CMake/SimVascularConfig.cmake.in" "${SV_BINARY_DIR}/SimVascularConfig.cmake" @ONLY)
 #-----------------------------------------------------------------------------
 
@@ -77,6 +72,8 @@ configure_file("${SV_SOURCE_DIR}/CMake/SimVascularConfig.cmake.in" "${SV_BINARY_
 # INSTALL TREE
 # SimVascular Configure file
 set(SV_CONF_INCLUDE_DIRS "")
+set(SV_CONF_SOURCE_DIR "")
+set(SV_CONF_BINARY_DIR "")
 configure_file("${SV_SOURCE_DIR}/CMake/SimVascularConfig.cmake.in" "${SV_BINARY_DIR}/tmp/SimVascularConfig.cmake" @ONLY)
 #-----------------------------------------------------------------------------
 
@@ -94,10 +91,6 @@ install(FILES
   "${SV_BINARY_DIR}/tmp/SimVascularConfig.cmake"
   "${SV_BINARY_DIR}/SimVascularConfigVersion.cmake"
   DESTINATION "${SV_INSTALL_CMAKE_DIR}" COMPONENT CMake)
-
-## Install the export set for use with the install-tree
-#install(EXPORT SimVascularTargets DESTINATION
-#  "${SV_INSTALL_CMAKE_DIR}" COMPONENT CMake)
 #-----------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------

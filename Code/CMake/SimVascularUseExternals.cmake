@@ -26,7 +26,6 @@
 #-----------------------------------------------------------------------------
 # File to use externals cmake to download and use sv externals
 #-----------------------------------------------------------------------------
-
 if(SimVascular_USE_FILE_INCLUDED)
   return()
 endif()
@@ -68,7 +67,7 @@ if(WIN32)
 elseif(LINUX)
   set(SV_Qt5_search_paths /opt/Qt5.4.2/5.4/gcc_64/lib/cmake/Qt5
                           /usr/local/package/Qt5.4.2/5.4/clang_64/lib/cmake/Qt5)
-  elseif(APPLE)
+elseif(APPLE)
   set(SV_Qt5_search_paths /usr/local/package/Qt5.4.2/5.4/clang_64/lib/cmake/Qt5
                           /opt/Qt5.4.2/5.4/gcc_64/lib/cmake/Qt5)
 endif()
@@ -125,20 +124,25 @@ endif()
 
 ##-----------------------------------------------------------------------------
 ## Externals!
+configure_file("${SimVascular_CMAKE_DIR}/simvascular_download_externals.sh.in" "${CMAKE_BINARY_DIR}/simvascular_download_externals.sh" @ONLY)
 set(SV_EXTERNALS_ADDITIONAL_CMAKE_ARGS "" CACHE STRING "If more options want to be provided to the sv_externals build, they can be with this string")
 list(APPEND SV_EXTERNALS_ADDITIONAL_CMAKE_ARGS -DCMAKE_MODULE_PATH:PATH="${CMAKE_MODULE_PATH}")
-execute_process(COMMAND bash "-c"
-  "${CMAKE_COMMAND} \
-  -B${CMAKE_CURRENT_BINARY_DIR}/Externals-build \
-  -H${SimVascular_EXTERNALS_DIR} \
-  -DCMAKE_CXX_COMPILER:STRING=${CMAKE_CXX_COMPILER} \
-  -DCMAKE_C_COMPILER:STRING=${CMAKE_C_COMPILER} \
-  -DCMAKE_CXX_FLAGS:STRING=\"${CMAKE_CXX_FLAGS}\" \
-  -DCMAKE_C_FLAGS:STRING=\"${CMAKE_C_FLAGS}\" \
-  -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE} \
-  -DCMAKE_MACOSX_RPATH:BOOL=ON \
-  -DQt5_DIR:PATH=${Qt5_DIR} \
-  ${SV_EXTERNALS_ADDITIONAL_CMAKE_ARGS}"
+#execute_process(COMMAND bash "-c"
+#  "${CMAKE_COMMAND} \
+#  -B${CMAKE_CURRENT_BINARY_DIR}/Externals-build \
+#  -H${SimVascular_EXTERNALS_DIR} \
+#  -DCMAKE_CXX_COMPILER:STRING=${CMAKE_CXX_COMPILER} \
+#  -DCMAKE_C_COMPILER:STRING=${CMAKE_C_COMPILER} \
+#  -DCMAKE_CXX_FLAGS:STRING=\"${CMAKE_CXX_FLAGS}\" \
+#  -DCMAKE_C_FLAGS:STRING=\"${CMAKE_C_FLAGS}\" \
+#  -DCMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE} \
+#  -DCMAKE_MACOSX_RPATH:BOOL=ON \
+#  -DQt5_DIR:PATH=${Qt5_DIR} \
+#  ${SV_EXTERNALS_ADDITIONAL_CMAKE_ARGS}"
+#  OUTPUT_VARIABLE EXTERNALS_OUTPUT
+#  RESULT_VARIABLE EXTERNALS_RESULT
+#  ERROR_VARIABLE EXTERNALS_ERROR)
+execute_process(COMMAND bash "-c" "source ${CMAKE_BINARY_DIR}/simvascular_download_externals.sh"
   OUTPUT_VARIABLE EXTERNALS_OUTPUT
   RESULT_VARIABLE EXTERNALS_RESULT
   ERROR_VARIABLE EXTERNALS_ERROR)
