@@ -36,7 +36,7 @@ include $(TOP)/include.mk
 
 DATEVAR = `date +%F`
 
-all: cxxdocs tcldocs flowsolverdocs post-build
+all: cxxdocs tcldocs post-build
 
 cxxdocs:
 	-rm -f sedscript
@@ -46,37 +46,36 @@ cxxdocs:
 	-echo "puts \"s+REPLACEME_SV_DOX_OUTPUT_DIR+[file rootname `pwd`]/htmldocs+g\"" | tclsh > sedscript
 	-echo "puts \"s+REPLACEME_SV_DOX_INPUT_DIR+[file rootname `pwd`]/../../Code+g\"" | tclsh >> sedscript
 	-echo "puts \"s+REPLACEME_SV_PROJECT_NUMBER+${DATEVAR}+g\"" | tclsh >> sedscript
+	-echo "s+REPLACEME_SV_DOX_EXCLUDE_FILES+*/.svn/* */.git/* */ThirdParty/*+g" >> sedscript
+	-echo "s+REPLACEME_SV_DOX_HTML_OUT_DIR+cxx_html+g" >> sedscript
 	-sed -f sedscript simvascular.Doxyfile > useme.Doxyfile
 	-doxygen useme.Doxyfile
+	-rm sedscript
+	-echo "puts \"s+REPLACEME_SV_DOX_OUTPUT_DIR+[file rootname `pwd`]/htmldocs+g\"" | tclsh > sedscript
+	-echo "puts \"s+REPLACEME_SV_DOX_INPUT_DIR+[file rootname `pwd`]/../../Code+g\"" | tclsh >> sedscript
+	-echo "puts \"s+REPLACEME_SV_PROJECT_NUMBER+${DATEVAR}+g\"" | tclsh >> sedscript
+	-echo "s+REPLACEME_SV_DOX_EXCLUDE_FILES+*/.svn/* */.git/* */ThirdParty/* */Modules/* */Plugins/*+g" >> sedscript
+	-echo "s+REPLACEME_SV_DOX_HTML_OUT_DIR+cxx_no_sv3_html+g" >> sedscript
+	-sed -f sedscript simvascular.Doxyfile > useme_no_sv3.Doxyfile
+	-doxygen useme_no_sv3.Doxyfile
 	-rm useme.Doxyfile
+	-rm useme_no_sv3.Doxyfile
 	-rm sedscript
 
 tcldocs:
 	-rm -f htmldocs/tcl_all_html
 	-mkdir -p htmldocs/tcl_all_html
-	-tclsh /SV15/src/autodoc/autodoc -srcdir `pwd`/../../Tcl/SimVascular_2.0 -outputdir `pwd`/htmldocs/tcl_all_html
+	-tclsh ./bin/autodoc -srcdir `pwd`/../../Tcl/SimVascular_2.0 -outputdir `pwd`/htmldocs/tcl_all_html
 	-cp styles.css `pwd`/htmldocs/tcl_all_html
 	-rm -f htmldocs/tcl_common_and_core_html
 	-rm -f -R TclCode
 	-mkdir -p htmldocs/tcl_common_and_core_html
 	-mkdir -p TclCode
-	-svn export --force $(TOP)/../Tcl/Common TclCode/Common
-	-svn export --force $(TOP)/../Tcl/SimVascular_2.0/Core TclCode/Core
-	-tclsh /SV15/src/autodoc/autodoc -srcdir `pwd`/TclCode -outputdir `pwd`/htmldocs/tcl_common_and_core_html
+	-cp -Rf $(TOP)/../Tcl/Common TclCode/Common
+	-cp -Rf $(TOP)/../Tcl/SimVascular_2.0/Core TclCode/Core
+	-tclsh ./bin/autodoc -srcdir `pwd`/TclCode -outputdir `pwd`/htmldocs/tcl_common_and_core_html
 	-cp styles.css `pwd`/htmldocs/tcl_common_and_core_html
 	-rm -f -R TclCode
-
-flowsolverdocs:
-	-rm -f sedscript
-	-rm -f useme.Doxyfile
-	-rm -f htmldocs/flowsolver_html
-	-mkdir -p htmldocs
-	-echo "puts \"s+REPLACEME_SV_DOX_OUTPUT_DIR+[file rootname `pwd`]/htmldocs+g\"" | tclsh > sedscript
-	-echo "s+REPLACEME_SV_PROJECT_NUMBER+${DATEVAR}+g" >> sedscript
-	-sed -f sedscript flowsolver.Doxyfile > useme.Doxyfile
-	-doxygen useme.Doxyfile
-	-rm useme.Doxyfile
-	-rm sedscript
 
 post-build:
 	-cp index.html htmldocs/
@@ -88,6 +87,7 @@ clean: veryclean
 veryclean:
 	if [ -e sedscript ];then /bin/rm -f sedscript;fi
 	if [ -e useme.Doxyfile ];then /bin/rm -f useme.Doxyfile;fi
+	if [ -e	useme_no_sv3.Doxyfile ]; then /bin/rm -f useme_no_sv3.Doxyfile;fi
 	if [ -e htmldocs ];then /bin/rm -Rf htmldocs;fi
 	if [ -e TclCode ];then /bin/rm -Rf TclCode;fi
 
