@@ -29,8 +29,8 @@
 set(proj MITK)
 
 # Dependencies
-set(${proj}_DEPENDENCIES "VTK" "Qt")
-#set(${proj}_DEPENDENCIES "VTK")
+#set(${proj}_DEPENDENCIES "VTK" "Qt")
+set(${proj}_DEPENDENCIES "VTK")
 
 if(SV_EXTERNALS_ENABLE_PYTHON)
   set(${proj}_DEPENDENCIES

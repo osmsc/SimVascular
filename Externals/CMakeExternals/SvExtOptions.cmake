@@ -83,8 +83,10 @@ option(SV_EXTERNALS_USE_QT "Enable QT Plugin" ON)
 # "EXTERNAL_NAME" "ENABLE_EXTERNAL" "BUILD_SHARED" "BUILD_DIR_NAME" "INSTALL_DIR_NAME"
 #-----------------------------------------------------------------------------
 # QT
+if(NOT WIN32)
 sv_externals_add_new_external(Qt 5.4.2 ON ON qt qt)
 set_property(CACHE SV_EXTERNALS_Qt_VERSION PROPERTY STRINGS "5.4.2" "5.6.0")
+endif()
 #-----------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------
@@ -109,7 +111,7 @@ sv_externals_add_new_external(TKLIB 0.6 ON ON tklib none)
 
 #-----------------------------------------------------------------------------
 # PYTHON
-sv_externals_add_new_external(PYTHON 2.7.11 ON ON python python)
+sv_externals_add_new_external(PYTHON 2.7.13 ON ON python python)
 #-----------------------------------------------------------------------------
 
 #-----------------------------------------------------------------------------

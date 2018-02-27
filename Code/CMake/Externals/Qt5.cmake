@@ -37,11 +37,13 @@ if(SV_USE_${proj})
 
     # If using toplevel dir, foce Qt_DIR to be the SV_Qt_DIR set by the
     # simvascular_add_new_external macro
+    if(NOT WIN32)
     if(SV_EXTERNALS_USE_TOPLEVEL_BIN_DIR)
       set(${proj}_DIR ${SV_${proj}_DIR}/lib/cmake/Qt5 CACHE PATH "Force ${proj} dir to externals" FORCE)
       if(WIN32)
         set(${proj}_DLL_PATH "${SV_${proj}_DIR}/bin" CACHE PATH "Force Qt DLL Path")
       endif()
+    endif()
     endif()
 
     set(SV_${proj}_COMPONENTS
