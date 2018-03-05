@@ -54,7 +54,7 @@ if [[ $SV_SUPER_OPTIONS == *WGET_QT* ]]; then
   rm -Rf qt
   mkdir -p qt
   pushd qt
-  wget $PARENT_URL/qt/qt-everywhere-opensource-src-5.4.2.tar.gz
+  wget $PARENT_URL/qt/qt-everywhere-opensource-src-5.6.0.tar.gz
   popd
 fi
 
@@ -75,7 +75,7 @@ if [[ $SV_SUPER_OPTIONS == *WGET_GDCM* ]]; then
   rm -Rf gdcm
   mkdir -p gdcm
   pushd gdcm
-  wget $PARENT_URL/gdcm/gdcm-2.6.1.tar.gz
+  wget $PARENT_URL/gdcm/gdcm-2.6.3.tar.gz
   popd
 fi
 
@@ -85,7 +85,7 @@ if [[ $SV_SUPER_OPTIONS == *WGET_VTK* ]]; then
   rm -Rf vtk
   mkdir -p vtk
   pushd vtk
-  wget $PARENT_URL/vtk/VTK-6.2.0.tar.gz
+  wget $PARENT_URL/vtk/VTK-8.0.0.tar.gz
   popd
 fi
 
@@ -95,7 +95,7 @@ if [[ $SV_SUPER_OPTIONS == *WGET_ITK* ]]; then
   rm -Rf itk
   mkdir -p itk
   pushd itk
-  wget $PARENT_URL/itk/InsightToolkit-4.7.1.tar.gz
+  wget $PARENT_URL/itk/InsightToolkit-4.12.2.tar.gz
   popd
 fi
 
@@ -105,8 +105,8 @@ if [[ $SV_SUPER_OPTIONS == *WGET_OPENCASCADE* ]]; then
   rm -Rf opencascade
   mkdir -p opencascade
   pushd opencascade
-  wget $PARENT_URL/opencascade/opencascade-7.0.0.tgz
-  wget $PARENT_URL/opencascade/Release_Notes_7.0.0.pdf
+  wget $PARENT_URL/opencascade/opencascade-7.2.0.tgz
+  wget $PARENT_URL/opencascade/Release_Notes_7.2.0.pdf
   popd
 fi
 
@@ -116,7 +116,7 @@ if [[ $SV_SUPER_OPTIONS == *WGET_MMG* ]]; then
   rm -Rf mmg
   mkdir -p mmg
   pushd mmg
-  wget $PARENT_URL/mmg/mmg-5.1.0.tar.gz
+  wget $PARENT_URL/mmg/mmg-5.3.9.tar.gz
   popd
 fi
 
@@ -126,7 +126,7 @@ if [[ $SV_SUPER_OPTIONS == *WGET_MITK* ]]; then
   rm -Rf mitk
   mkdir -p mitk
   pushd mitk
-  wget $PARENT_URL/mitk/mitk-v2016.03.0.tar.gz
+  wget $PARENT_URL/mitk/mitk-v2018.02.0.tar.gz
   popd
 fi
 
