@@ -42,6 +42,7 @@ cd ../tklib-0.6
 REPLACEME_SV_TOP_BIN_DIR_TCL/bin/tclsh8.? installer.tcl -no-gui -no-wait
 cd ../BuildHelpers
 
+REPLACEME_SV_SPECIAL_COMPILER_END_SCRIPT
 
 
 

@@ -81,6 +81,18 @@ fi
 rm -Rf zip_output_tmp
 mkdir -p zip_output_tmp
 
+# hdf5
+if [[ $SV_SUPER_OPTIONS == *ZIP_HDF5* ]]; then
+  echo "ZIP_HDF5"
+  REPLACEME_TAR -C zip_output_tmp/ -xvzf tar_output/$SV_TAR_FILE_PREFIX.REPLACEME_SV_HDF5_DIR.tar.gz
+  pushd zip_output_tmp
+  REPLACEME_ZIP -r ../zip_output/$SV_ZIP_FILE_PREFIX.REPLACEME_SV_HDF5_DIR.zip REPLACEME_SV_HDF5_DIR
+  popd
+fi
+
+rm -Rf zip_output_tmp
+mkdir -p zip_output_tmp
+
 # vtk
 if [[ $SV_SUPER_OPTIONS == *ZIP_VTK* ]]; then
   echo "ZIP_VTK"

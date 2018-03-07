@@ -26,6 +26,7 @@ if [ -z "$SV_SUPER_OPTIONS" ]; then
 #   SV_SUPER_OPTIONS="WGET_QT          UNTAR_QT          BUILD_QT          ARCHIVE_QT          ZIP_QT          $SV_SUPER_OPTIONS"
    SV_SUPER_OPTIONS="WGET_FREETYPE    UNTAR_FREETYPE    BUILD_FREETYPE    ARCHIVE_FREETYPE    ZIP_FREETYPE    $SV_SUPER_OPTIONS"
    SV_SUPER_OPTIONS="WGET_GDCM        UNTAR_GDCM        BUILD_GDCM        ARCHIVE_GDCM        ZIP_GDCM        $SV_SUPER_OPTIONS"
+   SV_SUPER_OPTIONS="WGET_HDF5        UNTAR_HDF5        BUILD_HDF5        ARCHIVE_HDF5        ZIP_HDF5        $SV_SUPER_OPTIONS"
    SV_SUPER_OPTIONS="WGET_VTK         UNTAR_VTK         BUILD_VTK         ARCHIVE_VTK         ZIP_VTK         $SV_SUPER_OPTIONS"
    SV_SUPER_OPTIONS="WGET_ITK         UNTAR_ITK         BUILD_ITK         ARCHIVE_ITK         ZIP_ITK         $SV_SUPER_OPTIONS"
    SV_SUPER_OPTIONS="WGET_OPENCASCADE UNTAR_OPENCASCADE BUILD_OPENCASCADE ARCHIVE_OPENCASCADE ZIP_OPENCASCADE $SV_SUPER_OPTIONS"
@@ -107,6 +108,13 @@ if [[ $SV_SUPER_OPTIONS == *BUILD_GDCM* ]]; then
   echo "CREATE_BUILD_SCRIPT_GDCM"
   sed -f CompileScripts/sed-script-x64_cygwin-options-cl.sh CompileScripts/compile-cmake-gdcm-generic.sh > tmp/compile.cmake.gdcm.cl.sh
   chmod a+rx ./tmp/compile.cmake.gdcm.cl.sh
+fi
+
+# hdf5
+if [[ $SV_SUPER_OPTIONS == *BUILD_HDF5* ]]; then
+  echo "CREATE_BUILD_SCRIPT_HDF5"
+  sed -f CompileScripts/sed-script-x64_cygwin-options-cl.sh CompileScripts/compile-cmake-hdf5-generic.sh > tmp/compile.cmake.hdf5.cl.sh
+  chmod a+rx ./tmp/compile.cmake.hdf5.cl.sh
 fi
 
 # vtk
@@ -204,6 +212,12 @@ fi
 if [[ $SV_SUPER_OPTIONS == *BUILD_GDCM* ]]; then
   echo "BUILD_GDCM"
   ./tmp/compile.cmake.gdcm.cl.sh >& ./tmp/stdout.gdcm.cl.txt
+fi
+
+# hdf5
+if [[ $SV_SUPER_OPTIONS == *BUILD_HDF5* ]]; then
+  echo "BUILD_HDF5"
+  ./tmp/compile.cmake.hdf5.cl.sh >& ./tmp/stdout.hdf5.cl.txt
 fi
 
 # vtk

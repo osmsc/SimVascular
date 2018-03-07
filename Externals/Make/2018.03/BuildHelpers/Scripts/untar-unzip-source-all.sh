@@ -77,6 +77,16 @@ if [[ $SV_SUPER_OPTIONS == *UNTAR_GDCM* ]]; then
   mv gdcm-2.6.3 ..
 fi
 
+#  hdf5
+if [[ $SV_SUPER_OPTIONS == *UNTAR_HDF5* ]]; then
+  echo "UNTAR_HDF5"
+  rm -Rf ../hdf5-1.10.1
+  #  unzip Originals/hdf5/CMake-hdf5-1.10.1.zip
+  #  mv CMake-hdf5-1.10.1 ../hdf5-1.10.1
+  tar xvf Originals/hdf5/hdf5-1.10.1.tar.gz
+  mv hdf5-1.10.1 ..
+fi
+
 # vtk
 if [[ $SV_SUPER_OPTIONS == *UNTAR_VTK* ]]; then
   echo "UNTAR_VTK"

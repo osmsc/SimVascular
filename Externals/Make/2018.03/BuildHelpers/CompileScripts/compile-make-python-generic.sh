@@ -16,3 +16,5 @@ make release
 make install
 make clean
 cd ../BuildHelpers
+
+REPLACEME_SV_SPECIAL_COMPILER_END_SCRIPT

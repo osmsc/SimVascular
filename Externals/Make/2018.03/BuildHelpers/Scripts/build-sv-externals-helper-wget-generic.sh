@@ -79,6 +79,17 @@ if [[ $SV_SUPER_OPTIONS == *WGET_GDCM* ]]; then
   popd
 fi
 
+# hdf5
+if [[ $SV_SUPER_OPTIONS == *WGET_HDF5* ]]; then
+  echo "WGET_HDF5"
+  rm -Rf hdf5
+  mkdir -p hdf5
+  pushd hdf5
+  #  wget $PARENT_URL/hdf5/CMake-hdf5-1.10.1.zip
+  wget $PARENT_URL/hdf5/hdf5-1.10.1.tar.gz
+  popd
+fi
+
 # vtk
 if [[ $SV_SUPER_OPTIONS == *WGET_VTK* ]]; then
   echo "WGET_VTK"

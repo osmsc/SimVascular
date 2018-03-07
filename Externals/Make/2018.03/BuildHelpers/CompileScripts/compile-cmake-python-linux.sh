@@ -55,4 +55,6 @@ echo "  REPLACEME_SV_TOP_BIN_DIR_PYTHON/bin/python2.7 \"\$1\" \"\$2\" \"\$3\" \"
 echo "fi" >> REPLACEME_SV_TOP_BIN_DIR_PYTHON/bin/python-wrapper
 chmod u+w,a+rx REPLACEME_SV_TOP_BIN_DIR_PYTHON/bin/python-wrapper
 
+REPLACEME_SV_SPECIAL_COMPILER_END_SCRIPT
+
 popd
