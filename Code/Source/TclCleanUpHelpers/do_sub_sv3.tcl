@@ -25,6 +25,7 @@ sv3gui_SplitBCWidget.ui \
 
 # ignore this one!
 #MitkCoreExports.h
+
 set module_exports_h [list \
 svCommonExports.h \
 svCommonExports.h \
@@ -38,7 +39,18 @@ svProjectManagementExports.h \
 svQtWidgetsExports.h \
 svSegmentationExports.h \
 svSimulationExports.h \
-			  ]
+			 ]
+
+set plugin_names [list \
+   org_sv_gui_qt_application \
+   org_sv_gui_qt_datamanager \
+   org_sv_gui_qt_projectmanager \
+   org_sv_gui_qt_pathplanning \
+   org_sv_gui_qt_modeling \
+   org_sv_gui_qt_segmentation \
+   org_sv_gui_qt_meshing \
+   org_sv_gui_qt_simulation \
+		 ]
 
 proc file_find {dir wildcard args} {
   #author Nathan Wilson
@@ -77,10 +89,15 @@ proc file_find {dir wildcard args} {
 
 puts "Make local copies of Plugins and Modules..."
 
-exec rm -Rf Plugins
-exec rm -Rf Modules
-exec cp -Rf ../Plugins .
-exec cp -Rf ../Modules .
+if {![file exists Plugins]} {
+    exec mv ../Plugins Plugins
+}
+if {![file exists Modules]} {
+    exec mv ../Modules Modules
+}
+
+exec rm -Rf ../Plugins
+exec rm -Rf ../Modules
 
 puts "Check for existence of headers and #defines..."
 
@@ -109,6 +126,8 @@ while {[gets $ofn line] >= 0} {
 }
 close $ofn
 
+#set directories_to_process {Modules Plugins}
+set directories_to_process {Plugins}
 
 set emacs_edit {}
 
@@ -120,7 +139,7 @@ for {set i 0} {$i < [llength $all_header_filenames]} {incr i} {
 
     # check headers
     
-    set found_file_hdr_fn [string trim [file_find {Modules Plugins} $find_me_hdr_fn]]
+    set found_file_hdr_fn [string trim [file_find $directories_to_process $find_me_hdr_fn]]
     if {$found_file_hdr_fn == ""} {
 	puts "error finding file: $find_me_hdr_fn"
     } else {
@@ -133,7 +152,7 @@ for {set i 0} {$i < [llength $all_header_filenames]} {incr i} {
 
     #check cxx files
     
-    set found_file_cxx_fn [string trim [file_find {Modules Plugins} $find_me_cxx_fn]]
+    set found_file_cxx_fn [string trim [file_find $directories_to_process $find_me_cxx_fn]]
     if {$found_file_cxx_fn == ""} {
 	puts "error finding file: $find_me_cxx_fn  (hdr: $found_file_hdr_fn)"
     } else {
@@ -147,38 +166,6 @@ for {set i 0} {$i < [llength $all_header_filenames]} {incr i} {
 
 }
 
-if {0 == 1} {
-puts "delete files to check what I'm not checking..."
-
-for {set i 0} {$i < [llength $all_header_filenames]} {incr i} {
-    
-    set find_me_hdr_fn  [lindex $all_header_filenames $i]
-    set find_me_cxx_fn  [lindex $all_cxx_filenames $i]
-    set find_me_defines [lindex $all_pound_defines $i]
-
-    # check headers
-    
-    set found_file_hdr_fn [string trim [file_find {Modules Plugins} $find_me_hdr_fn]]
-    if {$found_file_hdr_fn == ""} {
-	puts "error finding file: $find_me_hdr_fn"
-    } else {
-	#puts "found file: $found_file_hdr_fn"
-	exec rm -f $found_file_hdr_fn
-    }
-
-    #check cxx files
-    
-    set found_file_cxx_fn [string trim [file_find {Modules Plugins} $find_me_cxx_fn]]
-    if {$found_file_cxx_fn == ""} {
-	puts "error finding file: $find_me_cxx_fn  (hdr: $found_file_hdr_fn)"
-    } else {
-	#puts "found file: $found_file_cxx_fn"
-        exec rm -f $found_file_cxx_fn
-    }
-
-}
-}
-
 # replace header filenames and #defines
 
 exec rm -f sed-replace-stubby.txt
@@ -188,9 +175,9 @@ foreach me $module_exports_h {
     puts $ofn "s+[file rootname $me]\\.h+PROTECT_ME_[string toupper [string range [file rootname $me] 2 end]]+g"
 }
 
-foreach uifn $ui_files {
-    puts $ofn "s+Ui::sv[string range [file rootname $uifn] 7 end]+PROTECT_ME_UI_[string toupper sv[string range [file rootname $uifn] 7 end]]+g"
-}
+#foreach uifn $ui_files {
+#    puts $ofn "s+Ui::sv[string range [file rootname $uifn] 7 end]+PROTECT_ME_UI_[string toupper sv[string range [file rootname $uifn] 7 end]]+g"
+#}
 
 foreach funcname [lsort -dictionary $functions_to_replace] {
     puts $ofn "s+$funcname+sv3gui[string range $funcname 2 end]+g"
@@ -200,53 +187,68 @@ foreach me $module_exports_h {
     puts $ofn "s+PROTECT_ME_[string toupper [string range [file rootname $me] 2 end]]+[file rootname $me]\\.h+g"
 }
 
-foreach uifn $ui_files {
-    puts $ofn "s+PROTECT_ME_UI_[string toupper sv[string range [file rootname $uifn] 7 end]]+Ui::sv[string range [file rootname $uifn] 7 end]+g"
-}
+#foreach uifn $ui_files {
+#    puts $ofn "s+PROTECT_ME_UI_[string toupper sv[string range [file rootname $uifn] 7 end]]+Ui::sv[string range [file rootname $uifn] 7 end]+g"
+#}
 
 close $ofn
 
-exec rm -Rf sv3gui
-exec mkdir sv3gui
-
-foreach fn [file_find {Modules Plugins} *.h] {
+foreach fn [file_find $directories_to_process *.h] {
 
     set newfn [file tail $fn]
     puts "working on fn: $fn  ($newfn)"
-    exec mkdir -p sv3gui/[file dirname $fn]
-    exec sed -f sed-replace-stubby.txt $fn > sv3gui/[file dirname $fn]/$newfn
-    catch {exec d2u sv3gui/[file dirname $fn]/$newfn}
+    exec mkdir -p ../[file dirname $fn]
+    exec sed -f sed-replace-stubby.txt $fn > ../[file dirname $fn]/$newfn
+    catch {exec d2u ../[file dirname $fn]/$newfn}
 
 }
 
-foreach fn [file_find {Modules Plugins} *.cxx] {
+foreach fn [file_find $directories_to_process plugin.xml] {
 
     set newfn [file tail $fn]
     puts "working on fn: $fn  ($newfn)"
-    exec mkdir -p sv3gui/[file dirname $fn]
-    exec sed -f sed-replace-stubby.txt $fn > sv3gui/[file dirname $fn]/$newfn
-    catch {exec d2u sv3gui/[file dirname $fn]/$newfn}
+    exec mkdir -p ../[file dirname $fn]
+    exec sed -f sed-replace-stubby.txt $fn > ../[file dirname $fn]/$newfn
+    catch {exec d2u ../[file dirname $fn]/$newfn}
 
 }
 
-#foreach fn [file_find {Plugins} *.ui] {
-#}
+foreach fn [file_find $directories_to_process *.cxx] {
 
-foreach fn [file_find {Modules Plugins} *] {
+    set newfn [file tail $fn]
+    puts "working on fn: $fn  ($newfn)"
+    exec mkdir -p ../[file dirname $fn]
+    exec sed -f sed-replace-stubby.txt $fn > ../[file dirname $fn]/$newfn
+    catch {exec d2u ../[file dirname $fn]/$newfn}
+
+}
+
+foreach fn [file_find $directories_to_process *.ui] {
+
+    set newfn [file tail $fn]
+    puts "working on fn: $fn  ($newfn)"
+    exec mkdir -p ../[file dirname $fn]
+    exec sed -f sed-replace-stubby.txt $fn > ../[file dirname $fn]/$newfn
+    catch {exec d2u ../[file dirname $fn]/$newfn}
+
+}
+
+foreach fn [file_find $directories_to_process *] {
 
     if [file isdirectory $fn] continue 
     if {[file extension $fn] == ".h"} continue
-#    if {[file extension $fn] == ".ui"} continue
+    if {[file extension $fn] == ".ui"} continue
     if {[file extension $fn] == ".cxx"} continue
+    if {[file tail $fn] == "plugin.xml"} continue
    
     set newfn [file tail $fn]
     puts "copying fn: $fn  ($newfn)"
-    exec mkdir -p sv3gui/[file dirname $fn]
-    exec cp $fn sv3gui/[file dirname $fn]/$newfn
+    exec mkdir -p ../[file dirname $fn]
+    exec cp $fn ../[file dirname $fn]/$newfn
 
 }
 
 # need to manually copy these three unaltered files
-exec cp Plugins/org.sv.gui.qt.datamanager/src/internal/svberrySingleNodeSelection.cxx sv3gui/Plugins/org.sv.gui.qt.datamanager/src/internal/svberrySingleNodeSelection.cxx
-exec cp Plugins/org.sv.gui.qt.datamanager/src/internal/svberrySingleNodeSelection.h sv3gui/Plugins/org.sv.gui.qt.datamanager/src/internal/svberrySingleNodeSelection.h
-exec cp Plugins/org.sv.gui.qt.datamanager/src/internal/svmitkIContextMenuAction.h sv3gui/Plugins/org.sv.gui.qt.datamanager/src/internal/svmitkIContextMenuAction.h
+exec cp Plugins/org.sv.gui.qt.datamanager/src/internal/svberrySingleNodeSelection.cxx ../Plugins/org.sv.gui.qt.datamanager/src/internal/svberrySingleNodeSelection.cxx
+exec cp Plugins/org.sv.gui.qt.datamanager/src/internal/svberrySingleNodeSelection.h ../Plugins/org.sv.gui.qt.datamanager/src/internal/svberrySingleNodeSelection.h
+exec cp Plugins/org.sv.gui.qt.datamanager/src/internal/svmitkIContextMenuAction.h ../Plugins/org.sv.gui.qt.datamanager/src/internal/svmitkIContextMenuAction.h
