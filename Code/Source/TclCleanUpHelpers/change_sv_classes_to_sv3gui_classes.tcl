@@ -99,13 +99,15 @@ if {![file exists Modules]} {
 exec rm -Rf ../Plugins
 exec rm -Rf ../Modules
 
+exec mkdir tmp
+
 puts "Check for existence of headers and #defines..."
 
 set all_header_filenames {}
 set all_cxx_filenames {}
 set all_pound_defines {}
 
-set ofn [open all-sv-to-replace-sorted.txt r]
+set ofn [open all-sv-classes-to-replace.txt r]
 while {[gets $ofn line] >= 0} {
     set line [string trim $line]
     if {$line != ""} {
@@ -116,7 +118,7 @@ while {[gets $ofn line] >= 0} {
 }
 close $ofn
 
-set ofn [open all-sv-to-replace-sorted-stubby.txt r]
+set ofn [open all-sv-classes-to-replace-stubs.txt r]
 set functions_to_replace {}
 while {[gets $ofn line] >= 0} {
     set line [string trim $line]
@@ -126,8 +128,8 @@ while {[gets $ofn line] >= 0} {
 }
 close $ofn
 
-#set directories_to_process {Modules Plugins}
-set directories_to_process {Plugins}
+set directories_to_process {Modules Plugins}
+#set directories_to_process {Plugins}
 
 set emacs_edit {}
 
@@ -168,28 +170,27 @@ for {set i 0} {$i < [llength $all_header_filenames]} {incr i} {
 
 # replace header filenames and #defines
 
-exec rm -f sed-replace-stubby.txt
-set ofn [open sed-replace-stubby.txt w]
+exec rm -f tmp/sed-replace-stubs.txt
+set ofn [open tmp/sed-replace-stubs.txt w]
 
 foreach me $module_exports_h {
     puts $ofn "s+[file rootname $me]\\.h+PROTECT_ME_[string toupper [string range [file rootname $me] 2 end]]+g"
 }
 
-#foreach uifn $ui_files {
-#    puts $ofn "s+Ui::sv[string range [file rootname $uifn] 7 end]+PROTECT_ME_UI_[string toupper sv[string range [file rootname $uifn] 7 end]]+g"
+#foreach funcname [lsort -dictionary $functions_to_replace] {
+#    puts $ofn "s+$funcname+sv3gui::[string range $funcname 2 end]+g"
 #}
 
 foreach funcname [lsort -dictionary $functions_to_replace] {
     puts $ofn "s+$funcname+sv3gui[string range $funcname 2 end]+g"
 }
 
+
 foreach me $module_exports_h {
     puts $ofn "s+PROTECT_ME_[string toupper [string range [file rootname $me] 2 end]]+[file rootname $me]\\.h+g"
 }
 
-#foreach uifn $ui_files {
-#    puts $ofn "s+PROTECT_ME_UI_[string toupper sv[string range [file rootname $uifn] 7 end]]+Ui::sv[string range [file rootname $uifn] 7 end]+g"
-#}
+#puts $ofn "s+::sv3gui::+::+g"
 
 close $ofn
 
@@ -198,7 +199,7 @@ foreach fn [file_find $directories_to_process *.h] {
     set newfn [file tail $fn]
     puts "working on fn: $fn  ($newfn)"
     exec mkdir -p ../[file dirname $fn]
-    exec sed -f sed-replace-stubby.txt $fn > ../[file dirname $fn]/$newfn
+    exec sed -f tmp/sed-replace-stubs.txt $fn > ../[file dirname $fn]/$newfn
     catch {exec d2u ../[file dirname $fn]/$newfn}
 
 }
@@ -208,7 +209,7 @@ foreach fn [file_find $directories_to_process plugin.xml] {
     set newfn [file tail $fn]
     puts "working on fn: $fn  ($newfn)"
     exec mkdir -p ../[file dirname $fn]
-    exec sed -f sed-replace-stubby.txt $fn > ../[file dirname $fn]/$newfn
+    exec sed -f tmp/sed-replace-stubs.txt $fn > ../[file dirname $fn]/$newfn
     catch {exec d2u ../[file dirname $fn]/$newfn}
 
 }
@@ -218,7 +219,7 @@ foreach fn [file_find $directories_to_process *.cxx] {
     set newfn [file tail $fn]
     puts "working on fn: $fn  ($newfn)"
     exec mkdir -p ../[file dirname $fn]
-    exec sed -f sed-replace-stubby.txt $fn > ../[file dirname $fn]/$newfn
+    exec sed -f tmp/sed-replace-stubs.txt $fn > ../[file dirname $fn]/$newfn
     catch {exec d2u ../[file dirname $fn]/$newfn}
 
 }
@@ -228,7 +229,7 @@ foreach fn [file_find $directories_to_process *.ui] {
     set newfn [file tail $fn]
     puts "working on fn: $fn  ($newfn)"
     exec mkdir -p ../[file dirname $fn]
-    exec sed -f sed-replace-stubby.txt $fn > ../[file dirname $fn]/$newfn
+    exec sed -f tmp/sed-replace-stubs.txt $fn > ../[file dirname $fn]/$newfn
     catch {exec d2u ../[file dirname $fn]/$newfn}
 
 }
@@ -248,7 +249,17 @@ foreach fn [file_find $directories_to_process *] {
 
 }
 
-# need to manually copy these three unaltered files
-exec cp Plugins/org.sv.gui.qt.datamanager/src/internal/svberrySingleNodeSelection.cxx ../Plugins/org.sv.gui.qt.datamanager/src/internal/svberrySingleNodeSelection.cxx
-exec cp Plugins/org.sv.gui.qt.datamanager/src/internal/svberrySingleNodeSelection.h ../Plugins/org.sv.gui.qt.datamanager/src/internal/svberrySingleNodeSelection.h
-exec cp Plugins/org.sv.gui.qt.datamanager/src/internal/svmitkIContextMenuAction.h ../Plugins/org.sv.gui.qt.datamanager/src/internal/svmitkIContextMenuAction.h
+#
+# have to manually handle svMainWindow class since it's in UI dir!
+#
+
+set newfn ../UI/svMainWindow.cxx
+set fn ../UI/svMainWindow.cxx.org
+
+if {![file exists $fn]} {
+    exec mv $newfn $fn
+}
+exec rm -f $fn
+puts "special work on fn: $fn  ($newfn)"
+exec sed -f tmp/sed-replace-stubs.txt $fn > $newfn
+catch {exec d2u $newfn}
