@@ -32,12 +32,12 @@
 #ifndef SV4GUI_MODELOPERATION_H
 #define SV4GUI_MODELOPERATION_H
 
-#include <svModelExports.h>
+#include <sv4gui_ModelExports.h>
 
 #include "mitkOperation.h"
 #include "sv4gui_ModelElement.h"
 
-class SVMODEL_EXPORT sv4guiModelOperation : public mitk::Operation
+class SV4GUI_MODEL_EXPORT sv4guiModelOperation : public mitk::Operation
 {
 public:
 

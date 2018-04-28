@@ -32,12 +32,12 @@
 #ifndef SV4GUI_MODELELEMENTFACTORY_H
 #define SV4GUI_MODELELEMENTFACTORY_H
 
-#include <svModelExports.h>
+#include <sv4gui_ModelExports.h>
 
 #include "sv4gui_ModelElement.h"
 #include <map>
 
-class SVMODEL_EXPORT sv4guiModelElementFactory
+class SV4GUI_MODEL_EXPORT sv4guiModelElementFactory
 {
 
 public:

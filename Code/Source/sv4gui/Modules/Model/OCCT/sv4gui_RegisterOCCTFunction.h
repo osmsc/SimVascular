@@ -32,9 +32,9 @@
 #ifndef SV4GUI_REGISTEROCCTFUNCTION_H
 #define SV4GUI_REGISTEROCCTFUNCTION_H
 
-#include <svModelOCCTExports.h>
+#include <sv4gui_ModelOCCTExports.h>
 
-class SVMODELOCCT_EXPORT sv4guiRegisterOCCTFunction{
+class SV4GUI_MODELOCCT_EXPORT sv4guiRegisterOCCTFunction{
 
  public:
   

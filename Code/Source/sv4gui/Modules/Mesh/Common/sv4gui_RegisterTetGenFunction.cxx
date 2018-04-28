@@ -31,7 +31,7 @@
 
 #include "sv4gui_RegisterTetGenFunction.h"
 
-#include <svMeshExports.h>
+#include <sv4gui_MeshExports.h>
 
 #include "sv4gui_MeshFactory.h"
 #include "sv4gui_MeshTetGen.h"

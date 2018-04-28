@@ -34,7 +34,7 @@
 
 #include "SimVascular.h"
 
-#include <svCommonExports.h>
+#include <sv4gui_CommonExports.h>
 
 #include "mitkPoint.h"
 #include "mitkVector.h"
@@ -43,7 +43,7 @@
 
 #include <list>
 
-class SVCOMMON_EXPORT sv4guiXmlIOUtil
+class SV4GUI_COMMON_EXPORT sv4guiXmlIOUtil
 {
 public:
 

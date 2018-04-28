@@ -32,14 +32,14 @@
 #ifndef SV4GUI_SIMJOB_H
 #define SV4GUI_SIMJOB_H
 
-#include <svSimulationExports.h>
+#include <sv4gui_SimulationExports.h>
 
 #include <map>
 #include <sstream>
 #include <iostream>
 #include <string>
 
-class SVSIMULATION_EXPORT sv4guiSimJob
+class SV4GUI_SIMULATION_EXPORT sv4guiSimJob
 {
 
 public:

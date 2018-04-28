@@ -34,7 +34,7 @@
 
 #include "SimVascular.h"
 
-#include <svSegmentationExports.h>
+#include <sv4gui_SegmentationExports.h>
 
 #include "mitkDataNode.h"
 #include "mitkDataStorage.h"
@@ -42,7 +42,7 @@
 #include <QString>
 
 
-class SVSEGMENTATION_EXPORT sv4guiSegmentationLegacyIO
+class SV4GUI_SEGMENTATION_EXPORT sv4guiSegmentationLegacyIO
 {
 public:
 

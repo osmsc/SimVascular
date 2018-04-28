@@ -34,14 +34,14 @@
 
 #include "SimVascular.h"
 
-#include "svCommonExports.h"
+#include "sv4gui_CommonExports.h"
 
 #include <vtkSmartPointer.h>
 #include <vtkPolyData.h>
 #include <vtkImageData.h>
 #include <mitkImage.h>
 
-class SVCOMMON_EXPORT sv4guiVtkUtils
+class SV4GUI_COMMON_EXPORT sv4guiVtkUtils
 {
 public:
 

@@ -34,11 +34,11 @@
 
 #include "SimVascular.h"
 
-#include <svPathExports.h>
+#include <sv4gui_PathExports.h>
 
 #include "mitkAbstractFileIO.h"
 
-class SVPATH_EXPORT sv4guiPathIO : public mitk::AbstractFileIO
+class SV4GUI_PATH_EXPORT sv4guiPathIO : public mitk::AbstractFileIO
 {
 public:
 

@@ -31,7 +31,7 @@
 
 #include "sv4gui_RegisterOCCTFunction.h"
 
-#include <svModelOCCTExports.h>
+#include <sv4gui_ModelOCCTExports.h>
 
 #include "cv_globals.h"
 

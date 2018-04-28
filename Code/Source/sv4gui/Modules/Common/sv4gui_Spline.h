@@ -34,14 +34,14 @@
 
 #include "SimVascular.h"
 
-#include "svCommonExports.h"
+#include "sv4gui_CommonExports.h"
 
 #include <mitkPoint.h>
 #include <mitkVector.h>
 
 class sv4guiVtkParametricSpline;
 
-class SVCOMMON_EXPORT sv4guiSpline
+class SV4GUI_COMMON_EXPORT sv4guiSpline
 {
 public:
 

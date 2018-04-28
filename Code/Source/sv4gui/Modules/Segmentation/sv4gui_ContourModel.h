@@ -34,14 +34,14 @@
 
 #include "SimVascular.h"
 
-#include <svSegmentationExports.h>
+#include <sv4gui_SegmentationExports.h>
 
 #include "sv4gui_Contour.h"
 
 #include "mitkBaseData.h"
 #include "mitkPoint.h"
 
-class SVSEGMENTATION_EXPORT sv4guiContourModel : public mitk::BaseData
+class SV4GUI_SEGMENTATION_EXPORT sv4guiContourModel : public mitk::BaseData
 {
 public:
 

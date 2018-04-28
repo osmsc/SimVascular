@@ -32,13 +32,13 @@
 #ifndef SV4GUI_MESHSIM_H
 #define SV4GUI_MESHSIM_H
 
-#include <svMeshSimExports.h>
+#include <sv4gui_MeshSimExports.h>
 
 #include "sv4gui_Mesh.h"
 
 #include "cvMeshSimMeshObject.h"
 
-class SVMESHSIM_EXPORT sv4guiMeshSim : public sv4guiMesh
+class SV4GUI_MESHSIM_EXPORT sv4guiMeshSim : public sv4guiMesh
 {
 public:
 

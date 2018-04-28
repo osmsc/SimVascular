@@ -34,7 +34,7 @@
 
 #include "SimVascular.h"
 
-#include <svCommonExports.h>
+#include <sv4gui_CommonExports.h>
 
 #include <string>
 #include <vector>
@@ -81,7 +81,7 @@ static std::string sv4guiStringUtils_lower(std::string s) {
     return s;
 }
 
-class SVCOMMON_EXPORT sv4guiStringUtils
+class SV4GUI_COMMON_EXPORT sv4guiStringUtils
 {
 
  public:

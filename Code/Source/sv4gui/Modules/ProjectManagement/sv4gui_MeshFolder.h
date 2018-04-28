@@ -34,13 +34,13 @@
 
 #include "SimVascular.h"
 
-#include <svProjectManagementExports.h>
+#include <sv4gui_ProjectManagementExports.h>
 
 #include "sv4gui_DataFolder.h"
 
 #include "mitkBaseData.h"
 
-class SVPROJECTMANAGEMENT_EXPORT sv4guiMeshFolder : public sv4guiDataFolder
+class SV4GUI_PROJECTMANAGEMENT_EXPORT sv4guiMeshFolder : public sv4guiDataFolder
 {
 public:
 

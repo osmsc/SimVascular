@@ -32,14 +32,14 @@
 #ifndef SV4GUI_MODELELEMENTOCCT_H
 #define SV4GUI_MODELELEMENTOCCT_H
 
-#include <svModelOCCTExports.h>
+#include <sv4gui_ModelOCCTExports.h>
 
 #include "sv4gui_ModelElement.h"
 #include "sv4gui_ModelElementAnalytic.h"
 
 #include "cvOCCTSolidModel.h"
 
-class SVMODELOCCT_EXPORT sv4guiModelElementOCCT : public sv4guiModelElementAnalytic
+class SV4GUI_MODELOCCT_EXPORT sv4guiModelElementOCCT : public sv4guiModelElementAnalytic
 {
 public:
 
