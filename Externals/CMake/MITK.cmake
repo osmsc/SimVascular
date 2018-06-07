@@ -29,7 +29,9 @@
 set(proj MITK)
 
 # Dependencies
+if(NOT WIN32)
 set(${proj}_DEPENDENCIES "Qt")
+endif()
 
 if(SV_EXTERNALS_ENABLE_PYTHON AND SV_EXTERNALS_BUILD_MITK_WITH_PYTHON)
   set(${proj}_DEPENDENCIES

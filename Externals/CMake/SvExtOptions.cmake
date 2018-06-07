@@ -82,7 +82,10 @@ option(SV_EXTERNALS_BUILD_MITK_WITH_PYTHON "Build MITK without python" ON)
 # "EXTERNAL_NAME" "ENABLE_EXTERNAL" "BUILD_SHARED" "BUILD_DIR_NAME" "INSTALL_DIR_NAME"
 #-----------------------------------------------------------------------------
 # QT
+
+if(NOT WIN32)
 sv_externals_add_new_external(Qt ${SV_EXTERNALS_Qt_VERSION} ON ON qt qt)
+endif()
 #-----------------------------------------------------------------------------
 
 if (SV_EXTERNALS_VERSION_NUMBER VERSION_EQUAL "2018.05")

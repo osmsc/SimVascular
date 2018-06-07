@@ -66,9 +66,11 @@ if(SV_EXTERNALS_ENABLE_FREETYPE)
   set(${proj}_DEPENDENCIES
     ${${proj}_DEPENDENCIES} "FREETYPE")
 endif()
+if(NOT WIN32)
 if(SV_EXTERNALS_ENABLE_Qt)
   set(${proj}_DEPENDENCIES
     ${${proj}_DEPENDENCIES} "Qt")
+endif()
 endif()
 
 # Git info

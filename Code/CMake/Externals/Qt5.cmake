@@ -40,8 +40,19 @@ if(SV_USE_${proj})
     if(SV_EXTERNALS_USE_TOPLEVEL_BIN_DIR)
       set(${proj}_DIR ${SV_${proj}_DIR}/lib/cmake/Qt5 CACHE PATH "Force ${proj} dir to externals" FORCE)
       if(WIN32)
-        set(${proj}_DLL_PATH "${SV_${proj}_DIR}/bin" CACHE PATH "Force Qt DLL Path")
+        ##set(SV_Qt5_search_paths C:/OpenSource/Qt/Qt5.4.2/5.4/msvc2013_64_opengl/lib/cmake/Qt5
+        ##                  C:/OpenSource/Qt5.4.2/5.4/msvc2013_64_opengl/lib/cmake/Qt5
+        ##                  C:/Qt/Qt5.4.2/5.4/msvc2013_64_opengl/lib/cmake/Qt5
+	##		  C:/Qt5.4.2/5.4/msvc2013_64_opengl/lib/cmake/Qt5)
+        ##find_package(Qt5 PATHS ${SV_Qt5_search_paths} COMPONENTS ${SV_Qt5_COMPONENTS} REQUIRED)
+        ### need toplevel Qt dir path
+        ##get_filename_component(qt5_installed_prefix "${Qt5_DIR}/../../.." ABSOLUTE)
+	set(${proj}_DIR C:/OpenSource/Qt/Qt5.4.2/5.4/msvc2013_64_opengl/lib/cmake/Qt5 CACHE PATH "Force ${proj} dir to externals" FORCE)
+	set(${proj}_DLL_PATH "${${proj}_DIR}/bin" CACHE PATH "Force Qt DLL Path")
       endif()
+      #if(WIN32)
+      #  set(${proj}_DLL_PATH "${SV_${proj}_DIR}/bin" CACHE PATH "Force Qt DLL Path")
+      #endif()
     endif()
 
     set(SV_${proj}_COMPONENTS
