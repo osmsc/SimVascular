@@ -39,7 +39,7 @@
 
 #include "sv3_Spline.h"
 
-#include "mitkPoint.h"
+////#include "mitkPoint.h"
 
 #include <array>
 #include <vector>
@@ -129,7 +129,7 @@ public:
 
     void CalculateBoundingBox(double *bounds);
 
-    std::vector<PathPoint> GetExtendedPathPoints(double realBounds[6], double minSpacing, int& startingIndex){};
+    std::vector<PathPoint> GetExtendedPathPoints(double realBounds[6], double minSpacing, int& startingIndex){std::vector<PathPoint> dummy; return dummy;};
 
 protected:
 
