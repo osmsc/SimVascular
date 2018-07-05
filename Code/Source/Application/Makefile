@@ -257,9 +257,13 @@ ifneq ($(SV_STATIC_BUILD),1)
         # the tcltk and vtk dlls
 	editbin /REBASE:BASEFILE $(TARGET_EXE_FULL) ../../../BuildWithMake/Lib/$(CLUSTER)/$(CXX_COMPILER_VERSION)-$(FORTRAN_COMPILER_VERSION)*.$(SOEXT)
 endif
-endif
+endif	
 	if [ -e $(notdir $(TARGET_EXE_FULL)).pdb ];then mv $(basename $(TARGET_EXE_FULL)).pdb $(TOP)/Bin;fi
 	ln -s $(notdir $(TARGET_EXE_FULL)) $(TARGET_EXE)
+ifeq ($(CLUSTER), x64_macosx)
+	# Qt requires an explicit rpath be set on macosx
+	install_name_tool -add_rpath $(QT_LIBDIRS) $(TARGET_EXE_FULL)
+endif
 
 pre:
 	$(foreach name,$(COPIED_CXXSRCS),$(shell cp -f $(name) .))

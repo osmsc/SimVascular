@@ -32,17 +32,15 @@ MITK_MAJOR_VERSION=2018
 MITK_MINOR_VERSION=04
 MITK_PATCH_VERSION=0
 # NOTE: we don't use the patch version for MITK!
-MITK_VERSION=$(MITK_MAJOR_VERSION).$(MITK_MINOR_VERSION)
+MITK_VERSION=$(MITK_MAJOR_VERSION).$(MITK_MINOR_VERSION).$(MITK_PATCH_VERSION)
 
 MITK_BINDIR = $(OPEN_SOFTWARE_BINARIES_TOPLEVEL)/mitk-$(MITK_VERSION)
 
 MITK_US_RESOURCE_COMPILER = $(MITK_BINDIR)/bin/usResourceCompiler
 
 MITK_LIBDIRS = $(MITK_BINDIR)/lib
-#MITK_PLUGIN_DIR = $(MITK_BINDIR)/lib/plugins
-#SV_MITK_PLUGIN_PATH = $(MITK_BINDIR)/lib/plugins
-MITK_PLUGIN_DIR = $(MITK_BINDIR)/bin/plugins
-SV_MITK_PLUGIN_PATH = $(MITK_BINDIR)/bin/plugins
+MITK_PLUGIN_DIR = $(MITK_BINDIR)/lib/plugins
+SV_MITK_PLUGIN_PATH = $(MITK_BINDIR)/lib/plugins
 MITK_BINDIRS = $(MITK_BINDIR)/bin
 
 SV_MITK_SO_PATH = "$(MITK_LIBDIRS):$(MITK_BINDIRS):$(SV_MITK_PLUGIN_PATH)"
@@ -68,6 +66,7 @@ MITK_INCDIRS = \
            -I$(MITK_BINDIR)/include/mitk/ui_files \
            -I$(MITK_BINDIR)/include/mitk/AlgorithmsExt \
            -I$(MITK_BINDIR)/include/mitk/AlgorithmsExt/include \
+           -I$(MITK_BINDIR)/include/mitk/Annotation/include \
            -I$(MITK_BINDIR)/include/mitk/AppUtil/include \
            -I$(MITK_BINDIR)/include/mitk/Core \
            -I$(MITK_BINDIR)/include/mitk/Core/include \
@@ -166,7 +165,6 @@ MITK_LIBS += \
            $(LIBFLAG)CTKPluginFramework$(LIBLINKEXT) \
            $(LIBFLAG)CTKScriptingPythonCore$(LIBLINKEXT) \
            $(LIBFLAG)CTKScriptingPythonWidgets$(LIBLINKEXT) \
-           $(LIBFLAG)CTKVisualizationVTKCore$(LIBLINKEXT) \
            $(LIBFLAG)CTKWidgets$(LIBLINKEXT) \
            $(LIBFLAG)CTKXNATCore$(LIBLINKEXT) \
            $(LIBFLAG)mbilog$(LIBLINKEXT) \
@@ -174,7 +172,6 @@ MITK_LIBS += \
            $(LIBFLAG)MitkAlgorithmsExt$(LIBLINKEXT) \
            $(LIBFLAG)MitkAppUtil$(LIBLINKEXT) \
            $(LIBFLAG)MitkCore$(LIBLINKEXT) \
-           $(LIBFLAG)MitkContourModel$(LIBLINKEXT) \
            $(LIBFLAG)MitkDataTypesExt$(LIBLINKEXT) \
            $(LIBFLAG)MitkImageDenoising$(LIBLINKEXT) \
            $(LIBFLAG)MitkMapperExt$(LIBLINKEXT) \
@@ -193,3 +190,5 @@ MITK_LIBS += \
            $(LIBFLAG)PocoZip$(LIBLINKEXT) \
            $(LIBFLAG)PocoUtil$(LIBLINKEXT) \
            $(LIBFLAG)CppMicroServices$(LIBLINKEXT)
+
+MITK_LIBS += $(MITK_PLUGIN_LIBS)
