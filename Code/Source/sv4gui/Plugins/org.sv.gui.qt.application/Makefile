@@ -43,7 +43,7 @@ CXXFLAGS = $(GLOBAL_CXXFLAGS) \
 	   $(ITK_INCDIRS) \
            $(MITK_INCDIRS) $(MITK_DEFS) \
            -Dorg_sv_gui_qt_application_EXPORTS \
-           -DUS_MODULE_NAME=svApplication
+           -DUS_MODULE_NAME=org_sv_gui_qt_application
 
 HDRS	= \
   sv4gui_Application.h \

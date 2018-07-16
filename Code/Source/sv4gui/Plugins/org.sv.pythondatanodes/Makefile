@@ -43,7 +43,7 @@ CXXFLAGS = $(GLOBAL_CXXFLAGS) \
 	   $(ITK_INCDIRS) \
            $(MITK_INCDIRS) $(MITK_DEFS) \
            -Dorg_sv_pythondatanodes_EXPORTS \
-           -DUS_MODULE_NAME=svpythondatanodes
+           -DUS_MODULE_NAME=org_sv_pythondatanodes
 
 HDRS	= \
   sv4gui_Vis_init_py.h \

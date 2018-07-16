@@ -43,7 +43,7 @@ CXXFLAGS = $(GLOBAL_CXXFLAGS) \
 	   $(ITK_INCDIRS) \
            $(MITK_INCDIRS) $(MITK_DEFS) \
            -Dorg_sv_projectdatanodes_EXPORTS \
-           -DUS_MODULE_NAME=svProjectDataNodes
+           -DUS_MODULE_NAME=org_sv_projectdatanodes
 
 HDRS	= \
   sv4gui_ProjectDataNodesPluginActivator.h

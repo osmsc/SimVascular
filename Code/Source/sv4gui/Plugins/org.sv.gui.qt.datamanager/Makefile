@@ -47,7 +47,7 @@ CXXFLAGS = $(GLOBAL_CXXFLAGS) \
            $(MESHSIM_INCDIR) \
            $(PARASOLID_INCDIR) \
            -Dorg_sv_gui_qt_datamanager_EXPORTS \
-           -DUS_MODULE_NAME=svDataManager
+           -DUS_MODULE_NAME=org_sv_gui_qt_datamanager
 
 ifeq ($(SV_USE_OPENCASCADE_QT_GUI),1)
     CXXFLAGS += $(OPENCASCADE_INCDIR)

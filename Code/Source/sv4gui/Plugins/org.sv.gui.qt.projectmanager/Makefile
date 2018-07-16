@@ -43,7 +43,7 @@ CXXFLAGS = $(GLOBAL_CXXFLAGS) \
 	   $(ITK_INCDIRS) \
            $(MITK_INCDIRS) $(MITK_DEFS) \
           -Dorg_sv_gui_qt_projectmanager_EXPORTS \
-          -DUS_MODULE_NAME=svProjectManager
+          -DUS_MODULE_NAME=org_sv_gui_qt_projectmanager
 
 HDRS	=  \
   sv4gui_ProjectManagerPluginActivator.h \

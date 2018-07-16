@@ -34,8 +34,13 @@ TOP=../../../../BuildWithMake
 
 include $(TOP)/include.mk
 
-SVQTGUIEXT_DIRS = org.sv.projectdatanodes \
-		  org.sv.pythondatanodes \
+SVQTGUIEXT_DIRS = org.sv.projectdatanodes
+
+ifeq ($(SV_USE_PYTHON),1)
+  SVQTGUIEXT_DIRS += org.sv.pythondatanodes
+endif
+
+SVQTGUIEXT_DIRS += \
                   org.sv.gui.qt.projectmanager \
                   org.sv.gui.qt.datamanager \
                   org.sv.gui.qt.pathplanning \

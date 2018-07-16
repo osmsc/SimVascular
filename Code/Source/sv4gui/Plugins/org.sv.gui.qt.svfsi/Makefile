@@ -43,7 +43,7 @@ CXXFLAGS = $(GLOBAL_CXXFLAGS) \
 	   $(ITK_INCDIRS) \
            $(MITK_INCDIRS) $(MITK_DEFS) \
            -Dorg_sv_gui_qt_svfsi_EXPORTS \
-           -DUS_MODULE_NAME=sv4guiModulesvFSI
+           -DUS_MODULE_NAME=org_sv_gui_qt_svfsi
 
 HDRS	= \
     sv4gui_svFSIJobCreateAction.h \

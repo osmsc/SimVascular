@@ -81,6 +81,19 @@ void sv4guiProjectDataNodesPluginActivator::LoadModules()
     LoadLibrary("Parasolid", "lib_simvascular_module_model_parasolid");
 
     LoadLibrary("MeshSim", "lib_simvascular_module_meshsim");
+
+    LoadLibrary("sv4guiModuleCommon", "lib_simvascular_module_common");
+    LoadLibrary("sv4guiModuleImageProcessing", "lib_simvascular_module_imageprocessing");
+    LoadLibrary("sv4guiModuleMesh", "lib_simvascular_module_mesh");
+    LoadLibrary("sv4guiModuleModel", "lib_simvascular_module_model");
+    LoadLibrary("sv4guiModuleModelOCCT", "lib_simvascular_module_model_occt");
+    LoadLibrary("sv4guiModulePath", "lib_simvascular_module_path");
+    LoadLibrary("sv4guiModuleProjectManagement", "lib_simvascular_module_projectmanagement");
+    LoadLibrary("sv4guiModuleQtWidgets", "lib_simvascular_module_qtwidgets");
+    LoadLibrary("sv4guiModuleSegmentation", "lib_simvascular_module_segmentation");
+    LoadLibrary("sv4guiModuleSimulation", "lib_simvascular_module_simulation");
+    LoadLibrary("sv4guiModulesvFSI", "lib_simvascular_module_svfsi");
+    
 }
 
 void sv4guiProjectDataNodesPluginActivator::start(ctkPluginContext* context)
