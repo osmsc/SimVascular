@@ -218,6 +218,8 @@ endif
 	-$(GCP) -f $(TOP)/Lib/$(LIB_BUILD_DIR)/*simvascular_*.$(SOEXT)* $(DIST_DIR)
 	-$(GCP) -fR $(TOP)/Bin/plugins $(DIST_DIR)
 	-$(GCP) -fR $(TOP)/Bin/QtWebEngine $(DIST_DIR)
+# need to wrap this better
+	-$(GCP) -f svOneDSolver/svOneDSolver.exe $(DIST_DIR)/svOneDSolver.exe
 
 copy-sv-tcl-code:
 	-$(GMKDIR) -p $(DIST_DIR)/Tcl
