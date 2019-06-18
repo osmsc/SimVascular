@@ -32,20 +32,30 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]
 then
   export CC="gcc"
   export CXX="g++"
+  export MAKE="make --jobs=$NUM_THREADS --keep-going"
   export SV_CMAKE_BUILD_TYPE="Release"
+  export SV_CMAKE_CMD="/usr/local/bin/cmake"
+  export SV_CMAKE_GENERATOR="Unix Makefiles"
 elif [[ "$TRAVIS_OS_NAME" == "osx" ]]
 then
   export CC="clang"
   export CXX="clang++"
+  export MAKE="make --jobs=$NUM_THREADS --keep-going"
   export SV_CMAKE_BUILD_TYPE="RelWithDebInfo"
+  export SV_CMAKE_CMD="/usr/local/bin/cmake"
+  export SV_CMAKE_GENERATOR="Unix Makefiles"
+  export SV_MAKE_CMD="make -j8"
+elif [[ "$TRAVIS_OS_NAME" == "windows" ]]
+then
+#  export CC="CL"
+#  export CXX="CL"
+  export MAKE="cmake --build ."
+  export SV_CMAKE_BUILD_TYPE="RelWithDebInfo"
+  export SV_CMAKE_CMD="cmake"
+  export SV_CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
+#  export SV_CMAKE_GENERATOR_PLATFORM="x64"
+  export SV_MAKE_CMD=""
 fi
-
-#cmake
-export SV_CMAKE_CMD="/usr/local/bin/cmake"
-export SV_CMAKE_GENERATOR="Unix Makefiles"
-export SV_MAKE_CMD="make -j8"
-
-MAKE="make --jobs=$NUM_THREADS --keep-going"
 
 # Get externals
 mkdir -p $SV_EXTERNALS_BUILD_DIR
