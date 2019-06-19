@@ -34,6 +34,7 @@ then
   export CXX="g++"
   export MAKE="make --jobs=$NUM_THREADS --keep-going"
   export SV_CMAKE_BUILD_TYPE="Release"
+  export SV_CMAKE_CONFIGURATION_TYPES="Release"
   export SV_CMAKE_CMD="/usr/local/bin/cmake"
   export SV_CMAKE_GENERATOR="Unix Makefiles"
 elif [[ "$TRAVIS_OS_NAME" == "osx" ]]
@@ -41,7 +42,8 @@ then
   export CC="clang"
   export CXX="clang++"
   export MAKE="make --jobs=$NUM_THREADS --keep-going"
-  export SV_CMAKE_BUILD_TYPE="RelWithDebInfo"
+  export SV_CMAKE_BUILD_TYPE="Release"
+  export SV_CMAKE_CONFIGURATION_TYPES="Release"
   export SV_CMAKE_CMD="/usr/local/bin/cmake"
   export SV_CMAKE_GENERATOR="Unix Makefiles"
   export SV_MAKE_CMD="make -j8"
@@ -50,7 +52,8 @@ then
 #  export CC="CL"
 #  export CXX="CL"
   export MAKE="cmake --build ."
-  export SV_CMAKE_BUILD_TYPE="RelWithDebInfo"
+  export SV_CMAKE_BUILD_TYPE="Release"
+  export SV_CMAKE_CONFIGURATION_TYPES="Release"
   export SV_CMAKE_CMD="cmake"
   export SV_CMAKE_GENERATOR="Visual Studio 15 2017 Win64"
 #  export SV_CMAKE_GENERATOR_PLATFORM="x64"
@@ -65,6 +68,7 @@ pushd $SV_EXTERNALS_BUILD_DIR
 "$SV_CMAKE_CMD" \
   -G "$SV_CMAKE_GENERATOR" \
   -DCMAKE_BUILD_TYPE="$SV_CMAKE_BUILD_TYPE" \
+  -DCMAKE_CONFIGURATION_TYPES="$SV_CMAKE_CONFIGURATION_TYPES" \
   -DSV_EXTERNALS_TOPLEVEL_BIN_DIR=$SV_EXTERNALS_BIN_DIR \
   -DBUILD_TESTING:BOOL=OFF \
   -DBUILD_EXAMPLES:BOOL=OFF \
@@ -104,6 +108,7 @@ pushd $BUILD_DIR
    -G "$SV_CMAKE_GENERATOR" \
 \
    -DCMAKE_BUILD_TYPE="$SV_CMAKE_BUILD_TYPE" \
+   -DCMAKE_CONFIGURATION_TYPES="$SV_CMAKE_CONFIGURATION_TYPES" \
    -DBUILD_SHARED_LIBS=ON \
    -DBUILD_TESTING=OFF \
 \
