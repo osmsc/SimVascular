@@ -43,8 +43,9 @@ if $WITH_CMAKE; then
      source $SCRIPTS/travis_cmake_build.sh
   elif [[ "$TRAVIS_OS_NAME" == "windows" ]]
   then
-     echo "cmd /c $SCRIPTS/travis_cmake_windows.bat $SV_EXTERNALS_VERSION_NUMBER \"$SV_EXTERNALS_BUILD_DIR\" \"$SV_EXTERNALS_BIN_DIR\""
-     cmd /c $SCRIPTS/travis_cmake_windows.bat $SV_EXTERNALS_VERSION_NUMBER \"$SV_EXTERNALS_BUILD_DIR\" \"$SV_EXTERNALS_BIN_DIR\"
+     dir $CWD
+     echo "$SCRIPTS/travis_cmake_windows.bat $CWD $SV_EXTERNALS_VERSION_NUMBER \"$SV_EXTERNALS_BUILD_DIR\" \"$SV_EXTERNALS_BIN_DIR\""
+     $SCRIPTS/travis_cmake_windows.bat $CWD $SV_EXTERNALS_VERSION_NUMBER \"$SV_EXTERNALS_BUILD_DIR\" \"$SV_EXTERNALS_BIN_DIR\"
   fi
 else
   echo "Building with just make (i.e. NOT cmake!)"

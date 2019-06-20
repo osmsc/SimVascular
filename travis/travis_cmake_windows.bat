@@ -4,12 +4,15 @@ REM Test script for travis build using MSVC 2017
 if [%1]==[] goto hardcode
 if [%2]==[] goto hardcode
 if [%3]==[] goto hardcode
-  set SV_EXTERNALS_VERSION_NUMBER=%1
-  set SV_EXTERNALS_BUILD_DIR=%2
-  set SV_EXTERNALS_BIN_DIR=%3
+if [%4]==[] goto hardcode
+  set CWD=%1
+  set SV_EXTERNALS_VERSION_NUMBER=%2
+  set SV_EXTERNALS_BUILD_DIR=%3
+  set SV_EXTERNALS_BIN_DIR=%4
 goto :buildit
 
 :hardcode
+  set CWD=C:/travis
   set SV_EXTERNALS_VERSION_NUMBER=2019.06
   set SV_EXTERNALS_BUILD_DIR="C:/travis"
   set SV_EXTERNALS_BIN_DIR="C:/travis/bin"
@@ -19,7 +22,12 @@ goto :buildit
   echo SV_EXTERNALS_VERSION_NUMBER=%SV_EXTERNALS_VERSION_NUMBER%
   echo SV_EXTERNALS_BUILD_DIR=%SV_EXTERNALS_BUILD_DIR%
   echo SV_EXTERNALS_BIN_DIR=%SV_EXTERNALS_BIN_DIR%
-  
+
+  cd %CWD%
+
+  REM for debugging
+  dir
+
   set SV_EXTERNALS_USE_PREBUILT_QT=false
   
   set SV_CMAKE_BUILD_TYPE="Release"
