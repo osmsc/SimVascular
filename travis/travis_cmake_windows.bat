@@ -1,5 +1,5 @@
 REM @echo off
-REM Test script for travis build using MSVC 2017
+REM script for travis build using MSVC 2017
 
 if [%1]==[] goto hardcode
 if [%2]==[] goto hardcode
@@ -40,7 +40,7 @@ goto :buildit
 mkdir %SV_EXTERNALS_BUILD_DIR%
 mkdir %SV_EXTERNALS_BIN_DIR%
 
-cd "%SV_EXTERNALS_BUILD_DIR%
+cd %SV_EXTERNALS_BUILD_DIR%
 
 %SV_CMAKE_CMD% ^
   -G %SV_CMAKE_GENERATOR% ^
