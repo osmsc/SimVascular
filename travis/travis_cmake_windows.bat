@@ -65,4 +65,4 @@ cd %CWD%
    -DQt5_DIR:PATH=%SV_EXTERNALS_PREBUILT_QT_PATH% ^
  %CWD%
 
-%SV_CMAKE_CMD% --build %CWD% -j 6 --config Release
+%SV_CMAKE_CMD% --build %CWD% -j 2 --config Release
