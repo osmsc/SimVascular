@@ -45,8 +45,8 @@ if $WITH_CMAKE; then
   then
      echo "debugging cwd ($cwd)"
      dir $cwd
-     echo "$SCRIPTS/travis_cmake_windows.bat $cwd $SV_EXTERNALS_VERSION_NUMBER \"$SV_EXTERNALS_BUILD_DIR\" \"$SV_EXTERNALS_BIN_DIR\""
-     $SCRIPTS/travis_cmake_windows.bat $cwd $SV_EXTERNALS_VERSION_NUMBER \"$SV_EXTERNALS_BUILD_DIR\" \"$SV_EXTERNALS_BIN_DIR\"
+     echo "$SCRIPTS/travis_cmake_windows.bat $cwd $SV_EXTERNALS_VERSION_NUMBER $SV_EXTERNALS_BUILD_DIR $SV_EXTERNALS_BIN_DIR"
+     $SCRIPTS/travis_cmake_windows.bat $cwd $SV_EXTERNALS_VERSION_NUMBER $SV_EXTERNALS_BUILD_DIR $SV_EXTERNALS_BIN_DIR
   fi
 else
   echo "Building with just make (i.e. NOT cmake!)"
