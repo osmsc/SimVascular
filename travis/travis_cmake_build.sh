@@ -51,7 +51,7 @@ elif [[ "$TRAVIS_OS_NAME" == "windows" ]]
 then
 #  export CC="CL"
 #  export CXX="CL"
-  export MAKE="cmake --build ."
+  export MAKE="cmake --build . --configure Release"
   export SV_CMAKE_BUILD_TYPE="Release"
   export SV_CMAKE_CONFIGURATION_TYPES="Release"
   export SV_CMAKE_CMD="cmake"
