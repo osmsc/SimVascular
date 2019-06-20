@@ -41,14 +41,14 @@ ifeq ($(CLUSTER), x64_cygwin)
     AR              = lib -out:
 ifeq ($(MAKE_FULLY_OPTIMIZED),1)
     DEBUG_FLAGS     =
-    OPT_FLAGS       = /nologo /MD /Ox /EHsc /MP /FS
+    OPT_FLAGS       = /nologo /MD /Ox /EHsc /FS
 else
   ifeq ($(MAKE_OPTIMIZED),1)
     DEBUG_FLAGS     =
-    OPT_FLAGS       = /nologo /MD /Zi /O2 /EHsc /GS /MP /FS
+    OPT_FLAGS       = /nologo /MD /Zi /O2 /EHsc /GS /FS
   else
     OPT_FLAGS       =
-    DEBUG_FLAGS     = /nologo /MD /Zi /Od /EHsc -D_CRT_SECURE_NO_DEPRECATE /GS /GR /MP /FS
+    DEBUG_FLAGS     = /nologo /MD /Zi /Od /EHsc -D_CRT_SECURE_NO_DEPRECATE /GS /GR /FS
   endif
 endif
     SHAR            = "/cygdrive/c/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.16.27023/bin/HostX64/x64/link.exe"
