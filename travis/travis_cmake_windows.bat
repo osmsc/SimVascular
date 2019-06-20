@@ -1,4 +1,4 @@
-@echo off
+REM @echo off
 REM Test script for travis build using MSVC 2017
 
 if [%1]==[] goto hardcode
