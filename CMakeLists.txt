@@ -137,8 +137,8 @@ endif()
 mark_as_advanced(SV_EXTERNALS_USE_PREBUILT_QT)
 mark_as_advanced(SV_EXTERNALS_PREBUILT_QT_PATH)
 
-set (CMAKE_CXX_FLAGS "/Od")
-set (CMAKE_C_FLAGS "/Od")
+#set (CMAKE_CXX_FLAGS "/MD /Od /EHsc")
+#set (CMAKE_C_FLAGS "/MD /Od")
 
 set(SV_EXTERNALS_TOPLEVEL_BIN_DIR "${CMAKE_BINARY_DIR}/Externals-build/svExternals/bin")
 set(SV_EXTERNALS_ADDITIONAL_CMAKE_ARGS "" CACHE STRING "If more options want to be provided to the sv_externals build, they can be with this string")
