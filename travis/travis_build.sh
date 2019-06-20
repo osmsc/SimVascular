@@ -37,16 +37,14 @@ MAKE="make --jobs=$NUM_THREADS --keep-going"
 if $WITH_CMAKE; then
   if [[ "$TRAVIS_OS_NAME" == "linux" ]]
   then
-     source $SCRIPTS/travis_cmake_build.sh
+     source $SCRIPTS/travis_cmake_linux.sh
   elif [[ "$TRAVIS_OS_NAME" == "osx" ]]
   then
-     source $SCRIPTS/travis_cmake_build.sh
+     source $SCRIPTS/travis_cmake_macosx.sh
   elif [[ "$TRAVIS_OS_NAME" == "windows" ]]
   then
-     echo "debugging cwd ($cwd)"
-     dir $cwd
-     echo "$SCRIPTS/travis_cmake_windows.bat $cwd $SV_EXTERNALS_VERSION_NUMBER $SV_EXTERNALS_BUILD_DIR $SV_EXTERNALS_BIN_DIR"
-     $SCRIPTS/travis_cmake_windows.bat $cwd $SV_EXTERNALS_VERSION_NUMBER $SV_EXTERNALS_BUILD_DIR $SV_EXTERNALS_BIN_DIR
+     echo "$SCRIPTS/travis_cmake_windows.bat $cwd $SV_EXTERNALS_VERSION_NUMBER"
+     $SCRIPTS/travis_cmake_windows.bat $cwd $SV_EXTERNALS_VERSION_NUMBER
   fi
 else
   echo "Building with just make (i.e. NOT cmake!)"
