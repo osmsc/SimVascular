@@ -29,6 +29,8 @@ goto :buildit
   dir
 
   set SV_EXTERNALS_USE_PREBUILT_QT=false
+  REM hardcode a dummy path to system Qt
+  set SV_EXTERNALS_PREBUILT_QT_PATH="C:/blank"
   
   set SV_CMAKE_BUILD_TYPE="Release"
   set SV_CMAKE_CONFIGURATION_TYPES="Release"
