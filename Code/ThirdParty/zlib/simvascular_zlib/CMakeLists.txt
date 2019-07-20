@@ -32,13 +32,45 @@ PROJECT(SimVascularZLIB)
 
 INCLUDE_DIRECTORIES(BEFORE ${SimVascularZLIB_SOURCE_DIR})
 
-# source files for zlib
-SET(SRCS
-	adler32.c  compress.c  crc32.c  deflate.c  gzio.c   inffast.c
-	inflate.c  inftrees.c  trees.c  uncompr.c  zutil.c
-	)
-SET(HDRS crc32.h deflate.h inffast.h inffixed.h inflate.h inftrees.h
-	 trees.h zconf.h zlib.h zutil.h)
+#============================================================================
+# zlib
+#============================================================================
+
+set(ZLIB_PUBLIC_HDRS
+    zconf.h
+    zlib.h
+)
+set(ZLIB_PRIVATE_HDRS
+    crc32.h
+    deflate.h
+    gzguts.h
+    inffast.h
+    inffixed.h
+    inflate.h
+    inftrees.h
+    trees.h
+    zutil.h
+)
+set(ZLIB_SRCS
+    adler32.c
+    compress.c
+    crc32.c
+    deflate.c
+    gzclose.c
+    gzlib.c
+    gzread.c
+    gzwrite.c
+    inflate.c
+    infback.c
+    inftrees.c
+    inffast.c
+    trees.c
+    uncompr.c
+    zutil.c
+)
+
+set(SRCS ${ZLIB_SRCS})
+set(HDRS "${ZLIB_PUBLIC_HDRS} ${ZLIB_PRIVATE_HDRS}")
 
 IF(WIN32)
 	IF(BUILD_SHARED_LIBS)
