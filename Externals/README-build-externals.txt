@@ -1,6 +1,6 @@
 ****************************************************************
                       Building Externals
-                          2019-06-14
+                          2019-11-24
 ****************************************************************
 
 --> The current externals build is "2019.06"  <--
@@ -42,7 +42,12 @@ Notes:
    you only need to run prep once even if you rebuild multiple
    times (as long as the script doesn't get updated!).
 
-5. On CentOS, you must also use the updated toolchain:
+5a. When building on CentOS 8, you must allow all hosts to connect
+    so the Qt installer can run:
+
+% xhost +
+
+5b. On CentOS 7, you must also use the updated toolchain:
 
    scl enable devtoolset-6 bash
    scl enable rh-git29 bash
@@ -70,7 +75,7 @@ source scl_source enable rh-ruby23
    * alias cp, rm, etc. to require interactive user response
    * /usr/local/bin must precede /usr/bin in your path
 
-8. Running Centos in virtualbox requires:
+8. Running Centos 7 in virtualbox requires:
 
    export MESA_GL_VERSION_OVERRIDE=3.2
 

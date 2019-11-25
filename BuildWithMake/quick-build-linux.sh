@@ -102,6 +102,19 @@ case "$osid" in
 	export EXTERNALS_SV_OS_LONG_NAME_DIR=centos
 	export EXTERNALS_SV_COMPILER_SHORT_NAME=gnu
 	case "$osrel" in
+	   8*)
+		export SV_EXTERN_LINUX_VERSION=centos_8
+		export EXTERNALS_SV_COMPILER_VER_NO=6.3
+		if [ $SV_EXTERNALS_VERSION_NUMBER == '2019.02' ]; then
+		  export EXTERNALS_SV_FULL_OS_VER_NO=7.6
+                  export EXTERNALS_BUILD_DATE=2019.07.11
+                  export EXTERNALS_SV_LOWERCASE_CMAKE_BUILD_TYPE=release
+		elif [ $SV_EXTERNALS_VERSION_NUMBER == '2019.06' ]; then
+		  export EXTERNALS_SV_FULL_OS_VER_NO=7.6
+                  export EXTERNALS_BUILD_DATE=2019.07.17
+                  export EXTERNALS_SV_LOWERCASE_CMAKE_BUILD_TYPE=release
+		fi
+		;;
 	    7*)
 		export SV_EXTERN_LINUX_VERSION=centos_7
 		export EXTERNALS_SV_COMPILER_VER_NO=6.3
