@@ -292,12 +292,12 @@ common-pre-build: mksedscript mk_simvascular_options_h machine-learning-network 
 
 shared-pre-build: common-pre-build
 ifeq ($(SV_USE_MITK),1)
+	cd ../Code/Source/sv4gui/Modules;$(MAKE) moc qrc ui
+	cd ../Code/Source/sv4gui/Modules;$(MAKE) create_exports_h us-init-module create_cppmicroservices_file
 ifeq ($(SV_USE_SV4_GUI),1)
 	cd ../Code/Source/sv4gui/Plugins;$(MAKE) create_plugin_export_h create_manifest_qrc create_cached_qrc
 	cd ../Code/Source/sv4gui/Plugins;$(MAKE) moc qrc ui
 endif
-	cd ../Code/Source/sv4gui/Modules;$(MAKE) moc qrc ui
-	cd ../Code/Source/sv4gui/Modules;$(MAKE) create_exports_h us-init-module create_cppmicroservices_file
 endif
 	cd ../Code/Source/vtkSV;$(MAKE) create_exports_outname_h
 	for i in ${SHARED_LIBDIRS}; do ( \
@@ -309,11 +309,11 @@ endif
 static-pre-build: common-pre-build
 	cd ../Code/Source/Application;$(MAKE) SV_STATIC_BUILD=1 pre
 ifeq ($(SV_USE_MITK),1)
+	cd ../Code/Source/sv4gui/Modules;$(MAKE) moc qrc ui
+	cd ../Code/Source/sv4gui/Modules;$(MAKE) create_exports_h us-init-module
 ifeq ($(SV_USE_SV4_GUI),1)
 	cd ../Code/Source/sv4gui/Plugins;$(MAKE) create_plugin_export_h create_manifest_qrc create_cached_qrc
 	cd ../Code/Source/sv4gui/Plugins;$(MAKE) moc qrc ui
-	cd ../Code/Source/sv4gui/Modules;$(MAKE) moc qrc ui
-	cd ../Code/Source/sv4gui/Modules;$(MAKE) create_exports_h us-init-module
 endif
 endif
 	cd ../Code/Source/vtkSV;$(MAKE) create_exports_outname_h

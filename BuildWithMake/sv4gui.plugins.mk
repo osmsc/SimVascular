@@ -30,23 +30,65 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-TOP=../../../../BuildWithMake
+lib-complete: moc ui qrc lib
 
-include $(TOP)/include.mk
+static-complete:  create_plugin_export_h create_manifest_qrc create_cached_qrc moc ui qrc static
 
-SVQTGUIEXT_DIRS = org.sv.projectdatanodes \
-		  org.sv.pythondatanodes \
-                  org.sv.gui.qt.projectmanager \
-                  org.sv.gui.qt.datamanager \
-                  org.sv.gui.qt.pathplanning \
-                  org.sv.gui.qt.segmentation \
-                  org.sv.gui.qt.mitksegmentation \
-                  org.sv.gui.qt.modeling \
-                  org.sv.gui.qt.meshing \
-                  org.sv.gui.qt.simulation \
-                  org.sv.gui.qt.romsimulation \
-                  org.sv.gui.qt.imageprocessing \
-                  org.sv.gui.qt.svfsi  \
-                  org.sv.gui.qt.application
+shared-complete:  create_plugin_export_h create_manifest_qrc create_cached_qrc moc ui qrc shared
 
-include $(TOP)/sv4gui.plugins.mk
+lib:
+	@for i in ${SVQTGUIEXT_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE)) ; done
+
+static:
+	@for i in ${SVQTGUIEXT_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE)) ; done
+
+shared:
+	@for i in ${SVQTGUIEXT_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) shared) ; done
+
+moc:
+	@for i in ${SVQTGUIEXT_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) moc) ; done
+
+ui:
+	@for i in ${SVQTGUIEXT_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) ui) ; done
+
+qrc:
+	@for i in ${SVQTGUIEXT_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) qrc) ; done
+
+create_plugin_export_h:
+	@for i in ${SVQTGUIEXT_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) create_plugin_export_h) ; done
+
+create_exports_cv_h:
+
+create_manifest_qrc:
+	@for i in ${SVQTGUIEXT_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) create_manifest_qrc) ; done
+
+create_cached_qrc:
+	@for i in ${SVQTGUIEXT_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) create_cached_qrc) ; done
+
+clean:
+	for i in ${SVQTGUIEXT_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) clean ) ; done
+
+veryclean: clean
+	for i in ${SVQTGUIEXT_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) veryclean ) ; done

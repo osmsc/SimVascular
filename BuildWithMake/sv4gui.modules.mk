@@ -30,23 +30,68 @@
 # NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-TOP=../../../../BuildWithMake
+lib-complete: create_exports_h us-init-module moc ui qrc lib
 
-include $(TOP)/include.mk
+static-complete:  create_exports_h us-init-module moc ui qrc static
 
-SVQTGUIEXT_DIRS = org.sv.projectdatanodes \
-		  org.sv.pythondatanodes \
-                  org.sv.gui.qt.projectmanager \
-                  org.sv.gui.qt.datamanager \
-                  org.sv.gui.qt.pathplanning \
-                  org.sv.gui.qt.segmentation \
-                  org.sv.gui.qt.mitksegmentation \
-                  org.sv.gui.qt.modeling \
-                  org.sv.gui.qt.meshing \
-                  org.sv.gui.qt.simulation \
-                  org.sv.gui.qt.romsimulation \
-                  org.sv.gui.qt.imageprocessing \
-                  org.sv.gui.qt.svfsi  \
-                  org.sv.gui.qt.application
+shared-complete: create_exports_h us-init-module moc ui qrc create_cppmicroservices_file shared
 
-include $(TOP)/sv4gui.plugins.mk
+lib:
+	@for i in ${SVQTGUIMODULES_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE)) ; done
+
+static:
+	@for i in ${SVQTGUIMODULES_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE)) ; done
+
+shared:
+	@for i in ${SVQTGUIMODULES_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) shared) ; done
+
+create_exports_h:
+	@for i in ${SVQTGUIMODULES_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) create_exports_h) ; done
+
+moc:
+	@for i in ${SVQTGUIMODULES_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) moc) ; done
+
+ui:
+	@for i in ${SVQTGUIMODULES_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) ui) ; done
+
+qrc:
+	@for i in ${SVQTGUIMODULES_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) qrc) ; done
+
+us-init-module:
+	@for i in ${SVQTGUIMODULES_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) us-init-module) ; done
+
+create_cppmicroservices_file:
+	@for i in ${SVQTGUIMODULES_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) create_cppmicroservices_file) ; done
+
+create_exports_cv_h:
+
+clean:
+	for i in ${SVQTGUIMODULES_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) clean ) ; done
+
+veryclean: clean
+	@for i in ${SVQTGUIMODULES_DIRS}; do ( \
+	  rm -f ../Include/Make/sv$$i\Exports.h; \
+	  rm -f ../Include/Make/mitk$$i\Exports.h) ; done
+	for i in ${SVQTGUIMODULES_DIRS}; do ( \
+	  cd $$i; \
+	  $(MAKE) veryclean ) ; done
